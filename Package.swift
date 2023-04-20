@@ -38,44 +38,51 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "1.6.0")),
         .package(url: "https://github.com/mac-cain13/R.swift.git", from: "7.0.0"),
-        .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0"))
+        .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0")),
+        .package(url: "https://github.com/realm/SwiftLint.git", from: "0.51.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "Common",
-            dependencies: ["SwiftyBeaver"]),
+            dependencies: ["SwiftyBeaver"],
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+        ),
         .target(
             name: "UserStore",
             dependencies: ["Common", .product(name: "RswiftLibrary", package: "R.swift")],
-            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift")]
+            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
         ),
         .target(
             name: "APIClient",
-            dependencies: ["Common", "UserStore"]),
+            dependencies: ["Common", "UserStore"],
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+        ),
         .target(
             name: "DesignLibrary",
             dependencies: ["Common", .product(name: "RswiftLibrary", package: "R.swift")],
-            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift")]
+            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
         ),
         .target(
             name: "SharedModels",
             dependencies: ["Common", "UserStore", "DesignLibrary", .product(name: "RswiftLibrary", package: "R.swift")],
-            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift")]
+            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
         ),
         .target(
             name: "PushNotifications",
             dependencies: ["CryptoSwift", "APIClient", "Common", "UserStore", "DesignLibrary", .product(name: "RswiftLibrary", package: "R.swift")],
-            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift")]
+            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
         ),
         .target(
             name: "ProfileInfo",
-            dependencies: ["APIClient"]),
+            dependencies: ["APIClient"],
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+        ),
         .target(
             name: "Login",
             dependencies: ["APIClient", "PushNotifications", "ProfileInfo", "UserStore", "DesignLibrary", "SharedModels", .product(name: "RswiftLibrary", package: "R.swift")],
-            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift")]
+            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
         ),
     ]
 )
