@@ -1,0 +1,13 @@
+// MARK: Exercise
+"difficulty_easy" = "Easy";
+"difficulty_medium" = "Medium";
+"difficulty_hard" = "Hard";
+
+"includedInOverallScore_includedAsBonus" = "Bonus";
+"includedInOverallScore_notIncluded" = "Optional";
+"includedInOverallScore_includedCompletely" = "Included";
+
+// MARK: Conversation
+"archived" = "(Archived)";
+"onlyYou" = "Only you";
+"others" = "%d others";

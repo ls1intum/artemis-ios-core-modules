@@ -1,2 +1,5 @@
-# artemis-ios-core-modules
-Core modules for the Artemis related iOS apps
+# ArtemisCore
+
+Core modules which can be used accross all Artemis related iOS apps.
+
+## TODO
