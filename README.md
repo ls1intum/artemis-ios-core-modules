@@ -26,20 +26,21 @@ In Project Settings, on the tab "Package Dependencies", click "+" and add <https
 ### Add to Package.swift based SPM project
 
 1. Add a dependency in Package.swift:
-``
+```swift
 dependencies: [
     .package(url: "https://github.com/ls1intum/artemis-ios-core-modules", .upToNextMajor(from: "0.1.0")),
 ]
-``
+```
+
 2. For each relevant target, add a dependency with the product name from section 1, e.g.:
-``
+```swift
 .target(
     name: "Example",
     dependencies: [
         .product(name: "SharedModels", package: "artemis-ios-core-modules"),
     ]    
 )
-``
+```
 
 # How to use Modules
 
