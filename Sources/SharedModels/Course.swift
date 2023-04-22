@@ -19,6 +19,9 @@ public struct Course: Codable, Identifiable {
     public var lectures: [Lecture]?
     public var accuracyOfScores: Int?
     public var courseInformationSharingConfiguration: CourseInformationSharingConfiguration
+    public var instructorGroupName: String?
+    public var editorGroupName: String?
+    public var teachingAssistantGroupName: String?
 
     public init(id: Int, title: String? = "",
                 description: String? = "",
@@ -68,6 +71,16 @@ public struct Course: Codable, Identifiable {
                     return true
                 }
             })
+    }
+
+    /**
+     * checks if the currently logged-in user is at least tutor
+     */
+    var isAtLeastTutorInCourse: Bool {
+        User.hasGroup(group: instructorGroupName) ||
+        User.hasGroup(group: editorGroupName) ||
+        User.hasGroup(group: teachingAssistantGroupName) ||
+        User.hasAnyAuthorityDirect(authority: .admin)
     }
 
     /**
