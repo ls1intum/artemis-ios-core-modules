@@ -46,11 +46,14 @@ public enum Authority: String, RawRepresentable, Codable {
 public extension UserSession {
     var user: User? {
         get {
-            guard isLoggedIn else { return nil }
-            return UserDefaults.standard.object(forKey: "User") as? User
+            guard isLoggedIn,
+                  let userData = UserDefaults.standard.object(forKey: "User") as? Data else { return nil }
+            return try? JSONDecoder().decode(Account.self, from: userData)
         }
         set(newValue) {
-            UserDefaults.standard.set(newValue, forKey: "User")
+            if let encoded = try? JSONEncoder().encode(newValue) {
+                UserDefaults.standard.set(encoded, forKey: "User")
+            }
         }
     }
 }
