@@ -76,7 +76,7 @@ public struct Course: Codable, Identifiable {
     /**
      * checks if the currently logged-in user is at least tutor
      */
-    var isAtLeastTutorInCourse: Bool {
+    public var isAtLeastTutorInCourse: Bool {
         User.hasGroup(group: instructorGroupName) ||
         User.hasGroup(group: editorGroupName) ||
         User.hasGroup(group: teachingAssistantGroupName) ||
