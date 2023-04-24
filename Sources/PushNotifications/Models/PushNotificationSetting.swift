@@ -8,7 +8,7 @@
 import Foundation
 
 public struct PushNotificationSetting: Codable {
-    public let id: Int64
+    public let id: Int64?
     public let settingId: PushNotificationSettingId
     public let webapp: Bool
     public let email: Bool
