@@ -219,15 +219,16 @@ extension APIClient {
                 –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n
                 """)
         }
-        if let response = response as? HTTPURLResponse {
-            log.verbose(
-                """
-                \n––––––––––––––––––––––––––––––––––––––––Response–––––––––––––––––––––––––––––––––––––––––
-                \(response.statusCode) \(urlString)
-                Body: \(String(data: data ?? Data(), encoding: .utf8) ?? "empty")
-                –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n
-                """)
-        }
+        // Disabled debugging because app get's unresponsive in debug mode due to huge debug output
+//        if let response = response as? HTTPURLResponse {
+//            log.verbose(
+//                """
+//                \n––––––––––––––––––––––––––––––––––––––––Response–––––––––––––––––––––––––––––––––––––––––
+//                \(response.statusCode) \(urlString)
+//                Body: \(String(data: data ?? Data(), encoding: .utf8) ?? "empty")
+//                –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n
+//                """)
+//        }
     }
 }
 
