@@ -30,4 +30,11 @@ public extension BaseMessage {
             return authorId == userId && $0.emojiId == emojiId
         })
     }
+
+    var isCurrentUserAuthor: Bool {
+        guard let userId = UserSession.shared.user?.id,
+              let authorId = author?.id else { return false }
+
+        return userId == authorId
+    }
 }
