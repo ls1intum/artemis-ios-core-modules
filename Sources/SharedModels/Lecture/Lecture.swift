@@ -8,10 +8,10 @@
 import Foundation
 
 public struct Lecture: Codable {
-    let id: Int
-    let title: String?
-    let description: String?
-    let startDate: Date?
-    let endDate: Date?
-    //    let attachments: [Attachment]
+    public let id: Int
+    public let title: String?
+    public let description: String?
+    public let startDate: Date?
+    public let endDate: Date?
+    //    public let attachments: [Attachment]
 }
