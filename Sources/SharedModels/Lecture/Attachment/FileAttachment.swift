@@ -2,7 +2,7 @@ import Foundation
 
 public struct FileAttachment: BaseAttachment {
 
-    public var id: Int?
+    public var id: Int
     public var name: String?
     public var visibleToStudents: Bool?
     public var link: String?
