@@ -35,4 +35,11 @@ public extension View {
                               borderColor: borderColor,
                               cornerRadius: cornerRadius))
     }
+
+    func artemisStyleCard() -> some View {
+        modifier(CardModifier(backgroundColor: .Artemis.exerciseCardBackgroundColor,
+                              hasBorder: true,
+                              borderColor: .Artemis.artemisBlue,
+                              cornerRadius: 2))        
+    }
 }

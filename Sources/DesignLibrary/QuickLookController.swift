@@ -10,7 +10,7 @@ import QuickLook
 
 public struct QuickLookController: UIViewControllerRepresentable {
 
-    public var url: URL
+    var url: URL
 
     public init(url: URL) {
         self.url = url
@@ -20,16 +20,18 @@ public struct QuickLookController: UIViewControllerRepresentable {
         Coordinator(self)
     }
 
-    public func updateUIViewController(_ viewController: QLPreviewController, context: UIViewControllerRepresentableContext<QuickLookController>) {
-        viewController.reloadData()
+    public func updateUIViewController(_ viewController: UINavigationController, context: UIViewControllerRepresentableContext<QuickLookController>) {
+        if let controller = viewController.topViewController as? QLPreviewController {
+            controller.reloadData()
+        }
     }
 
-    public func makeUIViewController(context: Context) -> QLPreviewController {
+    public func makeUIViewController(context: Context) -> UINavigationController {
         let controller = QLPreviewController()
 
         controller.dataSource = context.coordinator
         controller.reloadData()
-        return controller
+        return UINavigationController(rootViewController: controller)
     }
 
     public class Coordinator: NSObject, QLPreviewControllerDataSource {

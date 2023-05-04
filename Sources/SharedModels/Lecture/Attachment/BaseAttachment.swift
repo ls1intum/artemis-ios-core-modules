@@ -39,4 +39,10 @@ public enum Attachment: Codable {
         default: self = .unknown(attachment: try UnknownAttachment(from: decoder))
         }
     }
+
+    public var pathExtension: String? {
+        guard let name = (baseAttachment as? FileAttachment)?.link else { return nil }
+        let filename: NSString = name as NSString
+        return filename.pathExtension.uppercased()
+    }
 }
