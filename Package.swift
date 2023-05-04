@@ -32,7 +32,10 @@ let package = Package(
             targets: ["ProfileInfo"]),
         .library(
             name: "Login",
-            targets: ["Login"])
+            targets: ["Login"]),
+        .library(
+            name: "Account",
+            targets: ["Account"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -84,5 +87,10 @@ let package = Package(
             dependencies: ["APIClient", "PushNotifications", "ProfileInfo", "UserStore", "DesignLibrary", "SharedModels", .product(name: "RswiftLibrary", package: "R.swift")],
             plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
         ),
+        .target(
+            name: "Account",
+            dependencies: ["APIClient", "PushNotifications", "UserStore", "DesignLibrary", "SharedModels", .product(name: "RswiftLibrary", package: "R.swift")],
+            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+        )
     ]
 )
