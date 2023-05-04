@@ -29,10 +29,16 @@ public struct ModelingExercise: BaseExercise {
     public var attachments: [Attachment]? = []
     public var studentAssignedTeamIdComputed: Bool?
     public var studentAssignedTeamId: Int?
+    public var gradingCriteria: [GradingCriterion]?
+    public var gradingInstructions: String?
 
     public var diagramType: UMLDiagramType?
     public var exampleSolutionModel: String?
     public var exampleSolutionExplanation: String?
+
+    public init(id: Int) {
+        self.id = id
+    }
 
     public func copyWithUpdatedParticipations(newParticipations: [Participation]) -> ModelingExercise {
         var clone = self

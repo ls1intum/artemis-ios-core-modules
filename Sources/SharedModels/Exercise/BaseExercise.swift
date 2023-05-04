@@ -11,7 +11,6 @@ public protocol BaseExercise: Codable {
     var shortName: String? { get }
     var maxPoints: Double? { get }
     var bonusPoints: Double? { get }
-    //    var releaseDate: Date? { get }
     var dueDate: Date? { get }
     var releaseDate: Date? { get }
     var assessmentDueDate: Date? { get }
@@ -29,9 +28,13 @@ public protocol BaseExercise: Codable {
     var studentParticipations: [Participation]? { get }
     var studentAssignedTeamIdComputed: Bool? { get }
     var studentAssignedTeamId: Int? { get }
+    var gradingCriteria: [GradingCriterion]? { get }
+    var gradingInstructions: String? { get }
 
     // -------
     var attachments: [Attachment]? { get }
+
+    init(id: Int)
 
     /**
      * Create a copy of this exercise with the participations field replaced.
