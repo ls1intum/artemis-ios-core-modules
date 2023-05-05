@@ -40,6 +40,6 @@ public extension View {
         modifier(CardModifier(backgroundColor: .Artemis.exerciseCardBackgroundColor,
                               hasBorder: true,
                               borderColor: .Artemis.artemisBlue,
-                              cornerRadius: 2))        
+                              cornerRadius: 2))
     }
 }
