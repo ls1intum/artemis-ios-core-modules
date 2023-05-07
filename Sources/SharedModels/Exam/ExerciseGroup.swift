@@ -9,6 +9,6 @@ import Foundation
 
 public struct ExerciseGroup: Codable {
     public var id: Int
-    public var title: String
+    public var title: String?
     public var exercises: [Exercise]?
 }
