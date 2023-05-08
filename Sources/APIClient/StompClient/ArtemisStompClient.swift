@@ -18,11 +18,7 @@ public class ArtemisStompClient {
 
     private var stompClient: SwiftStomp?
     private var topics: [String: SubscribeStatus] = [:]
-    private var continuations: [String: AsyncStream<Any?>.Continuation] = [:] {
-        didSet {
-            print("Sven")
-        }
-    }
+    private var continuations: [String: AsyncStream<Any?>.Continuation] = [:]
 
     public static let shared = ArtemisStompClient()
 
@@ -61,9 +57,9 @@ public class ArtemisStompClient {
             topics[topic] = .pending
         }
         return AsyncStream { continuation in
-            continuation.onTermination = { [weak self] termination in
-                log.error(termination)
+            continuation.onTermination = { [weak self] _ in
                 self?.continuations.removeValue(forKey: topic)
+                self?.unsubscribe(from: topic)
             }
 
             continuations[topic] = continuation
@@ -71,6 +67,7 @@ public class ArtemisStompClient {
     }
 
     public func unsubscribe(from topic: String) {
+        log.debug("Stomp Unsubscribe: \(topic)")
         stompClient?.unsubscribe(from: topic)
     }
 }
@@ -115,5 +112,24 @@ extension ArtemisStompClient: SwiftStompDelegate {
 
     public func onSocketEvent(eventName: String, description: String) {
         log.debug("Event Name: \(eventName), Description: \(description)")
+    }
+}
+
+public extension JSONDecoder {
+    static func getTypeFromSocketMessage<T: Decodable>(type: T.Type, message: Any?) -> T? {
+        guard let messageString = message as? String,
+              let messsageData = messageString.data(using: .utf8) else {
+            log.error("Could not decode message as \(T.self)")
+            return nil
+        }
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .customISO8601
+        do {
+            return try decoder.decode(T.self, from: messsageData)
+        } catch {
+            log.error(error)
+            return nil
+        }
     }
 }
