@@ -19,7 +19,7 @@ public struct Result: Codable {
     public var codeIssueCount: Int?
     public var submission: Submission?
     public var assessor: User?
-    // val feedbacks: List<Feedback>? = nil,
+    public var feedbacks: [Feedback]?
     public var participation: Participation?
 
     public var isProgrammingExerciseStudentParticipation: Bool {

@@ -31,7 +31,14 @@ public struct ProgrammingExercise: BaseExercise {
     public var programmingLanguage: ProgrammingLanguage?
     public var studentAssignedTeamIdComputed: Bool?
     public var studentAssignedTeamId: Int?
+    public var gradingCriteria: [GradingCriterion]?
+    public var gradingInstructions: String?
     public var buildAndTestStudentSubmissionsAfterDueDate: Date?
+    public var templateParticipation: TemplateParticipation?
+
+    public init(id: Int) {
+        self.id = id
+    }
 
     public func copyWithUpdatedParticipations(newParticipations: [Participation]) -> ProgrammingExercise {
         var clone = self
