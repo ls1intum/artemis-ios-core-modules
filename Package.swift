@@ -90,7 +90,7 @@ let package = Package(
         ),
         .target(
             name: "Login",
-            dependencies: ["APIClient", "PushNotifications", "ProfileInfo", "UserStore", "DesignLibrary", "SharedModels", .product(name: "RswiftLibrary", package: "R.swift")],
+            dependencies: ["APIClient", "PushNotifications", "ProfileInfo", "UserStore", "DesignLibrary", "SharedModels", "Account", .product(name: "RswiftLibrary", package: "R.swift")],
             plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
         ),
         .target(
