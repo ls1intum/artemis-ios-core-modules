@@ -11,11 +11,13 @@ public struct Course: Codable, Identifiable {
     public var id: Int
     public var title: String? = ""
     public var description: String? = ""
+    public var shortName: String? = ""
     public var courseIcon: String?
     public var color: String?
     public var semester: String? = ""
     public var registrationConfirmationMessage: String? = ""
     public var exercises: [Exercise]?
+    public var exams: [Exam]?
     public var lectures: [Lecture]?
     public var accuracyOfScores: Int?
     public var courseInformationSharingConfiguration: CourseInformationSharingConfiguration

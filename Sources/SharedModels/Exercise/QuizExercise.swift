@@ -31,6 +31,8 @@ public struct QuizExercise: BaseExercise {
     public var attachments: [Attachment]? = []
     public var studentAssignedTeamIdComputed: Bool?
     public var studentAssignedTeamId: Int?
+    public var gradingCriteria: [GradingCriterion]?
+    public var gradingInstructions: String?
 
     public var allowedNumberOfAttempts: Int?
     public var remainingNumberOfAttempts: Int?
@@ -42,6 +44,10 @@ public struct QuizExercise: BaseExercise {
     public var quizMode: QuizMode? = QuizMode.INDIVIDUAL
     public var quizEnded: Bool?
     public var quizBatches: [QuizBatch]? = []
+
+    public init(id: Int) {
+        self.id = id
+    }
 
     public func copyWithUpdatedParticipations(newParticipations: [Participation]) -> QuizExercise {
         var clone = self
