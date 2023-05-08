@@ -82,6 +82,11 @@ attributes:
   always_on_line_above:
     - "@OptionGroup"
 identifier_name:
+  max_length:
+    warning: 55
+    error: 60
+  min_length:
+    warning: 1
   excluded:
     - id
 large_tuple: 3

@@ -7,7 +7,6 @@
 
 import Foundation
 
-// swiftlint:disable identifier_name
 public enum Language: String, RawRepresentable, Codable, Identifiable, Hashable {
 
     public var id: String {

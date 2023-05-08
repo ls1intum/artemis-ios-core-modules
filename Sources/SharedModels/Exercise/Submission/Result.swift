@@ -22,7 +22,6 @@ public struct Result: Codable {
     // val feedbacks: List<Feedback>? = nil,
     public var participation: Participation?
 
-    // swiftlint:disable:next identifier_name
     public var isProgrammingExerciseStudentParticipation: Bool {
         switch participation {
         case .programmingExerciseStudent:
@@ -69,7 +68,6 @@ public struct Result: Codable {
                 // in case the assessment due date is not set, the assessment type of the latest result is checked. If it is automatic the result is still preliminary.
                 return assessmentType == .automatic
             }
-            // swiftlint:disable:next identifier_name
             if let buildAndTestStudentSubmissionsAfterDueDate = exercise.buildAndTestStudentSubmissionsAfterDueDate {
                 return completionDate < buildAndTestStudentSubmissionsAfterDueDate
             }

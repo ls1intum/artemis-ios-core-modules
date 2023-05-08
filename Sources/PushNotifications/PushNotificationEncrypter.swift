@@ -12,7 +12,6 @@ import Common
 
 class PushNotificationEncrypter {
 
-    // swiftlint:disable identifier_name
     static func decrypt(payload: String, iv: String) -> PushNotification? {
         // decode PrivateKey from base64 to String
         guard let privateKey = UserSession.shared.getCurrentNotificationDeviceConfiguration()?.notificationsEncryptionKey,

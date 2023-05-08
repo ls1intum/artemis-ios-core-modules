@@ -12,7 +12,6 @@ import UserNotifications
 
 public class PushNotificationHandler {
 
-    // swiftlint:disable identifier_name
     public static func handle(payload: String, iv: String) {
         log.verbose("Notification received with payload: \(payload)")
 
