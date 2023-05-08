@@ -18,7 +18,11 @@ public class ArtemisStompClient {
 
     private var stompClient: SwiftStomp?
     private var topics: [String: SubscribeStatus] = [:]
-    private var continuations: [String: AsyncStream<Any?>.Continuation] = [:]
+    private var continuations: [String: AsyncStream<Any?>.Continuation] = [:] {
+        didSet {
+            print("Sven")
+        }
+    }
 
     public static let shared = ArtemisStompClient()
 
@@ -43,7 +47,11 @@ public class ArtemisStompClient {
         stompClient?.connect()
     }
 
-    public func subscribe(to topic: String, withoutStream: Bool = false) -> AsyncStream<Any?>? {
+    public func subscribe(to topic: String) -> AsyncStream<Any?> {
+        if stompClient == nil {
+            setup()
+        }
+
         if stompClient?.connectionStatus == .fullyConnected {
             stompClient?.subscribe(to: topic)
             log.debug("Stomp Subscripe: \(topic)")
@@ -52,25 +60,38 @@ public class ArtemisStompClient {
             log.debug("Stomp Subscripe Pending: \(topic)")
             topics[topic] = .pending
         }
-        if !withoutStream {
-            return AsyncStream { continuation in
-                continuation.onTermination = { [weak self] _ in
-                    self?.continuations.removeValue(forKey: topic)
-                }
-
-                continuations[topic] = continuation
+        return AsyncStream { continuation in
+            continuation.onTermination = { [weak self] termination in
+                log.error(termination)
+                self?.continuations.removeValue(forKey: topic)
             }
+
+            continuations[topic] = continuation
         }
-        return nil
+    }
+
+    public func unsubscribe(from topic: String) {
+        stompClient?.unsubscribe(from: topic)
     }
 }
 
 extension ArtemisStompClient: SwiftStompDelegate {
+    private func subscribeWithoutStream(to topic: String) {
+        if stompClient?.connectionStatus == .fullyConnected {
+            stompClient?.subscribe(to: topic)
+            log.debug("Stomp Subscripe: \(topic)")
+            topics[topic] = .subscribed
+        } else {
+            log.debug("Stomp Subscripe Pending: \(topic)")
+            topics[topic] = .pending
+        }
+    }
+
     public func onConnect(swiftStomp: SwiftStomp, connectType: StompConnectType) {
         print("Stomp: Connect")
         topics.forEach { topic in
             guard topic.value != .subscribed else { return }
-            _ = subscribe(to: topic.key, withoutStream: true)
+            subscribeWithoutStream(to: topic.key)
         }
     }
 
