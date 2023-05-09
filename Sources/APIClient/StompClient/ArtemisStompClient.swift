@@ -50,14 +50,8 @@ public class ArtemisStompClient {
             setup()
         }
 
-        if stompClient?.connectionStatus == .fullyConnected {
-            stompClient?.subscribe(to: topic)
-            log.debug("Stomp Subscripe: \(topic)")
-            setTopic(topic, status: .subscribed)
-        } else {
-            log.debug("Stomp Subscripe Pending: \(topic)")
-            setTopic(topic, status: .pending)
-        }
+        subscribeWithoutStream(to: topic)
+
         return AsyncStream { continuation in
             continuation.onTermination = { [weak self] _ in
                 self?.unsubscribe(from: topic)
@@ -73,6 +67,9 @@ public class ArtemisStompClient {
         queue.async { [weak self] in
             self?.continuations.removeValue(forKey: topic)
             self?.topics.removeValue(forKey: topic)
+            if self?.topics.isEmpty ?? false {
+                self?.stompClient?.disconnect()
+            }
         }
     }
 
@@ -104,13 +101,13 @@ extension ArtemisStompClient: SwiftStompDelegate {
     public func onConnect(swiftStomp: SwiftStomp, connectType: StompConnectType) {
         print("Stomp: Connect")
         topics.forEach { topic in
-            guard topic.value != .subscribed else { return }
             subscribeWithoutStream(to: topic.key)
         }
     }
 
     public func onDisconnect(swiftStomp: SwiftStomp, disconnectType: StompDisconnectType) {
         print("Stomp: Disconnect")
+        stompClient = nil
     }
 
     public func onMessageReceived(swiftStomp: SwiftStomp, message: Any?, messageId: String, destination: String, headers: [String: String]) {
