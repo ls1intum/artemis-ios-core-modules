@@ -20,6 +20,8 @@ public class ArtemisStompClient {
     private var topics: [String: SubscribeStatus] = [:]
     private var continuations: [String: AsyncStream<Any?>.Continuation] = [:]
 
+    private let queue = DispatchQueue(label: "thread-safe-socket")
+
     public static let shared = ArtemisStompClient()
 
     private init() {
@@ -51,24 +53,39 @@ public class ArtemisStompClient {
         if stompClient?.connectionStatus == .fullyConnected {
             stompClient?.subscribe(to: topic)
             log.debug("Stomp Subscripe: \(topic)")
-            topics[topic] = .subscribed
+            setTopic(topic, status: .subscribed)
         } else {
             log.debug("Stomp Subscripe Pending: \(topic)")
-            topics[topic] = .pending
+            setTopic(topic, status: .pending)
         }
         return AsyncStream { continuation in
             continuation.onTermination = { [weak self] _ in
-                self?.continuations.removeValue(forKey: topic)
                 self?.unsubscribe(from: topic)
             }
 
-            continuations[topic] = continuation
+            setContinuation(topic, continuation: continuation)
         }
     }
 
     public func unsubscribe(from topic: String) {
         log.debug("Stomp Unsubscribe: \(topic)")
         stompClient?.unsubscribe(from: topic)
+        queue.async { [weak self] in
+            self?.continuations.removeValue(forKey: topic)
+            self?.topics.removeValue(forKey: topic)
+        }
+    }
+
+    private func setTopic(_ topic: String, status: SubscribeStatus) {
+        queue.async { [weak self] in
+            self?.topics[topic] = status
+        }
+    }
+
+    private func setContinuation(_ topic: String, continuation: AsyncStream<Any?>.Continuation) {
+        queue.async { [weak self] in
+            self?.continuations[topic] = continuation
+        }
     }
 }
 
@@ -77,10 +94,10 @@ extension ArtemisStompClient: SwiftStompDelegate {
         if stompClient?.connectionStatus == .fullyConnected {
             stompClient?.subscribe(to: topic)
             log.debug("Stomp Subscripe: \(topic)")
-            topics[topic] = .subscribed
+            setTopic(topic, status: .subscribed)
         } else {
             log.debug("Stomp Subscripe Pending: \(topic)")
-            topics[topic] = .pending
+            setTopic(topic, status: .pending)
         }
     }
 
