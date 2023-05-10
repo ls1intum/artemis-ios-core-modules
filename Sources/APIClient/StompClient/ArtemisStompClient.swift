@@ -111,7 +111,7 @@ extension ArtemisStompClient: SwiftStompDelegate {
     }
 
     public func onMessageReceived(swiftStomp: SwiftStomp, message: Any?, messageId: String, destination: String, headers: [String: String]) {
-        print("Stomp: MessageReceived")
+        log.debug("Stomp: MessageReceived")
         let continuation = continuations[destination]
         continuation?.yield(message)
     }
