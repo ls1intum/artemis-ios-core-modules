@@ -93,7 +93,7 @@ extension ArtemisStompClient: SwiftStompDelegate {
             log.debug("Stomp Subscribe: \(topic)")
             setTopic(topic, status: .subscribed)
         } else {
-            log.debug("Stomp Subscripe Pending: \(topic)")
+            log.debug("Stomp Subscribe Pending: \(topic)")
             setTopic(topic, status: .pending)
         }
     }
