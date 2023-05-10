@@ -117,7 +117,7 @@ extension ArtemisStompClient: SwiftStompDelegate {
     }
 
     public func onReceipt(swiftStomp: SwiftStomp, receiptId: String) {
-        print("Stomp: Receipt")
+        log.debug("Stomp: Receipt")
     }
 
     public func onError(swiftStomp: SwiftStomp, briefDescription: String, fullDescription: String?, receiptId: String?, type: StompErrorType) {
