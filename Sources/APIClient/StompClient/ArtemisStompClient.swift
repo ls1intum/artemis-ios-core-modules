@@ -99,7 +99,7 @@ extension ArtemisStompClient: SwiftStompDelegate {
     }
 
     public func onConnect(swiftStomp: SwiftStomp, connectType: StompConnectType) {
-        print("Stomp: Connect")
+        log.debug("Stomp: Connect")
         topics.forEach { topic in
             subscribeWithoutStream(to: topic.key)
         }
