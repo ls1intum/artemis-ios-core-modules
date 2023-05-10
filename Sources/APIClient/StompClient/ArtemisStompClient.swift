@@ -90,7 +90,7 @@ extension ArtemisStompClient: SwiftStompDelegate {
     private func subscribeWithoutStream(to topic: String) {
         if stompClient?.connectionStatus == .fullyConnected {
             stompClient?.subscribe(to: topic)
-            log.debug("Stomp Subscripe: \(topic)")
+            log.debug("Stomp Subscribe: \(topic)")
             setTopic(topic, status: .subscribed)
         } else {
             log.debug("Stomp Subscripe Pending: \(topic)")
