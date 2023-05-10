@@ -106,7 +106,7 @@ extension ArtemisStompClient: SwiftStompDelegate {
     }
 
     public func onDisconnect(swiftStomp: SwiftStomp, disconnectType: StompDisconnectType) {
-        print("Stomp: Disconnect")
+        log.debug("Stomp: Disconnect")
         stompClient = nil
     }
 
