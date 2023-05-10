@@ -10,6 +10,7 @@ import APIClient
 import UserStore
 import Common
 import PushNotifications
+import Account
 
 class LoginServiceImpl: LoginService {
     private let client = APIClient()
@@ -40,18 +41,27 @@ class LoginServiceImpl: LoginService {
 
         switch result {
         case .success:
-            UserSession.shared.setUserLoggedIn(isLoggedIn: true)
-            if rememberMe {
-                UserSession.shared.saveUsername(username: username)
-                UserSession.shared.savePassword(password: password)
-            }
+            let userResult = await AccountServiceFactory.shared.getAccount()
 
-            if let notificationConfig = UserSession.shared.getCurrentNotificationDeviceConfiguration(),
-               let deviceToken = notificationConfig.apnsDeviceToken,
-               !notificationConfig.skippedNotifications {
-                return await PushNotificationServiceFactory.shared.register(deviceToken: deviceToken)
+            switch userResult {
+            case .loading:
+                return .loading
+            case .failure(let error):
+                return .failure(error: error)
+            case .done:
+                UserSession.shared.setUserLoggedIn(isLoggedIn: true)
+                if rememberMe {
+                    UserSession.shared.saveUsername(username: username)
+                    UserSession.shared.savePassword(password: password)
+                }
+
+                if let notificationConfig = UserSession.shared.getCurrentNotificationDeviceConfiguration(),
+                   let deviceToken = notificationConfig.apnsDeviceToken,
+                   !notificationConfig.skippedNotifications {
+                    return await PushNotificationServiceFactory.shared.register(deviceToken: deviceToken)
+                }
+                return .success
             }
-            return .success
         case .failure(let error):
             switch error {
             case let .httpURLResponseError(statusCode, artemisError):

@@ -91,10 +91,10 @@ public enum QuizMode: String, RawRepresentable, Codable {
 }
 
 public struct QuizBatch: Codable {
-    var id: Int?
-    var startTime: Date?
-    var started: Bool?
-    var ended: Bool?
-    var submissionAllowed: Bool?
-    var password: String?
+    public var id: Int?
+    public var startTime: Date?
+    public var started: Bool?
+    public var ended: Bool?
+    public var submissionAllowed: Bool?
+    public var password: String?
 }

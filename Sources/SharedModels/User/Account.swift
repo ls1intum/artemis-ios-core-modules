@@ -11,6 +11,7 @@ public struct Account: Codable {
     public let langKey: String
     public let authorities: [Authority]?
     public let groups: [String]?
+    public let lastNotificationRead: Date?
 
     public static func hasGroup(group: String?) -> Bool {
         guard let group,

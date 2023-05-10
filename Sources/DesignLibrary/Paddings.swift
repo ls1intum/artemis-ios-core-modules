@@ -7,7 +7,6 @@
 
 import Foundation
 
-// swiftlint:disable identifier_name
 public extension CGFloat {
     // size for paddings
     static let xxs: CGFloat = 1

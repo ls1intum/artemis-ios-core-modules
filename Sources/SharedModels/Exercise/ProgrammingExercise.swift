@@ -33,8 +33,6 @@ public struct ProgrammingExercise: BaseExercise {
     public var studentAssignedTeamId: Int?
     public var gradingCriteria: [GradingCriterion]?
     public var gradingInstructions: String?
-
-    // swiftlint:disable:next identifier_name
     public var buildAndTestStudentSubmissionsAfterDueDate: Date?
     public var templateParticipation: TemplateParticipation?
 
@@ -49,7 +47,6 @@ public struct ProgrammingExercise: BaseExercise {
     }
 }
 
-// swiftlint:disable identifier_name
 public enum ProgrammingLanguage: String, RawRepresentable, Codable {
     case java = "JAVA"
     case python = "PYTHON"

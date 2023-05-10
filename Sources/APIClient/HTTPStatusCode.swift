@@ -11,7 +11,7 @@ public enum HTTPStatusCode: Int {
     case unknown
 
     // 200 Success
-    case ok = 200 // swiftlint:disable:this identifier_name
+    case ok = 200
 
     // 400 Client Error
     case badRequest = 400

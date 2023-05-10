@@ -19,13 +19,15 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
     @Published var isLoading = false
 
     init() {
-        Task {
-            await getAccount()
-        }
+        getAccount()
     }
 
-    func getAccount() async {
-        account = await AccountServiceFactory.shared.getAccount()
+    func getAccount() {
+        if let user = UserSession.shared.user {
+            account = .done(response: user)
+        } else {
+            account = .loading
+        }
     }
 
     func logout() {

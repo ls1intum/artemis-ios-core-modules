@@ -86,6 +86,23 @@ public struct Course: Codable, Identifiable {
     }
 
     /**
+     * checks if the currently logged-in user is at least instructor in the given course
+     */
+    public var isAtLeastInstructorInCourse: Bool {
+        User.hasGroup(group: instructorGroupName) ||
+        User.hasAnyAuthorityDirect(authority: .admin)
+    }
+
+    /**
+     * checks if the currently logged-in user is at least editor in the given course
+     */
+    public var isAtLeastEditorInCourse: Bool {
+        User.hasGroup(group: instructorGroupName) ||
+        User.hasGroup(group: editorGroupName) ||
+        User.hasAnyAuthorityDirect(authority: .admin)
+    }
+
+    /**
      * Rounds the given value to the accuracy defined by the course.
      * @param value The value that should be rounded.
      * @returns The rounded value.
