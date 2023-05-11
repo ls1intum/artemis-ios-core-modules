@@ -37,7 +37,7 @@ public struct UnknownExercise: BaseExercise {
     public init(id: Int) {
         self.id = id
     }
-    
+
     public func copyWithUpdatedParticipations(newParticipations: [Participation]) -> UnknownExercise {
         var clone = self
         clone[keyPath: \.studentParticipations] = newParticipations

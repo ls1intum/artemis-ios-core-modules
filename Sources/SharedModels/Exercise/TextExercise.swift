@@ -39,7 +39,7 @@ public struct TextExercise: BaseExercise {
     public init(id: Int) {
         self.id = id
     }
-    
+
     public func copyWithUpdatedParticipations(newParticipations: [Participation]) -> TextExercise {
         var clone = self
         clone[keyPath: \.studentParticipations] = newParticipations

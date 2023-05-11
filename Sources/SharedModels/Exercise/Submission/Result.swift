@@ -114,7 +114,6 @@ public struct Result: Codable {
         }
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
     public func getTemplateStatus(for exercise: Exercise,
                                   and participation: BaseParticipation,
                                   isBuilding: Bool,

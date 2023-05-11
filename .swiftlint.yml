@@ -81,6 +81,8 @@ opt_in_rules:
 attributes:
   always_on_line_above:
     - "@OptionGroup"
+  always_on_same_line:
+    - "@Environment"
 identifier_name:
   max_length:
     warning: 55
@@ -103,11 +105,14 @@ line_length:
   ignores_interpolated_strings: true
   ignores_urls: true
 
+cyclomatic_complexity:
+  warning: 13
+
 nesting:
   type_level:
     warning: 3
     error: 6
-  statement_level:
+  function_level:
     warning: 5
     error: 10
 
