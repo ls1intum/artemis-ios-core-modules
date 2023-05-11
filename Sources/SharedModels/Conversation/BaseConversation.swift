@@ -29,10 +29,10 @@ public protocol BaseConversation: Codable {
     var type: ConversationType { get }
     var id: Int64 { get }
     var creationDate: Date? { get }
-    var lastMessageDate: Date? { get }
+    var lastMessageDate: Date? { get set }
     var creator: ConversationUser? { get }
     var lastReadDate: Date? { get }
-    var unreadMessagesCount: Int? { get }
+    var unreadMessagesCount: Int? { get set }
     var isFavorite: Bool? { get }
     var isHidden: Bool? { get }
     var isCreator: Bool? { get }
