@@ -108,6 +108,9 @@ extension ArtemisStompClient: SwiftStompDelegate {
     public func onDisconnect(swiftStomp: SwiftStomp, disconnectType: StompDisconnectType) {
         log.debug("Stomp: Disconnect")
         stompClient = nil
+        if !topics.isEmpty {
+            setup()
+        }
     }
 
     public func onMessageReceived(swiftStomp: SwiftStomp, message: Any?, messageId: String, destination: String, headers: [String: String]) {
@@ -126,6 +129,11 @@ extension ArtemisStompClient: SwiftStompDelegate {
 
     public func onSocketEvent(eventName: String, description: String) {
         log.debug("Event Name: \(eventName), Description: \(description)")
+        if eventName == "cancelled",
+           !topics.isEmpty,
+           !(stompClient?.isConnected ?? false) {
+            stompClient?.connect()
+        }
     }
 }
 
