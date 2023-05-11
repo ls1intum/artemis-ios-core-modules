@@ -66,7 +66,7 @@ public struct QuizExercise: BaseExercise {
     private var notEndedSubmittedOrFinished: Bool {
         !(quizEnded ?? false)
         && (studentParticipations?.first?.baseParticipation.initializationState == nil
-            || [InitializationState.initialized, InitializationState.finished].contains(
+            || ![InitializationState.initialized, InitializationState.finished].contains(
                 studentParticipations?.first?.baseParticipation.initializationState)
         )
     }
