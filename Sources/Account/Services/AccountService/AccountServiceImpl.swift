@@ -11,7 +11,7 @@ import Common
 import SharedModels
 import UserStore
 
-class AccountServiceImpl: AccountService {
+public class AccountServiceImpl: AccountService {
     private let client = APIClient()
 
     struct GetAccountRequest: APIRequest {
@@ -26,7 +26,7 @@ class AccountServiceImpl: AccountService {
         }
     }
 
-    func getAccount() async -> DataState<Account> {
+    public func getAccount() async -> DataState<Account> {
         let result = await client.sendRequest(GetAccountRequest())
 
         switch result {

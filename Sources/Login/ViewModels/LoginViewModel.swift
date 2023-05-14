@@ -7,37 +7,37 @@ import ProfileInfo
 import SharedModels
 
 @MainActor
-class LoginViewModel: ObservableObject {
-    @Published var username: String = "" {
+open class LoginViewModel: ObservableObject {
+    @Published public var username: String = "" {
         didSet {
             usernameValidation()
         }
     }
-    @Published var password: String = ""
-    @Published var rememberMe = true
+    @Published public var password: String = ""
+    @Published public var rememberMe = true
 
-    @Published var error: UserFacingError? {
+    @Published public var error: UserFacingError? {
         didSet {
             showError = error != nil
         }
     }
-    @Published var showError = false
-    @Published var isLoading = false
+    @Published public var showError = false
+    @Published public var isLoading = false
 
-    @Published var loginExpired = false
-    @Published var captchaRequired = false
+    @Published public var loginExpired = false
+    @Published public var captchaRequired = false
 
-    @Published var externalUserManagementUrl: DataState<URL> = .loading
-    @Published var externalUserManagementName: DataState<String> = .loading
-    @Published var externalPasswordResetLink: DataState<URL> = .loading
-    @Published var usernamePattern: String?
-    @Published var showUsernameWarning = false
+    @Published public var externalUserManagementUrl: DataState<URL> = .loading
+    @Published public var externalUserManagementName: DataState<String> = .loading
+    @Published public var externalPasswordResetLink: DataState<URL> = .loading
+    @Published public var usernamePattern: String?
+    @Published public var showUsernameWarning = false
 
-    @Published var instituiton: InstitutionIdentifier = .tum
+    @Published public var instituiton: InstitutionIdentifier = .tum
 
     private var cancellables: Set<AnyCancellable> = Set()
 
-    init() {
+    public init() {
         UserSession.shared.objectWillChange.sink {
             DispatchQueue.main.async { [weak self] in
                 self?.username = UserSession.shared.username ?? ""
@@ -53,7 +53,7 @@ class LoginViewModel: ObservableObject {
         instituiton = UserSession.shared.institution ?? .tum
     }
 
-    func login() async {
+    public func login() async {
         let response = await LoginServiceFactory.shared.login(username: username, password: password, rememberMe: rememberMe)
 
         switch response {
@@ -79,11 +79,11 @@ class LoginViewModel: ObservableObject {
         }
     }
 
-    func resetLoginExpired() {
+    public func resetLoginExpired() {
         UserSession.shared.setTokenExpired(expired: false)
     }
 
-    func getProfileInfo() async {
+    public func getProfileInfo() async {
         isLoading = true
         let response = await ProfileInfoServiceFactory.shared.getProfileInfo()
         isLoading = false
@@ -98,7 +98,7 @@ class LoginViewModel: ObservableObject {
         }
     }
 
-    func handleProfileInfoReceived(profileInfo: ProfileInfo?) {
+    public func handleProfileInfoReceived(profileInfo: ProfileInfo?) {
         if let externalUserManagementURL = profileInfo?.externalUserManagementURL {
             self.externalUserManagementUrl = .done(response: externalUserManagementURL)
         } else {

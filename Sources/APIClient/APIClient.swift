@@ -38,8 +38,7 @@ public final class APIClient {
 
             // logout
             if response.statusCode == 401 {
-                perfomLogout()
-                UserSession.shared.setTokenExpired(expired: true)
+                logoutAndSetTokenExpired()
             }
 
             if case 400..<600 = response.statusCode {
@@ -119,8 +118,7 @@ public final class APIClient {
                    error.detail == "Bad credentials" {
                     return .failure(.jhipsterError(error: error))
                 }
-                perfomLogout()
-                UserSession.shared.setTokenExpired(expired: true)
+                logoutAndSetTokenExpired()
             }
 
             if case 400..<600 = response.statusCode {
@@ -183,7 +181,7 @@ public final class APIClient {
     }
 
     public func perfomLogout() {
-        log.debug("Logging user out because token could not be refreshed")
+        log.debug("Logging user out")
         DispatchQueue.main.async {
             Task {
                 await URLSession.shared.reset()
@@ -191,6 +189,12 @@ public final class APIClient {
             UserSession.shared.setUserLoggedIn(isLoggedIn: false)
             UserSession.shared.savePassword(password: nil)
         }
+    }
+    
+    private func logoutAndSetTokenExpired() {
+        log.debug("Token could not be refreshed")
+        perfomLogout()
+        UserSession.shared.setTokenExpired(expired: true)
     }
 }
 

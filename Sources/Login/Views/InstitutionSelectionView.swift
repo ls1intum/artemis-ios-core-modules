@@ -10,13 +10,18 @@ import UserStore
 import DesignLibrary
 import ProfileInfo
 
-struct InstitutionSelectionView: View {
+public struct InstitutionSelectionView: View {
 
     @Binding var institution: InstitutionIdentifier
 
     var handleProfileInfoCompletion: @MainActor (ProfileInfo?) -> Void
 
-    var body: some View {
+    public init(institution: Binding<InstitutionIdentifier>, handleProfileInfoCompletion: @escaping @MainActor (ProfileInfo?) -> Void) {
+        self._institution = institution
+        self.handleProfileInfoCompletion = handleProfileInfoCompletion
+    }
+
+    public var body: some View {
         List {
             Text(R.string.localizable.account_select_artemis_instance_select_text())
                 .font(.headline)
