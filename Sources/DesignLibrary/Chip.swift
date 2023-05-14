@@ -11,10 +11,12 @@ public struct Chip: View {
 
     var text: String
     var backgroundColor: Color
+    var padding: CGFloat
 
-    public init(text: String, backgroundColor: Color) {
+    public init(text: String, backgroundColor: Color, padding: CGFloat = .m) {
         self.text = text
         self.backgroundColor = backgroundColor
+        self.padding = padding
     }
 
     public var body: some View {
@@ -22,7 +24,7 @@ public struct Chip: View {
             .bold()
             .lineLimit(1)
             .foregroundColor(.white)
-            .padding(.m)
+            .padding(padding)
             .background(backgroundColor)
             .cornerRadius(8)
     }
