@@ -73,6 +73,10 @@ public class ArtemisStompClient {
         }
     }
 
+    public func didSubscribeTopic(_ topic: String) -> Bool {
+        topics.keys.contains(topic)
+    }
+
     private func setTopic(_ topic: String, status: SubscribeStatus) {
         queue.async { [weak self] in
             self?.topics[topic] = status
