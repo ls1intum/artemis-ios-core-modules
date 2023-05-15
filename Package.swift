@@ -25,6 +25,9 @@ let package = Package(
             name: "SharedModels",
             targets: ["SharedModels"]),
         .library(
+            name: "SharedServices",
+            targets: ["SharedServices"]),
+        .library(
             name: "PushNotifications",
             targets: ["PushNotifications"]),
         .library(
@@ -79,6 +82,11 @@ let package = Package(
             plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
         ),
         .target(
+            name: "SharedServices", // TODO: make sure that the dependencies are correct
+            dependencies: ["Common", "SharedModels", "APIClient", "UserStore"],
+            plugins: []
+        ),
+        .target(
             name: "PushNotifications",
             dependencies: ["CryptoSwift", "APIClient", "Common", "UserStore", "DesignLibrary", .product(name: "RswiftLibrary", package: "R.swift")],
             plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
@@ -90,7 +98,7 @@ let package = Package(
         ),
         .target(
             name: "Login",
-            dependencies: ["APIClient", "PushNotifications", "ProfileInfo", "UserStore", "DesignLibrary", "SharedModels", "Account", .product(name: "RswiftLibrary", package: "R.swift")],
+            dependencies: ["APIClient", "PushNotifications", "ProfileInfo", "UserStore", "DesignLibrary", "SharedModels", "SharedServices", "Account", .product(name: "RswiftLibrary", package: "R.swift")],
             plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
         ),
         .target(
