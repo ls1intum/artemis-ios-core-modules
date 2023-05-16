@@ -88,6 +88,7 @@ public final class APIClient {
         var urlRequest = URLRequest(url: endpoint)
 
         urlRequest.httpMethod = request.method.description
+        urlRequest.url?.append(queryItems: request.params)
         // urlRequests are not forcing to ignore cached data. That's why it might be possible to see older data. Also the statusCode 304 (send on server-side) will be changed to a 200. For more information see (https://stackoverflow.com/q/46696624)
 
         // NOTE: GET requests with body are never sent

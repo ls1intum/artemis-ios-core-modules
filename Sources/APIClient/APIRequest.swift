@@ -14,6 +14,12 @@ public protocol APIRequest: Codable {
 
     var resourceName: String { get }
     var method: HTTPMethod { get }
+    var params: [URLQueryItem] { get }
+}
+
+// default implementation for some fields
+public extension APIRequest {
+    var params: [URLQueryItem] { [] }
 }
 
 public struct MultipartFormDataRequest {
