@@ -85,7 +85,7 @@ public struct MultipartFormDataRequest {
 }
 
 public struct RawResponse: Decodable {
-    let rawData: String
+    public let rawData: String
 }
 
 extension NSMutableData {
