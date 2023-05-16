@@ -4,11 +4,10 @@ import Common
 
 public protocol CourseService {
     
-    /**
-     * Load the dashboard from the specified server using the specified authentication data.
-     */
+    /// Fetch courses for dashboard
     func getCourses() async -> DataState<[CourseForDashboard]>
 
+    /// Fetch the course for dashboard
     func getCourse(courseId: Int) async -> DataState<CourseForDashboard>
 }
 

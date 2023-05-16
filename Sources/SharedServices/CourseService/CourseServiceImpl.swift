@@ -7,6 +7,7 @@ public class CourseServiceImpl: CourseService {
 
     let client = APIClient()
     
+    // MARK: - Get Courses For Dashboard
     struct GetCoursesRequest: APIRequest {
         typealias Response = [CourseForDashboard]
 
@@ -18,7 +19,19 @@ public class CourseServiceImpl: CourseService {
             return "api/courses/for-dashboard"
         }
     }
+    
+    public func getCourses() async -> DataState<[CourseForDashboard]> {
+        let result = await client.sendRequest(GetCoursesRequest())
 
+        switch result {
+        case .success((let response, _)):
+            return .done(response: response)
+        case .failure(let error):
+            return .failure(error: UserFacingError(error: error))
+        }
+    }
+
+    // MARK: - Get Course
     struct GetCourseRequest: APIRequest {
         typealias Response = CourseForDashboard
 
@@ -30,17 +43,6 @@ public class CourseServiceImpl: CourseService {
 
         var resourceName: String {
             return "api/courses/\(courseId)/for-dashboard"
-        }
-    }
-
-    public func getCourses() async -> DataState<[CourseForDashboard]> {
-        let result = await client.sendRequest(GetCoursesRequest())
-
-        switch result {
-        case .success((let response, _)):
-            return .done(response: response)
-        case .failure(let error):
-            return .failure(error: UserFacingError(error: error))
         }
     }
     
