@@ -172,8 +172,10 @@ public final class APIClient {
     private func body<T: APIRequest>(for request: T) -> Data? {
         var bodyData: Data
         let encoder = JSONEncoder()
+        let dataToBeEncoded = request.body ?? request // if no .body is specified, encode the whole request
+
         do {
-            bodyData = try encoder.encode(request)
+            bodyData = try encoder.encode(dataToBeEncoded)
         } catch {
             log.error("Couldn't encode HTTPRequest.body. Body is nil for non-GET request")
             return nil
@@ -191,7 +193,7 @@ public final class APIClient {
             UserSession.shared.savePassword(password: nil)
         }
     }
-    
+
     private func logoutAndSetTokenExpired() {
         log.debug("Token could not be refreshed")
         perfomLogout()
