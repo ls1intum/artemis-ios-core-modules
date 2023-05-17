@@ -82,7 +82,7 @@ let package = Package(
             plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
         ),
         .target(
-            name: "SharedServices", // TODO: make sure that the dependencies are correct
+            name: "SharedServices",
             dependencies: ["Common", "SharedModels", "APIClient", "UserStore"],
             plugins: []
         ),
