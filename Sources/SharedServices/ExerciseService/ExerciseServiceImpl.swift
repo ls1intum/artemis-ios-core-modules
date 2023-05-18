@@ -13,7 +13,7 @@ import SharedModels
 public class ExerciseServiceImpl: ExerciseService {
 
     let client = APIClient()
-    
+
     // MARK: - Get Exercise
     struct GetExerciseRequest: APIRequest {
         typealias Response = Exercise
@@ -28,7 +28,7 @@ public class ExerciseServiceImpl: ExerciseService {
             return "api/exercises/\(exerciseId)/details"
         }
     }
-    
+
     public func getExercise(exerciseId: Int) async -> DataState<Exercise> {
         let result = await client.sendRequest(GetExerciseRequest(exerciseId: exerciseId))
 
@@ -57,7 +57,7 @@ public class ExerciseServiceImpl: ExerciseService {
 
     public func getExerciseForAssessment(exerciseId: Int) async -> DataState<Exercise> {
         let result = await client.sendRequest(GetExerciseForAssessmentRequest(exerciseId: exerciseId))
-        
+
         switch result {
         case .success((let response, _)):
             return .done(response: response)
@@ -65,7 +65,7 @@ public class ExerciseServiceImpl: ExerciseService {
             return .failure(error: UserFacingError(error: error))
         }
     }
-    
+
     // MARK: - Get Exercise Statistics For Dashboard
     struct GetExerciseStatsForDashboardRequest: APIRequest {
         typealias Response = ExerciseStatistics
@@ -75,7 +75,7 @@ public class ExerciseServiceImpl: ExerciseService {
         var method: HTTPMethod {
             .get
         }
-        
+
         var params: [URLQueryItem] {
             [URLQueryItem(name: "exerciseId", value: String(exerciseId))]
         }
@@ -84,10 +84,10 @@ public class ExerciseServiceImpl: ExerciseService {
             "api/management/statistics/exercise-statistics"
         }
     }
-    
+
     public func getExerciseStatsForDashboard(exerciseId: Int) async -> DataState<ExerciseStatistics> {
         let result = await client.sendRequest(GetExerciseStatsForDashboardRequest(exerciseId: exerciseId))
-        
+
         switch result {
         case .success((let response, _)):
             return .done(response: response)
@@ -95,8 +95,9 @@ public class ExerciseServiceImpl: ExerciseService {
             return .failure(error: UserFacingError(error: error))
         }
     }
-    
+
     // MARK: - Get Exercise Statistics For Assessment Dashboard
+    // swiftlint:disable:next type_name
     struct GetExerciseStatsForAssessmentDashboardRequest: APIRequest {
         typealias Response = ExerciseStatsForAssessmentDashboard
 
@@ -110,10 +111,10 @@ public class ExerciseServiceImpl: ExerciseService {
             "api/exercises/\(exerciseId)/stats-for-assessment-dashboard"
         }
     }
-    
+
     public func getExerciseStatsForAssessmentDashboard(exerciseId: Int) async -> DataState<ExerciseStatsForAssessmentDashboard> {
         let result = await client.sendRequest(GetExerciseStatsForAssessmentDashboardRequest(exerciseId: exerciseId))
-        
+
         switch result {
         case .success((let response, _)):
             return .done(response: response)

@@ -3,7 +3,7 @@ import SharedModels
 import Common
 
 public protocol CourseService {
-    
+
     /// Fetch courses for dashboard
     func getCourses() async -> DataState<[CourseForDashboard]>
 
@@ -12,6 +12,6 @@ public protocol CourseService {
 }
 
 public enum CourseServiceFactory {
-    
+
     public static let shared: CourseService = CourseServiceImpl()
 }
