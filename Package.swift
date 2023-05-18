@@ -84,7 +84,7 @@ let package = Package(
         .target(
             name: "SharedServices",
             dependencies: ["Common", "SharedModels", "APIClient", "UserStore"],
-            plugins: []
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
         ),
         .target(
             name: "PushNotifications",
