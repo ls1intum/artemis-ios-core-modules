@@ -88,6 +88,7 @@ public final class APIClient {
         var urlRequest = URLRequest(url: endpoint)
 
         urlRequest.httpMethod = request.method.description
+        urlRequest.url?.append(queryItems: request.params)
         // urlRequests are not forcing to ignore cached data. That's why it might be possible to see older data. Also the statusCode 304 (send on server-side) will be changed to a 200. For more information see (https://stackoverflow.com/q/46696624)
 
         // NOTE: GET requests with body are never sent
@@ -171,8 +172,10 @@ public final class APIClient {
     private func body<T: APIRequest>(for request: T) -> Data? {
         var bodyData: Data
         let encoder = JSONEncoder()
+        let dataToBeEncoded = request.body ?? request // if no .body is specified, encode the whole request
+
         do {
-            bodyData = try encoder.encode(request)
+            bodyData = try encoder.encode(dataToBeEncoded)
         } catch {
             log.error("Couldn't encode HTTPRequest.body. Body is nil for non-GET request")
             return nil
@@ -190,7 +193,7 @@ public final class APIClient {
             UserSession.shared.savePassword(password: nil)
         }
     }
-    
+
     private func logoutAndSetTokenExpired() {
         log.debug("Token could not be refreshed")
         perfomLogout()

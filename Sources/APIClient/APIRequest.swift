@@ -9,11 +9,19 @@ import Foundation
 import Common
 import UserStore
 
-public protocol APIRequest: Codable {
+public protocol APIRequest: Encodable {
     associatedtype Response: Decodable
 
     var resourceName: String { get }
     var method: HTTPMethod { get }
+    var params: [URLQueryItem] { get }
+    var body: Encodable? { get }
+}
+
+// default implementation for some fields
+public extension APIRequest {
+    var params: [URLQueryItem] { [] }
+    var body: Encodable? { nil }
 }
 
 public struct MultipartFormDataRequest {
@@ -77,7 +85,7 @@ public struct MultipartFormDataRequest {
 }
 
 public struct RawResponse: Decodable {
-    let rawData: String
+    public let rawData: String
 }
 
 extension NSMutableData {

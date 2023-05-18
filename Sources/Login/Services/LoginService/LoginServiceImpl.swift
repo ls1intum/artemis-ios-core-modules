@@ -11,6 +11,7 @@ import UserStore
 import Common
 import PushNotifications
 import Account
+import SharedServices
 
 class LoginServiceImpl: LoginService {
     private let client = APIClient()
