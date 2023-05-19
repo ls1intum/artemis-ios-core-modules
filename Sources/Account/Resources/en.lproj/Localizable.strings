@@ -1,1 +1,15 @@
-"test" = "test";
+// MARK: AccountNavigationBarMenuView
+"notificationSettingsLabel" = "Notification Settings";
+"logoutLabel" = "Logout";
+
+// MARK: ProfileView
+"fullNameLabel" = "Full Name";
+"loginLabel" = "Login";
+"emailLabel" = "Email";
+"registrationNumberLabel" = "Registration Number";
+"joinedLabel" = "Joined Artemis on";
+"accountInformationNavigationTitle" = "Account Information";
+
+// MARK: General
+"close" = "Close";
+"loading" = "Loading...";

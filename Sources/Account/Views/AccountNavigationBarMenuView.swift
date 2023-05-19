@@ -16,22 +16,31 @@ struct AccountNavigationBarMenuView: View {
     @Binding var error: UserFacingError?
 
     @State private var showNotificationSettings = false
+    @State private var showProfile = false
 
     var body: some View {
         Menu(content: {
             DataStateView(data: $viewModel.account, retryHandler: viewModel.getAccount) { account in
-                Text(account.login)
+                Button(action: {
+                    showProfile = true
+                }, label: {
+                    HStack {
+                        Image(systemName: "person.fill")
+                        Text(account.login)
+                        Spacer()
+                    }
+                })
             }
             Button(action: {
                 showNotificationSettings = true
             }, label: {
                 HStack {
                     Image(systemName: "gearshape.fill")
-                    Text("Notification Settings")
+                    Text(R.string.localizable.notificationSettingsLabel())
                     Spacer()
                 }
             })
-            Button("Logout") {
+            Button(R.string.localizable.logoutLabel()) {
                 viewModel.logout()
             }
         }, label: {
@@ -49,6 +58,13 @@ struct AccountNavigationBarMenuView: View {
         }
         .sheet(isPresented: $showNotificationSettings) {
             PushNotificationSettingsView()
+        }
+        .sheet(isPresented: $showProfile) {
+            if let account = viewModel.account.value {
+                ProfileView(account: account)
+            } else {
+                Text(R.string.localizable.loading())
+            }
         }
     }
 }
