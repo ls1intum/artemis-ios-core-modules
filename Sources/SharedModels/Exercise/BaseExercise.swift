@@ -30,7 +30,12 @@ public protocol BaseExercise: Codable {
     var studentAssignedTeamId: Int? { get }
     var gradingCriteria: [GradingCriterion]? { get }
     var gradingInstructions: String? { get }
-
+    var numberOfAssessmentsOfCorrectionRounds: [DueDateStat]? { get }
+    var numberOfOpenComplaints: Int? { get }
+    var numberOfOpenMoreFeedbackRequests: Int? { get }
+    var numberOfSubmissions: DueDateStat? { get }
+    var totalNumberOfAssessments: DueDateStat? { get }
+    
     // -------
     var attachments: [Attachment]? { get }
 

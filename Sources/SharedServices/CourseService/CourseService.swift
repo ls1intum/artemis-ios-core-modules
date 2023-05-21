@@ -9,6 +9,9 @@ public protocol CourseService {
 
     /// Fetch the course for dashboard
     func getCourse(courseId: Int) async -> DataState<CourseForDashboard>
+
+    /// Fetch the course for assessment dashboard (with some assessment-related data)
+    func getCourseForAssessment(courseId: Int) async -> DataState<Course>
 }
 
 public enum CourseServiceFactory {

@@ -33,6 +33,11 @@ public struct UnknownExercise: BaseExercise {
     public var studentAssignedTeamId: Int?
     public var gradingCriteria: [GradingCriterion]?
     public var gradingInstructions: String?
+    public var numberOfAssessmentsOfCorrectionRounds: [DueDateStat]?
+    public var numberOfOpenComplaints: Int?
+    public var numberOfOpenMoreFeedbackRequests: Int?
+    public var numberOfSubmissions: DueDateStat?
+    public var totalNumberOfAssessments: DueDateStat?
 
     public init(id: Int) {
         self.id = id

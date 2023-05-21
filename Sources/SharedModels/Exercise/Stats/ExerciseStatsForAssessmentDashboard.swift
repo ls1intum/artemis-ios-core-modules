@@ -16,8 +16,3 @@ public struct ExerciseStatsForAssessmentDashboard: Codable {
     public let complaintsEnabled: Bool?
     public let feedbackRequestEnabled: Bool?
 }
-
-public struct DueDateStat: Codable {
-    public let inTime: Int
-    public let late: Int
-}

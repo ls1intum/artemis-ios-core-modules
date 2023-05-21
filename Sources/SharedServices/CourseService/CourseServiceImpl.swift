@@ -56,4 +56,30 @@ public class CourseServiceImpl: CourseService {
             return .failure(error: UserFacingError(error: error))
         }
     }
+
+    // MARK: - Get Course For Assessment
+    struct GetCourseForAssessmentRequest: APIRequest {
+        typealias Response = Course
+
+        var method: HTTPMethod {
+            return .get
+        }
+
+        var courseId: Int
+
+        var resourceName: String {
+            return "api/courses/\(courseId)/for-assessment-dashboard"
+        }
+    }
+
+    public func getCourseForAssessment(courseId: Int) async -> DataState<Course> {
+        let result = await client.sendRequest(GetCourseForAssessmentRequest(courseId: courseId))
+
+        switch result {
+        case .success((let response, _)):
+            return .done(response: response)
+        case .failure(let error):
+            return .failure(error: UserFacingError(error: error))
+        }
+    }
 }
