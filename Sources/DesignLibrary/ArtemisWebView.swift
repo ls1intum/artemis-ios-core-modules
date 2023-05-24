@@ -31,7 +31,12 @@ public struct ArtemisWebView: UIViewRepresentable {
     }
 
     public func makeUIView(context: Context) -> WKWebView {
-        let webView = WKWebView()
+        let config = WKWebViewConfiguration()
+        let source = "document.addEventListener('click', function(){ window.webkit.messageHandlers.iosListener.postMessage('click clack!'); })"
+        let script = WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+        config.userContentController.addUserScript(script)
+        config.userContentController.add(context.coordinator, name: "iosListener")
+        let webView = WKWebView(frame: UIScreen.main.bounds, configuration: config)
         webView.scrollView.isScrollEnabled = isScrollEnabled
         webView.scrollView.showsHorizontalScrollIndicator = false
         webView.navigationDelegate = context.coordinator
@@ -56,9 +61,11 @@ public struct ArtemisWebView: UIViewRepresentable {
         Coordinator(contentHeight: $contentHeight, isLoading: $isLoading)
     }
 
-    public class Coordinator: NSObject, WKNavigationDelegate {
+    public class Coordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler {
         @Binding var contentHeight: CGFloat
         @Binding var isLoading: Bool
+
+        var webView: WKWebView?
 
         init(contentHeight: Binding<CGFloat>, isLoading: Binding<Bool>) {
             self._contentHeight = contentHeight
@@ -70,10 +77,8 @@ public struct ArtemisWebView: UIViewRepresentable {
                 webView.evaluateJavaScript("document.readyState") { complete, _ in
                     guard complete != nil else { return }
                     self.isLoading = false
-                    webView.evaluateJavaScript("document.body.scrollHeight") { height, _ in
-                        guard let height = height as? CGFloat else { return }
-                        self.contentHeight = height
-                    }
+                    self.webView = webView
+                    self.setParentHeight()
                 }
             }
         }
@@ -81,6 +86,19 @@ public struct ArtemisWebView: UIViewRepresentable {
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
             if scrollView.contentOffset.x > 0 {
                 scrollView.contentOffset = CGPoint(x: 0, y: scrollView.contentOffset.y)
+            }
+        }
+
+        public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+            print("message: \(message.body)")
+            setParentHeight()
+            // and whatever other actions you want to take
+        }
+
+        private func setParentHeight() {
+            webView?.evaluateJavaScript("document.body.scrollHeight") { height, _ in
+                guard let height = height as? CGFloat else { return }
+                self.contentHeight = height
             }
         }
     }
