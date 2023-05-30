@@ -19,4 +19,6 @@ public struct TextSubmission: BaseSubmission {
     public var durationInMinutes: Double?
     public var results: [Result]?
     public var participation: Participation?
+
+    public var text: String?
 }
