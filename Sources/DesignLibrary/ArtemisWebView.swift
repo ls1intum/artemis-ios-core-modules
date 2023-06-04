@@ -67,19 +67,59 @@ public struct ArtemisWebView: UIViewRepresentable {
 
         var webView: WKWebView?
 
+        /// Used for checking the loading progress
+        private var timer: Timer?
+
         init(contentHeight: Binding<CGFloat>, isLoading: Binding<Bool>) {
             self._contentHeight = contentHeight
             self._isLoading = isLoading
         }
 
+        deinit {
+            timer?.invalidate()
+        }
+
         public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                webView.evaluateJavaScript("document.readyState") { complete, _ in
-                    guard complete != nil else { return }
-                    self.isLoading = false
-                    self.webView = webView
-                    self.setParentHeight()
+            // check if the document is really loaded
+            timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] timer in
+                if self?.isLoading == true {
+                    self?.updateLoadingStateIfDocumentIsReady(webView)
+                } else {
+                    timer.invalidate()
                 }
+            }
+        }
+
+        private func updateLoadingStateIfDocumentIsReady(_ webView: WKWebView) {
+            webView.evaluateJavaScript("document.readyState") { [weak self] complete, _ in
+                guard complete != nil else { return }
+
+                DispatchQueue.main.async {
+                    self?.isLoading = false
+                }
+                self?.webView = webView
+                self?.determineHeight(for: webView)
+            }
+        }
+
+        /// Determines the height for the web view by taking several samples over time
+        /// - Parameters:
+        ///   - webView: a WKWebView loading some page
+        ///   - maxSampleCount: the number of samples that should be taken. This is needed because the content height might increase as the page loads more content and
+        ///    we don't have a reliable way of checking when this loading process is really finished
+        ///   - sampleInterval: the time interval between samples
+        private func determineHeight(for webView: WKWebView, maxSampleCount: Int = 5, sampleInterval: TimeInterval = 1.0) {
+            timer?.invalidate()
+
+            var currentSampleNumber = 0
+
+            timer = Timer.scheduledTimer(withTimeInterval: sampleInterval, repeats: true) { [weak self] timer in
+                if currentSampleNumber == maxSampleCount {
+                    timer.invalidate()
+                    return
+                }
+                self?.setParentHeight()
+                currentSampleNumber += 1
             }
         }
 
@@ -96,9 +136,11 @@ public struct ArtemisWebView: UIViewRepresentable {
         }
 
         private func setParentHeight() {
-            webView?.evaluateJavaScript("document.body.scrollHeight") { height, _ in
+            webView?.evaluateJavaScript("document.body.scrollHeight") { [weak self] height, _ in
                 guard let height = height as? CGFloat else { return }
-                self.contentHeight = height
+                DispatchQueue.main.async {
+                    self?.contentHeight = height
+                }
             }
         }
     }
