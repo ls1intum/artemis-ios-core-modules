@@ -31,11 +31,14 @@ public struct ArtemisWebView: UIViewRepresentable {
     }
 
     public func makeUIView(context: Context) -> WKWebView {
+        // configure click event listener
         let config = WKWebViewConfiguration()
-        let source = "document.addEventListener('click', function(){ window.webkit.messageHandlers.iosListener.postMessage('click clack!'); })"
+        let source = "document.addEventListener('click', function(){ window.webkit.messageHandlers.iosListener.postMessage(''); })"
         let script = WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         config.userContentController.addUserScript(script)
         config.userContentController.add(context.coordinator, name: "iosListener")
+
+        // set up WKWebView
         let webView = WKWebView(frame: UIScreen.main.bounds, configuration: config)
         webView.scrollView.isScrollEnabled = isScrollEnabled
         webView.scrollView.showsHorizontalScrollIndicator = false
@@ -109,10 +112,11 @@ public struct ArtemisWebView: UIViewRepresentable {
         ///    we don't have a reliable way of checking when this loading process is really finished
         ///   - sampleInterval: the time interval between samples
         private func determineHeight(for webView: WKWebView, maxSampleCount: Int = 5, sampleInterval: TimeInterval = 1.0) {
-            timer?.invalidate()
+            timer?.invalidate() // because timer will be reused
 
             var currentSampleNumber = 0
 
+            // reuse the timer to set the height
             timer = Timer.scheduledTimer(withTimeInterval: sampleInterval, repeats: true) { [weak self] timer in
                 if currentSampleNumber == maxSampleCount {
                     timer.invalidate()
@@ -130,7 +134,6 @@ public struct ArtemisWebView: UIViewRepresentable {
         }
 
         public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-            print("message: \(message.body)")
             setParentHeight()
             // and whatever other actions you want to take
         }
