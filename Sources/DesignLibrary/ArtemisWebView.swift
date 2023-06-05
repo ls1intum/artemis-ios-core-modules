@@ -1,6 +1,6 @@
 //
 //  ArtemisWebView.swift
-//  
+//
 //
 //  Created by Sven Andabaka on 23.03.23.
 //
@@ -15,6 +15,7 @@ public struct ArtemisWebView: UIViewRepresentable {
     @Binding var isLoading: Bool
 
     private let isScrollEnabled: Bool
+    private static let scriptMessageHandlerName = "iosListener"
 
     public init(urlRequest: Binding<URLRequest>, contentHeight: Binding<CGFloat>, isLoading: Binding<Bool>) {
         self._urlRequest = urlRequest
@@ -36,7 +37,7 @@ public struct ArtemisWebView: UIViewRepresentable {
         let source = "document.addEventListener('click', function(){ window.webkit.messageHandlers.iosListener.postMessage(''); })"
         let script = WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         config.userContentController.addUserScript(script)
-        config.userContentController.add(context.coordinator, name: "iosListener")
+        config.userContentController.add(context.coordinator, name: Self.scriptMessageHandlerName)
 
         // set up WKWebView
         let webView = WKWebView(frame: UIScreen.main.bounds, configuration: config)
@@ -72,6 +73,7 @@ public struct ArtemisWebView: UIViewRepresentable {
 
         /// Used for checking the loading progress
         private var timer: Timer?
+        private var currentHeightSampleNumber = 1
 
         init(contentHeight: Binding<CGFloat>, isLoading: Binding<Bool>) {
             self._contentHeight = contentHeight
@@ -84,11 +86,11 @@ public struct ArtemisWebView: UIViewRepresentable {
 
         public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
             // check if the document is really loaded
-            timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] timer in
+            timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
                 if self?.isLoading == true {
                     self?.updateLoadingStateIfDocumentIsReady(webView)
                 } else {
-                    timer.invalidate()
+                    self?.determineHeight(for: webView)
                 }
             }
         }
@@ -101,7 +103,6 @@ public struct ArtemisWebView: UIViewRepresentable {
                     self?.isLoading = false
                 }
                 self?.webView = webView
-                self?.determineHeight(for: webView)
             }
         }
 
@@ -110,21 +111,14 @@ public struct ArtemisWebView: UIViewRepresentable {
         ///   - webView: a WKWebView loading some page
         ///   - maxSampleCount: the number of samples that should be taken. This is needed because the content height might increase as the page loads more content and
         ///    we don't have a reliable way of checking when this loading process is really finished
-        ///   - sampleInterval: the time interval between samples
-        private func determineHeight(for webView: WKWebView, maxSampleCount: Int = 5, sampleInterval: TimeInterval = 1.0) {
-            timer?.invalidate() // because timer will be reused
-
-            var currentSampleNumber = 0
-
-            // reuse the timer to set the height
-            timer = Timer.scheduledTimer(withTimeInterval: sampleInterval, repeats: true) { [weak self] timer in
-                if currentSampleNumber == maxSampleCount {
-                    timer.invalidate()
-                    return
-                }
-                self?.setParentHeight()
-                currentSampleNumber += 1
+        private func determineHeight(for webView: WKWebView, maxSampleCount: Int = 10) {
+            if currentHeightSampleNumber == maxSampleCount {
+                timer?.invalidate()
+                return
             }
+
+            self.setParentHeight()
+            currentHeightSampleNumber += 1
         }
 
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -146,6 +140,16 @@ public struct ArtemisWebView: UIViewRepresentable {
                 }
             }
         }
+    }
+
+    public static func dismantleUIView(_ uiView: WKWebView, coordinator: Coordinator) {
+        ArtemisWebView.removeScriptMessageHandler(uiView)
+    }
+
+    /// Removes the WKScriptMessageHandler instance from WebView to prevent a retain cycle
+    /// See this for more info: https://stackoverflow.com/a/32443423/7074664
+    private static func removeScriptMessageHandler(_ webView: WKWebView) {
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: scriptMessageHandlerName)
     }
 }
 
