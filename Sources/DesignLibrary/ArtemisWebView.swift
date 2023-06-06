@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WebKit
+import Combine
 
 public struct ArtemisWebView: UIViewRepresentable {
 
@@ -14,20 +15,25 @@ public struct ArtemisWebView: UIViewRepresentable {
     @Binding var contentHeight: CGFloat
     @Binding var isLoading: Bool
 
+    /// If set, this query string will be used to determine `contentHeight`. Otherwise, `document.body.scrollHeight` will be used.
+    var customJSHeightQuery: String?
+
     private let isScrollEnabled: Bool
     private static let scriptMessageHandlerName = "iosListener"
 
-    public init(urlRequest: Binding<URLRequest>, contentHeight: Binding<CGFloat>, isLoading: Binding<Bool>) {
+    public init(urlRequest: Binding<URLRequest>, contentHeight: Binding<CGFloat>, isLoading: Binding<Bool>, customJSHeightQuery: String? = nil) {
         self._urlRequest = urlRequest
         self._contentHeight = contentHeight
         self._isLoading = isLoading
+        self.customJSHeightQuery = customJSHeightQuery
         isScrollEnabled = false
     }
 
-    public init(urlRequest: Binding<URLRequest>, isLoading: Binding<Bool>) {
+    public init(urlRequest: Binding<URLRequest>, isLoading: Binding<Bool>, customJSHeightQuery: String? = nil) {
         self._urlRequest = urlRequest
         self._contentHeight = .constant(.s)
         self._isLoading = isLoading
+        self.customJSHeightQuery = customJSHeightQuery
         isScrollEnabled = true
     }
 
@@ -62,7 +68,7 @@ public struct ArtemisWebView: UIViewRepresentable {
     }
 
     public func makeCoordinator() -> Coordinator {
-        Coordinator(contentHeight: $contentHeight, isLoading: $isLoading)
+        Coordinator(contentHeight: $contentHeight, isLoading: $isLoading, customJSHeightQuery: customJSHeightQuery)
     }
 
     public class Coordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler {
@@ -70,14 +76,17 @@ public struct ArtemisWebView: UIViewRepresentable {
         @Binding var isLoading: Bool
 
         var webView: WKWebView?
+        var customJSHeightQuery: String?
 
         /// Used for checking the loading progress
         private var timer: Timer?
         private var currentHeightSampleNumber = 1
+        private var sizeChangeCancellable: AnyCancellable?
 
-        init(contentHeight: Binding<CGFloat>, isLoading: Binding<Bool>) {
+        init(contentHeight: Binding<CGFloat>, isLoading: Binding<Bool>, customJSHeightQuery: String?) {
             self._contentHeight = contentHeight
             self._isLoading = isLoading
+            self.customJSHeightQuery = customJSHeightQuery
         }
 
         deinit {
@@ -103,6 +112,14 @@ public struct ArtemisWebView: UIViewRepresentable {
                     self?.isLoading = false
                 }
                 self?.webView = webView
+
+                // reset the height if webView is resized
+                self?.sizeChangeCancellable = webView
+                    .publisher(for: \.scrollView.contentSize)
+                    .removeDuplicates()
+                    .sink { [weak self] _ in
+                        self?.setParentHeight(withCustomJSQuery: self?.customJSHeightQuery)
+                    }
             }
         }
 
@@ -117,7 +134,7 @@ public struct ArtemisWebView: UIViewRepresentable {
                 return
             }
 
-            self.setParentHeight()
+            self.setParentHeight(withCustomJSQuery: customJSHeightQuery)
             currentHeightSampleNumber += 1
         }
 
@@ -128,13 +145,21 @@ public struct ArtemisWebView: UIViewRepresentable {
         }
 
         public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-            setParentHeight()
+            setParentHeight(withCustomJSQuery: customJSHeightQuery)
             // and whatever other actions you want to take
         }
 
-        private func setParentHeight() {
-            webView?.evaluateJavaScript("document.body.scrollHeight") { [weak self] height, _ in
-                guard let height = height as? CGFloat else { return }
+        public func setParentHeight(withCustomJSQuery customQuery: String? = nil) {
+            let query = customQuery ?? "document.body.scrollHeight"
+
+            webView?.evaluateJavaScript(query) { [weak self] height, _ in
+                guard let height = height as? CGFloat else { // query failed
+                    if customQuery != nil { // it was a custom query
+                        self?.setParentHeight(withCustomJSQuery: nil) // fallback to default (nil)
+                    }
+                    return
+                }
+
                 DispatchQueue.main.async {
                     self?.contentHeight = height
                 }
