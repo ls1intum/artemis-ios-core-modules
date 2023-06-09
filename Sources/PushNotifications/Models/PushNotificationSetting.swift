@@ -12,7 +12,7 @@ public struct PushNotificationSetting: Codable {
     public let settingId: PushNotificationSettingId
     public let webapp: Bool
     public let email: Bool
-    public var push: Bool = false
+    public var push: Bool
 }
 
 public enum PushNotificationSettingId: String, RawRepresentable, Codable {
