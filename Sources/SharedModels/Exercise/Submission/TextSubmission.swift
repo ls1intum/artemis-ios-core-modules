@@ -32,7 +32,7 @@ public struct TextBlock: Codable {
     public var endIndex: Int?
     public var type: TextBlockType
     public var numberOfAffectedSubmissions: Int?
-    
+
     // not decoded/encoded
     public var submissionId: Int?
 
