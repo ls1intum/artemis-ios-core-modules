@@ -13,11 +13,11 @@ struct PushNotification: Codable {
     var target: String
     var type: PushNotificationType
 
-    var title: String {
+    var title: String? {
         type.title
     }
 
-    var body: String {
+    var body: String? {
         type.getBody(notificationPlaceholders: notificationPlaceholders)
     }
 }
@@ -28,6 +28,8 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
     case exerciseReleased = "EXERCISE_RELEASED"
     case exercisePractice = "EXERCISE_PRACTICE"
     case quizExerciseStarted = "QUIZ_EXERCISE_STARTED"
+    case exerciseUpdated = "EXERCISE_UPDATED"
+
     case newReplyForLecturePost = "NEW_REPLY_FOR_LECTURE_POST"
     case newReplyForCoursePost = "NEW_REPLY_FOR_COURSE_POST"
     case newReplyForExercisePost = "NEW_REPLY_FOR_EXERCISE_POST"
@@ -35,18 +37,47 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
     case newLecturePost = "NEW_LECTURE_POST"
     case newCoursePost = "NEW_COURSE_POST"
     case newAnnouncementPost = "NEW_ANNOUNCEMENT_POST"
+
+    case courseArchiveStarted = "COURSE_ARCHIVE_STARTED"
+    case courseArchiveFinished = "COURSE_ARCHIVE_FINISHED"
+    case courseArchiveFinishedWithError = "internal"
+    case courseArchiveFinishedWithoutError = "internal2"
+    case courseArchiveFailed = "COURSE_ARCHIVE_FAILED"
+    case examArchiveStarted = "EXAM_ARCHIVE_STARTED"
+    case examArchiveFinished = "EXAM_ARCHIVE_FINISHED"
+    case examArchiveFinishedWithError = "internal3"
+    case examArchiveFinishedWithoutError = "internal4"
+    case examArchiveFailed = "EXAM_ARCHIVE_FAILED"
+
+    case illegalSubmission = "ILLEGAL_SUBMISSION"
+    case programmingTestCasesChanged = "PROGRAMMING_TEST_CASES_CHANGED"
     case fileSubmissionSuccessful = "FILE_SUBMISSION_SUCCESSFUL"
     case duplicateTestCase = "DUPLICATE_TEST_CASE"
     case newPlagiarismCaseStudent = "NEW_PLAGIARISM_CASE_STUDENT"
     case plagiarismCaseVerdictStudent = "PLAGIARISM_CASE_VERDICT_STUDENT"
+    case newManualFeedbackRequest = "NEW_MANUAL_FEEDBACK_REQUEST"
+
+    case tutorialGroupRegistrationStudent = "TUTORIAL_GROUP_REGISTRATION_STUDENT"
+    case tutorialGroupDegregistrationStudent = "TUTORIAL_GROUP_DEREGISTRATION_STUDENT"
+    case tutorialGroupRegistrationTutor = "TUTORIAL_GROUP_REGISTRATION_TUTOR"
+    case tutorialGroupMultipleRegistrationTutor = "TUTORIAL_GROUP_MULTIPLE_REGISTRATION_TUTOR"
+    case tutorialGroupDeregistrationTutor = "TUTORIAL_GROUP_DEREGISTRATION_TUTOR"
+    case tutorialGroupDeleted = "TUTORIAL_GROUP_DELETED"
+    case tutorialGroupUpdated = "TUTORIAL_GROUP_UPDATED"
+    case tutorialGroupAssigned = "TUTORIAL_GROUP_ASSIGNED"
+    case tutorialGroupUnassigned = "TUTORIAL_GROUP_UNASSIGNED"
+
     case conversationNewMessage = "CONVERSATION_NEW_MESSAGE"
     case conversationNewReplyMessage = "CONVERSATION NEW REPLY MESSAGE"
+    case conversationCreateOneToOneChat = "CONVERSATION_CREATE_ONE_TO_ONE_CHAT"
+    case conversationCreateGroupChat = "CONVERSATION_CREATE_GROUP_CHAT"
+    case conversationAddUserGroupChat = "CONVERSATION_ADD_USER_GROUP_CHAT"
+    case conversationAddUserChannel = "CONVERSATION_ADD_USER_CHANNEL"
+    case conversationRemoveUserGroupChat = "CONVERSATION_REMOVE_USER_GROUP_CHAT"
+    case conversationRemoveUserChannel = "CONVERSATION_REMOVE_USER_CHANNEL"
+    case conversationDeleteChannel = "CONVERSATION_DELETE_CHANNEL"
 
-    // TODO: maybe following needed as well
-//    TUTORIAL_GROUP_REGISTRATION_STUDENT, TUTORIAL_GROUP_REGISTRATION_TUTOR, TUTORIAL_GROUP_MULTIPLE_REGISTRATION_TUTOR, TUTORIAL_GROUP_DEREGISTRATION_STUDENT,
-//    TUTORIAL_GROUP_DEREGISTRATION_TUTOR, TUTORIAL_GROUP_DELETED, TUTORIAL_GROUP_UPDATED, TUTORIAL_GROUP_ASSIGNED, TUTORIAL_GROUP_UNASSIGNED,
-
-    public var title: String {
+    public var title: String? {
         switch self {
         case .exerciseSubmissionAssessed:
             return R.string.localizable.artemisAppSingleUserNotificationTitleExerciseSubmissionAssessed()
@@ -84,10 +115,67 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
             return R.string.localizable.artemisAppConversationNotificationTitleNewMessage()
         case .conversationNewReplyMessage:
             return R.string.localizable.artemisAppSingleUserNotificationTitleMessageReply()
+        case .exerciseUpdated:
+            return R.string.localizable.artemisAppGroupNotificationTitleExerciseUpdated()
+        case .courseArchiveStarted:
+            return R.string.localizable.artemisAppGroupNotificationTitleCourseArchiveStarted()
+        case .courseArchiveFinished,
+                .courseArchiveFinishedWithError,
+                .courseArchiveFinishedWithoutError:
+            return R.string.localizable.artemisAppGroupNotificationTitleCourseArchiveFinished()
+        case .courseArchiveFailed:
+            return R.string.localizable.artemisAppGroupNotificationTitleCourseArchiveFailed()
+        case .examArchiveStarted:
+            return R.string.localizable.artemisAppGroupNotificationTitleExamArchiveStarted()
+        case .examArchiveFinished,
+                .examArchiveFinishedWithError,
+                .examArchiveFinishedWithoutError:
+            return R.string.localizable.artemisAppGroupNotificationTitleExamArchiveFinished()
+        case .examArchiveFailed:
+            return R.string.localizable.artemisAppGroupNotificationTitleExamArchiveFailed()
+        case .illegalSubmission:
+            return R.string.localizable.artemisAppGroupNotificationTitleIllegalSubmission()
+        case .programmingTestCasesChanged:
+            return R.string.localizable.artemisAppGroupNotificationTitleProgrammingTestCasesChanged()
+        case .newManualFeedbackRequest:
+            return R.string.localizable.artemisAppGroupNotificationTitleNewManualFeedbackRequest()
+        case .tutorialGroupRegistrationStudent:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupRegistrationStudent()
+        case .tutorialGroupDegregistrationStudent:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupDeregistrationStudent()
+        case .tutorialGroupRegistrationTutor:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupRegistrationTutor()
+        case .tutorialGroupMultipleRegistrationTutor:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupMultipleRegistrationTutor()
+        case .tutorialGroupDeregistrationTutor:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupDeregistrationTutor()
+        case .tutorialGroupDeleted:
+            return R.string.localizable.artemisAppTutorialGroupNotificationTitleTutorialGroupDeleted()
+        case .tutorialGroupUpdated:
+            return R.string.localizable.artemisAppTutorialGroupNotificationTitleTutorialGroupUpdated()
+        case .tutorialGroupAssigned:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupAssigned()
+        case .tutorialGroupUnassigned:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupUnassigned()
+        case .conversationCreateOneToOneChat:
+            return nil
+        case .conversationCreateGroupChat:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleCreateGroupChat()
+        case .conversationAddUserGroupChat:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleAddUserGroupChat()
+        case .conversationAddUserChannel:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleAddUserChannel()
+        case .conversationRemoveUserGroupChat:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleRemoveUserGroupChat()
+        case .conversationRemoveUserChannel:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleRemoveUserChannel()
+        case .conversationDeleteChannel:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleDeleteChannel()
         }
     }
 
-    public func getBody(notificationPlaceholders: [String]) -> String {
+    // swiftlint:disable cyclomatic_complexity function_body_length
+    public func getBody(notificationPlaceholders: [String]) -> String? {
         switch self {
         case .exerciseSubmissionAssessed:
             return R.string.localizable.artemisAppSingleUserNotificationTextExerciseSubmissionAssessed(notificationPlaceholders[0],
@@ -134,7 +222,7 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
         case .fileSubmissionSuccessful:
             return R.string.localizable.artemisAppSingleUserNotificationTextFileSubmissionSuccessful(notificationPlaceholders[1])
         case .duplicateTestCase:
-            return R.string.localizable.artemisAppGroupNotificationTextDuplicateTestCase()
+            return nil
         case .newPlagiarismCaseStudent:
             return R.string.localizable.artemisAppSingleUserNotificationTextNewPlagiarismCaseStudent(notificationPlaceholders[1],
                                                                                                      notificationPlaceholders[2])
@@ -147,7 +235,93 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
         case .conversationNewReplyMessage:
             return R.string.localizable.artemisAppSingleUserNotificationTextMessageReply(notificationPlaceholders[0],
                                                                                          notificationPlaceholders[6])
+        case .exerciseUpdated:
+            return R.string.localizable.artemisAppGroupNotificationTextExerciseUpdated(notificationPlaceholders[0],
+                                                                                       notificationPlaceholders[1])
+        case .courseArchiveStarted:
+            return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveStarted(notificationPlaceholders[0])
+        case .courseArchiveFinished:
+            // TODO: difference between with and without error not possible yet
+            return "TODO"
+        case .courseArchiveFinishedWithError:
+            return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveFinishedWithErrors(notificationPlaceholders[0],
+                                                                                                       notificationPlaceholders[1])
+        case .courseArchiveFinishedWithoutError:
+            return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveFinishedWithoutErrors(notificationPlaceholders[0])
+        case .courseArchiveFailed:
+            return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveFailed(notificationPlaceholders[0])
+        case .examArchiveStarted:
+            return R.string.localizable.artemisAppGroupNotificationTextExamArchiveStarted(notificationPlaceholders[1])
+        case .examArchiveFinished:
+            // TODO: difference between with and without error not possible yet
+            return "TODO"
+        case .examArchiveFinishedWithError:
+            return R.string.localizable.artemisAppGroupNotificationTextExamArchiveFinishedWithErrors(notificationPlaceholders[1],
+                                                                                                     notificationPlaceholders[2])
+        case .examArchiveFinishedWithoutError:
+            return R.string.localizable.artemisAppGroupNotificationTextExamArchiveFinishedWithoutErrors(notificationPlaceholders[1])
+        case .examArchiveFailed:
+            return R.string.localizable.artemisAppGroupNotificationTextExamArchiveFailed(notificationPlaceholders[1],
+                                                                                         notificationPlaceholders[2])
+        case .illegalSubmission:
+            return R.string.localizable.artemisAppGroupNotificationTextIllegalSubmission(notificationPlaceholders[1])
+        case .programmingTestCasesChanged:
+            return R.string.localizable.artemisAppGroupNotificationTextProgrammingTestCasesChanged(notificationPlaceholders[0],
+                                                                                                   notificationPlaceholders[1])
+        case .newManualFeedbackRequest:
+            return R.string.localizable.artemisAppGroupNotificationTextNewManualFeedbackRequest(notificationPlaceholders[0],
+                                                                                                notificationPlaceholders[1])
+        case .tutorialGroupRegistrationStudent:
+            return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupRegistrationStudent(notificationPlaceholders[1],
+                                                                                                             notificationPlaceholders[2])
+        case .tutorialGroupDegregistrationStudent:
+            return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupDeregistrationStudent(notificationPlaceholders[1],
+                                                                                                               notificationPlaceholders[2])
+        case .tutorialGroupRegistrationTutor:
+            return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupRegistrationTutor(notificationPlaceholders[1],
+                                                                                                           notificationPlaceholders[2],
+                                                                                                           notificationPlaceholders[3])
+        case .tutorialGroupMultipleRegistrationTutor:
+            return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupMultipleRegistrationTutor(notificationPlaceholders[1],
+                                                                                                                   notificationPlaceholders[2],
+                                                                                                                   notificationPlaceholders[3])
+        case .tutorialGroupDeregistrationTutor:
+            return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupDeregistrationTutor(notificationPlaceholders[1],
+                                                                                                             notificationPlaceholders[2],
+                                                                                                             notificationPlaceholders[3])
+        case .tutorialGroupDeleted:
+            return R.string.localizable.artemisAppTutorialGroupNotificationTextTutorialGroupDeleted(notificationPlaceholders[1])
+        case .tutorialGroupUpdated:
+            return R.string.localizable.artemisAppTutorialGroupNotificationTextTutorialGroupUpdated(notificationPlaceholders[1])
+        case .tutorialGroupAssigned:
+            return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupAssigned(notificationPlaceholders[1],
+                                                                                                  notificationPlaceholders[2])
+        case .tutorialGroupUnassigned:
+            return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupUnassigned(notificationPlaceholders[1],
+                                                                                                    notificationPlaceholders[2])
+        case .conversationCreateOneToOneChat:
+            return nil
+        case .conversationCreateGroupChat:
+            return R.string.localizable.artemisAppSingleUserNotificationTextCreateGroupChat(notificationPlaceholders[0],
+                                                                                            notificationPlaceholders[1])
+        case .conversationAddUserGroupChat:
+            return R.string.localizable.artemisAppSingleUserNotificationTextAddUserGroupChat(notificationPlaceholders[0],
+                                                                                             notificationPlaceholders[1])
+        case .conversationAddUserChannel:
+            return R.string.localizable.artemisAppSingleUserNotificationTextAddUserChannel(notificationPlaceholders[0],
+                                                                                           notificationPlaceholders[1],
+                                                                                           notificationPlaceholders[2])
+        case .conversationRemoveUserGroupChat:
+            return R.string.localizable.artemisAppSingleUserNotificationTextRemoveUserGroupChat(notificationPlaceholders[0],
+                                                                                                notificationPlaceholders[1])
+        case .conversationRemoveUserChannel:
+            return R.string.localizable.artemisAppSingleUserNotificationTextRemoveUserChannel(notificationPlaceholders[0],
+                                                                                              notificationPlaceholders[1],
+                                                                                              notificationPlaceholders[2])
+        case .conversationDeleteChannel:
+            return R.string.localizable.artemisAppSingleUserNotificationTextDeleteChannel(notificationPlaceholders[0],
+                                                                                          notificationPlaceholders[1],
+                                                                                          notificationPlaceholders[2])
         }
     }
-
 }

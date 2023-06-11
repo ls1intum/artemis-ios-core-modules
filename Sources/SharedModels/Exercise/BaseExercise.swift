@@ -35,7 +35,7 @@ public protocol BaseExercise: Codable {
     var numberOfOpenMoreFeedbackRequests: Int? { get }
     var numberOfSubmissions: DueDateStat? { get }
     var totalNumberOfAssessments: DueDateStat? { get }
-    
+
     // -------
     var attachments: [Attachment]? { get }
 

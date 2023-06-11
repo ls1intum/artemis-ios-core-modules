@@ -55,12 +55,6 @@ class LoginServiceImpl: LoginService {
                     UserSession.shared.saveUsername(username: username)
                     UserSession.shared.savePassword(password: password)
                 }
-
-                if let notificationConfig = UserSession.shared.getCurrentNotificationDeviceConfiguration(),
-                   let deviceToken = notificationConfig.apnsDeviceToken,
-                   !notificationConfig.skippedNotifications {
-                    return await PushNotificationServiceFactory.shared.register(deviceToken: deviceToken)
-                }
                 return .success
             }
         case .failure(let error):

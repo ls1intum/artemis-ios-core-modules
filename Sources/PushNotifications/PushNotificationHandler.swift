@@ -35,7 +35,11 @@ public class PushNotificationHandler {
         }
 
         Task {
-            let notification = await prepareNotification(notification)
+            guard let notification = await prepareNotification(notification)  else {
+                log.debug("NotificationType does not support displaying notifications.")
+                return
+            }
+
             let request = UNNotificationRequest(identifier: UUID().uuidString, content: notification, trigger: nil)
 
             UNUserNotificationCenter.current().add(request) { error in
@@ -46,10 +50,14 @@ public class PushNotificationHandler {
         }
     }
 
-    private static func prepareNotification(_ notification: PushNotification) async -> UNMutableNotificationContent {
+    private static func prepareNotification(_ notification: PushNotification) async -> UNMutableNotificationContent? {
+        guard let title = notification.title else { return nil }
+
         let content = UNMutableNotificationContent()
-        content.title = notification.title
-        content.body = notification.body
+        content.title = title
+        if let body = notification.body {
+            content.body = body
+        }
 //        content.categoryIdentifier = type.rawValue
         content.userInfo = [PushNotificationUserInfoKeys.target: notification.target,
                             PushNotificationUserInfoKeys.type: notification.type.rawValue]

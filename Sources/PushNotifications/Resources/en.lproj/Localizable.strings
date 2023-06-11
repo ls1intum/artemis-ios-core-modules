@@ -75,6 +75,34 @@
 "artemisApp.conversationNotification.title.newMessage" = "New message";
 "artemisApp.singleUserNotification.title.messageReply" = "New message reply in conversation";
 
+"artemisApp.groupNotification.title.exerciseUpdated" = "Exercise updated";
+"artemisApp.groupNotification.title.courseArchiveStarted" = "Course archival started";
+"artemisApp.groupNotification.title.courseArchiveFinished" = "Course archival finished";
+"artemisApp.groupNotification.title.courseArchiveFailed" = "Course archival failed";
+"artemisApp.groupNotification.title.examArchiveStarted" = "Exam archival started";
+"artemisApp.groupNotification.title.examArchiveFinished" = "Exam archival finished";
+"artemisApp.groupNotification.title.examArchiveFailed" = "Exam archival failed";
+"artemisApp.groupNotification.title.illegalSubmission" = "Illegal submission of a student.";
+"artemisApp.groupNotification.title.programmingTestCasesChanged" = "Test cases for programming exercise changed";
+"artemisApp.groupNotification.title.newManualFeedbackRequest" = "A new manual feedback request has been submitted";
+
+"artemisApp.singleUserNotification.title.tutorialGroupRegistrationStudent" = "You have been registered to a tutorial group";
+"artemisApp.singleUserNotification.title.tutorialGroupDeregistrationStudent" = "You have been deregistered from a tutorial group";
+"artemisApp.singleUserNotification.title.tutorialGroupRegistrationTutor" = "A student has been registered to your tutorial group";
+"artemisApp.singleUserNotification.title.tutorialGroupDeregistrationTutor" = "A student has been deregistered from your tutorial group";
+"artemisApp.singleUserNotification.title.tutorialGroupMultipleRegistrationTutor" = "Multiple students have been registered to your tutorial group";
+"artemisApp.singleUserNotification.title.tutorialGroupAssigned" = "You have been assigned to lead a tutorial group";
+"artemisApp.singleUserNotification.title.tutorialGroupUnassigned" = "You have been unassigned from leading a tutorial group";
+"artemisApp.tutorialGroupNotification.title.tutorialGroupDeleted" = "Tutorial Group deleted";
+"artemisApp.tutorialGroupNotification.title.tutorialGroupUpdated" = "Tutorial Group updated";
+
+"artemisApp.singleUserNotification.title.deleteChannel" = "Channel deleted";
+"artemisApp.singleUserNotification.title.removeUserChannel" = "You have been removed from a channel";
+"artemisApp.singleUserNotification.title.addUserChannel" = "You have been added to a channel";
+"artemisApp.singleUserNotification.title.removeUserGroupChat" = "You have been removed from a group chat";
+"artemisApp.singleUserNotification.title.addUserGroupChat" = "You have been added to a group chat";
+"artemisApp.singleUserNotification.title.createGroupChat" = "New group chat";
+
 // Body
 "artemisApp.singleUserNotification.text.exerciseSubmissionAssessed" = "Your submission for the %2$@ exercise \"%3$@\" in the course \"%1$@\" has been assessed.";
 "artemisApp.groupNotification.text.attachmentChange" = "The attachment \"%2$@\" of \"%3$@\" in the course \"%1$@\" was updated.";
@@ -89,13 +117,42 @@
 "artemisApp.groupNotification.text.newCoursePost" = "The course \"%1$@\" got a new course-wide post: \"%2$@\"";
 "artemisApp.groupNotification.text.newAnnouncementPost" = "The course \"%1$@\" got a new announcement: \"%2$@\"";
 "artemisApp.singleUserNotification.text.fileSubmissionSuccessful" = "Your file for the exercise \"%1$@\" was successfully submitted.";
-"artemisApp.groupNotification.text.duplicateTestCase" = ""; // not available in web
 "artemisApp.singleUserNotification.text.newPlagiarismCaseStudent" = "New plagiarism case concerning the %1$@ exercise \"%2$@\".";
 "artemisApp.singleUserNotification.text.plagiarismCaseVerdictStudent" = "Your plagiarism case concerning the %1$@ exercise \"%2$@\" has a verdict.";
 "artemisApp.conversationNotification.text.newMessageChannel" = "New message in %2$@ channel from %3$@ in course %1$@.";
 "artemisApp.conversationNotification.text.newMessageGroupChat" = "New message in group chat from %2$@ in course %1$@.";
 "artemisApp.conversationNotification.text.newMessageDirect" = "New direct message from %2$@ in course %1$@.";
 "artemisApp.singleUserNotification.text.messageReply" = "You have new reply in a message by %2$@ in course %1$@.";
+
+"artemisApp.groupNotification.text.exerciseUpdated" = "The exercise \"%2$@\" in course \"%1$@\" got updated.";
+"artemisApp.groupNotification.text.courseArchiveStarted" = "The course \"%1$@\" is being archived.";
+"artemisApp.groupNotification.text.courseArchiveFinishedWithoutErrors" = "The course \"%1$@\" has been archived.";
+"artemisApp.groupNotification.text.courseArchiveFinishedWithErrors" = "The course \"%1$@\" has been archived. Some exercises couldn't be included in the archive:\n\n %2$@";
+"artemisApp.groupNotification.text.courseArchiveFailed" = "There was a problem archiving course \"%1$@\": \n\n";
+"artemisApp.groupNotification.text.examArchiveStarted" = "The exam \"%1$@\" is being archived.";
+"artemisApp.groupNotification.text.examArchiveFinishedWithoutErrors" = "The exam \"%1$@\" has been archived.";
+"artemisApp.groupNotification.text.examArchiveFinishedWithErrors" = "The exam \"%1$@\" has been archived. Some exercises couldn't be included in the archive:\n\n %2$@";
+"artemisApp.groupNotification.text.examArchiveFailed" = "There was a problem archiving exam \"%1$@\": \n\n %2$@";
+"artemisApp.groupNotification.text.illegalSubmission" = "The exercise %1$@ has illegal submissions of students.";
+"artemisApp.groupNotification.text.programmingTestCasesChanged" = "The test cases of the programming exercise \"%2$@\" in the course \"%1$@\" were updated. The students' submissions should be rebuilt and tested in order to create new results.";
+"artemisApp.groupNotification.text.newManualFeedbackRequest" = "The programming exercise \"%2$@\" in the course \"%1$@\" has a new manual feedback request. Please assess the feedback before the deadline.";
+
+"artemisApp.singleUserNotification.text.tutorialGroupRegistrationStudent" = "You have been registered to the tutorial group %1$@ by %2$@.";
+"artemisApp.singleUserNotification.text.tutorialGroupDeregistrationStudent" = "You have been deregistered from the tutorial group %1$@ by %2$@.";
+"artemisApp.singleUserNotification.text.tutorialGroupRegistrationTutor" = "The student %1$@ has been registered to your tutorial group %2$@ by %3$@.";
+"artemisApp.singleUserNotification.text.tutorialGroupDeregistrationTutor" = "The student %1$@ has been deregistered from your tutorial group %2$@ by %3$@.";
+"artemisApp.singleUserNotification.text.tutorialGroupMultipleRegistrationTutor" = "%1$@ students have been registered to your tutorial group %2$@ by %3$@.";
+"artemisApp.singleUserNotification.text.tutorialGroupAssigned" = "You have been assigned to lead the tutorial group %1$@ by %2$@.";
+"artemisApp.singleUserNotification.text.tutorialGroupUnassigned" = "You have been unassigned from leading the tutorial group %1$@ by %2$@.";
+"artemisApp.tutorialGroupNotification.text.tutorialGroupDeleted" = "The tutorial group %1$@ has been deleted.";
+"artemisApp.tutorialGroupNotification.text.tutorialGroupUpdated" = "The tutorial group %1$@ has been updated.";
+
+"artemisApp.singleUserNotification.text.deleteChannel" = "%2$@ channel has been deleted by %3$@ in course %1$@.";
+"artemisApp.singleUserNotification.text.removeUserChannel" = "You have been removed from channel %2$@ by %3$@ in course %1$@.";
+"artemisApp.singleUserNotification.text.addUserChannel" = "You have been added to channel %2$@ by %3$@ in course %1$@.";
+"artemisApp.singleUserNotification.text.removeUserGroupChat" = "You have been removed from group chat by %2$@ in course %1$@.";
+"artemisApp.singleUserNotification.text.addUserGroupChat" = "You have been added to a new group chat by %2$@ in course %1$@.";
+"artemisApp.singleUserNotification.text.createGroupChat" = "You have been added to a new group chat by %2$@ in course %1$@.";
 
 // MARK: General
 "skip" = "Skip";
