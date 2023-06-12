@@ -33,10 +33,17 @@ public class PushNotificationResponseHandler {
             return "courses/\(target.course)/discussion?searchText=%23\(target.id)"
         case .newExercisePost, .newReplyForExercisePost:
             guard let target = try? decoder.decode(NewExercisePostTarget.self, from: targetData) else { return nil }
-            return "courses/\(target.course)/exercises/\(target.exercise ?? target.exerciseId ?? 0)?postId=%23\(target.id)"
+            return "courses/\(target.course)/exercises/\(target.exercise ?? target.exerciseId ?? 0)?postId=\(target.id)"
         case .newLecturePost, .newReplyForLecturePost:
             guard let target = try? decoder.decode(NewLecturePostTarget.self, from: targetData) else { return nil }
-            return "courses/\(target.course)/lectures/\(target.lecture ?? target.lectureId ?? 0)?postId=%23\(target.id)"
+            return "courses/\(target.course)/lectures/\(target.lecture ?? target.lectureId ?? 0)?postId=\(target.id)"
+        case .conversationCreateGroupChat,
+                .conversationAddUserChannel,
+                .conversationAddUserGroupChat,
+                .conversationRemoveUserChannel,
+                .conversationRemoveUserGroupChat:
+            guard let target = try? decoder.decode(NewLecturePostTarget.self, from: targetData) else { return nil }
+            return "courses/\(target.course)/messages?conversationId=\(target.id)"
         default:
             guard let target = try? decoder.decode(GeneralTarget.self, from: targetData) else { return nil }
             return "courses/\(target.course)/\(target.entity)/\(target.id)"
@@ -66,6 +73,11 @@ private struct NewLecturePostTarget: Codable {
     let course: Int
     let lecture: Int?
     let lectureId: Int?
+}
+
+private struct ConversationTarget: Codable {
+    let conversation: Int
+    let course: Int
 }
 
 private struct GeneralTarget: Codable {
