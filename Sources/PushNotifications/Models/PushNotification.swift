@@ -242,7 +242,7 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
             return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveStarted(notificationPlaceholders[0])
         case .courseArchiveFinished:
             // TODO: difference between with and without error not possible yet
-            return "TODO"
+            return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveFinishedWithoutErrors(notificationPlaceholders[0])
         case .courseArchiveFinishedWithError:
             return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveFinishedWithErrors(notificationPlaceholders[0],
                                                                                                        notificationPlaceholders[1])
@@ -254,7 +254,7 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
             return R.string.localizable.artemisAppGroupNotificationTextExamArchiveStarted(notificationPlaceholders[1])
         case .examArchiveFinished:
             // TODO: difference between with and without error not possible yet
-            return "TODO"
+            return R.string.localizable.artemisAppGroupNotificationTextExamArchiveFinishedWithoutErrors(notificationPlaceholders[1])
         case .examArchiveFinishedWithError:
             return R.string.localizable.artemisAppGroupNotificationTextExamArchiveFinishedWithErrors(notificationPlaceholders[1],
                                                                                                      notificationPlaceholders[2])

@@ -26,7 +26,7 @@ public struct ArtemisButton: ButtonStyle {
         self.buttonPriority = priority
     }
 
-    // TODO: maybe add custom priority init
+    // maybe add custom priority init
 
     public func makeBody(configuration: ButtonStyleConfiguration) -> some View {
         configuration.label

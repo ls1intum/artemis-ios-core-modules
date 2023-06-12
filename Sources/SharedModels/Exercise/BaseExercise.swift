@@ -218,15 +218,14 @@ public enum AssessmentType: String, Codable {
     case semiAutomatic = "SEMI_AUTOMATIC"
     case manual = "MANUAL"
 
-    // TODO: localization
     public var description: String {
         switch self {
         case .automatic:
-            return "automatic"
+            return R.string.localizable.assessmentType_automatic()
         case .semiAutomatic:
-            return "semi-automatic"
+            return R.string.localizable.assessmentType_semiAutomatic()
         case .manual:
-            return "manual"
+            return R.string.localizable.assessmentType_manual()
         }
     }
 }
