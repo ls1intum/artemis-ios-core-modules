@@ -174,151 +174,197 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
         }
     }
 
-    // swiftlint:disable cyclomatic_complexity function_body_length
+    // TODO: add checks for length
+    // swiftlint:disable cyclomatic_complexity function_body_length empty_count
     public func getBody(notificationPlaceholders: [String]) -> String? {
         switch self {
         case .exerciseSubmissionAssessed:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextExerciseSubmissionAssessed(notificationPlaceholders[0],
                                                                                                        notificationPlaceholders[1],
                                                                                                        notificationPlaceholders[2])
         case .attachmentChange:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextAttachmentChange(notificationPlaceholders[0],
                                                                                         notificationPlaceholders[1],
                                                                                         notificationPlaceholders[2])
         case .exerciseReleased:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextExerciseReleased(notificationPlaceholders[1])
         case .exercisePractice:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextExercisePractice(notificationPlaceholders[1])
         case .quizExerciseStarted:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextQuizExerciseStarted(notificationPlaceholders[1])
         case .newReplyForLecturePost:
+            guard notificationPlaceholders.count > 8 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewReplyForLecturePost(notificationPlaceholders[0],
                                                                                               notificationPlaceholders[4],
                                                                                               notificationPlaceholders[5],
                                                                                               notificationPlaceholders[8])
         case .newReplyForCoursePost:
+            guard notificationPlaceholders.count > 5 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewReplyForCoursePost(notificationPlaceholders[0],
                                                                                              notificationPlaceholders[4],
                                                                                              notificationPlaceholders[5])
         case .newReplyForExercisePost:
+            guard notificationPlaceholders.count > 8 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewReplyForExercisePost(notificationPlaceholders[0],
                                                                                                notificationPlaceholders[4],
                                                                                                notificationPlaceholders[5],
                                                                                                notificationPlaceholders[8])
         case .newExercisePost:
+            guard notificationPlaceholders.count > 5 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewExercisePost(notificationPlaceholders[0],
                                                                                        notificationPlaceholders[2],
                                                                                        notificationPlaceholders[5])
         case .newLecturePost:
+            guard notificationPlaceholders.count > 5 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewLecturePost(notificationPlaceholders[0],
                                                                                       notificationPlaceholders[2],
                                                                                       notificationPlaceholders[5])
         case .newCoursePost:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewCoursePost(notificationPlaceholders[0],
                                                                                      notificationPlaceholders[2])
         case .newAnnouncementPost:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewAnnouncementPost(notificationPlaceholders[0],
                                                                                            notificationPlaceholders[2])
         case .fileSubmissionSuccessful:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextFileSubmissionSuccessful(notificationPlaceholders[1])
         case .duplicateTestCase:
             return nil
         case .newPlagiarismCaseStudent:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextNewPlagiarismCaseStudent(notificationPlaceholders[1],
                                                                                                      notificationPlaceholders[2])
         case .plagiarismCaseVerdictStudent:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextPlagiarismCaseVerdictStudent(notificationPlaceholders[1],
                                                                                                          notificationPlaceholders[2])
         case .conversationNewMessage:
             // TODO: once https://github.com/ls1intum/Artemis/pull/6679/ is merged
             return "TODO"
         case .conversationNewReplyMessage:
+            guard notificationPlaceholders.count > 6 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextMessageReply(notificationPlaceholders[0],
                                                                                          notificationPlaceholders[6])
         case .exerciseUpdated:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextExerciseUpdated(notificationPlaceholders[0],
                                                                                        notificationPlaceholders[1])
         case .courseArchiveStarted:
+            guard notificationPlaceholders.count > 0 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveStarted(notificationPlaceholders[0])
         case .courseArchiveFinished:
             // TODO: difference between with and without error not possible yet
+            guard notificationPlaceholders.count > 0 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveFinishedWithoutErrors(notificationPlaceholders[0])
         case .courseArchiveFinishedWithError:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveFinishedWithErrors(notificationPlaceholders[0],
                                                                                                        notificationPlaceholders[1])
         case .courseArchiveFinishedWithoutError:
+            guard notificationPlaceholders.count > 0 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveFinishedWithoutErrors(notificationPlaceholders[0])
         case .courseArchiveFailed:
+            guard notificationPlaceholders.count > 0 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveFailed(notificationPlaceholders[0])
         case .examArchiveStarted:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextExamArchiveStarted(notificationPlaceholders[1])
         case .examArchiveFinished:
             // TODO: difference between with and without error not possible yet
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextExamArchiveFinishedWithoutErrors(notificationPlaceholders[1])
         case .examArchiveFinishedWithError:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextExamArchiveFinishedWithErrors(notificationPlaceholders[1],
                                                                                                      notificationPlaceholders[2])
         case .examArchiveFinishedWithoutError:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextExamArchiveFinishedWithoutErrors(notificationPlaceholders[1])
         case .examArchiveFailed:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextExamArchiveFailed(notificationPlaceholders[1],
                                                                                          notificationPlaceholders[2])
         case .illegalSubmission:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextIllegalSubmission(notificationPlaceholders[1])
         case .programmingTestCasesChanged:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextProgrammingTestCasesChanged(notificationPlaceholders[0],
                                                                                                    notificationPlaceholders[1])
         case .newManualFeedbackRequest:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewManualFeedbackRequest(notificationPlaceholders[0],
                                                                                                 notificationPlaceholders[1])
         case .tutorialGroupRegistrationStudent:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupRegistrationStudent(notificationPlaceholders[1],
                                                                                                              notificationPlaceholders[2])
         case .tutorialGroupDegregistrationStudent:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupDeregistrationStudent(notificationPlaceholders[1],
                                                                                                                notificationPlaceholders[2])
         case .tutorialGroupRegistrationTutor:
+            guard notificationPlaceholders.count > 3 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupRegistrationTutor(notificationPlaceholders[1],
                                                                                                            notificationPlaceholders[2],
                                                                                                            notificationPlaceholders[3])
         case .tutorialGroupMultipleRegistrationTutor:
+            guard notificationPlaceholders.count > 3 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupMultipleRegistrationTutor(notificationPlaceholders[1],
                                                                                                                    notificationPlaceholders[2],
                                                                                                                    notificationPlaceholders[3])
         case .tutorialGroupDeregistrationTutor:
+            guard notificationPlaceholders.count > 3 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupDeregistrationTutor(notificationPlaceholders[1],
                                                                                                              notificationPlaceholders[2],
                                                                                                              notificationPlaceholders[3])
         case .tutorialGroupDeleted:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppTutorialGroupNotificationTextTutorialGroupDeleted(notificationPlaceholders[1])
         case .tutorialGroupUpdated:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppTutorialGroupNotificationTextTutorialGroupUpdated(notificationPlaceholders[1])
         case .tutorialGroupAssigned:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupAssigned(notificationPlaceholders[1],
                                                                                                   notificationPlaceholders[2])
         case .tutorialGroupUnassigned:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupUnassigned(notificationPlaceholders[1],
                                                                                                     notificationPlaceholders[2])
         case .conversationCreateOneToOneChat:
             return nil
         case .conversationCreateGroupChat:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextCreateGroupChat(notificationPlaceholders[0],
                                                                                             notificationPlaceholders[1])
         case .conversationAddUserGroupChat:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextAddUserGroupChat(notificationPlaceholders[0],
                                                                                              notificationPlaceholders[1])
         case .conversationAddUserChannel:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextAddUserChannel(notificationPlaceholders[0],
                                                                                            notificationPlaceholders[1],
                                                                                            notificationPlaceholders[2])
         case .conversationRemoveUserGroupChat:
+            guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextRemoveUserGroupChat(notificationPlaceholders[0],
                                                                                                 notificationPlaceholders[1])
         case .conversationRemoveUserChannel:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextRemoveUserChannel(notificationPlaceholders[0],
                                                                                               notificationPlaceholders[1],
                                                                                               notificationPlaceholders[2])
         case .conversationDeleteChannel:
+            guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextDeleteChannel(notificationPlaceholders[0],
                                                                                           notificationPlaceholders[1],
                                                                                           notificationPlaceholders[2])
