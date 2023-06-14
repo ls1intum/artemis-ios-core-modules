@@ -22,7 +22,7 @@ public class AccountServiceImpl: AccountService {
         }
 
         var resourceName: String {
-            return "api/account"
+            return "api/public/account"
         }
     }
 

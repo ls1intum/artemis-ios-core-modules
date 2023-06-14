@@ -7,6 +7,10 @@
 "includedInOverallScore_notIncluded" = "Optional";
 "includedInOverallScore_includedCompletely" = "Included";
 
+"assessmentType_automatic" = "automatic";
+"assessmentType_semiAutomatic" = "semi-automatic";
+"assessmentType_manual" = "manual";
+
 // MARK: Conversation
 "archived" = "(Archived)";
 "onlyYou" = "Only you";

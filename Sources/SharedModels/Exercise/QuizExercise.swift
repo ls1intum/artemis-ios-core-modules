@@ -39,6 +39,7 @@ public struct QuizExercise: BaseExercise {
     public var numberOfSubmissions: DueDateStat?
     public var totalNumberOfAssessments: DueDateStat?
 
+    public var course: EmbeddedCourse?
     public var allowedNumberOfAttempts: Int?
     public var remainingNumberOfAttempts: Int?
     public var randomizeQuestionOrder: Bool?
@@ -102,4 +103,9 @@ public struct QuizBatch: Codable {
     public var ended: Bool?
     public var submissionAllowed: Bool?
     public var password: String?
+}
+
+public struct EmbeddedCourse: Codable {
+    public var id: Int
+    public var title: String
 }

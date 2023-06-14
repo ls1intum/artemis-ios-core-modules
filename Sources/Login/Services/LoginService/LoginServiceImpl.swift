@@ -28,7 +28,7 @@ class LoginServiceImpl: LoginService {
         }
 
         var resourceName: String {
-            return "api/authenticate"
+            return "api/public/authenticate"
         }
     }
 
@@ -54,12 +54,6 @@ class LoginServiceImpl: LoginService {
                 if rememberMe {
                     UserSession.shared.saveUsername(username: username)
                     UserSession.shared.savePassword(password: password)
-                }
-
-                if let notificationConfig = UserSession.shared.getCurrentNotificationDeviceConfiguration(),
-                   let deviceToken = notificationConfig.apnsDeviceToken,
-                   !notificationConfig.skippedNotifications {
-                    return await PushNotificationServiceFactory.shared.register(deviceToken: deviceToken)
                 }
                 return .success
             }
