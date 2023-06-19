@@ -234,14 +234,16 @@ public struct Category: Codable {
     public let category: String
     public let colorCode: String
 
-    // TODO: remove force unwrap
-    // swiftlint:disable force_try
     public init(from decoder: Decoder) {
-        let string: String = try! decoder.singleValueContainer().decode(String.self)
-        let impl = try! JSONDecoder().decode(CategoryImpl.self, from: Data(string.utf8))
+        guard let string = try? decoder.singleValueContainer().decode(String.self) else {
+            category = "?"
+            colorCode = "#000000"
+            return
+        }
+        let impl = try? JSONDecoder().decode(CategoryImpl.self, from: Data(string.utf8))
 
-        category = impl.category
-        colorCode = impl.color
+        category = impl?.category ?? "?"
+        colorCode = impl?.color ?? "#000000"
     }
 }
 
