@@ -90,6 +90,7 @@ fileprivate extension UIColor {
         static let LemonChiffon = UIColor(netHex: 0xfff3cd)
         static let AmericanBronze = UIColor(netHex: 0x362203)
         static let ViolinBrown = UIColor(netHex: 0x664d03)
+        static let Flavescent = UIColor(netHex: 0xffe69c)
         static let Gamboge = UIColor(netHex: 0xf39c12)
     }
 }
@@ -155,7 +156,7 @@ public extension Color {
 
         // Warning
         public static let warningBackground = UIColor(UIColor.ColorPalette.LemonChiffon, darkModeColor: UIColor.ColorPalette.AmericanBronze).suColor
-        public static let warningBorder = UIColor(UIColor.ColorPalette.ViolinBrown, darkModeColor: UIColor.ColorPalette.Gamboge).suColor
+        public static let warningBorder = UIColor(UIColor.ColorPalette.Flavescent, darkModeColor: UIColor.ColorPalette.Gamboge).suColor
         public static let warningText = UIColor(UIColor.ColorPalette.ViolinBrown, darkModeColor: UIColor.ColorPalette.Gamboge).suColor
     }
 }
