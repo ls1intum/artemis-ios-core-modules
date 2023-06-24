@@ -41,6 +41,7 @@ public struct ProgrammingExercise: BaseExercise {
 
     public var buildAndTestStudentSubmissionsAfterDueDate: Date?
     public var templateParticipation: TemplateParticipation?
+    public var solutionParticipation: SolutionParticipation?
 
     public init(id: Int) {
         self.id = id

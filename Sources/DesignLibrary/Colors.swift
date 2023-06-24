@@ -87,6 +87,17 @@ fileprivate extension UIColor {
         static let Orange = UIColor(netHex: 0xfd7e14)
         static let Yellow = UIColor(netHex: 0xffc107)
         static let Green = UIColor(netHex: 0x28a745)
+        static let LemonChiffon = UIColor(netHex: 0xfff3cd)
+        static let AmericanBronze = UIColor(netHex: 0x362203)
+        static let ViolinBrown = UIColor(netHex: 0x664d03)
+        static let Flavescent = UIColor(netHex: 0xffe69c)
+        static let Gamboge = UIColor(netHex: 0xf39c12)
+        static let Water = UIColor(netHex: 0xd1ecf1)
+        static let Crystal = UIColor(netHex: 0xa2dae3)
+        static let WarmBlack = UIColor(netHex: 0x09414a)
+        static let SacramentoStateGreen = UIColor(netHex: 0x062a30)
+        static let ViridianGreen = UIColor(netHex: 0x148ea1)
+        static let Turquoise = UIColor(netHex: 0x36cee6)
     }
 }
 
@@ -148,6 +159,15 @@ public extension Color {
         // Message
         public static let reactionCapsuleColor = UIColor(UIColor.ColorPalette.Gray10, darkModeColor: UIColor.ColorPalette.Gray90).suColor
         public static let messsageCellPressed = UIColor(UIColor.ColorPalette.Gray05, darkModeColor: UIColor.ColorPalette.Gray95).suColor
+
+        // Alert
+        public static let alertWarningBackground = UIColor(UIColor.ColorPalette.LemonChiffon, darkModeColor: UIColor.ColorPalette.AmericanBronze).suColor
+        public static let alertWarningBorder = UIColor(UIColor.ColorPalette.Flavescent, darkModeColor: UIColor.ColorPalette.Gamboge).suColor
+        public static let alertWarningText = UIColor(UIColor.ColorPalette.ViolinBrown, darkModeColor: UIColor.ColorPalette.Gamboge).suColor
+
+        public static let alertInfoBackground = UIColor(UIColor.ColorPalette.Water, darkModeColor: UIColor.ColorPalette.SacramentoStateGreen).suColor
+        public static let alertInfoBorder = UIColor(UIColor.ColorPalette.Crystal, darkModeColor: UIColor.ColorPalette.ViridianGreen).suColor
+        public static let alertInfoText = UIColor(UIColor.ColorPalette.WarmBlack, darkModeColor: UIColor.ColorPalette.Turquoise).suColor
     }
 }
 
