@@ -87,6 +87,10 @@ fileprivate extension UIColor {
         static let Orange = UIColor(netHex: 0xfd7e14)
         static let Yellow = UIColor(netHex: 0xffc107)
         static let Green = UIColor(netHex: 0x28a745)
+        static let LemonChiffon = UIColor(netHex: 0xfff3cd)
+        static let AmericanBronze = UIColor(netHex: 0x362203)
+        static let ViolinBrown = UIColor(netHex: 0x664d03)
+        static let Gamboge = UIColor(netHex: 0xf39c12)
     }
 }
 
@@ -148,6 +152,11 @@ public extension Color {
         // Message
         public static let reactionCapsuleColor = UIColor(UIColor.ColorPalette.Gray10, darkModeColor: UIColor.ColorPalette.Gray90).suColor
         public static let messsageCellPressed = UIColor(UIColor.ColorPalette.Gray05, darkModeColor: UIColor.ColorPalette.Gray95).suColor
+
+        // Warning
+        public static let warningBackground = UIColor(UIColor.ColorPalette.LemonChiffon, darkModeColor: UIColor.ColorPalette.AmericanBronze).suColor
+        public static let warningBorder = UIColor(UIColor.ColorPalette.ViolinBrown, darkModeColor: UIColor.ColorPalette.Gamboge).suColor
+        public static let warningText = UIColor(UIColor.ColorPalette.ViolinBrown, darkModeColor: UIColor.ColorPalette.Gamboge).suColor
     }
 }
 
