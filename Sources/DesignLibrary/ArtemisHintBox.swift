@@ -1,5 +1,5 @@
 //
-//  ArtemisAlertView.swift
+//  ArtemisHintBox.swift
 //  
 //
 //  Created by Tarlan Ismayilsoy on 24.06.23.
@@ -7,38 +7,38 @@
 
 import SwiftUI
 
-public struct ArtemisAlertView: View {
+public struct ArtemisHintBox: View {
     private var text: String
-    private var level: ArtemisAlertLevel
+    private var hintType: ArtemisHintType
     private let cornerRadius = 3.0
 
     public init(text: String,
-                level: ArtemisAlertLevel = .info) {
+                hintType: ArtemisHintType = .info) {
         self.text = text
-        self.level = level
+        self.hintType = hintType
     }
 
     public var body: some View {
         Group {
-            Text(level.icon)
+            Text(hintType.icon)
             +
             Text(" " + text)
                 .font(.body)
         }
-        .foregroundColor(level.textColor)
+        .foregroundColor(hintType.textColor)
         .frame(maxWidth: .infinity, alignment: .leading)
         .cornerRadius(cornerRadius)
         .padding()
-        .background(level.backgroundColor)
+        .background(hintType.backgroundColor)
         .overlay {
             RoundedRectangle(cornerRadius: cornerRadius)
-                .stroke(level.borderColor)
+                .stroke(hintType.borderColor)
         }
         .transition(.asymmetric(insertion: .push(from: .top), removal: .push(from: .bottom)))
     }
 }
 
-public enum ArtemisAlertLevel {
+public enum ArtemisHintType {
     case info, warning
 
     public var icon: Image {
@@ -53,33 +53,33 @@ public enum ArtemisAlertLevel {
     public var textColor: Color {
         switch self {
         case .info:
-            return Color.Artemis.alertInfoText
+            return Color.Artemis.hintBoxInfoText
         case .warning:
-            return Color.Artemis.alertWarningText
+            return Color.Artemis.hintBoxWarningText
         }
     }
 
     public var borderColor: Color {
         switch self {
         case .info:
-            return Color.Artemis.alertInfoBorder
+            return Color.Artemis.hintBoxInfoBorder
         case .warning:
-            return Color.Artemis.alertWarningBorder
+            return Color.Artemis.hintBoxWarningBorder
         }
     }
 
     public var backgroundColor: Color {
         switch self {
         case .info:
-            return Color.Artemis.alertInfoBackground
+            return Color.Artemis.hintBoxInfoBackground
         case .warning:
-            return Color.Artemis.alertWarningBackground
+            return Color.Artemis.hintBoxWarningBackground
         }
     }
 }
 
-public struct ArtemisWarning_Previews: PreviewProvider {
+public struct ArtemisHintBox_Previews: PreviewProvider {
     public static var previews: some View {
-        ArtemisAlertView(text: "This is a warning!")
+        ArtemisHintBox(text: "This is a warning!")
     }
 }
