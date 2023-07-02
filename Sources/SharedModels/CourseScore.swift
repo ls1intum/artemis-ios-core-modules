@@ -17,5 +17,5 @@ public struct StudentScore: Codable {
     public var absoluteScore: Double
     public var relativeScore: Double
     public var currentRelativeScore: Double
-    public var presentationScore: Int
+    public var presentationScore: Double
 }
