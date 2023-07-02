@@ -32,6 +32,7 @@ public struct Channel: BaseConversation {
     public var isChannelModerator: Bool?
     public var tutorialGroupId: Int?
     public var tutorialGroupTitle: String?
+    public var subType: ChannelSubType?
 
     public var conversationName: String {
         if isArchived ?? false {
@@ -52,4 +53,11 @@ public struct Channel: BaseConversation {
         }
         return Image(systemName: "lock.fill")
     }
+}
+
+public enum ChannelSubType: String, RawRepresentable {
+    case general
+    case exercise
+    case lecture
+    case exam
 }
