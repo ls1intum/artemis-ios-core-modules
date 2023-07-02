@@ -12,6 +12,7 @@ public struct AnswerMessage: BaseMessage {
     public var id: Int64
     public var author: ConversationUser?
     public var creationDate: Date?
+    public var updatedDate: Date?
     public var content: String?
     public var tokenizedContent: String?
     public var authorRoleTransient: UserRole?
