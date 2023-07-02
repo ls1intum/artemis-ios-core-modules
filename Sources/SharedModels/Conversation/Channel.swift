@@ -55,7 +55,7 @@ public struct Channel: BaseConversation {
     }
 }
 
-public enum ChannelSubType: String, RawRepresentable {
+public enum ChannelSubType: String, RawRepresentable, Codable {
     case general
     case exercise
     case lecture
