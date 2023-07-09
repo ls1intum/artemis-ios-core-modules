@@ -246,8 +246,21 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
             return R.string.localizable.artemisAppSingleUserNotificationTextPlagiarismCaseVerdictStudent(notificationPlaceholders[1],
                                                                                                          notificationPlaceholders[2])
         case .conversationNewMessage:
-            // TODO: once https://github.com/ls1intum/Artemis/pull/6679/ is merged
-            return "TODO"
+            guard notificationPlaceholders.count > 5 else { return nil }
+            switch notificationPlaceholders[5] {
+            case "channel":
+                return R.string.localizable.artemisAppConversationNotificationTextNewMessageChannel(notificationPlaceholders[0],
+                                                                                                    notificationPlaceholders[3],
+                                                                                                    notificationPlaceholders[4])
+            case "groupChat":
+                return R.string.localizable.artemisAppConversationNotificationTextNewMessageGroupChat(notificationPlaceholders[0],
+                                                                                                      notificationPlaceholders[3])
+            case "oneToOneChat":
+                return R.string.localizable.artemisAppConversationNotificationTextNewMessageDirect(notificationPlaceholders[0],
+                                                                                                   notificationPlaceholders[3])
+            default:
+                return nil
+            }
         case .conversationNewReplyMessage:
             guard notificationPlaceholders.count > 6 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextMessageReply(notificationPlaceholders[0],
