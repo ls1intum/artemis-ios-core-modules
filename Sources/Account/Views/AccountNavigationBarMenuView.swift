@@ -18,6 +18,8 @@ struct AccountNavigationBarMenuView: View {
     @State private var showNotificationSettings = false
     @State private var showProfile = false
 
+    let notificationsVisible: Bool
+
     var body: some View {
         Menu(content: {
             DataStateView(data: $viewModel.account, retryHandler: viewModel.getAccount) { account in
@@ -31,15 +33,17 @@ struct AccountNavigationBarMenuView: View {
                     }
                 })
             }
-            Button(action: {
-                showNotificationSettings = true
-            }, label: {
-                HStack {
-                    Image(systemName: "gearshape.fill")
-                    Text(R.string.localizable.notificationSettingsLabel())
-                    Spacer()
-                }
-            })
+            if notificationsVisible {
+                Button(action: {
+                    showNotificationSettings = true
+                }, label: {
+                    HStack {
+                        Image(systemName: "gearshape.fill")
+                        Text(R.string.localizable.notificationSettingsLabel())
+                        Spacer()
+                    }
+                })
+            }
             Button(R.string.localizable.logoutLabel()) {
                 viewModel.logout()
             }
@@ -73,18 +77,20 @@ struct AccountMenu: ViewModifier {
 
     @Binding var error: UserFacingError?
 
+    let notificationsVisible: Bool
+
     func body(content: Content) -> some View {
         content
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    AccountNavigationBarMenuView(error: $error)
+                    AccountNavigationBarMenuView(error: $error, notificationsVisible: notificationsVisible)
                 }
             }
     }
 }
 
 public extension View {
-    func accountMenu(error: Binding<UserFacingError?>) -> some View {
-        modifier(AccountMenu(error: error))
+    func accountMenu(error: Binding<UserFacingError?>, notificationsVisible: Bool = true) -> some View {
+        modifier(AccountMenu(error: error, notificationsVisible: notificationsVisible))
     }
 }
