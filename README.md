@@ -93,7 +93,8 @@ The `App` and `Themis` clients extensively utilize this subsystem.
 The Design Library subsystem is a comprehensive collection of UI elements that mirror the aesthetics of the `Webapp`. It encompasses a variety of components, such as buttons, text fields, chips, progress bars, and card modifiers. Additionally, it houses commonly utilized styles, including paddings, colors, and font sizes. It also encapsulates some UIKit components like the 'QLPreviewController' or 'WKWebView', offering SwiftUI versions of these elements. This subsystem is integral to all other subsystems and clients that incorporate UI, enhancing the visual consistency and user experience across the system.
 
 #### Artemis Markdown
-The Artemis Markdown subsystem provides a MarkdownView, a crucial component for rendering the partially custom markdown Artemis utilizes. This subsystem is adept at handling and displaying this custom markdown.
+The Artemis Markdown subsystem provides a MarkdownView, a crucial component for rendering the partially custom markdown Artemis utilizes. 
+This subsystem is adept at handling and displaying this custom markdown.
 Currently, the `App` exclusively employs this module to display lecture descriptions or messages within the instant message feature.
 This selective use may expand in the future as the system evolves.
 
