@@ -104,4 +104,7 @@ The Account subsystem manages user account operations. It provides the functiona
 A navigation bar menu, integrated across all clients, facilitates the detail view. 
 
 #### Push Notifications
-The Push Notifications subsystem manages all aspects related to push notifications. It encompasses the push notification setup user interface and the notification settings interface. Further, it includes handlers for the decryption and deep-linking of notifications. The User Session Store securely stores encryption keys. Currently, the `App` exclusively utilizes this subsystem.
+The Push Notifications subsystem manages all aspects related to push notifications.
+It encompasses the push notification setup user interface and the notification settings interface.
+Further, it includes handlers for the decryption and deep-linking of notifications.
+The User Session Store securely stores encryption keys. Currently, the `App` exclusively utilizes this subsystem.
