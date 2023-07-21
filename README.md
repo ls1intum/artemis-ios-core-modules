@@ -108,7 +108,8 @@ The Artemis Profile Info subsystem primarily supports the Login subsystem by ver
 This subsystem is service-oriented and does not incorporate any user interface components.
 
 #### Account
-The Account subsystem manages user account operations. It provides the functionality to view account information and log out of the current user.
+The Account subsystem manages user account operations. 
+It provides the functionality to view account information and log out of the current user.
 A navigation bar menu, integrated across all clients, facilitates the detail view. 
 
 #### Push Notifications
