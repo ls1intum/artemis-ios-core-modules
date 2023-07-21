@@ -65,7 +65,13 @@ Additionally, it houses configurations about the Artemis instances and maintains
 It is important to note that this subsystem is exclusively utilized within the `Core Module`, with no direct usage by any client.
 
 #### API Client
-The API Client subsystem is a lightweight API client built upon Apple's URLSession. It provides a straightforward method for sending REST requests and supports the content-types 'application/json' and 'multipart/form-data'. This subsystem is responsible for encrypting requests and decryption of responses, ensuring secure data transmission. Additionally, it handles logging and some aspects of error handling, contributing to the system's robustness. The API Client also includes a simple STOMP web socket client, facilitating real-time communication. The API Client subsystem is critical for all other subsystems that necessitate network communication. Its role is to ensure seamless and efficient data exchange within the system, enhancing its overall functionality and performance.
+The API Client subsystem is a lightweight API client built upon Apple's URLSession.
+It provides a straightforward method for sending REST requests and supports the content-types 'application/json' and 'multipart/form-data'.
+This subsystem is responsible for encrypting requests and decryption of responses, ensuring secure data transmission.
+Additionally, it handles logging and some aspects of error handling, contributing to the system's robustness.
+The API Client also includes a simple STOMP web socket client, facilitating real-time communication.
+The API Client subsystem is critical for all other subsystems that necessitate network communication.
+Its role is to ensure seamless and efficient data exchange within the system, enhancing its overall functionality and performance.
 
 *[STOMP documentation](https://stomp.github.io/stomp-specification-1.2.html)*
 
