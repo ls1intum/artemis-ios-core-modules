@@ -90,7 +90,10 @@ Currently, the `App` exclusively employs this module to display lecture descript
 This selective use may expand in the future as the system evolves.
 
 #### Login
-The Login subsystem manages the authentication flow of Artemis, providing both the user interface for login and the corresponding service layer. It facilitates institution selection, enabling users to switch between different Artemis instances. All three clients, `App`, `Exam Checker`, and `Themis`, employ this subsystem. Further, the login subsystem utilizes the User Session Store to retain authentication information.
+The Login subsystem manages the authentication flow of Artemis, providing both the user interface for login and the corresponding service layer.
+It facilitates institution selection, enabling users to switch between different Artemis instances.
+All three clients, `App`, `Exam Checker`, and `Themis`, employ this subsystem.
+Further, the login subsystem utilizes the User Session Store to retain authentication information.
 
 #### Artemis Profile Info
 The Artemis Profile Info subsystem primarily supports the Login subsystem by verifying the compatibility of the chosen Artemis instance with the client. This subsystem is service-oriented and does not incorporate any user interface components.
