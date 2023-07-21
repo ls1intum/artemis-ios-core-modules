@@ -49,7 +49,9 @@ dependencies: [
 *Figure: Subsystem decomposition of the `Core Module`.*
 
 #### Common Utility
-The Common Utility subsystem provides essential utility functions, encompassing a network state wrapper, logging functionality, and date formatting. Almost all other `Core Module`s extensively utilize this subsystem. Furthermore, all clients, including `App`, `Exam Checker`, and `Themis`, use this subsystem.
+The Common Utility subsystem provides essential utility functions, encompassing a network state wrapper, logging functionality, and date formatting.
+Almost all other `Core Module`s extensively utilize this subsystem.
+Furthermore, all clients, including `App`, `Exam Checker`, and `Themis`, use this subsystem.
 
 #### Shared Models
 The Shared Models subsystem houses all the Artemis domain models required by any of the clients. It includes computed properties with design elements for domain objects, such as the exercise icon, varying based on the exercise type. This subsystem is crucial for network communication and its data encryption. It also ensures consistency and efficiency in data handling across different clients. All clients within the system utilize the Shared Models subsystem.
