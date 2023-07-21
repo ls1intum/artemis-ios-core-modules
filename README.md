@@ -100,7 +100,8 @@ The Artemis Profile Info subsystem primarily supports the Login subsystem by ver
 This subsystem is service-oriented and does not incorporate any user interface components.
 
 #### Account
-The Account subsystem manages user account operations. It provides the functionality to view account information and log out of the current user. A navigation bar menu, integrated across all clients, facilitates the detail view. 
+The Account subsystem manages user account operations. It provides the functionality to view account information and log out of the current user.
+A navigation bar menu, integrated across all clients, facilitates the detail view. 
 
 #### Push Notifications
 The Push Notifications subsystem manages all aspects related to push notifications. It encompasses the push notification setup user interface and the notification settings interface. Further, it includes handlers for the decryption and deep-linking of notifications. The User Session Store securely stores encryption keys. Currently, the `App` exclusively utilizes this subsystem.
