@@ -2,6 +2,14 @@
 
 ArtemisCore is a SPM package containing modules which can be used accross all Artemis related iOS apps.
 
+## Clients Overview
+
+The package is currently used by the following iOS clients:
+
+- [Artemis iOS App](https://github.com/ls1intum/artemis-ios) (referred to as the App) – Native iOS application for Artemis
+- [Artemis Exam Participation Checker App](https://github.com/ls1intum/ArtemisExamChecker) (referred to as the Exam Checker) – an iPad app designed to streamline the process of checking student attendance during on-site exams conducted with the Artemis platform
+- [Themis](https://github.com/ls1intum/Themis) – an iPad app that provides a comprehensive and optimized way for tutors to assess student submissions on the go.
+
 # Modules Overview
 
 - **APIClient**: A lightweight API client based on Apple's URLSesssion
