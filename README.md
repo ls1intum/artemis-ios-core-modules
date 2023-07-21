@@ -76,7 +76,10 @@ Its role is to ensure seamless and efficient data exchange within the system, en
 *[STOMP documentation](https://stomp.github.io/stomp-specification-1.2.html)*
 
 #### Shared Services
-The Shared Services subsystem operates with the API Client to deliver service functionality to all other subsystems. This approach ensures that common API calls are not repetitively implemented across different subsystems, promoting code reuse and efficiency. The subsystem comprises an *AccountService*, *CourseService*, and *ExerciseService*, each providing the necessary calls for their respective services. The `App` and `Themis` clients extensively utilize this subsystem.
+The Shared Services subsystem operates with the API Client to deliver service functionality to all other subsystems.
+This approach ensures that common API calls are not repetitively implemented across different subsystems, promoting code reuse and efficiency.
+The subsystem comprises an *AccountService*, *CourseService*, and *ExerciseService*, each providing the necessary calls for their respective services.
+The `App` and `Themis` clients extensively utilize this subsystem.
 
 #### Design Library
 The Design Library subsystem is a comprehensive collection of UI elements that mirror the aesthetics of the `Webapp`. It encompasses a variety of components, such as buttons, text fields, chips, progress bars, and card modifiers. Additionally, it houses commonly utilized styles, including paddings, colors, and font sizes. It also encapsulates some UIKit components like the 'QLPreviewController' or 'WKWebView', offering SwiftUI versions of these elements. This subsystem is integral to all other subsystems and clients that incorporate UI, enhancing the visual consistency and user experience across the system.
