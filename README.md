@@ -65,7 +65,8 @@ Furthermore, all clients, including `App`, `Exam Checker`, and `Themis`, use thi
 The Shared Models subsystem houses all the Artemis domain models required by any of the clients.
 It includes computed properties with design elements for domain objects, such as the exercise icon, varying based on the exercise type.
 This subsystem is crucial for network communication and its data encryption.
-It also ensures consistency and efficiency in data handling across different clients. All clients within the system utilize the Shared Models subsystem.
+It also ensures consistency and efficiency in data handling across different clients.
+All clients within the system utilize the Shared Models subsystem.
 
 #### User Session Store
 The User Session Store subsystem stores user-session-related data, encompassing login data and push notification keys.
