@@ -31,7 +31,7 @@ public struct ArtemisMarkdownView: View {
 
     // swiftlint:disable force_try
     private func replaceExercises(replaceType: ReplaceType, _ inputString: String) -> String {
-        guard let baseURL = UserSession.shared.institution?.baseURL?.absoluteString else { return inputString }
+        guard let baseURL = UserSession.shared.institution?.baseURL else { return inputString }
 
         let pattern = "\\[\(replaceType.rawValue)\\](.*?)\\(/courses/(\\d+)/exercises/(\\d+)\\)\\[/\(replaceType.rawValue)\\]"
         let regex = try! NSRegularExpression(pattern: pattern, options: [])
@@ -40,16 +40,18 @@ public struct ArtemisMarkdownView: View {
         let outputString = regex.stringByReplacingMatches(in: inputString, options: [], range: range, withTemplate: {
             let title = replaceType.altText
             let icon = replaceType.icon
-            let url = "\(baseURL)/courses/$2/exercises/$3"
-
-            return "![\(title)](\(icon)) [$1](\(url))"
+            let urlPath = "/courses/$2/exercises/$3"
+            if let url = URL(string: urlPath, relativeTo: baseURL) {
+                return "![\(title)](\(icon)) [$1](\(url.absoluteString))"
+            }
+            return inputString
         }())
 
         return outputString
     }
 
     private func replaceLecture(_ inputString: String) -> String {
-        guard let baseURL = UserSession.shared.institution?.baseURL?.absoluteString else { return inputString }
+        guard let baseURL = UserSession.shared.institution?.baseURL else { return inputString }
 
         let pattern = "\\[lecture\\](.*?)\\(/courses/(\\d+)/lectures/(\\d+)\\)\\[/lecture\\]"
         let regex = try! NSRegularExpression(pattern: pattern, options: [])
@@ -58,9 +60,12 @@ public struct ArtemisMarkdownView: View {
         let outputString = regex.stringByReplacingMatches(in: inputString, options: [], range: range, withTemplate: {
             let title = "Lecture"
             let icon = "fa-chalkboard-user"
-            let url = "\(baseURL)/courses/$2/lectures/$3"
+            let urlPath = "/courses/$2/lectures/$3"
+            if let url = URL(string: urlPath, relativeTo: baseURL) {
+                return "![\(title)](\(icon)) [$1](\(url.absoluteString))"
+            }
 
-            return "![\(title)](\(icon)) [$1](\(url))"
+            return inputString
         }())
 
         return outputString
