@@ -191,6 +191,7 @@ public final class APIClient {
             }
             UserSession.shared.setUserLoggedIn(isLoggedIn: false)
             UserSession.shared.savePassword(password: nil)
+            UserSession.shared.saveUsername(username: nil)
         }
     }
 
