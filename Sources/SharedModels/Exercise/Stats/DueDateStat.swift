@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DueDateStat: Codable {
+public struct DueDateStat: Codable, Hashable {
     public let inTime: Int
     public let late: Int
 }
