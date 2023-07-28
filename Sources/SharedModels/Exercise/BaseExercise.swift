@@ -255,9 +255,27 @@ private struct CategoryImpl: Codable {
 extension Exercise: Hashable {
     public static func == (lhs: Exercise, rhs: Exercise) -> Bool {
         lhs.id == rhs.id
+        && lhs.baseExercise.title == rhs.baseExercise.title
+        && lhs.baseExercise.dueDate == rhs.baseExercise.dueDate
+        && lhs.baseExercise.releaseDate == rhs.baseExercise.releaseDate
+        && lhs.baseExercise.assessmentDueDate == rhs.baseExercise.assessmentDueDate
+        && lhs.baseExercise.numberOfSubmissions == rhs.baseExercise.numberOfSubmissions
+        && lhs.baseExercise.numberOfOpenComplaints == rhs.baseExercise.numberOfOpenComplaints
+        && lhs.baseExercise.totalNumberOfAssessments == rhs.baseExercise.totalNumberOfAssessments
+        && lhs.baseExercise.numberOfOpenMoreFeedbackRequests == rhs.baseExercise.numberOfOpenMoreFeedbackRequests
+        && lhs.baseExercise.numberOfAssessmentsOfCorrectionRounds == rhs.baseExercise.numberOfAssessmentsOfCorrectionRounds
     }
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+        hasher.combine(baseExercise.title)
+        hasher.combine(baseExercise.dueDate)
+        hasher.combine(baseExercise.releaseDate)
+        hasher.combine(baseExercise.assessmentDueDate)
+        hasher.combine(baseExercise.numberOfSubmissions)
+        hasher.combine(baseExercise.numberOfOpenComplaints)
+        hasher.combine(baseExercise.totalNumberOfAssessments)
+        hasher.combine(baseExercise.numberOfOpenMoreFeedbackRequests)
+        hasher.combine(baseExercise.numberOfAssessmentsOfCorrectionRounds)
     }
 }
