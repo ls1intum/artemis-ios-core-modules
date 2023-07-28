@@ -19,4 +19,7 @@ public struct ModelingSubmission: BaseSubmission {
     public var durationInMinutes: Double?
     public var results: [Result]?
     public var participation: Participation?
+
+    public var model: String?
+    public var explanationText: String?
 }
