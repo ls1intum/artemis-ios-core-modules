@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol StudentParticipation: BaseParticipation {
-    //    var student: User? { get }
+    var student: User? { get }
     var team: Team? { get }
     var participantIdentifier: String? { get }
     var testRun: Bool? { get }
