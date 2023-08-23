@@ -52,6 +52,7 @@ let package = Package(
         .package(url: "https://github.com/gonzalezreal/swift-markdown-ui", from: "2.0.0"),
         .package(url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "7.0.0")),
         .package(url: "https://github.com/Romixery/SwiftStomp.git", .upToNextMajor(from: "1.0.4")),
+        // TODO: remove the dependency below once the WebSocketDelegate issue is fixed
         .package(url: "https://github.com/daltoniam/Starscream", exact: "4.0.4")
     ],
     targets: [
