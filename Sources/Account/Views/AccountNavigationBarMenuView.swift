@@ -27,9 +27,8 @@ struct AccountNavigationBarMenuView: View {
                     showProfile = true
                 }, label: {
                     HStack {
-                        Image(systemName: "person.fill")
                         Text(account.login)
-                        Spacer()
+                        Image(systemName: "person.fill")
                     }
                 })
             }
@@ -38,11 +37,18 @@ struct AccountNavigationBarMenuView: View {
                     showNotificationSettings = true
                 }, label: {
                     HStack {
-                        Image(systemName: "gearshape.fill")
                         Text(R.string.localizable.notificationSettingsLabel())
-                        Spacer()
+                        Image(systemName: "gearshape.fill")
                     }
                 })
+            }
+            Button {
+                //
+            } label: {
+                HStack {
+                    Text("Instance Contact")
+                    Image(systemName: "info.bubble.fill")
+                }
             }
             Button(R.string.localizable.logoutLabel()) {
                 viewModel.logout()
