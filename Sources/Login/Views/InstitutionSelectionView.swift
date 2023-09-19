@@ -105,7 +105,7 @@ private struct CustomInstanceCell: View {
         .frame(maxWidth: .infinity)
         .padding(.l)
         .cardModifier()
-        .onChange(of: currentInstitution) { _ in
+        .onChange(of: currentInstitution) {
             if case .custom(let url) = institution {
                 customUrl = url?.absoluteString ?? ""
             }
