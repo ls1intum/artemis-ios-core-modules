@@ -36,7 +36,7 @@ In Project Settings, on the tab "Package Dependencies", click "+" and add <https
 1. Add a dependency in Package.swift:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ls1intum/artemis-ios-core-modules", .upToNextMajor(from: "2.3.6")),
+    .package(url: "https://github.com/ls1intum/artemis-ios-core-modules", .upToNextMajor(from: "3.5.0")),
 ]
 ```
 
