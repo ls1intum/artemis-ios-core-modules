@@ -73,6 +73,7 @@ private struct CustomInstanceCell: View {
 
             TextField(R.string.localizable.account_select_artemis_instance_custom_instance(), text: $customUrl)
                 .textFieldStyle(ArtemisTextField())
+                .keyboardType(.URL)
                 .background(Color.gray.opacity(0.2))
             Button(R.string.localizable.select()) {
                 guard let url = URL(string: customUrl) else {
