@@ -14,6 +14,20 @@ public struct Reaction: Codable {
     public var emojiId: String
     public var post: Message?
     public var answerPost: AnswerMessage?
+
+    public init(id: Int64,
+                user: ConversationUser? = nil,
+                creationDate: Date? = nil,
+                emojiId: String,
+                post: Message? = nil,
+                answerPost: AnswerMessage? = nil) {
+        self.id = id
+        self.user = user
+        self.creationDate = creationDate
+        self.emojiId = emojiId
+        self.post = post
+        self.answerPost = answerPost
+    }
 }
 
 extension Reaction: Equatable, Hashable {

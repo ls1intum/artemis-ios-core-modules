@@ -21,7 +21,7 @@ public struct Lecture: Codable, Identifiable {
         return Image("chalkboard-teacher-solid", bundle: .module)
     }
 
-    public init(id: Int, 
+    public init(id: Int,
                 title: String?,
                 description: String?,
                 startDate: Date?,

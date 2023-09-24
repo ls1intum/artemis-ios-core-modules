@@ -26,6 +26,50 @@ public struct Message: BaseMessage {
     public var resolved: Bool?
     public var answerCount: Int?
     public var voteCount: Int?
+
+    public init(id: Int64,
+                author: ConversationUser? = nil, 
+                creationDate: Date? = nil,
+                updatedDate: Date? = nil,
+                content: String? = nil,
+                tokenizedContent: String? = nil,
+                authorRoleTransient: UserRole? = nil,
+                title: String? = nil,
+                visibleForStudents: Bool? = nil,
+                reactions: [Reaction]? = nil,
+                answers: [AnswerMessage]? = nil,
+                tags: [String]? = nil,
+                exercise: Exercise? = nil,
+                lecture: Lecture? = nil,
+                course: Course? = nil,
+                courseWideContext: CourseWideContext? = nil,
+                conversation: Conversation? = nil,
+                displayPriority: DisplayPriority? = nil,
+                resolved: Bool? = nil,
+                answerCount: Int? = nil,
+                voteCount: Int? = nil) {
+        self.id = id
+        self.author = author
+        self.creationDate = creationDate
+        self.updatedDate = updatedDate
+        self.content = content
+        self.tokenizedContent = tokenizedContent
+        self.authorRoleTransient = authorRoleTransient
+        self.title = title
+        self.visibleForStudents = visibleForStudents
+        self.reactions = reactions
+        self.answers = answers
+        self.tags = tags
+        self.exercise = exercise
+        self.lecture = lecture
+        self.course = course
+        self.courseWideContext = courseWideContext
+        self.conversation = conversation
+        self.displayPriority = displayPriority
+        self.resolved = resolved
+        self.answerCount = answerCount
+        self.voteCount = voteCount
+    }
 }
 
 extension Message: Equatable, Hashable {
