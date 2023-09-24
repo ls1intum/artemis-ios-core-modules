@@ -20,6 +20,22 @@ public struct Lecture: Codable, Identifiable {
     public var image: Image {
         return Image("chalkboard-teacher-solid", bundle: .module)
     }
+
+    public init(id: Int, 
+                title: String?,
+                description: String?,
+                startDate: Date?,
+                endDate: Date?,
+                attachments: [Attachment]?,
+                lectureUnits: [LectureUnit]?) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.startDate = startDate
+        self.endDate = endDate
+        self.attachments = attachments
+        self.lectureUnits = lectureUnits
+    }
 }
 
 extension Lecture: Equatable, Hashable {

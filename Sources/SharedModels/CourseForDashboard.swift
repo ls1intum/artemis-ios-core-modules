@@ -16,6 +16,24 @@ public struct CourseForDashboard: Codable {
     public var fileUploadScores: CourseScore?
     public var quizScores: CourseScore?
     public var participationResults: [ParticipationResultDTO]?
+
+    public init(course: Course,
+                totalScores: CourseScore? = nil,
+                textScores: CourseScore? = nil,
+                programmingScores: CourseScore? = nil,
+                modelingScores: CourseScore? = nil,
+                fileUploadScores: CourseScore? = nil,
+                quizScores: CourseScore? = nil,
+                participationResults: [ParticipationResultDTO]? = nil) {
+        self.course = course
+        self.totalScores = totalScores
+        self.textScores = textScores
+        self.programmingScores = programmingScores
+        self.modelingScores = modelingScores
+        self.fileUploadScores = fileUploadScores
+        self.quizScores = quizScores
+        self.participationResults = participationResults
+    }
 }
 
 extension CourseForDashboard: Identifiable {
