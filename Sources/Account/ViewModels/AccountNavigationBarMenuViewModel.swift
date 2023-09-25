@@ -38,10 +38,11 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
 
             switch result {
             case .success:
-                guard let notificationDeviceConfiguration = UserSession.shared.getCurrentNotificationDeviceConfiguration() else { return }
-                UserSession.shared.saveNotificationDeviceConfiguration(token: notificationDeviceConfiguration.apnsDeviceToken,
-                                                                       encryptionKey: nil,
-                                                                       skippedNotifications: notificationDeviceConfiguration.skippedNotifications)
+                if let notificationDeviceConfiguration = UserSession.shared.getCurrentNotificationDeviceConfiguration() {
+                    UserSession.shared.saveNotificationDeviceConfiguration(token: notificationDeviceConfiguration.apnsDeviceToken,
+                                                                           encryptionKey: nil,
+                                                                           skippedNotifications: notificationDeviceConfiguration.skippedNotifications)
+                }
                 APIClient().perfomLogout()
             case .failure(let error):
                 if let error = error as? APIClientError {
