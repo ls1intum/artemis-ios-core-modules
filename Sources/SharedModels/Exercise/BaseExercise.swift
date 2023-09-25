@@ -245,6 +245,11 @@ public struct Category: Codable {
         category = impl?.category ?? "?"
         colorCode = impl?.color ?? "#000000"
     }
+
+    public init(category: String, colorCode: String) {
+        self.category = category
+        self.colorCode = colorCode
+    }
 }
 
 private struct CategoryImpl: Codable {

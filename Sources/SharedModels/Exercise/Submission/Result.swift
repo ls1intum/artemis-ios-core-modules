@@ -22,6 +22,40 @@ public struct Result: Codable {
     public var feedbacks: [Feedback]?
     public var participation: Participation?
 
+    public init(id: Int? = nil,
+                completionDate: Date? = nil,
+                successful: Bool? = nil,
+                hasFeedback: Bool? = nil,
+                score: Double? = nil,
+                assessmentType: AssessmentType? = nil,
+                rated: Bool? = nil,
+                hasComplaint: Bool? = nil,
+                exampleResult: Bool? = nil,
+                testCaseCount: Int? = nil,
+                passedTestCaseCount: Int? = nil,
+                codeIssueCount: Int? = nil,
+                submission: Submission? = nil,
+                assessor: User? = nil,
+                feedbacks: [Feedback]? = nil,
+                participation: Participation? = nil) {
+        self.id = id
+        self.completionDate = completionDate
+        self.successful = successful
+        self.hasFeedback = hasFeedback
+        self.score = score
+        self.assessmentType = assessmentType
+        self.rated = rated
+        self.hasComplaint = hasComplaint
+        self.exampleResult = exampleResult
+        self.testCaseCount = testCaseCount
+        self.passedTestCaseCount = passedTestCaseCount
+        self.codeIssueCount = codeIssueCount
+        self.submission = submission
+        self.assessor = assessor
+        self.feedbacks = feedbacks
+        self.participation = participation
+    }
+
     public var isProgrammingExerciseStudentParticipation: Bool {
         switch participation {
         case .programmingExerciseStudent:
