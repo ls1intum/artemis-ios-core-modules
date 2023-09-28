@@ -16,6 +16,7 @@ public struct Feedback: Codable, Identifiable, Hashable {
     public var credits: Double? /// score of element
     public var type: FeedbackType?
     public var positive: Bool?
+    public var testCase: ProgrammingExerciseTestCase?
 
     public init(id: Int? = nil, text: String? = nil, detailText: String? = nil, reference: String? = nil, credits: Double? = nil, type: FeedbackType? = nil, positive: Bool? = nil) {
         self.id = id
