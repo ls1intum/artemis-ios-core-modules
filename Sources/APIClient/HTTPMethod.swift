@@ -11,11 +11,11 @@ public enum HTTPMethod: String, CustomStringConvertible {
     case connect
     case delete
     case get
-    case post
     case head
-    case put
     case options
-    case update
+    case patch
+    case post
+    case put
 
     public var description: String {
         return rawValue.uppercased()
