@@ -8,7 +8,7 @@ public protocol BaseSubmission: Codable {
     var submissionDate: Date? { get }
     var exampleSubmission: Bool? { get }
     var durationInMinutes: Double? { get }
-    var results: [Result]? { get }
+    var results: [Result?]? { get }
     var participation: Participation? { get }
 }
 
