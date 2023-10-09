@@ -42,10 +42,10 @@ public class PushNotificationHandler {
 
             let request = UNNotificationRequest(identifier: UUID().uuidString, content: notification, trigger: nil)
 
-            UNUserNotificationCenter.current().add(request) { error in
-                if let error {
-                    log.error(error.localizedDescription)
-                }
+            do {
+                try await UNUserNotificationCenter.current().add(request)
+            } catch {
+                log.error(error.localizedDescription)
             }
         }
     }
