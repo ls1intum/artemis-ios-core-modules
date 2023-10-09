@@ -21,6 +21,7 @@ public struct Course: Codable, Identifiable {
     public var lectures: [Lecture]?
     public var accuracyOfScores: Int?
     public var courseInformationSharingConfiguration: CourseInformationSharingConfiguration
+    public var courseInformationSharingMessagingCodeOfConduct: String? = ""
     public var instructorGroupName: String?
     public var editorGroupName: String?
     public var teachingAssistantGroupName: String?
