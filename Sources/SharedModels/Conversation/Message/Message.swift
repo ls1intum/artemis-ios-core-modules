@@ -28,7 +28,7 @@ public struct Message: BaseMessage {
     public var voteCount: Int?
 
     public init(id: Int64,
-                author: ConversationUser? = nil, 
+                author: ConversationUser? = nil,
                 creationDate: Date? = nil,
                 updatedDate: Date? = nil,
                 content: String? = nil,
