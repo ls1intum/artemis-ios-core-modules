@@ -19,6 +19,7 @@ public protocol BaseExercise: Codable {
     var categories: [Category]? { get }
     var visibleToStudents: Bool? { get }
     var teamMode: Bool? { get }
+    var secondCorrectionEnabled: Bool? { get }
     var problemStatement: String? { get }
     var assessmentType: AssessmentType? { get }
     var allowComplaintsForAutomaticAssessments: Bool? { get }
@@ -261,6 +262,7 @@ extension Exercise: Hashable {
         && lhs.baseExercise.assessmentDueDate == rhs.baseExercise.assessmentDueDate
         && lhs.baseExercise.numberOfSubmissions == rhs.baseExercise.numberOfSubmissions
         && lhs.baseExercise.numberOfOpenComplaints == rhs.baseExercise.numberOfOpenComplaints
+        && lhs.baseExercise.secondCorrectionEnabled == rhs.baseExercise.secondCorrectionEnabled
         && lhs.baseExercise.totalNumberOfAssessments == rhs.baseExercise.totalNumberOfAssessments
         && lhs.baseExercise.numberOfOpenMoreFeedbackRequests == rhs.baseExercise.numberOfOpenMoreFeedbackRequests
         && lhs.baseExercise.numberOfAssessmentsOfCorrectionRounds == rhs.baseExercise.numberOfAssessmentsOfCorrectionRounds
@@ -274,6 +276,7 @@ extension Exercise: Hashable {
         hasher.combine(baseExercise.assessmentDueDate)
         hasher.combine(baseExercise.numberOfSubmissions)
         hasher.combine(baseExercise.numberOfOpenComplaints)
+        hasher.combine(baseExercise.secondCorrectionEnabled)
         hasher.combine(baseExercise.totalNumberOfAssessments)
         hasher.combine(baseExercise.numberOfOpenMoreFeedbackRequests)
         hasher.combine(baseExercise.numberOfAssessmentsOfCorrectionRounds)

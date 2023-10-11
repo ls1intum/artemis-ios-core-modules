@@ -19,6 +19,7 @@ public struct ModelingExercise: BaseExercise {
     public var categories: [Category]? = []
     public var visibleToStudents: Bool?
     public var teamMode: Bool?
+    public var secondCorrectionEnabled: Bool?
     public var problemStatement: String?
     public var assessmentType: AssessmentType?
     public var allowComplaintsForAutomaticAssessments: Bool?
