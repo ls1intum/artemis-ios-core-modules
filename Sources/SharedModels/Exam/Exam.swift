@@ -16,4 +16,5 @@ public struct Exam: Codable {
     /// End of assessment date
     public var publishResultsDate: Date?
     public var exerciseGroups: [ExerciseGroup]?
+    public var numberOfCorrectionRoundsInExam: Int?
 }
