@@ -17,8 +17,17 @@ public struct Feedback: Codable, Identifiable, Hashable {
     public var type: FeedbackType?
     public var positive: Bool?
     public var testCase: ProgrammingExerciseTestCase?
+    public var gradingInstruction: GradingInstruction?
 
-    public init(id: Int? = nil, text: String? = nil, detailText: String? = nil, reference: String? = nil, credits: Double? = nil, type: FeedbackType? = nil, positive: Bool? = nil) {
+    public init(id: Int? = nil,
+                text: String? = nil,
+                detailText: String? = nil,
+                reference: String? = nil,
+                credits: Double? = nil,
+                type: FeedbackType? = nil,
+                positive: Bool? = nil,
+                testCase: ProgrammingExerciseTestCase? = nil,
+                gradingInstruction: GradingInstruction? = nil) {
         self.id = id
         self.text = text
         self.detailText = detailText
@@ -26,6 +35,8 @@ public struct Feedback: Codable, Identifiable, Hashable {
         self.credits = credits
         self.type = type
         self.positive = positive
+        self.testCase = testCase
+        self.gradingInstruction = gradingInstruction
     }
 }
 

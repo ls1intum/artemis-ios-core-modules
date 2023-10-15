@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct GradingInstruction: Codable, Identifiable {
+public struct GradingInstruction: Codable, Identifiable, Hashable {
     public var id: Int
     public var credits: Double?
     public var gradingScale: String?

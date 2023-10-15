@@ -12,8 +12,9 @@ public struct GradingCriterion: Codable, Identifiable {
     public var title: String?
     public var structuredGradingInstructions: [GradingInstruction] = []
 
-    public init(id: Int, structuredGradingInstructions: [GradingInstruction] = []) {
+    public init(id: Int, title: String? = nil, structuredGradingInstructions: [GradingInstruction] = []) {
         self.id = id
+        self.title = title
         self.structuredGradingInstructions = structuredGradingInstructions
     }
 }
