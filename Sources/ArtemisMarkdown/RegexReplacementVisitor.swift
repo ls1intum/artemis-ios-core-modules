@@ -85,4 +85,15 @@ enum RegexReplacementVisitors {
     static let members = RegexReplacementVisitor(regex: #/\[user\](?<name>.*?)\((?<login>.*?)\)\[/user\]/#) { match in
         "[@\(match.name)]()"
     }
+
+    static func visitAll(input: inout String) {
+        for visit in [
+            exercises.visit(input:),
+            ins.visit(input:),
+            lectures.visit(input:),
+            members.visit(input:)
+        ] {
+            visit(&input)
+        }
+    }
 }

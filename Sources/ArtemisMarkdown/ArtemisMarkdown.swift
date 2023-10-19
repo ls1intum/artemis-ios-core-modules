@@ -9,14 +9,7 @@ public struct ArtemisMarkdownView: View {
 
     public init(string: String) {
         var input = string
-        for visit in [
-            RegexReplacementVisitors.exercises.visit(input:),
-            RegexReplacementVisitors.ins.visit(input:),
-            RegexReplacementVisitors.lectures.visit(input:),
-            RegexReplacementVisitors.members.visit(input:)
-        ] {
-            visit(&input)
-        }
+        RegexReplacementVisitors.visitAll(input: &input)
         self.string = input
     }
 
