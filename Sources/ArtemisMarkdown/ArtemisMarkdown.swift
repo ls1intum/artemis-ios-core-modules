@@ -19,7 +19,8 @@ public struct ArtemisMarkdownView: View {
         let replacedFileUpload = replaceExercises(replaceType: .fileUpload, replacedModeling)
         let replacedLecture = replaceLecture(replacedFileUpload)
         let replacedInsTag = replaceInsTag(replacedLecture)
-        return replacedInsTag
+        let replacedMembers = replaceMembers(replacedInsTag)
+        return replacedMembers
     }
 
     public var body: some View {
@@ -27,6 +28,15 @@ public struct ArtemisMarkdownView: View {
             .markdownTheme(.artemis)
             .markdownImageProvider(AssetImageProvider(bundle: .module))
             .markdownInlineImageProvider(AssetInlineImageProvider(bundle: .module))
+    }
+
+    private func replaceMembers(_ inputString: String) -> String {
+        let pattern = #/\[user\](?<name>.*?)\((?<login>.*?)\)\[/user\]/#
+        var outputString = inputString
+        outputString.replace(pattern) { match in
+            "[@\(match.name)]()"
+        }
+        return outputString
     }
 
     // swiftlint:disable force_try
