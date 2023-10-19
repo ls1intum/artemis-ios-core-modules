@@ -57,7 +57,7 @@ enum RegexReplacementVisitors {
     }
 
     static let exercises = RegexReplacementVisitor(
-        regex: #/\[(?<start>.*?)\](?<name>.*?)\((?<path>/courses/\d+/exercises/\d+)\)\[/(?<stop>.*?)\]/#
+        regex: #/\[(?<start>[\w-]*?)\](?<name>.*?)\((?<path>/courses/\d+/exercises/\d+)\)\[/(?<stop>[\w-]*?)\]/#
     ) { match in
         guard match.start == match.stop,
               let exercise = Exercise.allCases.first(where: { $0.rawValue == match.start }),

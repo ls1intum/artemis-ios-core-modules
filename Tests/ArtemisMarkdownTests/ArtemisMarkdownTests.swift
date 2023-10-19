@@ -3,7 +3,7 @@ import XCTest
 
 final class ArtemisMarkdownTests: XCTestCase {
     func testExerciseRegex() throws {
-        let inputString = "[uml]An Exercise(/courses/1/exercises/2)[/uml]"
+        let inputString = "[file-upload]An Exercise(/courses/1/exercises/2)[/file-upload]"
         let match = try XCTUnwrap(RegexReplacementVisitors.exercises.regex.wholeMatch(in: inputString))
         XCTAssertEqual(match.name, "An Exercise")
         XCTAssertEqual(match.path, "/courses/1/exercises/2")
