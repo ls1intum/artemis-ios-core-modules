@@ -8,24 +8,20 @@ public struct ArtemisMarkdownView: View {
     let string: String
 
     public init(string: String) {
-        self.string = string
-    }
-
-    private var markdownString: String {
-        var output = string
-        for visitor in [
+        var input = string
+        for visit in [
             RegexReplacementVisitors.exercises.visit(input:),
             RegexReplacementVisitors.ins.visit(input:),
             RegexReplacementVisitors.lectures.visit(input:),
             RegexReplacementVisitors.members.visit(input:)
         ] {
-            visitor(&output)
+            visit(&input)
         }
-        return output
+        self.string = input
     }
 
     public var body: some View {
-        Markdown(markdownString)
+        Markdown(string)
             .markdownTheme(.artemis)
             .markdownImageProvider(AssetImageProvider(bundle: .module))
             .markdownInlineImageProvider(AssetInlineImageProvider(bundle: .module))
