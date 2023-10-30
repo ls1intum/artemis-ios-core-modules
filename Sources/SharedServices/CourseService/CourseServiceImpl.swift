@@ -82,4 +82,27 @@ public class CourseServiceImpl: CourseService {
             return .failure(error: UserFacingError(error: error))
         }
     }
+
+    // MARK: - Get Course Members By Searching
+    struct GetCourseMembersSearchRequest: APIRequest {
+        typealias Response = [UserNameAndLoginDTO]
+
+        var method: HTTPMethod { .get }
+
+        var courseId: Int
+        var loginOrName: String
+
+        var resourceName: String { "api/courses/\(courseId)/members/search?loginOrName=\(loginOrName)" }
+    }
+
+    public func getCourseMembers(courseId: Int, searchLoginOrName: String) async -> DataState<[UserNameAndLoginDTO]> {
+        let result = await client.sendRequest(GetCourseMembersSearchRequest(courseId: courseId, loginOrName: searchLoginOrName))
+
+        switch result {
+        case let .success((response, _)):
+            return .done(response: response)
+        case let .failure(error):
+            return .failure(error: UserFacingError(error: error))
+        }
+    }
 }
