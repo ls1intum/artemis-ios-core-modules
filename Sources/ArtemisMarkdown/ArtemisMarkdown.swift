@@ -22,19 +22,19 @@ public struct ArtemisMarkdownView: View {
 }
 
 private extension Theme {
-  /// A theme that mimics the Artmeis style ( very close to the Github style)
-  ///
-  /// Style | Preview
-  /// --- | ---
-  /// Inline text | ![](GitHubInlines)
-  /// Headings | ![](GitHubHeading)
-  /// Blockquote | ![](GitHubBlockquote)
-  /// Code block | ![](GitHubCodeBlock)
-  /// Image | ![](GitHubImage)
-  /// Task list | ![](GitHubTaskList)
-  /// Bulleted list | ![](GitHubNestedBulletedList)
-  /// Numbered list | ![](GitHubNumberedList)
-  /// Table | ![](GitHubTable)
+    /// A theme that mimics the Artmeis style ( very close to the Github style)
+    ///
+    /// Style | Preview
+    /// --- | ---
+    /// Inline text | ![](GitHubInlines)
+    /// Headings | ![](GitHubHeading)
+    /// Blockquote | ![](GitHubBlockquote)
+    /// Code block | ![](GitHubCodeBlock)
+    /// Image | ![](GitHubImage)
+    /// Task list | ![](GitHubTaskList)
+    /// Bulleted list | ![](GitHubNestedBulletedList)
+    /// Numbered list | ![](GitHubNumberedList)
+    /// Table | ![](GitHubTable)
     static let artemis = Theme.gitHub
         .text {
             FontSize(16)

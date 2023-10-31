@@ -18,42 +18,8 @@ struct RegexReplacementVisitor<Output> {
 }
 
 enum RegexReplacementVisitors {
-    enum Exercise: String, CaseIterable {
-        case programming
-        case quiz
-        case text
-        case fileUpload = "file-upload"
-        case modeling
-
-        var title: String {
-            switch self {
-            case .programming:
-                return "Programming"
-            case .quiz:
-                return "Quiz"
-            case .text:
-                return "Text"
-            case .fileUpload:
-                return "File Upload"
-            case .modeling:
-                return "Modeling"
-            }
-        }
-
-        var icon: String {
-            switch self {
-            case .programming:
-                return "fa-keyboard"
-            case .quiz:
-                return "fa-check-double"
-            case .fileUpload:
-                return "file-upload"
-            case .text:
-                return "text"
-            case .modeling:
-                return "uml"
-            }
-        }
+    static let channels = RegexReplacementVisitor(regex: #/\[channel\](?<name>.*?)\((?<id>.*?)\)\[/channel\]/#) { match in
+        "[#\(match.name)]()"
     }
 
     static let exercises = RegexReplacementVisitor(
@@ -94,6 +60,46 @@ enum RegexReplacementVisitors {
             members.visit(input:)
         ] {
             visit(&input)
+        }
+    }
+}
+
+// MARK: - Supporting Types
+
+private enum Exercise: String, CaseIterable {
+    case programming
+    case quiz
+    case text
+    case fileUpload = "file-upload"
+    case modeling
+
+    var title: String {
+        switch self {
+        case .programming:
+            return "Programming"
+        case .quiz:
+            return "Quiz"
+        case .text:
+            return "Text"
+        case .fileUpload:
+            return "File Upload"
+        case .modeling:
+            return "Modeling"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .programming:
+            return "fa-keyboard"
+        case .quiz:
+            return "fa-check-double"
+        case .fileUpload:
+            return "file-upload"
+        case .text:
+            return "text"
+        case .modeling:
+            return "uml"
         }
     }
 }
