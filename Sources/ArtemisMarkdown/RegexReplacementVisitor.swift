@@ -54,6 +54,7 @@ enum RegexReplacementVisitors {
 
     static func visitAll(input: inout String) {
         for visit in [
+            channels.visit(input:),
             exercises.visit(input:),
             ins.visit(input:),
             lectures.visit(input:),
