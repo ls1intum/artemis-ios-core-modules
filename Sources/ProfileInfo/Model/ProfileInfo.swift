@@ -22,7 +22,7 @@ public struct ProfileInfo: Codable {
     public let externalCredentialProvider: String?
     public let externalPasswordResetLinkMap: [String: String]?
     public let useExternal: Bool
-    public let buildPlanURLTemplate: String
+    public let buildPlanURLTemplate: String?
     public let activeProfiles: [String]
 }
 
