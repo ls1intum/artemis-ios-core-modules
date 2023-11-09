@@ -57,7 +57,7 @@ struct AccountNavigationBarMenuView: View {
                     .scaleEffect(0.5)
             }.frame(width: 150)
         })
-        .onChange(of: viewModel.error) { error in
+        .onChange(of: viewModel.error) { _, error in
             self.error = error
         }
         .sheet(isPresented: $showNotificationSettings) {
