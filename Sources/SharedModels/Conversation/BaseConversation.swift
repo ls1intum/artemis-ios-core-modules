@@ -35,6 +35,7 @@ public protocol BaseConversation: Codable {
     var unreadMessagesCount: Int? { get set }
     var isFavorite: Bool? { get }
     var isHidden: Bool? { get }
+    var muted: Muted? { get }
     var isCreator: Bool? { get }
     var isMember: Bool? { get }
     var numberOfMembers: Int? { get }

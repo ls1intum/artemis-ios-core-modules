@@ -18,6 +18,7 @@ public struct OneToOneChat: BaseConversation {
     public var unreadMessagesCount: Int?
     public var isFavorite: Bool?
     public var isHidden: Bool?
+    public var muted: Muted?
     public var isCreator: Bool?
     public var isMember: Bool?
     public var numberOfMembers: Int?
