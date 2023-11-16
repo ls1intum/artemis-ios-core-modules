@@ -56,6 +56,12 @@ public struct StudentParticipationImpl: StudentParticipation, Codable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        guard container.contains(.type),
+              container.contains(.id) else {
+            throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Type or id is missing.")
+        }
+
         let type = try container.decode(String.self, forKey: .type)
 
         switch type {
