@@ -44,6 +44,9 @@ public enum Participation: Identifiable, Codable {
     }
 
     public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(type(of: baseParticipation).type, forKey: .type)
+
         switch self {
         case .student(let participation):
             try participation.encode(to: encoder)
