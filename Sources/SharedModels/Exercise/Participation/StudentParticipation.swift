@@ -40,6 +40,20 @@ public struct StudentParticipationImpl: StudentParticipation, Codable {
         case submissions
     }
 
+    init() {
+        self.student = nil
+        self.team = nil
+        self.participantIdentifier = nil
+        self.testRun = nil
+        self.id = 0
+        self.initializationState = nil
+        self.initializationDate = nil
+        self.individualDueDate = nil
+        self.results = nil
+        self.exercise = nil
+        self.submissions = nil
+    }
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try container.decode(String.self, forKey: .type)
@@ -48,17 +62,7 @@ public struct StudentParticipationImpl: StudentParticipation, Codable {
         case StudentParticipationImpl.type:
             self = try StudentParticipationImpl(from: decoder)
         default:
-            self.student = nil
-            self.team = nil
-            self.participantIdentifier = nil
-            self.testRun = nil
-            self.id = 0
-            self.initializationState = nil
-            self.initializationDate = nil
-            self.individualDueDate = nil
-            self.results = nil
-            self.exercise = nil
-            self.submissions = nil
+            self = StudentParticipationImpl()
         }
     }
 
