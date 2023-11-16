@@ -62,13 +62,17 @@ public struct StudentParticipationImpl: StudentParticipation, Codable {
             throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Type or id is missing.")
         }
 
-        let type = try container.decode(String.self, forKey: .type)
+        do {
+            let type = try container.decode(String.self, forKey: .type)
 
-        switch type {
-        case StudentParticipationImpl.type:
-            self = try StudentParticipationImpl(from: decoder)
-        default:
-            self = StudentParticipationImpl()
+            switch type {
+            case StudentParticipationImpl.type:
+                self = try StudentParticipationImpl(from: decoder)
+            default:
+                self = StudentParticipationImpl()
+            }
+        } catch {
+            throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Failed to decode properties.")
         }
     }
 
