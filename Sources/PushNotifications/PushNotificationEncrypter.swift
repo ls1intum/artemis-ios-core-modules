@@ -29,6 +29,12 @@ class PushNotificationEncrypter {
         do {
             let decrypted = try AES(key: uint8Key, blockMode: CBC(iv: uint8Iv), padding: .pkcs7).decrypt(uint8payload)
             let decoder = JSONDecoder()
+
+            let version = try decoder.decode(PushNotificationVersion.self, from: Data(decrypted))
+            guard version.isValid else {
+                return nil
+            }
+
             return try decoder.decode(PushNotification.self, from: Data(decrypted))
         } catch {
             log.error("error encrypting: \(error)")
