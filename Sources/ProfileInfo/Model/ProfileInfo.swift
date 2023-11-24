@@ -18,7 +18,7 @@ public struct ProfileInfo: Codable {
     public let accountName: String
     public let externalUserManagementURL: URL?
     public let externalUserManagementName: String?
-    public let versionControlUrl: URL
+    public let versionControlUrl: URL?
     public let externalCredentialProvider: String?
     public let externalPasswordResetLinkMap: [String: String]?
     public let useExternal: Bool
