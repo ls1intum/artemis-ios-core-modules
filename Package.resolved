@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/daltoniam/Starscream.git",
       "state" : {
-        "revision" : "ac6c0fc9da221873e01bd1a0d4818498a71eef33",
-        "version" : "4.0.6"
+        "revision" : "df8d82047f6654d8e4b655d1b1525c64e1059d21",
+        "version" : "4.0.4"
       }
     },
     {
@@ -95,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-syntax.git",
       "state" : {
-        "revision" : "013a48e2312e57b7b355db25bd3ea75282ebf274",
-        "version" : "0.50900.0-swift-DEVELOPMENT-SNAPSHOT-2023-02-06-a"
+        "revision" : "6ad4ea24b01559dde0773e3d091f1b9e36175036",
+        "version" : "509.0.2"
       }
     },
     {
@@ -104,8 +104,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/SwiftLint.git",
       "state" : {
-        "revision" : "eb85125a5f293de3d3248af259980c98bc2b1faa",
-        "version" : "0.51.0"
+        "revision" : "f17a4f9dfb6a6afb0408426354e4180daaf49cee",
+        "version" : "0.54.0"
       }
     },
     {

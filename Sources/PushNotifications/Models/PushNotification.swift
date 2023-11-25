@@ -8,10 +8,26 @@
 
 import Foundation
 
+enum PushNotificationVersionError: Error {
+    case invalidVersion
+}
+
+struct PushNotificationVersion: Codable {
+    let version: Int
+
+    /// The version is 1, as of Artemis 6.6.7.
+    ///
+    /// The version is declared in the constants of Artemis, see [source](https://github.com/ls1intum/Artemis/blob/6.6.7/src/main/java/de/tum/in/www1/artemis/config/Constants.java#L318).
+    var isValid: Bool {
+        version == 1
+    }
+}
+
 struct PushNotification: Codable {
     var notificationPlaceholders: [String] = []
-    var target: String
-    var type: PushNotificationType
+    let target: String
+    let type: PushNotificationType
+    let version: Int
 
     var title: String? {
         type.title

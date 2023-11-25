@@ -15,8 +15,8 @@ public class PushNotificationHandler {
     public static func handle(payload: String, iv: String) {
         log.verbose("Notification received with payload: \(payload)")
 
-        guard let notification = PushNotificationEncrypter.decrypt(payload: payload, iv: iv) else {
-            log.verbose("Notification could not be encrypted.")
+        guard let notification = PushNotificationCipher.decrypt(payload: payload, iv: iv) else {
+            log.verbose("Notification could not be decrypted.")
             return
         }
 
