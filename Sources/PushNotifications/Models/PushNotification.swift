@@ -23,6 +23,7 @@ struct PushNotification: Codable {
     var notificationPlaceholders: [String] = []
     var target: String
     var type: PushNotificationType
+    var version: Int
 
     var title: String? {
         type.title
