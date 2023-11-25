@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum PushNotificationVersionError: Error {
+    case invalidVersion
+}
+
 struct PushNotificationVersion: Codable {
     var version: Int
 
