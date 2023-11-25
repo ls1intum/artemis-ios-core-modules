@@ -33,34 +33,35 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
     func logout() {
         isLoading = true
         Task {
+            defer {
+                APIClient().perfomLogout()
+            }
             let result = await PushNotificationServiceFactory.shared.unregister()
             isLoading = false
 
             switch result {
             case .success:
                 if let notificationDeviceConfiguration = UserSession.shared.getCurrentNotificationDeviceConfiguration() {
-                    UserSession.shared.saveNotificationDeviceConfiguration(token: notificationDeviceConfiguration.apnsDeviceToken,
-                                                                           encryptionKey: nil,
-                                                                           skippedNotifications: notificationDeviceConfiguration.skippedNotifications)
+                    UserSession.shared.saveNotificationDeviceConfiguration(
+                        token: notificationDeviceConfiguration.apnsDeviceToken,
+                        encryptionKey: nil,
+                        skippedNotifications: notificationDeviceConfiguration.skippedNotifications)
                 }
-                APIClient().perfomLogout()
             case .failure(let error):
                 if let error = error as? APIClientError {
                     switch error {
                     case .httpURLResponseError(let statusCode, _):
                         if statusCode == .methodNotAllowed {
-                            // ignore network error and login anyway
                             // TODO: schedule task to retry above functionality
-                            APIClient().perfomLogout()
                         }
                     case .networkError:
-                        // ignore network error and login anyway
                         // TODO: schedule task to retry above functionality
-                        APIClient().perfomLogout()
+                        break
                     default:
                         // do nothing
                         break
-                    }                }
+                    }
+                }
                 log.error(error.localizedDescription)
                 self.error = UserFacingError(title: error.localizedDescription)
             default:
