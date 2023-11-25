@@ -13,7 +13,7 @@ enum PushNotificationVersionError: Error {
 }
 
 struct PushNotificationVersion: Codable {
-    var version: Int
+    let version: Int
 
     /// The version is 1, as of Artemis 6.6.7.
     ///
@@ -25,9 +25,9 @@ struct PushNotificationVersion: Codable {
 
 struct PushNotification: Codable {
     var notificationPlaceholders: [String] = []
-    var target: String
-    var type: PushNotificationType
-    var version: Int
+    let target: String
+    let type: PushNotificationType
+    let version: Int
 
     var title: String? {
         type.title
