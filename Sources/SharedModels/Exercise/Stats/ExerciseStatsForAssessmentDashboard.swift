@@ -13,6 +13,7 @@ public struct ExerciseStatsForAssessmentDashboard: Codable {
     public let numberOfStudent: Int?
     public let numberOfSubmissions: DueDateStat?
     public let totalNumberOfAssessments: DueDateStat?
+    public let numberOfAssessmentsOfCorrectionRounds: [DueDateStat]?
     public let complaintsEnabled: Bool?
     public let feedbackRequestEnabled: Bool?
 }
