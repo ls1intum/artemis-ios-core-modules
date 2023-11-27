@@ -24,9 +24,9 @@ public class CourseServiceImpl: CourseService {
         let result = await client.sendRequest(GetCoursesRequest())
 
         switch result {
-        case .success((let response, _)):
+        case let .success((response, _)):
             return .done(response: response)
-        case .failure(let error):
+        case let .failure(error):
             return .failure(error: UserFacingError(error: error))
         }
     }
@@ -50,9 +50,9 @@ public class CourseServiceImpl: CourseService {
         let result = await client.sendRequest(GetCourseRequest(courseId: courseId))
 
         switch result {
-        case .success((let response, _)):
+        case let .success((response, _)):
             return .done(response: response)
-        case .failure(let error):
+        case let .failure(error):
             return .failure(error: UserFacingError(error: error))
         }
     }
@@ -76,9 +76,9 @@ public class CourseServiceImpl: CourseService {
         let result = await client.sendRequest(GetCourseForAssessmentRequest(courseId: courseId))
 
         switch result {
-        case .success((let response, _)):
+        case let .success((response, _)):
             return .done(response: response)
-        case .failure(let error):
+        case let .failure(error):
             return .failure(error: UserFacingError(error: error))
         }
     }
@@ -87,12 +87,16 @@ public class CourseServiceImpl: CourseService {
     struct GetCourseMembersSearchRequest: APIRequest {
         typealias Response = [UserNameAndLoginDTO]
 
-        var method: HTTPMethod { .get }
-
         var courseId: Int
         var loginOrName: String
 
-        var resourceName: String { "api/courses/\(courseId)/members/search?loginOrName=\(loginOrName)" }
+        var method: HTTPMethod {
+            .get
+        }
+
+        var resourceName: String {
+            "api/courses/\(courseId)/members/search?loginOrName=\(loginOrName)"
+        }
     }
 
     public func getCourseMembers(courseId: Int, searchLoginOrName: String) async -> DataState<[UserNameAndLoginDTO]> {
