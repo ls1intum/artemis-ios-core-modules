@@ -111,6 +111,9 @@ let package = Package(
             name: "ArtemisMarkdown",
             dependencies: ["UserStore", "DesignLibrary", .product(name: "MarkdownUI", package: "swift-markdown-ui")],
             plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-        )
+        ),
+        .testTarget(
+            name: "ArtemisMarkdownTests",
+            dependencies: ["ArtemisMarkdown"])
     ]
 )

@@ -12,6 +12,9 @@ public protocol CourseService {
 
     /// Fetch the course for assessment dashboard (with some assessment-related data)
     func getCourseForAssessment(courseId: Int) async -> DataState<Course>
+
+    /// Fetch the course's members by searching the login or name
+    func getCourseMembers(courseId: Int, searchLoginOrName: String) async -> DataState<[UserNameAndLoginDTO]>
 }
 
 public enum CourseServiceFactory {
