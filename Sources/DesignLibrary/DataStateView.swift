@@ -31,28 +31,22 @@ public struct DataStateView<T, Content: View>: View {
                     Spacer()
                 }
             case .failure(let error):
-                VStack(spacing: 8) {
-                    Spacer()
-                    Text(error.title)
-                        .font(.title)
-                        .foregroundColor(.red)
+                ContentUnavailableView {
+                    Label(error.title, systemImage: "bolt.horizontal")
+                } description: {
                     if let message = error.message {
                         Text(message)
-                            .font(.caption)
-                            .foregroundColor(.red)
                     }
                     if let detail = error.detail {
                         Text(detail)
-                            .font(.footnote)
-                            .foregroundColor(.gray)
                     }
-                    Button(R.string.localizable.retryButton()) {
+                } actions: {
+                    Button("Retry") {
                         data = .loading
                         Task {
                             await retryHandler()
                         }
                     }
-                    Spacer()
                 }
             case .done(let result):
                 content(result)
