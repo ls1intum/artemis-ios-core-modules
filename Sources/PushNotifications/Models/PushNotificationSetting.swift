@@ -21,6 +21,10 @@ public enum PushNotificationSettingId: String, RawRepresentable, Codable {
     case newReplyForCoursePost = "notification.course-wide-discussion.new-reply-for-course-post"
     case newAnnouncementPost = "notification.course-wide-discussion.new-announcement-post"
 
+    // Exam notificationn
+    case newExamPost = "notification.exam-notification.new-exam-post"
+    case newReplyForExamPost = "notification.exam-notification.new-reply-for-exam-post"
+
     // Exercise Notifications
     case exerciseReleased = "notification.exercise-notification.exercise-released"
     case exercisePractice = "notification.exercise-notification.exercise-open-for-practice"
@@ -41,6 +45,9 @@ public enum PushNotificationSettingId: String, RawRepresentable, Codable {
     // Tutor Group Notifications
     case tutorialGroupRegistrationTutor = "notification.tutor-notification.tutorial-group-registration"
     case tutorialGroupAssignUnassignTutor = "notification.tutor-notification.tutorial-group-assign-unassign"
+
+    // User Notifications
+    case userMention = "notification.user-notification.user-mention"
 
     case other
 
