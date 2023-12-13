@@ -46,13 +46,18 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
     case quizExerciseStarted = "QUIZ_EXERCISE_STARTED"
     case exerciseUpdated = "EXERCISE_UPDATED"
 
-    case newReplyForLecturePost = "NEW_REPLY_FOR_LECTURE_POST"
     case newReplyForCoursePost = "NEW_REPLY_FOR_COURSE_POST"
     case newReplyForExercisePost = "NEW_REPLY_FOR_EXERCISE_POST"
+    case newReplyForExamPost = "NEW_REPLY_FOR_EXAM_POST"
+    case newReplyForLecturePost = "NEW_REPLY_FOR_LECTURE_POST"
+
+    case newAnnouncementPost = "NEW_ANNOUNCEMENT_POST"
+    case newCoursePost = "NEW_COURSE_POST"
+    case newExamPost = "NEW_EXAM_POST"
     case newExercisePost = "NEW_EXERCISE_POST"
     case newLecturePost = "NEW_LECTURE_POST"
-    case newCoursePost = "NEW_COURSE_POST"
-    case newAnnouncementPost = "NEW_ANNOUNCEMENT_POST"
+
+    case userMention = "USER_MENTION"
 
     case courseArchiveStarted = "COURSE_ARCHIVE_STARTED"
     case courseArchiveFinished = "COURSE_ARCHIVE_FINISHED"
@@ -105,20 +110,26 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
             return R.string.localizable.artemisAppGroupNotificationTitleExercisePractice()
         case .quizExerciseStarted:
             return R.string.localizable.artemisAppGroupNotificationTitleQuizExerciseStarted()
-        case .newReplyForLecturePost:
-            return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForLecturePost()
         case .newReplyForCoursePost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForCoursePost()
+        case .newReplyForExamPost:
+            return "artemisApp.groupNotification.title.newReplyForExamPost"
         case .newReplyForExercisePost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForExercisePost()
+        case .newReplyForLecturePost:
+            return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForLecturePost()
+        case .newAnnouncementPost:
+            return R.string.localizable.artemisAppGroupNotificationTitleNewAnnouncementPost()
+        case .newCoursePost:
+            return R.string.localizable.artemisAppGroupNotificationTitleNewCoursePost()
+        case .newExamPost:
+            return "artemisApp.groupNotification.title.newExamPost"
         case .newExercisePost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewExercisePost()
         case .newLecturePost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewLecturePost()
-        case .newCoursePost:
-            return R.string.localizable.artemisAppGroupNotificationTitleNewCoursePost()
-        case .newAnnouncementPost:
-            return R.string.localizable.artemisAppGroupNotificationTitleNewAnnouncementPost()
+        case .userMention:
+            return "artemisApp.singleUserNotification.title.mentionedInMessage"
         case .fileSubmissionSuccessful:
             return R.string.localizable.artemisAppSingleUserNotificationTitleFileSubmissionSuccessful()
         case .duplicateTestCase:
@@ -224,12 +235,24 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
             return R.string.localizable.artemisAppGroupNotificationTextNewReplyForCoursePost(notificationPlaceholders[0],
                                                                                              notificationPlaceholders[4],
                                                                                              notificationPlaceholders[5])
+        case .newReplyForExamPost:
+            return nil
         case .newReplyForExercisePost:
             guard notificationPlaceholders.count > 8 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewReplyForExercisePost(notificationPlaceholders[0],
                                                                                                notificationPlaceholders[4],
                                                                                                notificationPlaceholders[5],
                                                                                                notificationPlaceholders[8])
+        case .newAnnouncementPost:
+            guard notificationPlaceholders.count > 2 else { return nil }
+            return R.string.localizable.artemisAppGroupNotificationTextNewAnnouncementPost(notificationPlaceholders[0],
+                                                                                           notificationPlaceholders[2])
+        case .newCoursePost:
+            guard notificationPlaceholders.count > 2 else { return nil }
+            return R.string.localizable.artemisAppGroupNotificationTextNewCoursePost(notificationPlaceholders[0],
+                                                                                     notificationPlaceholders[2])
+        case .newExamPost:
+            return nil
         case .newExercisePost:
             guard notificationPlaceholders.count > 5 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewExercisePost(notificationPlaceholders[0],
@@ -240,14 +263,8 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
             return R.string.localizable.artemisAppGroupNotificationTextNewLecturePost(notificationPlaceholders[0],
                                                                                       notificationPlaceholders[2],
                                                                                       notificationPlaceholders[5])
-        case .newCoursePost:
-            guard notificationPlaceholders.count > 2 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewCoursePost(notificationPlaceholders[0],
-                                                                                     notificationPlaceholders[2])
-        case .newAnnouncementPost:
-            guard notificationPlaceholders.count > 2 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewAnnouncementPost(notificationPlaceholders[0],
-                                                                                           notificationPlaceholders[2])
+        case .userMention:
+            return nil
         case .fileSubmissionSuccessful:
             guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextFileSubmissionSuccessful(notificationPlaceholders[1])
