@@ -1,18 +1,25 @@
 "push_notification_settings_receive_label" = "Receive push notifications on this device?";
 "push_notification_settings_receive_information" = "Push notifications are end-to-end encrypted. Additonal preferences can be activated or deactivated in your profile settings later.";
 
-// MARK: Notification Settings
-// Section Titles
+// MARK: - Notification Settings
+"notificationSettingsTitle" = "Notification Settings";
+
+// MARK: Section Titles
 "courseWideDiscussionNotificationsSectionTitle" = "Course-wide Discussion Notifications";
+"examNotificationsSectionTitle" = "Exam Notifications";
 "exerciseNotificationsSectionTitle" = "Exercise Notifications";
 "lectureNotificationsSectionTitle" = "Lecture Notifications";
 "tutorialGroupNotificationsSectionTitle" = "Tutorial Group Notifications";
 "tutorNotificationsSectionTitle" = "Tutor Notifications";
+"userMentionSectionTitle" = "User Mention Notifications";
 
-// Settings Names
+// MARK: Settings Names
 "newCoursePostSettingsName" = "New Course Post";
 "newReplyForCoursePostSettingsName" = "New Reply for Course Post";
 "newAnnouncementPostSettingsName" = "New Announcement";
+
+"newExamMessageSettingsName" = "New Exam Message";
+"newReplyForExamMessageSettingsName" = "New Reply for Exam Message";
 
 "exerciseReleasedSettingsName" = "Exercise released";
 "exerciseOpenForPracticeSettingsName" = "Exercise Open for Practice";
@@ -30,10 +37,15 @@
 
 "assignUnassignTutorialGroupSettingsName" = "Assign and Unassign of Tutorial Groups";
 
-// Settings Description
+"userMentionSettingsName" = "New User Mention";
+
+// MARK: Settings Descriptions
 "newCoursePostDescription" = "Receive a notification when a new course-wide post has been created";
 "newReplyForCoursePostDescription" = "Receive a notification when a new reply for a course-wide post has been created";
 "newAnnouncementPostDescription" = "Receive a notification when a new announcement has been created";
+
+"newExamMessageSettingsDescription" = "Get notified when a new exam message has been created";
+"newReplyForExamMessageSettingsDescription" = "Get notified when a new reply for an exam message has been created";
 
 "exerciseReleasedDescription" = "Get notified when a new exercise has been released";
 "exerciseOpenForPracticeDescription" = "Get notified when an exercise has been opened for practice (e.g. Quiz)";
@@ -46,16 +58,16 @@
 "newLecturePostDescription" = "Get notified when a new lecture post has been created";
 "newReplyForLecturePostDescription" = "Get notified when a new reply for a lecture post has been created";
 
-
 "registrationTutorialGroupStudentDescription" = "Get notified when you were registered or deregistered from a tutorial group";
 "tutorialGroupUpdateDeleteDescription" = "Get notified when a tutorial group for which you are registered or a tutor was updated or deleted";
 
 "registrationTutorialGroupTutorDescription" = "Get notified when a student was registered or deregistered from your tutorial group";
 "assignUnassignTutorialGroupDescription" = "Get notified when you were assigned or unassigned to lead a tutorial group";
 
-// MARK: Push Notifications
+"userMentionSettingsDescription" = "Receive a notification when you are mentioned in a message or reply";
 
-// Title
+// MARK: - Push Notifications
+// MARK: Title
 "artemisApp.singleUserNotification.title.exerciseSubmissionAssessed" = "Exercise Submission Assessed";
 "artemisApp.groupNotification.title.attachmentChange" = "Attachment updated";
 "artemisApp.groupNotification.title.exerciseReleased" = "Exercise released";
@@ -103,7 +115,7 @@
 "artemisApp.singleUserNotification.title.addUserGroupChat" = "You have been added to a group chat";
 "artemisApp.singleUserNotification.title.createGroupChat" = "New group chat";
 
-// Body
+// MARK: Body
 "artemisApp.singleUserNotification.text.exerciseSubmissionAssessed" = "Your submission for the %2$@ exercise \"%3$@\" in the course \"%1$@\" has been assessed.";
 "artemisApp.groupNotification.text.attachmentChange" = "The attachment \"%2$@\" of \"%3$@\" in the course \"%1$@\" was updated.";
 "artemisApp.groupNotification.text.exerciseReleased" = "A new exercise \"%1$@\" got released.";
@@ -154,6 +166,9 @@
 "artemisApp.singleUserNotification.text.addUserGroupChat" = "You have been added to a new group chat by %2$@ in course %1$@.";
 "artemisApp.singleUserNotification.text.createGroupChat" = "You have been added to a new group chat by %2$@ in course %1$@.";
 
-// MARK: General
-"skip" = "Skip";
+// MARK: - General
 "activate" = "Activate";
+"cancel" = "Cancel";
+"error" = "Error";
+"save" = "Save";
+"skip" = "Skip";

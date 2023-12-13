@@ -30,9 +30,11 @@ public struct PushNotificationSettingsView: View {
                             SettingsCell(viewModel: viewModel,
                                          type: .newAnnouncementPost)
                         }
-                        Section("Exam Notifications") {
-                            SettingsCell(viewModel: viewModel, type: .newExamPost)
-                            SettingsCell(viewModel: viewModel, type: .newReplyForExamPost)
+                        Section(R.string.localizable.examNotificationsSectionTitle()) {
+                            SettingsCell(viewModel: viewModel,
+                                         type: .newExamPost)
+                            SettingsCell(viewModel: viewModel,
+                                         type: .newReplyForExamPost)
                         }
                         Section(R.string.localizable.exerciseNotificationsSectionTitle()) {
                             SettingsCell(viewModel: viewModel,
@@ -68,8 +70,9 @@ public struct PushNotificationSettingsView: View {
                             SettingsCell(viewModel: viewModel,
                                          type: .tutorialGroupAssignUnassignTutor)
                         }
-                        Section("User Mention Notifications") {
-                            SettingsCell(viewModel: viewModel, type: .userMention)
+                        Section(R.string.localizable.userMentionSectionTitle()) {
+                            SettingsCell(viewModel: viewModel,
+                                         type: .userMention)
                         }
                     }
                 }.task {
@@ -77,12 +80,12 @@ public struct PushNotificationSettingsView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
-                        Button("Cancel") {
+                        Button(R.string.localizable.cancel()) {
                             dismiss()
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Save") {
+                        Button(R.string.localizable.save()) {
                             viewModel.pushNotificationSettingsRequest = .loading
                             Task {
                                 let isSuccessful = await viewModel.saveNotificationSettings()
@@ -93,7 +96,7 @@ public struct PushNotificationSettingsView: View {
                         }.disabled(viewModel.isSaveDisabled)
                     }
                 }
-                .navigationTitle("Notification Settings")
+                .navigationTitle(R.string.localizable.notificationSettingsTitle())
             } else {
                 PushNotificationSetupView(shouldCloseOnSkip: true)
             }
@@ -120,7 +123,6 @@ struct SettingsCell: View {
             VStack(alignment: .leading, spacing: .s) {
                 Toggle(isOn: binding) {
                     Text(type.title)
-//                        .font(.title3)
                         .lineLimit(2)
                 }
                 Text(type.description)
@@ -144,9 +146,9 @@ extension PushNotificationSettingId {
         case .newAnnouncementPost:
             return R.string.localizable.newAnnouncementPostSettingsName()
         case .newExamPost:
-            return "New Exam Message"
+            return R.string.localizable.newExamMessageSettingsName()
         case .newReplyForExamPost:
-            return "New Reply for Exam Message"
+            return R.string.localizable.newReplyForExamMessageSettingsName()
         case .exerciseReleased:
             return R.string.localizable.exerciseReleasedSettingsName()
         case .exercisePractice:
@@ -174,9 +176,9 @@ extension PushNotificationSettingId {
         case .tutorialGroupAssignUnassignTutor:
             return R.string.localizable.assignUnassignTutorialGroupSettingsName()
         case .userMention:
-            return "New User Mention"
+            return R.string.localizable.userMentionSettingsName()
         case .other:
-            return "Error"
+            return R.string.localizable.error()
         }
     }
 
@@ -189,9 +191,9 @@ extension PushNotificationSettingId {
         case .newAnnouncementPost:
             return R.string.localizable.newAnnouncementPostDescription()
         case .newExamPost:
-            return "Get notified when a new exam message has been created"
+            return R.string.localizable.newExamMessageSettingsDescription()
         case .newReplyForExamPost:
-            return "Get notified when a new reply for an exam message has been created"
+            return R.string.localizable.newReplyForExamMessageSettingsDescription()
         case .exerciseReleased:
             return R.string.localizable.exerciseReleasedDescription()
         case .exercisePractice:
@@ -219,9 +221,9 @@ extension PushNotificationSettingId {
         case .tutorialGroupAssignUnassignTutor:
             return R.string.localizable.assignUnassignTutorialGroupDescription()
         case .userMention:
-            return "Receive a notification when you are mentioned in a message or reply"
+            return R.string.localizable.userMentionSettingsDescription()
         case .other:
-            return "Error"
+            return R.string.localizable.error()
         }
     }
 }

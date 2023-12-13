@@ -21,7 +21,7 @@ public enum PushNotificationSettingId: String, RawRepresentable, Codable {
     case newReplyForCoursePost = "notification.course-wide-discussion.new-reply-for-course-post"
     case newAnnouncementPost = "notification.course-wide-discussion.new-announcement-post"
 
-    // Exam notificationn
+    // Exam notifications
     case newExamPost = "notification.exam-notification.new-exam-post"
     case newReplyForExamPost = "notification.exam-notification.new-reply-for-exam-post"
 
