@@ -25,6 +25,12 @@ public struct TextSubmission: BaseSubmission {
     public var blocks: [TextBlock]?
 }
 
+extension TextSubmission {
+    public init(id: Int?) {
+        self.id = id
+    }
+}
+
 public struct TextBlock: Codable {
     public var id: String?
     public var text: String?
