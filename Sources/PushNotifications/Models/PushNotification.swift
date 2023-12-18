@@ -112,7 +112,7 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
         case .newReplyForCoursePost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForCoursePost()
         case .newReplyForExamPost:
-            return "artemisApp.groupNotification.title.newReplyForExamPost"
+            return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForExamPost()
         case .newReplyForExercisePost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForExercisePost()
         case .newReplyForLecturePost:
@@ -122,7 +122,7 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
         case .newCoursePost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewCoursePost()
         case .newExamPost:
-            return "artemisApp.groupNotification.title.newExamPost"
+            return R.string.localizable.artemisAppGroupNotificationTitleNewExamPost()
         case .newExercisePost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewExercisePost()
         case .newLecturePost:

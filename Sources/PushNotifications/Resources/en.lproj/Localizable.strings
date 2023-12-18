@@ -73,12 +73,14 @@
 "artemisApp.groupNotification.title.exerciseReleased" = "Exercise released";
 "artemisApp.groupNotification.title.exercisePractice" = "Exercise open for practice";
 "artemisApp.groupNotification.title.quizExerciseStarted" = "Quiz started";
+"artemisApp.groupNotification.title.newReplyForCoursePost" = "New reply for course-wide post";
+"artemisApp.groupNotification.title.newReplyForExamPost" = "New reply for exam message";
 "artemisApp.groupNotification.title.newReplyForExercisePost" = "New reply for exercise post";
 "artemisApp.groupNotification.title.newReplyForLecturePost" = "New reply for lecture post";
-"artemisApp.groupNotification.title.newReplyForCoursePost" = "New reply for course-wide post";
+"artemisApp.groupNotification.title.newCoursePost" = "New course-wide post";
+"artemisApp.groupNotification.title.newExamPost" = "New exam message";
 "artemisApp.groupNotification.title.newExercisePost" = "New exercise post";
 "artemisApp.groupNotification.title.newLecturePost" = "New lecture post";
-"artemisApp.groupNotification.title.newCoursePost" = "New course-wide post";
 "artemisApp.groupNotification.title.newAnnouncementPost" = "New announcement";
 "artemisApp.singleUserNotification.title.fileSubmissionSuccessful" = "File submission successful";
 "artemisApp.groupNotification.title.duplicateTestCase" = "Duplicate test case was found.";
