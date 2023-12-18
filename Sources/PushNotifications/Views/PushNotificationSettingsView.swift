@@ -176,7 +176,7 @@ extension PushNotificationSettingId {
             return R.string.localizable.assignUnassignTutorialGroupSettingsName()
         case .userMention:
             return R.string.localizable.userMentionSettingsName()
-        case .other:
+        case .unknown:
             return R.string.localizable.error()
         }
     }
@@ -221,7 +221,7 @@ extension PushNotificationSettingId {
             return R.string.localizable.assignUnassignTutorialGroupDescription()
         case .userMention:
             return R.string.localizable.userMentionSettingsDescription()
-        case .other:
+        case .unknown:
             return R.string.localizable.error()
         }
     }
