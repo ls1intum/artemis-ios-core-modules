@@ -114,6 +114,7 @@
 "artemisApp.singleUserNotification.title.removeUserGroupChat" = "You have been removed from a group chat";
 "artemisApp.singleUserNotification.title.addUserGroupChat" = "You have been added to a group chat";
 "artemisApp.singleUserNotification.title.createGroupChat" = "New group chat";
+"artemisApp.singleUserNotification.title.mentionedInMessage" = "You were mentioned";
 
 // MARK: Body
 "artemisApp.singleUserNotification.text.exerciseSubmissionAssessed" = "Your submission for the %2$@ exercise \"%3$@\" in the course \"%1$@\" has been assessed.";

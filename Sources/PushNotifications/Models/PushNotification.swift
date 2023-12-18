@@ -57,8 +57,6 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
     case newExercisePost = "NEW_EXERCISE_POST"
     case newLecturePost = "NEW_LECTURE_POST"
 
-    case userMention = "USER_MENTION"
-
     case courseArchiveStarted = "COURSE_ARCHIVE_STARTED"
     case courseArchiveFinished = "COURSE_ARCHIVE_FINISHED"
     case courseArchiveFinishedWithError = "internal"
@@ -97,6 +95,7 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
     case conversationRemoveUserGroupChat = "CONVERSATION_REMOVE_USER_GROUP_CHAT"
     case conversationRemoveUserChannel = "CONVERSATION_REMOVE_USER_CHANNEL"
     case conversationDeleteChannel = "CONVERSATION_DELETE_CHANNEL"
+    case conversationUserMentioned = "CONVERSATION_USER_MENTIONED"
 
     public var title: String? {
         switch self {
@@ -128,8 +127,6 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
             return R.string.localizable.artemisAppGroupNotificationTitleNewExercisePost()
         case .newLecturePost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewLecturePost()
-        case .userMention:
-            return "artemisApp.singleUserNotification.title.mentionedInMessage"
         case .fileSubmissionSuccessful:
             return R.string.localizable.artemisAppSingleUserNotificationTitleFileSubmissionSuccessful()
         case .duplicateTestCase:
@@ -198,6 +195,8 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
             return R.string.localizable.artemisAppSingleUserNotificationTitleRemoveUserChannel()
         case .conversationDeleteChannel:
             return R.string.localizable.artemisAppSingleUserNotificationTitleDeleteChannel()
+        case .conversationUserMentioned:
+            return R.string.localizable.artemisAppSingleUserNotificationTitleMentionedInMessage()
         }
     }
 
@@ -263,8 +262,6 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
             return R.string.localizable.artemisAppGroupNotificationTextNewLecturePost(notificationPlaceholders[0],
                                                                                       notificationPlaceholders[2],
                                                                                       notificationPlaceholders[5])
-        case .userMention:
-            return nil
         case .fileSubmissionSuccessful:
             guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextFileSubmissionSuccessful(notificationPlaceholders[1])
@@ -414,6 +411,8 @@ public enum PushNotificationType: String, RawRepresentable, Codable {
             return R.string.localizable.artemisAppSingleUserNotificationTextDeleteChannel(notificationPlaceholders[0],
                                                                                           notificationPlaceholders[1],
                                                                                           notificationPlaceholders[2])
+        case .conversationUserMentioned:
+            return nil
         }
     }
 }
