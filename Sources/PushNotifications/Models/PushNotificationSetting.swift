@@ -15,7 +15,7 @@ public struct PushNotificationSetting: Codable {
     public var push: Bool
 }
 
-public enum PushNotificationSettingId: String, RawRepresentable, Codable {
+public enum PushNotificationSettingId: String, Codable {
     // Course-Wide Dicussion Notifications
     case newCoursePost = "notification.course-wide-discussion.new-course-post"
     case newReplyForCoursePost = "notification.course-wide-discussion.new-reply-for-course-post"
@@ -49,9 +49,10 @@ public enum PushNotificationSettingId: String, RawRepresentable, Codable {
     // User Notifications
     case userMention = "notification.user-notification.user-mention"
 
-    case other
+    case unknown
 
     public init(from decoder: Decoder) throws {
-        self = try PushNotificationSettingId(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .other
+        let rawValue = try decoder.singleValueContainer().decode(RawValue.self)
+        self = try PushNotificationSettingId(rawValue: rawValue) ?? .unknown
     }
 }

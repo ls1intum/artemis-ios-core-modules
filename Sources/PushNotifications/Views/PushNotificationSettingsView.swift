@@ -5,8 +5,8 @@
 //  Created by Sven Andabaka on 28.03.23.
 //
 
-import SwiftUI
 import DesignLibrary
+import SwiftUI
 
 public struct PushNotificationSettingsView: View {
 
@@ -136,7 +136,6 @@ struct SettingsCell: View {
 }
 
 extension PushNotificationSettingId {
-
     var title: String {
         switch self {
         case .newCoursePost:

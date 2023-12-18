@@ -38,7 +38,7 @@ struct PushNotification: Codable {
     }
 }
 
-public enum PushNotificationType: String, RawRepresentable, Codable {
+public enum PushNotificationType: String, Codable {
     case exerciseSubmissionAssessed = "EXERCISE_SUBMISSION_ASSESSED"
     case attachmentChange = "ATTACHMENT_CHANGE"
     case exerciseReleased = "EXERCISE_RELEASED"
