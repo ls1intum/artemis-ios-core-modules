@@ -13,4 +13,20 @@ public struct FileAttachment: BaseAttachment {
     public static var type: String {
         "FILE"
     }
+
+    public init(id: Int,
+                name: String? = nil,
+                visibleToStudents: Bool? = nil,
+                link: String? = nil,
+                version: Int? = nil,
+                uploadDate: Date? = nil,
+                releaseDate: Date? = nil) {
+        self.id = id
+        self.name = name
+        self.visibleToStudents = visibleToStudents
+        self.link = link
+        self.version = version
+        self.uploadDate = uploadDate
+        self.releaseDate = releaseDate
+    }
 }

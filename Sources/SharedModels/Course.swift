@@ -43,6 +43,7 @@ public struct Course: Codable, Identifiable {
         self.courseInformationSharingConfiguration = courseInformationSharingConfiguration
     }
 
+    @available(*, deprecated, message: "Model should not contain controller logic")
     public var courseIconURL: URL? {
         guard let courseIcon else { return nil }
         return URL(string: courseIcon, relativeTo: UserSession.shared.institution?.baseURL)

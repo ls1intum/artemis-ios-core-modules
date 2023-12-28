@@ -26,4 +26,20 @@ public struct TextUnit: BaseLectureUnit {
     public var image: Image {
         Image("scroll-solid", bundle: .module)
     }
+
+    public init(id: Int64,
+                name: String? = nil,
+                releaseDate: Date? = nil,
+                lecture: Lecture? = nil,
+                visibleToStudents: Bool? = nil,
+                completed: Bool? = nil,
+                content: String? = nil) {
+        self.id = id
+        self.name = name
+        self.releaseDate = releaseDate
+        self.lecture = lecture
+        self.visibleToStudents = visibleToStudents
+        self.completed = completed
+        self.content = content
+    }
 }

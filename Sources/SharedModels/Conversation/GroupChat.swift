@@ -45,4 +45,33 @@ public struct GroupChat: BaseConversation {
     public var icon: Image? {
         Image(systemName: "person.3.fill")
     }
+
+    public init(type: ConversationType,
+                id: Int64, creationDate: Date? = nil,
+                lastMessageDate: Date? = nil,
+                creator: ConversationUser? = nil,
+                lastReadDate: Date? = nil,
+                unreadMessagesCount: Int? = nil,
+                isFavorite: Bool? = nil,
+                isHidden: Bool? = nil,
+                isCreator: Bool? = nil,
+                isMember: Bool? = nil,
+                numberOfMembers: Int? = nil, 
+                name: String? = nil,
+                members: [ConversationUser]? = nil) {
+        self.type = type
+        self.id = id
+        self.creationDate = creationDate
+        self.lastMessageDate = lastMessageDate
+        self.creator = creator
+        self.lastReadDate = lastReadDate
+        self.unreadMessagesCount = unreadMessagesCount
+        self.isFavorite = isFavorite
+        self.isHidden = isHidden
+        self.isCreator = isCreator
+        self.isMember = isMember
+        self.numberOfMembers = numberOfMembers
+        self.name = name
+        self.members = members
+    }
 }

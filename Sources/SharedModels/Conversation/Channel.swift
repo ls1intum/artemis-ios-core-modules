@@ -53,6 +53,53 @@ public struct Channel: BaseConversation {
         }
         return Image(systemName: "lock.fill")
     }
+
+    public init(type: ConversationType,
+                id: Int64, creationDate: Date? = nil,
+                lastMessageDate: Date? = nil,
+                creator: ConversationUser? = nil,
+                lastReadDate: Date? = nil,
+                unreadMessagesCount: Int? = nil,
+                isFavorite: Bool? = nil,
+                isHidden: Bool? = nil,
+                isCreator: Bool? = nil,
+                isMember: Bool? = nil,
+                numberOfMembers: Int? = nil,
+                name: String? = nil,
+                description: String? = nil,
+                topic: String? = nil,
+                isPublic: Bool? = nil,
+                isAnnouncementChannel: Bool? = nil,
+                isArchived: Bool? = nil,
+                hasChannelModerationRights: Bool? = nil,
+                isChannelModerator: Bool? = nil,
+                tutorialGroupId: Int? = nil,
+                tutorialGroupTitle: String? = nil,
+                subType: ChannelSubType? = nil) {
+        self.type = type
+        self.id = id
+        self.creationDate = creationDate
+        self.lastMessageDate = lastMessageDate
+        self.creator = creator
+        self.lastReadDate = lastReadDate
+        self.unreadMessagesCount = unreadMessagesCount
+        self.isFavorite = isFavorite
+        self.isHidden = isHidden
+        self.isCreator = isCreator
+        self.isMember = isMember
+        self.numberOfMembers = numberOfMembers
+        self.name = name
+        self.description = description
+        self.topic = topic
+        self.isPublic = isPublic
+        self.isAnnouncementChannel = isAnnouncementChannel
+        self.isArchived = isArchived
+        self.hasChannelModerationRights = hasChannelModerationRights
+        self.isChannelModerator = isChannelModerator
+        self.tutorialGroupId = tutorialGroupId
+        self.tutorialGroupTitle = tutorialGroupTitle
+        self.subType = subType
+    }
 }
 
 public enum ChannelSubType: String, RawRepresentable, Codable {

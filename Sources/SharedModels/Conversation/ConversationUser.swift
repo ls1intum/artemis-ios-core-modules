@@ -20,6 +20,30 @@ public struct ConversationUser: UserPublicInfo {
 
     public var isChannelModerator: Bool?
     public var isRequestingUser: Bool?
+
+    public init(id: Int64,
+                login: String? = nil,
+                name: String? = nil,
+                firstName: String? = nil,
+                lastName: String? = nil,
+                isInstructor: Bool? = nil,
+                isEditor: Bool? = nil,
+                isTeachingAssistant: Bool? = nil,
+                isStudent: Bool? = nil,
+                isChannelModerator: Bool? = nil,
+                isRequestingUser: Bool? = nil) {
+        self.id = id
+        self.login = login
+        self.name = name
+        self.firstName = firstName
+        self.lastName = lastName
+        self.isInstructor = isInstructor
+        self.isEditor = isEditor
+        self.isTeachingAssistant = isTeachingAssistant
+        self.isStudent = isStudent
+        self.isChannelModerator = isChannelModerator
+        self.isRequestingUser = isRequestingUser
+    }
 }
 
 extension ConversationUser: Hashable { }

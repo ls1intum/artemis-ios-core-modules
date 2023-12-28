@@ -2,6 +2,7 @@ import Foundation
 import SharedModels
 import APIClient
 import Common
+import UserStore
 
 public class CourseServiceImpl: CourseService {
 
@@ -81,5 +82,12 @@ public class CourseServiceImpl: CourseService {
         case .failure(let error):
             return .failure(error: UserFacingError(error: error))
         }
+    }
+
+    public func courseIconURL(for course: Course) -> URL? {
+        guard let courseIcon = course.courseIcon else {
+            return nil
+        }
+        return URL(string: courseIcon, relativeTo: UserSession.shared.institution?.baseURL)
     }
 }

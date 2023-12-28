@@ -24,4 +24,28 @@ public struct StudentParticipationImpl: StudentParticipation, Codable {
     public var results: [Result]?
     public var exercise: Exercise?
     public var submissions: [Submission]?
+
+    public init(student: User? = nil,
+                team: Team? = nil,
+                participantIdentifier: String? = nil,
+                testRun: Bool? = nil,
+                id: Int,
+                initializationState: InitializationState? = nil,
+                initializationDate: Date? = nil,
+                individualDueDate: Date? = nil,
+                results: [Result]? = nil,
+                exercise: Exercise? = nil,
+                submissions: [Submission]? = nil) {
+        self.student = student
+        self.team = team
+        self.participantIdentifier = participantIdentifier
+        self.testRun = testRun
+        self.id = id
+        self.initializationState = initializationState
+        self.initializationDate = initializationDate
+        self.individualDueDate = individualDueDate
+        self.results = results
+        self.exercise = exercise
+        self.submissions = submissions
+    }
 }

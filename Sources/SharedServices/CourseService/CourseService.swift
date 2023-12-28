@@ -12,6 +12,8 @@ public protocol CourseService {
 
     /// Fetch the course for assessment dashboard (with some assessment-related data)
     func getCourseForAssessment(courseId: Int) async -> DataState<Course>
+
+    func courseIconURL(for course: Course) -> URL?
 }
 
 public enum CourseServiceFactory {
