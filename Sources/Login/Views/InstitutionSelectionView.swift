@@ -174,7 +174,7 @@ struct InstitutionLogo: View {
 
     var body: some View {
         if institution.logo == nil {
-            Image("Artemis-Logo")
+            Image("Artemis-Logo", bundle: .module)
                 .resizable()
                 .scaledToFit()
         } else {
@@ -187,7 +187,7 @@ struct InstitutionLogo: View {
                         .resizable()
                         .scaledToFit()
                 case .failure:
-                    Image("Artemis-Logo")
+                    Image("Artemis-Logo", bundle: .module)
                         .resizable()
                         .scaledToFit()
                 @unknown default:
@@ -201,9 +201,6 @@ struct InstitutionLogo: View {
 extension InstitutionIdentifier {
 
     var logo: URL? {
-        switch self {
-        default:
-            return URL(string: "public/images/logo.png", relativeTo: self.baseURL)
-        }
+        URL(string: "public/images/logo.png", relativeTo: self.baseURL)
     }
 }
