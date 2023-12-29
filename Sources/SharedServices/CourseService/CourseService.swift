@@ -5,7 +5,7 @@ import Common
 public protocol CourseService {
 
     /// Fetch courses for dashboard
-    func getCourses() async -> DataState<[CourseForDashboard]>
+    func getCourses() async -> DataState<CoursesForDashboardDTO>
 
     /// Fetch the course for dashboard
     func getCourse(courseId: Int) async -> DataState<CourseForDashboard>
