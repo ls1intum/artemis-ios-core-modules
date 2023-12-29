@@ -106,6 +106,31 @@ public enum Exercise: Codable, Identifiable {
         }
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Keys.self)
+
+        switch self {
+        case .fileUpload(exercise: let exercise):
+            try container.encode(FileUploadExercise.type, forKey: .type)
+            try exercise.encode(to: encoder)
+        case .modeling(exercise: let exercise):
+            try container.encode(ModelingExercise.type, forKey: .type)
+            try exercise.encode(to: encoder)
+        case .programming(exercise: let exercise):
+            try container.encode(ProgrammingExercise.type, forKey: .type)
+            try exercise.encode(to: encoder)
+        case .quiz(exercise: let exercise):
+            try container.encode(QuizExercise.type, forKey: .type)
+            try exercise.encode(to: encoder)
+        case .text(exercise: let exercise):
+            try container.encode(TextExercise.type, forKey: .type)
+            try exercise.encode(to: encoder)
+        case .unknown(exercise: let exercise):
+            try container.encode(UnknownExercise.type, forKey: .type)
+            try exercise.encode(to: encoder)
+        }
+    }
+
     public func copyWithUpdatedParticipations(newParticipations: [Participation]) -> Exercise {
         switch self {
         case .fileUpload(exercise: let exercise):
