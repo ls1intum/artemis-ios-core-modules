@@ -8,6 +8,42 @@
 import DesignLibrary
 import SwiftUI
 
+enum PushNotificationSettingsSection: String, CaseIterable {
+
+    struct Entry: Identifiable {
+        let id: PushNotificationSettingId
+        let title: String
+        let description: String
+    }
+
+    case courseWideDiscussionNotifications
+
+    var title: String {
+        switch self {
+        case .courseWideDiscussionNotifications:
+            R.string.localizable.courseWideDiscussionNotificationsSectionTitle()
+        }
+    }
+
+    var entries: [Entry] {
+        switch self {
+        case .courseWideDiscussionNotifications:
+            [
+                .init(
+                    id: .newCoursePost,
+                    title: R.string.localizable.newCoursePostSettingsName(),
+                    description: R.string.localizable.newCoursePostDescription()),
+            ]
+        }
+    }
+}
+
+extension PushNotificationSettingsSection: Identifiable {
+    var id: Self {
+        self
+    }
+}
+
 public struct PushNotificationSettingsView: View {
 
     @Environment(\.dismiss) var dismiss
