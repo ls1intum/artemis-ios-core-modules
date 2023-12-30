@@ -68,14 +68,9 @@ private extension PushNotificationSettingsView {
         }
 
         return (viewModel.pushNotificationSettings[id]?.push).map { _ in
-            VStack(alignment: .leading, spacing: .s) {
-                Toggle(isOn: isOn) {
-                    Text(id.title)
-                        .lineLimit(2)
-                }
+            Toggle(isOn: isOn) {
+                Text(id.title)
                 Text(id.description)
-                    .font(.caption)
-                    .foregroundColor(Color.Artemis.secondaryLabel)
             }
         }
     }
