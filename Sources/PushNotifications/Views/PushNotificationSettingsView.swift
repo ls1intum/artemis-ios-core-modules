@@ -8,42 +8,6 @@
 import DesignLibrary
 import SwiftUI
 
-enum PushNotificationSettingsSection: String, CaseIterable {
-
-    struct Entry: Identifiable {
-        let id: PushNotificationSettingId
-        let title: String
-        let description: String
-    }
-
-    case courseWideDiscussionNotifications
-
-    var title: String {
-        switch self {
-        case .courseWideDiscussionNotifications:
-            R.string.localizable.courseWideDiscussionNotificationsSectionTitle()
-        }
-    }
-
-    var entries: [Entry] {
-        switch self {
-        case .courseWideDiscussionNotifications:
-            [
-                .init(
-                    id: .newCoursePost,
-                    title: R.string.localizable.newCoursePostSettingsName(),
-                    description: R.string.localizable.newCoursePostDescription()),
-            ]
-        }
-    }
-}
-
-extension PushNotificationSettingsSection: Identifiable {
-    var id: Self {
-        self
-    }
-}
-
 public struct PushNotificationSettingsView: View {
 
     @Environment(\.dismiss) var dismiss
@@ -58,57 +22,10 @@ public struct PushNotificationSettingsView: View {
                 DataStateView(data: $viewModel.pushNotificationSettingsRequest,
                               retryHandler: { await viewModel.getNotificationSettings() }) { _ in
                     List {
-                        Section(R.string.localizable.courseWideDiscussionNotificationsSectionTitle()) {
-                            SettingsCell(viewModel: viewModel,
-                                         type: .newCoursePost)
-                            SettingsCell(viewModel: viewModel,
-                                         type: .newReplyForCoursePost)
-                            SettingsCell(viewModel: viewModel,
-                                         type: .newAnnouncementPost)
-                        }
-                        Section(R.string.localizable.examNotificationsSectionTitle()) {
-                            SettingsCell(viewModel: viewModel,
-                                         type: .newExamPost)
-                            SettingsCell(viewModel: viewModel,
-                                         type: .newReplyForExamPost)
-                        }
-                        Section(R.string.localizable.exerciseNotificationsSectionTitle()) {
-                            SettingsCell(viewModel: viewModel,
-                                         type: .exerciseReleased)
-                            SettingsCell(viewModel: viewModel,
-                                         type: .exercisePractice)
-                            SettingsCell(viewModel: viewModel,
-                                         type: .exerciseSubmissionAssessed)
-                            SettingsCell(viewModel: viewModel,
-                                         type: .fileSubmissionSuccessful)
-                            SettingsCell(viewModel: viewModel,
-                                         type: .newExercisePost)
-                            SettingsCell(viewModel: viewModel,
-                                         type: .newReplyForExercisePost)
-                        }
-                        Section(R.string.localizable.lectureNotificationsSectionTitle()) {
-                            SettingsCell(viewModel: viewModel,
-                                         type: .attachmentChange)
-                            SettingsCell(viewModel: viewModel,
-                                         type: .newLecturePost)
-                            SettingsCell(viewModel: viewModel,
-                                         type: .newReplyForLecturePost)
-                        }
-                        Section(R.string.localizable.tutorialGroupNotificationsSectionTitle()) {
-                            SettingsCell(viewModel: viewModel,
-                                         type: .tutorialGroupRegistrationStudent)
-                            SettingsCell(viewModel: viewModel,
-                                         type: .tutorialGroupDeleteUpdateStudent)
-                        }
-                        Section(R.string.localizable.tutorNotificationsSectionTitle()) {
-                            SettingsCell(viewModel: viewModel,
-                                         type: .tutorialGroupRegistrationTutor)
-                            SettingsCell(viewModel: viewModel,
-                                         type: .tutorialGroupAssignUnassignTutor)
-                        }
-                        Section(R.string.localizable.userMentionSectionTitle()) {
-                            SettingsCell(viewModel: viewModel,
-                                         type: .userMention)
+                        ForEach(PushNotificationSettingsSection.allCases) { section in
+                            Section(section.title) {
+                                ForEach(section.entries, content: self.content)
+                            }
                         }
                     }
                 }.task {
@@ -133,6 +50,7 @@ public struct PushNotificationSettingsView: View {
                     }
                 }
                 .navigationTitle(R.string.localizable.notificationSettingsTitle())
+                .navigationBarTitleDisplayMode(.inline)
             } else {
                 PushNotificationSetupView(shouldCloseOnSkip: true)
             }
@@ -140,36 +58,113 @@ public struct PushNotificationSettingsView: View {
     }
 }
 
-struct SettingsCell: View {
-
-    @ObservedObject var viewModel: PushNotificationSettingsViewModel
-
-    let type: PushNotificationSettingId
-
-    private var binding: Binding<Bool> {
-        Binding(get: { viewModel.pushNotificationSettings[type]?.push ?? false },
-                set: {
-            viewModel.pushNotificationSettings[type]?.push = $0
+private extension PushNotificationSettingsView {
+    func content(id: PushNotificationSettingId) -> some View {
+        let isOn = Binding {
+            viewModel.pushNotificationSettings[id]?.push ?? false
+        } set: { value in
+            viewModel.pushNotificationSettings[id]?.push = value
             viewModel.isSaveDisabled = false
-        })
-    }
+        }
 
-    var body: some View {
-        if viewModel.pushNotificationSettings[type]?.push != nil {
+        return (viewModel.pushNotificationSettings[id]?.push).map { _ in
             VStack(alignment: .leading, spacing: .s) {
-                Toggle(isOn: binding) {
-                    Text(type.title)
+                Toggle(isOn: isOn) {
+                    Text(id.title)
                         .lineLimit(2)
                 }
-                Text(type.description)
+                Text(id.description)
                     .font(.caption)
                     .foregroundColor(Color.Artemis.secondaryLabel)
             }
-        } else {
-            EmptyView()
         }
     }
 }
+
+// MARK: - PushNotificationSettingsSection
+
+private enum PushNotificationSettingsSection: String, CaseIterable {
+
+    case courseWideDiscussion
+    case exam
+    case exercise
+    case lecture
+    case tutorialGroup
+    case tutor
+    case userMention
+
+    var title: String {
+        switch self {
+        case .courseWideDiscussion:
+            return R.string.localizable.courseWideDiscussionNotificationsSectionTitle()
+        case .exam:
+            return R.string.localizable.examNotificationsSectionTitle()
+        case .exercise:
+            return R.string.localizable.exerciseNotificationsSectionTitle()
+        case .lecture:
+            return R.string.localizable.lectureNotificationsSectionTitle()
+        case .tutorialGroup:
+            return R.string.localizable.tutorialGroupNotificationsSectionTitle()
+        case .tutor:
+            return R.string.localizable.tutorNotificationsSectionTitle()
+        case .userMention:
+            return R.string.localizable.userMentionSectionTitle()
+        }
+    }
+
+    var entries: [PushNotificationSettingId] {
+        switch self {
+        case .courseWideDiscussion:
+            return [
+                .newCoursePost,
+                .newReplyForCoursePost,
+                .newAnnouncementPost
+            ]
+        case .exam:
+            return [
+                .newExamPost,
+                .newReplyForExamPost
+            ]
+        case .exercise:
+            return [
+                .exerciseReleased,
+                .exercisePractice,
+                .exerciseSubmissionAssessed,
+                .fileSubmissionSuccessful,
+                .newExercisePost,
+                .newReplyForExercisePost
+            ]
+        case .lecture:
+            return [
+                .attachmentChange,
+                .newLecturePost,
+                .newReplyForLecturePost
+            ]
+        case .tutorialGroup:
+            return [
+                .tutorialGroupRegistrationStudent,
+                .tutorialGroupDeleteUpdateStudent
+            ]
+        case .tutor:
+            return [
+                .tutorialGroupRegistrationTutor,
+                .tutorialGroupAssignUnassignTutor
+            ]
+        case .userMention:
+            return [
+                .userMention
+            ]
+        }
+    }
+}
+
+extension PushNotificationSettingsSection: Identifiable {
+    var id: Self {
+        self
+    }
+}
+
+// MARK: PushNotificationSettingId+Localization
 
 extension PushNotificationSettingId {
     var title: String {

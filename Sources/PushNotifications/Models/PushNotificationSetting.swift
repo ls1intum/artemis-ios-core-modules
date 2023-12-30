@@ -56,3 +56,9 @@ public enum PushNotificationSettingId: String, Codable {
         self = try PushNotificationSettingId(rawValue: rawValue) ?? .unknown
     }
 }
+
+extension PushNotificationSettingId: Identifiable {
+    public var id: Self {
+        self
+    }
+}
