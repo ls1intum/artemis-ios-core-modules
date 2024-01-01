@@ -8,6 +8,6 @@
 import Foundation
 
 public struct CoursesForDashboard: Codable {
-    public var courses: [CourseForDashboard]
-    public var activeExams: [Exam]
+    public var courses: [CourseForDashboard]?
+    public var activeExams: [Exam]?
 }
