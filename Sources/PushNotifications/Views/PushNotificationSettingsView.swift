@@ -19,8 +19,9 @@ public struct PushNotificationSettingsView: View {
     public var body: some View {
         NavigationView {
             if viewModel.didSetupNotifications {
-                DataStateView(data: $viewModel.pushNotificationSettingsRequest,
-                              retryHandler: { await viewModel.getNotificationSettings() }) { _ in
+                DataStateView(data: $viewModel.pushNotificationSettingsRequest) {
+                    await viewModel.getNotificationSettings()
+                } content: { _ in
                     List {
                         ForEach(PushNotificationSettingsSection.allCases) { section in
                             Section(section.title) {

@@ -45,18 +45,18 @@ public enum PushNotificationType: String, Codable {
     case exercisePractice = "EXERCISE_PRACTICE"
     case quizExerciseStarted = "QUIZ_EXERCISE_STARTED"
     case exerciseUpdated = "EXERCISE_UPDATED"
-    // MARK
+    //
     case newReplyForCoursePost = "NEW_REPLY_FOR_COURSE_POST"
     case newReplyForExamPost = "NEW_REPLY_FOR_EXAM_POST"
     case newReplyForExercisePost = "NEW_REPLY_FOR_EXERCISE_POST"
     case newReplyForLecturePost = "NEW_REPLY_FOR_LECTURE_POST"
-    // MARK
+    //
     case newAnnouncementPost = "NEW_ANNOUNCEMENT_POST"
     case newCoursePost = "NEW_COURSE_POST"
     case newExamPost = "NEW_EXAM_POST"
     case newExercisePost = "NEW_EXERCISE_POST"
     case newLecturePost = "NEW_LECTURE_POST"
-    // MARK
+    //
     case courseArchiveStarted = "COURSE_ARCHIVE_STARTED"
     case courseArchiveFinished = "COURSE_ARCHIVE_FINISHED"
     case courseArchiveFinishedWithError = "internal"
@@ -67,7 +67,7 @@ public enum PushNotificationType: String, Codable {
     case examArchiveFinishedWithError = "internal3"
     case examArchiveFinishedWithoutError = "internal4"
     case examArchiveFailed = "EXAM_ARCHIVE_FAILED"
-    // MARK
+    //
     case illegalSubmission = "ILLEGAL_SUBMISSION"
     case programmingTestCasesChanged = "PROGRAMMING_TEST_CASES_CHANGED"
     case fileSubmissionSuccessful = "FILE_SUBMISSION_SUCCESSFUL"
@@ -75,7 +75,7 @@ public enum PushNotificationType: String, Codable {
     case newPlagiarismCaseStudent = "NEW_PLAGIARISM_CASE_STUDENT"
     case plagiarismCaseVerdictStudent = "PLAGIARISM_CASE_VERDICT_STUDENT"
     case newManualFeedbackRequest = "NEW_MANUAL_FEEDBACK_REQUEST"
-    // MARK
+    //
     case tutorialGroupRegistrationStudent = "TUTORIAL_GROUP_REGISTRATION_STUDENT"
     case tutorialGroupDegregistrationStudent = "TUTORIAL_GROUP_DEREGISTRATION_STUDENT"
     case tutorialGroupRegistrationTutor = "TUTORIAL_GROUP_REGISTRATION_TUTOR"
@@ -85,7 +85,7 @@ public enum PushNotificationType: String, Codable {
     case tutorialGroupUpdated = "TUTORIAL_GROUP_UPDATED"
     case tutorialGroupAssigned = "TUTORIAL_GROUP_ASSIGNED"
     case tutorialGroupUnassigned = "TUTORIAL_GROUP_UNASSIGNED"
-    // MARK
+    //
     case conversationNewMessage = "CONVERSATION_NEW_MESSAGE"
     case conversationNewReplyMessage = "CONVERSATION NEW REPLY MESSAGE"
     case conversationCreateOneToOneChat = "CONVERSATION_CREATE_ONE_TO_ONE_CHAT"
@@ -111,7 +111,7 @@ public enum PushNotificationType: String, Codable {
             return R.string.localizable.artemisAppGroupNotificationTitleQuizExerciseStarted()
         case .exerciseUpdated:
             return R.string.localizable.artemisAppGroupNotificationTitleExerciseUpdated()
-        // MARK
+        //
         case .newReplyForCoursePost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForCoursePost()
         case .newReplyForExamPost:
@@ -120,7 +120,7 @@ public enum PushNotificationType: String, Codable {
             return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForExercisePost()
         case .newReplyForLecturePost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForLecturePost()
-        // MARK
+        //
         case .newAnnouncementPost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewAnnouncementPost()
         case .newCoursePost:
@@ -131,7 +131,7 @@ public enum PushNotificationType: String, Codable {
             return R.string.localizable.artemisAppGroupNotificationTitleNewExercisePost()
         case .newLecturePost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewLecturePost()
-        // MARK
+        //
         case .courseArchiveStarted:
             return R.string.localizable.artemisAppGroupNotificationTitleCourseArchiveStarted()
         case .courseArchiveFinished,
@@ -148,7 +148,7 @@ public enum PushNotificationType: String, Codable {
             return R.string.localizable.artemisAppGroupNotificationTitleExamArchiveFinished()
         case .examArchiveFailed:
             return R.string.localizable.artemisAppGroupNotificationTitleExamArchiveFailed()
-        // MARK
+        //
         case .illegalSubmission:
             return R.string.localizable.artemisAppGroupNotificationTitleIllegalSubmission()
         case .programmingTestCasesChanged:
@@ -163,7 +163,7 @@ public enum PushNotificationType: String, Codable {
             return R.string.localizable.artemisAppSingleUserNotificationTitlePlagiarismCaseVerdictStudent()
         case .newManualFeedbackRequest:
             return R.string.localizable.artemisAppGroupNotificationTitleNewManualFeedbackRequest()
-        // MARK
+        //
         case .tutorialGroupRegistrationStudent:
             return R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupRegistrationStudent()
         case .tutorialGroupDegregistrationStudent:
@@ -182,7 +182,7 @@ public enum PushNotificationType: String, Codable {
             return R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupAssigned()
         case .tutorialGroupUnassigned:
             return R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupUnassigned()
-        // MARK
+        //
         case .conversationNewMessage:
             return R.string.localizable.artemisAppConversationNotificationTitleNewMessage()
         case .conversationNewReplyMessage:
@@ -233,7 +233,7 @@ public enum PushNotificationType: String, Codable {
             guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextExerciseUpdated(notificationPlaceholders[0],
                                                                                        notificationPlaceholders[1])
-        // MARK
+        //
         case .newReplyForCoursePost:
             guard notificationPlaceholders.count > 5 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewReplyForCoursePost(notificationPlaceholders[0],
@@ -253,7 +253,7 @@ public enum PushNotificationType: String, Codable {
                                                                                               notificationPlaceholders[4],
                                                                                               notificationPlaceholders[5],
                                                                                               notificationPlaceholders[8])
-        // MARK
+        //
         case .newAnnouncementPost:
             guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewAnnouncementPost(notificationPlaceholders[0],
@@ -274,7 +274,7 @@ public enum PushNotificationType: String, Codable {
             return R.string.localizable.artemisAppGroupNotificationTextNewLecturePost(notificationPlaceholders[0],
                                                                                       notificationPlaceholders[2],
                                                                                       notificationPlaceholders[5])
-        // MARK
+        //
         case .courseArchiveStarted:
             guard notificationPlaceholders.count > 0 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextCourseArchiveStarted(notificationPlaceholders[0])
@@ -310,7 +310,7 @@ public enum PushNotificationType: String, Codable {
             guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextExamArchiveFailed(notificationPlaceholders[1],
                                                                                          notificationPlaceholders[2])
-        // MARK
+        //
         case .illegalSubmission:
             guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextIllegalSubmission(notificationPlaceholders[1])
@@ -335,7 +335,7 @@ public enum PushNotificationType: String, Codable {
             guard notificationPlaceholders.count > 1 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewManualFeedbackRequest(notificationPlaceholders[0],
                                                                                                 notificationPlaceholders[1])
-        // MARK
+        //
         case .tutorialGroupRegistrationStudent:
             guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupRegistrationStudent(notificationPlaceholders[1],
@@ -373,7 +373,7 @@ public enum PushNotificationType: String, Codable {
             guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupUnassigned(notificationPlaceholders[1],
                                                                                                     notificationPlaceholders[2])
-        // MARK
+        //
         case .conversationNewMessage:
             guard notificationPlaceholders.count > 5 else { return nil }
             switch notificationPlaceholders[5] {
