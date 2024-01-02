@@ -7,7 +7,9 @@
 
 import Foundation
 
-public struct CoursesForDashboard: Codable {
-    public var courses: [CourseForDashboard]?
+public struct CoursesForDashboardDTO: Codable {
+    public var courses: [CourseForDashboardDTO]?
     public var activeExams: [Exam]?
+
+    public init() {}
 }

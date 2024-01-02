@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CourseForDashboard: Codable {
+public struct CourseForDashboardDTO: Codable {
     public var course: Course
     public var totalScores: CourseScore?
     public var textScores: CourseScore?
@@ -18,7 +18,7 @@ public struct CourseForDashboard: Codable {
     public var participationResults: [ParticipationResultDTO]?
 }
 
-extension CourseForDashboard: Identifiable {
+extension CourseForDashboardDTO: Identifiable {
     public var id: Int {
         course.id
     }
