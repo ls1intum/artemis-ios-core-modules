@@ -9,7 +9,7 @@ public class CourseServiceImpl: CourseService {
 
     // MARK: - Get Courses For Dashboard
     struct GetCoursesRequest: APIRequest {
-        typealias Response = [CourseForDashboard]
+        typealias Response = CoursesForDashboardDTO
 
         var method: HTTPMethod {
             return .get
@@ -20,20 +20,20 @@ public class CourseServiceImpl: CourseService {
         }
     }
 
-    public func getCourses() async -> DataState<[CourseForDashboard]> {
+    public func getCourses() async -> DataState<CoursesForDashboardDTO> {
         let result = await client.sendRequest(GetCoursesRequest())
 
         switch result {
-        case .success((let response, _)):
+        case let .success((response, _)):
             return .done(response: response)
-        case .failure(let error):
+        case let .failure(error):
             return .failure(error: UserFacingError(error: error))
         }
     }
 
     // MARK: - Get Course
     struct GetCourseRequest: APIRequest {
-        typealias Response = CourseForDashboard
+        typealias Response = CourseForDashboardDTO
 
         var courseId: Int
 
@@ -46,13 +46,13 @@ public class CourseServiceImpl: CourseService {
         }
     }
 
-    public func getCourse(courseId: Int) async -> DataState<CourseForDashboard> {
+    public func getCourse(courseId: Int) async -> DataState<CourseForDashboardDTO> {
         let result = await client.sendRequest(GetCourseRequest(courseId: courseId))
 
         switch result {
-        case .success((let response, _)):
+        case let .success((response, _)):
             return .done(response: response)
-        case .failure(let error):
+        case let .failure(error):
             return .failure(error: UserFacingError(error: error))
         }
     }
@@ -76,9 +76,36 @@ public class CourseServiceImpl: CourseService {
         let result = await client.sendRequest(GetCourseForAssessmentRequest(courseId: courseId))
 
         switch result {
-        case .success((let response, _)):
+        case let .success((response, _)):
             return .done(response: response)
-        case .failure(let error):
+        case let .failure(error):
+            return .failure(error: UserFacingError(error: error))
+        }
+    }
+
+    // MARK: - Get Course Members By Searching
+    struct GetCourseMembersSearchRequest: APIRequest {
+        typealias Response = [UserNameAndLoginDTO]
+
+        var courseId: Int
+        var loginOrName: String
+
+        var method: HTTPMethod {
+            .get
+        }
+
+        var resourceName: String {
+            "api/courses/\(courseId)/members/search?loginOrName=\(loginOrName)"
+        }
+    }
+
+    public func getCourseMembers(courseId: Int, searchLoginOrName: String) async -> DataState<[UserNameAndLoginDTO]> {
+        let result = await client.sendRequest(GetCourseMembersSearchRequest(courseId: courseId, loginOrName: searchLoginOrName))
+
+        switch result {
+        case let .success((response, _)):
+            return .done(response: response)
+        case let .failure(error):
             return .failure(error: UserFacingError(error: error))
         }
     }

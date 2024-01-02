@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol UserPublicInfo: Codable {
+public protocol UserPublicInfo: Codable, Identifiable {
     var id: Int64 { get }
     var login: String? { get }
     var name: String? { get }
