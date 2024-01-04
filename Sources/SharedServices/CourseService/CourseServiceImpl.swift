@@ -9,7 +9,7 @@ public class CourseServiceImpl: CourseService {
 
     // MARK: - Get Courses For Dashboard
     struct GetCoursesRequest: APIRequest {
-        typealias Response = [CourseForDashboard]
+        typealias Response = CoursesForDashboardDTO
 
         var method: HTTPMethod {
             return .get
@@ -20,7 +20,7 @@ public class CourseServiceImpl: CourseService {
         }
     }
 
-    public func getCourses() async -> DataState<[CourseForDashboard]> {
+    public func getCourses() async -> DataState<CoursesForDashboardDTO> {
         let result = await client.sendRequest(GetCoursesRequest())
 
         switch result {
@@ -33,7 +33,7 @@ public class CourseServiceImpl: CourseService {
 
     // MARK: - Get Course
     struct GetCourseRequest: APIRequest {
-        typealias Response = CourseForDashboard
+        typealias Response = CourseForDashboardDTO
 
         var courseId: Int
 
@@ -46,7 +46,7 @@ public class CourseServiceImpl: CourseService {
         }
     }
 
-    public func getCourse(courseId: Int) async -> DataState<CourseForDashboard> {
+    public func getCourse(courseId: Int) async -> DataState<CourseForDashboardDTO> {
         let result = await client.sendRequest(GetCourseRequest(courseId: courseId))
 
         switch result {

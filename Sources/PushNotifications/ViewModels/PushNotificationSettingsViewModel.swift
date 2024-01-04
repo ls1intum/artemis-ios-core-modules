@@ -58,7 +58,7 @@ class PushNotificationSettingsViewModel: ObservableObject {
             pushNotificationSettingsRequest = .done(response: true)
             self.pushNotificationSettings = Dictionary(uniqueKeysWithValues: response
                 .filter {
-                    $0.settingId != .other
+                    $0.settingId != .unknown
                 }
                 .map {
                     ($0.settingId, $0)
