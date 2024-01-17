@@ -1,7 +1,7 @@
-import Foundation
-import SwiftUI
 import Common
 import DesignLibrary
+import Foundation
+import SwiftUI
 
 public struct LoginView: View {
     enum FocusField {

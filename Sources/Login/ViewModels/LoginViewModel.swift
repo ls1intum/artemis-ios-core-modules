@@ -1,10 +1,10 @@
-import Foundation
 import APIClient
-import Common
-import UserStore
 import Combine
+import Common
+import Foundation
 import ProfileInfo
 import SharedModels
+import UserStore
 
 @MainActor
 open class LoginViewModel: ObservableObject {
