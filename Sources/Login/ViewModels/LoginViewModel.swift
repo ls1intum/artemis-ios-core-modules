@@ -33,7 +33,7 @@ open class LoginViewModel: ObservableObject {
     @Published public var usernamePattern: String?
     @Published public var showUsernameWarning = false
 
-    @Published public var instituiton: InstitutionIdentifier = .tum
+    @Published public var institution: InstitutionIdentifier = .tum
 
     private var cancellables: Set<AnyCancellable> = Set()
 
@@ -43,14 +43,14 @@ open class LoginViewModel: ObservableObject {
                 self?.username = UserSession.shared.username ?? ""
                 self?.password = UserSession.shared.password ?? ""
                 self?.loginExpired = UserSession.shared.tokenExpired
-                self?.instituiton = UserSession.shared.institution ?? .tum
+                self?.institution = UserSession.shared.institution ?? .tum
             }
         }.store(in: &cancellables)
 
         username = UserSession.shared.username ?? ""
         password = UserSession.shared.password ?? ""
         loginExpired = UserSession.shared.tokenExpired
-        instituiton = UserSession.shared.institution ?? .tum
+        institution = UserSession.shared.institution ?? .tum
     }
 
     public func login() async {

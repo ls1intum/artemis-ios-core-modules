@@ -10,20 +10,19 @@ public struct LoginView: View {
 
     @StateObject private var viewModel = LoginViewModel()
 
-    @State private var showInstituionSelection = false
+    @State private var isInstitutionSelectionPresented = false
     @FocusState private var focusedField: FocusField?
 
-    public init() { }
+    public init() {}
 
     public var body: some View {
         GeometryReader { geometry in
             ScrollView {
                 VStack(spacing: .xl) {
-
                     header
                         .padding(.top, .xl)
 
-                    Text(R.string.localizable.login_please_sign_in_account(viewModel.instituiton.shortName))
+                    Text(R.string.localizable.login_please_sign_in_account(viewModel.institution.shortName))
                         .font(.customBody)
                         .multilineTextAlignment(.center)
                         .padding(.top, -.l)
@@ -58,27 +57,27 @@ public struct LoginView: View {
                             .toggleStyle(.switch)
                             .tint(Color.Artemis.toggleColor)
                     }
-                        .frame(maxWidth: 520)
-                        .onSubmit {
-                            if focusedField == .username {
-                                focusedField = .password
-                            } else if focusedField == .password {
-                                focusedField = nil
-                                viewModel.isLoading = true
-                                Task {
-                                    await viewModel.login()
-                                }
+                    .frame(maxWidth: 520)
+                    .onSubmit {
+                        if focusedField == .username {
+                            focusedField = .password
+                        } else if focusedField == .password {
+                            focusedField = nil
+                            viewModel.isLoading = true
+                            Task {
+                                await viewModel.login()
                             }
                         }
-                        .toolbar {
-                            ToolbarItemGroup(placement: .keyboard) {
-                                Spacer()
+                    }
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            Spacer()
 
-                                Button(R.string.localizable.done()) {
-                                    focusedField = nil
-                                }
+                            Button(R.string.localizable.done()) {
+                                focusedField = nil
                             }
                         }
+                    }
 
                     Button(R.string.localizable.login_perform_login_button_text()) {
                         viewModel.isLoading = true
@@ -99,14 +98,20 @@ public struct LoginView: View {
                         }
 
                         Button(R.string.localizable.account_change_artemis_instance_label()) {
-                            showInstituionSelection = true
+                            isInstitutionSelectionPresented = true
                         }
-                        .sheet(isPresented: $showInstituionSelection) {
-                            InstitutionSelectionView(institution: $viewModel.instituiton,
-                                                     handleProfileInfoCompletion: viewModel.handleProfileInfoReceived)
+                        .sheet(isPresented: $isInstitutionSelectionPresented) {
+                            NavigationStack {
+                                InstitutionSelectionView(
+                                    institution: $viewModel.institution,
+                                    handleProfileInfoCompletion: viewModel.handleProfileInfoReceived
+                                )
+                                .navigationTitle(R.string.localizable.account_select_artemis_instance_select_title())
+                                .navigationBarTitleDisplayMode(.inline)
+                            }
                         }
                     }
-                        .padding(.bottom, .m)
+                    .padding(.bottom, .m)
                 }
                 .padding(.horizontal, .l)
                 .frame(minHeight: geometry.size.height)
@@ -114,19 +119,27 @@ public struct LoginView: View {
             }
             .scrollDisabled(!viewModel.captchaRequired && focusedField != .password)
         }
-            .loadingIndicator(isLoading: $viewModel.isLoading)
-            .background(Color.Artemis.loginBackgroundColor)
-            .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: {})
-            .alert(isPresented: $viewModel.loginExpired) {
-                Alert(title: Text(R.string.localizable.account_session_expired_error()),
-                      dismissButton: .default(Text(R.string.localizable.ok()),
-                                              action: { viewModel.resetLoginExpired() }))
-            }
-            .task {
-                await viewModel.getProfileInfo()
-            }
+        .loadingIndicator(isLoading: $viewModel.isLoading)
+        .background(Color.Artemis.loginBackgroundColor)
+        .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: {})
+        .alert(isPresented: $viewModel.loginExpired) {
+            Alert(
+                title: Text(R.string.localizable.account_session_expired_error()),
+                dismissButton: .default(
+                    Text(R.string.localizable.ok()),
+                    action: {
+                        viewModel.resetLoginExpired()
+                    }
+                )
+            )
+        }
+        .task {
+            await viewModel.getProfileInfo()
+        }
     }
+}
 
+private extension LoginView {
     var header: some View {
         VStack(spacing: .l) {
             Text(R.string.localizable.account_screen_title())

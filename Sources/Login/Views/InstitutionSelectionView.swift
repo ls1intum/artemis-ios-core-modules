@@ -24,25 +24,21 @@ public struct InstitutionSelectionView: View {
     }
 
     public var body: some View {
-        List {
-            Text(R.string.localizable.account_select_artemis_instance_select_text())
-                .font(.headline)
-            ForEach(InstitutionIdentifier.allCases) { institutionIdentifier in
-                Group {
-                    if case .custom = institutionIdentifier {
-                        CustomInstanceCell(
-                            currentInstitution: $institution,
-                            institution: institutionIdentifier,
-                            handleProfileInfoCompletion: handleProfileInfoCompletion)
-                    } else {
-                        InstanceCell(
-                            currentInstitution: $institution,
-                            institution: institutionIdentifier,
-                            handleProfileInfoCompletion: handleProfileInfoCompletion)
-                    }
+        List(InstitutionIdentifier.allCases) { institutionIdentifier in
+            Group {
+                if case .custom = institutionIdentifier {
+                    CustomInstanceCell(
+                        currentInstitution: $institution,
+                        institution: institutionIdentifier,
+                        handleProfileInfoCompletion: handleProfileInfoCompletion)
+                } else {
+                    InstanceCell(
+                        currentInstitution: $institution,
+                        institution: institutionIdentifier,
+                        handleProfileInfoCompletion: handleProfileInfoCompletion)
                 }
-                .listRowSeparator(.hidden)
             }
+            .listRowSeparator(.hidden)
         }
         .listStyle(.plain)
     }

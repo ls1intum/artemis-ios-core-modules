@@ -23,7 +23,7 @@
 "account_captcha_alert_message" = "You entered your password incorrectly. Solve the capture to continue.";
 
 // MARK: - InstanceSelectionView
-"account_select_artemis_instance_select_text" = "Please select your university:";
+"account_select_artemis_instance_select_title" = "Please Select Your University";
 "account_select_artemis_instance_custom_instance" = "Your custom Artemis instance URL";
 "account_select_artemis_instance_error" = "The URL is incorrect or does not link to an Artemis instance!";
 
