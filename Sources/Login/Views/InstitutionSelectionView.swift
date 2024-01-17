@@ -5,18 +5,20 @@
 //  Created by Sven Andabaka on 01.03.23.
 //
 
-import SwiftUI
-import UserStore
 import DesignLibrary
 import ProfileInfo
+import SwiftUI
+import UserStore
 
 public struct InstitutionSelectionView: View {
-
     @Binding var institution: InstitutionIdentifier
 
     var handleProfileInfoCompletion: @MainActor (ProfileInfo?) -> Void
 
-    public init(institution: Binding<InstitutionIdentifier>, handleProfileInfoCompletion: @escaping @MainActor (ProfileInfo?) -> Void) {
+    public init(
+        institution: Binding<InstitutionIdentifier>,
+        handleProfileInfoCompletion: @escaping @MainActor (ProfileInfo?) -> Void
+    ) {
         self._institution = institution
         self.handleProfileInfoCompletion = handleProfileInfoCompletion
     }
@@ -28,19 +30,21 @@ public struct InstitutionSelectionView: View {
             ForEach(InstitutionIdentifier.allCases) { institutionIdentifier in
                 Group {
                     if case .custom = institutionIdentifier {
-                        CustomInstanceCell(currentInstitution: $institution,
-                                           institution: institutionIdentifier,
-                                           handleProfileInfoCompletion: handleProfileInfoCompletion)
+                        CustomInstanceCell(
+                            currentInstitution: $institution,
+                            institution: institutionIdentifier,
+                            handleProfileInfoCompletion: handleProfileInfoCompletion)
                     } else {
-                        InstanceCell(currentInstitution: $institution,
-                                     institution: institutionIdentifier,
-                                     handleProfileInfoCompletion: handleProfileInfoCompletion)
+                        InstanceCell(
+                            currentInstitution: $institution,
+                            institution: institutionIdentifier,
+                            handleProfileInfoCompletion: handleProfileInfoCompletion)
                     }
                 }
                 .listRowSeparator(.hidden)
             }
         }
-        .listStyle(PlainListStyle())
+        .listStyle(.plain)
     }
 }
 
@@ -54,7 +58,6 @@ private struct CustomInstanceCell: View {
     @State private var isLoading = false
 
     var institution: InstitutionIdentifier
-
     var handleProfileInfoCompletion: @MainActor (ProfileInfo?) -> Void
 
     var body: some View {
@@ -75,33 +78,10 @@ private struct CustomInstanceCell: View {
                 .textFieldStyle(ArtemisTextField())
                 .keyboardType(.URL)
                 .background(Color.gray.opacity(0.2))
-            Button(R.string.localizable.select()) {
-                guard let url = URL(string: customUrl) else {
-                    showErrorAlert = true
-                    return
-                }
-                UserSession.shared.saveInstitution(identifier: .custom(url))
-
-                isLoading = true
-
-                Task {
-                    let result = await ProfileInfoServiceFactory.shared.getProfileInfo()
-                    isLoading = false
-                    switch result {
-                    case .loading:
-                        isLoading = true
-                    case .failure:
-                        showErrorAlert = true
-                        UserSession.shared.saveInstitution(identifier: .tum)
-                    case .done(let response):
-                        handleProfileInfoCompletion(response)
-                        dismiss()
-                    }
-                }
-            }
-            .buttonStyle(ArtemisButton())
-            .loadingIndicator(isLoading: $isLoading)
-            .alert(R.string.localizable.account_select_artemis_instance_error(), isPresented: $showErrorAlert, actions: { })
+            Button(R.string.localizable.select(), action: select)
+                .buttonStyle(ArtemisButton())
+                .loadingIndicator(isLoading: $isLoading)
+                .alert(R.string.localizable.account_select_artemis_instance_error(), isPresented: $showErrorAlert, actions: { })
         }
         .frame(maxWidth: .infinity)
         .padding(.l)
@@ -110,16 +90,42 @@ private struct CustomInstanceCell: View {
             if case .custom(let url) = institution {
                 customUrl = url?.absoluteString ?? ""
             }
-        }.onAppear {
+        }
+        .onAppear {
             if case .custom(let url) = currentInstitution {
                 customUrl = url?.absoluteString ?? ""
+            }
+        }
+    }
+
+    @MainActor
+    func select() {
+        guard let url = URL(string: customUrl) else {
+            showErrorAlert = true
+            return
+        }
+        UserSession.shared.saveInstitution(identifier: .custom(url))
+
+        isLoading = true
+
+        Task {
+            let result = await ProfileInfoServiceFactory.shared.getProfileInfo()
+            isLoading = false
+            switch result {
+            case .loading:
+                isLoading = true
+            case .failure:
+                showErrorAlert = true
+                UserSession.shared.saveInstitution(identifier: .tum)
+            case .done(let response):
+                handleProfileInfoCompletion(response)
+                dismiss()
             }
         }
     }
 }
 
 private struct InstanceCell: View {
-
     @Environment(\.dismiss) var dismiss
 
     @Binding var currentInstitution: InstitutionIdentifier
@@ -128,7 +134,6 @@ private struct InstanceCell: View {
     @State private var isLoading = false
 
     var institution: InstitutionIdentifier
-
     var handleProfileInfoCompletion: @MainActor (ProfileInfo?) -> Void
 
     var body: some View {
@@ -148,28 +153,30 @@ private struct InstanceCell: View {
         .cardModifier()
         .loadingIndicator(isLoading: $isLoading)
         .alert(R.string.localizable.account_select_artemis_instance_error(), isPresented: $showErrorAlert, actions: { })
-        .onTapGesture {
-            UserSession.shared.saveInstitution(identifier: institution)
-            Task {
-                let result = await ProfileInfoServiceFactory.shared.getProfileInfo()
-                isLoading = false
-                switch result {
-                case .loading:
-                    isLoading = true
-                case .failure:
-                    showErrorAlert = true
-                    UserSession.shared.saveInstitution(identifier: .tum)
-                case .done(let response):
-                    handleProfileInfoCompletion(response)
-                    dismiss()
-                }
+        .onTapGesture(perform: select)
+    }
+
+    @MainActor
+    func select() {
+        UserSession.shared.saveInstitution(identifier: institution)
+        Task {
+            let result = await ProfileInfoServiceFactory.shared.getProfileInfo()
+            isLoading = false
+            switch result {
+            case .loading:
+                isLoading = true
+            case .failure:
+                showErrorAlert = true
+                UserSession.shared.saveInstitution(identifier: .tum)
+            case .done(let response):
+                handleProfileInfoCompletion(response)
+                dismiss()
             }
         }
     }
 }
 
-struct InstitutionLogo: View {
-
+private struct InstitutionLogo: View {
     var institution: InstitutionIdentifier
 
     var body: some View {
@@ -198,8 +205,9 @@ struct InstitutionLogo: View {
     }
 }
 
-extension InstitutionIdentifier {
+// MARK: - InstitutionIdentifier+Logo
 
+extension InstitutionIdentifier {
     var logo: URL? {
         URL(string: "public/images/logo.png", relativeTo: self.baseURL)
     }
