@@ -15,11 +15,15 @@ public struct PushNotificationSetting: Codable {
     public var push: Bool
 }
 
-public enum PushNotificationSettingId: String, RawRepresentable, Codable {
+public enum PushNotificationSettingId: String, Codable {
     // Course-Wide Dicussion Notifications
     case newCoursePost = "notification.course-wide-discussion.new-course-post"
     case newReplyForCoursePost = "notification.course-wide-discussion.new-reply-for-course-post"
     case newAnnouncementPost = "notification.course-wide-discussion.new-announcement-post"
+
+    // Exam notifications
+    case newExamPost = "notification.exam-notification.new-exam-post"
+    case newReplyForExamPost = "notification.exam-notification.new-reply-for-exam-post"
 
     // Exercise Notifications
     case exerciseReleased = "notification.exercise-notification.exercise-released"
@@ -42,9 +46,19 @@ public enum PushNotificationSettingId: String, RawRepresentable, Codable {
     case tutorialGroupRegistrationTutor = "notification.tutor-notification.tutorial-group-registration"
     case tutorialGroupAssignUnassignTutor = "notification.tutor-notification.tutorial-group-assign-unassign"
 
-    case other
+    // User Notifications
+    case userMention = "notification.user-notification.user-mention"
+
+    case unknown
 
     public init(from decoder: Decoder) throws {
-        self = try PushNotificationSettingId(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .other
+        let rawValue = try decoder.singleValueContainer().decode(RawValue.self)
+        self = try PushNotificationSettingId(rawValue: rawValue) ?? .unknown
+    }
+}
+
+extension PushNotificationSettingId: Identifiable {
+    public var id: Self {
+        self
     }
 }
