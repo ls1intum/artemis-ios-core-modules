@@ -46,3 +46,10 @@ public struct GroupChat: BaseConversation {
         Image(systemName: "person.3.fill")
     }
 }
+
+public extension GroupChat {
+    init(id: Int64) {
+        self.type = .groupChat
+        self.id = id
+    }
+}

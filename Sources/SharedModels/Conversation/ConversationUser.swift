@@ -22,4 +22,12 @@ public struct ConversationUser: UserPublicInfo {
     public var isRequestingUser: Bool?
 }
 
-extension ConversationUser: Hashable { }
+public extension ConversationUser {
+    init(id: Int64) {
+        self.id = id
+    }
+}
+
+// MARK: Hashable
+
+extension ConversationUser: Hashable {}

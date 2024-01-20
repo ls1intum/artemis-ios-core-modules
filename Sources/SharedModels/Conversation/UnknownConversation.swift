@@ -30,3 +30,10 @@ public struct UnknownConversation: BaseConversation {
         nil
     }
 }
+
+public extension UnknownConversation {
+    init(id: Int64) {
+        self.type = .unknown
+        self.id = id
+    }
+}

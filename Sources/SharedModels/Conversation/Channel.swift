@@ -55,6 +55,13 @@ public struct Channel: BaseConversation {
     }
 }
 
+public extension Channel {
+    init(id: Int64) {
+        self.type = .channel
+        self.id = id
+    }
+}
+
 public enum ChannelSubType: String, RawRepresentable, Codable {
     case general
     case exercise

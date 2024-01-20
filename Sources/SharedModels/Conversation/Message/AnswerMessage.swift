@@ -8,7 +8,6 @@
 import Foundation
 
 public struct AnswerMessage: BaseMessage {
-
     public var id: Int64
     public var author: ConversationUser?
     public var creationDate: Date?
@@ -21,6 +20,14 @@ public struct AnswerMessage: BaseMessage {
     public var reactions: [Reaction]?
     public var post: Message?
 }
+
+public extension AnswerMessage {
+    init(id: Int64) {
+        self.id = id
+    }
+}
+
+// MARK: Equatable & Hashable
 
 extension AnswerMessage: Equatable, Hashable {
     public static func == (lhs: AnswerMessage, rhs: AnswerMessage) -> Bool {

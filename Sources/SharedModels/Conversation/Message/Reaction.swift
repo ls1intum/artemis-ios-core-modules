@@ -16,6 +16,14 @@ public struct Reaction: Codable {
     public var answerPost: AnswerMessage?
 }
 
+//public extension Reaction {
+//    init(id: Int64) {
+//        self.id = id
+//    }
+//}
+
+// MARK: Equatable & Hashable
+
 extension Reaction: Equatable, Hashable {
     public static func == (lhs: Reaction, rhs: Reaction) -> Bool {
         lhs.id == rhs.id
