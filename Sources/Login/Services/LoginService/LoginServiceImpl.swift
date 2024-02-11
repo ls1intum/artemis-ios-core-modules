@@ -5,13 +5,12 @@
 //  Created by Sven Andabaka on 09.01.23.
 //
 
-import Foundation
+import Account
 import APIClient
-import UserStore
 import Common
 import PushNotifications
-import Account
 import SharedServices
+import UserStore
 
 class LoginServiceImpl: LoginService {
     private let client = APIClient()
