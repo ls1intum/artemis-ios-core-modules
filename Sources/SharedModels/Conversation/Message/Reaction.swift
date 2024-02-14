@@ -16,11 +16,12 @@ public struct Reaction: Codable {
     public var answerPost: AnswerMessage?
 }
 
-//public extension Reaction {
-//    init(id: Int64) {
-//        self.id = id
-//    }
-//}
+public extension Reaction {
+    init(id: Int64, emojiId: String = "grin") {
+        self.id = id
+        self.emojiId = emojiId
+    }
+}
 
 // MARK: Equatable & Hashable
 
