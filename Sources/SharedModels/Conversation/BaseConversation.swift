@@ -114,6 +114,8 @@ public enum Conversation: Codable, Identifiable {
     }
 }
 
+// MARK: Equatable & Hashable
+
 extension Conversation: Equatable, Hashable {
     public static func == (lhs: Conversation, rhs: Conversation) -> Bool {
         lhs.id == rhs.id &&

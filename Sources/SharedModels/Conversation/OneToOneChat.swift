@@ -34,3 +34,10 @@ public struct OneToOneChat: BaseConversation {
         nil
     }
 }
+
+public extension OneToOneChat {
+    init(id: Int64) {
+        self.type = .oneToOneChat
+        self.id = id
+    }
+}

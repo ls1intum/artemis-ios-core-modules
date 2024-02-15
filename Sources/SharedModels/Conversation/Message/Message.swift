@@ -2,7 +2,6 @@ import Foundation
 import UserStore
 
 public struct Message: BaseMessage {
-
     public var id: Int64
     public var author: ConversationUser?
     public var creationDate: Date?
@@ -27,6 +26,14 @@ public struct Message: BaseMessage {
     public var answerCount: Int?
     public var voteCount: Int?
 }
+
+public extension Message {
+    init(id: Int64) {
+        self.id = id
+    }
+}
+
+// MARK: Equatable & Hashable
 
 extension Message: Equatable, Hashable {
     public static func == (lhs: Message, rhs: Message) -> Bool {
