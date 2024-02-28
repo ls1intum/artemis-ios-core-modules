@@ -26,7 +26,11 @@ public struct ArtemisButton: ButtonStyle {
         self.buttonPriority = priority
     }
 
-    // maybe add custom priority init
+    public init(buttonColor: Color, buttonTextColor: Color) {
+        self.buttonPriority = .custom
+        self.buttonColor = buttonColor
+        self.buttonTextColor = buttonTextColor
+    }
 
     public func makeBody(configuration: ButtonStyleConfiguration) -> some View {
         configuration.label
