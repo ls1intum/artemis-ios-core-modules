@@ -18,6 +18,7 @@ public struct GroupChat: BaseConversation {
     public var unreadMessagesCount: Int?
     public var isFavorite: Bool?
     public var isHidden: Bool?
+    public var isMuted: Bool?
     public var isCreator: Bool?
     public var isMember: Bool?
     public var numberOfMembers: Int?
@@ -44,5 +45,12 @@ public struct GroupChat: BaseConversation {
 
     public var icon: Image? {
         Image(systemName: "person.3.fill")
+    }
+}
+
+public extension GroupChat {
+    init(id: Int64) {
+        self.type = .groupChat
+        self.id = id
     }
 }

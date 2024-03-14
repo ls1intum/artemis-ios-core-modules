@@ -18,6 +18,7 @@ public struct OneToOneChat: BaseConversation {
     public var unreadMessagesCount: Int?
     public var isFavorite: Bool?
     public var isHidden: Bool?
+    public var isMuted: Bool?
     public var isCreator: Bool?
     public var isMember: Bool?
     public var numberOfMembers: Int?
@@ -31,5 +32,12 @@ public struct OneToOneChat: BaseConversation {
 
     public var icon: Image? {
         nil
+    }
+}
+
+public extension OneToOneChat {
+    init(id: Int64) {
+        self.type = .oneToOneChat
+        self.id = id
     }
 }

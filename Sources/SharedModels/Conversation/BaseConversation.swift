@@ -35,6 +35,7 @@ public protocol BaseConversation: Codable {
     var unreadMessagesCount: Int? { get set }
     var isFavorite: Bool? { get }
     var isHidden: Bool? { get }
+    var isMuted: Bool? { get }
     var isCreator: Bool? { get }
     var isMember: Bool? { get }
     var numberOfMembers: Int? { get }
@@ -112,6 +113,8 @@ public enum Conversation: Codable, Identifiable {
         }
     }
 }
+
+// MARK: Equatable & Hashable
 
 extension Conversation: Equatable, Hashable {
     public static func == (lhs: Conversation, rhs: Conversation) -> Bool {

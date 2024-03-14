@@ -18,6 +18,7 @@ public struct UnknownConversation: BaseConversation {
     public var unreadMessagesCount: Int?
     public var isFavorite: Bool?
     public var isHidden: Bool?
+    public var isMuted: Bool?
     public var isCreator: Bool?
     public var isMember: Bool?
     public var numberOfMembers: Int?
@@ -28,5 +29,12 @@ public struct UnknownConversation: BaseConversation {
 
     public var icon: Image? {
         nil
+    }
+}
+
+public extension UnknownConversation {
+    init(id: Int64) {
+        self.type = .unknown
+        self.id = id
     }
 }

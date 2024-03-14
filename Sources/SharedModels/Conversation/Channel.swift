@@ -18,6 +18,7 @@ public struct Channel: BaseConversation {
     public var unreadMessagesCount: Int?
     public var isFavorite: Bool?
     public var isHidden: Bool?
+    public var isMuted: Bool?
     public var isCreator: Bool?
     public var isMember: Bool?
     public var numberOfMembers: Int?
@@ -52,6 +53,13 @@ public struct Channel: BaseConversation {
             return Image(systemName: "number")
         }
         return Image(systemName: "lock.fill")
+    }
+}
+
+public extension Channel {
+    init(id: Int64) {
+        self.type = .channel
+        self.id = id
     }
 }
 

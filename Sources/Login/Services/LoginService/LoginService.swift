@@ -5,7 +5,6 @@
 //  Created by Sven Andabaka on 09.01.23.
 //
 
-import Foundation
 import Common
 
 public protocol LoginService {
