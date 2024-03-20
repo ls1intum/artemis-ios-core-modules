@@ -56,9 +56,9 @@ private extension ProgressBar {
             var color: Color {
                 switch self {
                 case .success:
-                    return Color.Artemis.courseScoreProgressBackgroundColor
-                case .failure:
                     return Color.Artemis.courseScoreProgressRingColor
+                case .failure:
+                    return Color.Artemis.courseScoreProgressBackgroundColor
                 case .placeholder:
                     return Color.Artemis.courseScoreProgressPlaceholderColor
                 }
@@ -74,7 +74,7 @@ private extension ProgressBar {
             return [Fraction(id: .placeholder, value: 1)]
         } else {
             let remainder = total - value
-            return [Fraction(id: .failure, value: value), Fraction(id: .success, value: remainder)]
+            return [Fraction(id: .success, value: value), Fraction(id: .failure, value: remainder)]
         }
     }
 }
