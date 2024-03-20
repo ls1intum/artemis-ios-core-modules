@@ -155,6 +155,7 @@ public extension Color {
         // Course Score
         public static let courseScoreProgressBackgroundColor = UIColor.ColorPalette.Red.suColor
         public static let courseScoreProgressRingColor = UIColor.ColorPalette.Green.suColor
+        public static let courseScoreProgressPlaceholderColor = UIColor.ColorPalette.Gray50.suColor
 
         // Message
         public static let reactionCapsuleColor = UIColor(UIColor.ColorPalette.Gray10, darkModeColor: UIColor.ColorPalette.Gray90).suColor
