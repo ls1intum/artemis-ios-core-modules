@@ -5,6 +5,7 @@
 //  Created by Sven Andabaka on 15.03.23.
 //
 
+import Charts
 import SwiftUI
 
 public struct ProgressBar: View {
@@ -25,27 +26,55 @@ public struct ProgressBar: View {
         self.ringColor = ringColor
     }
 
-    private var progress: Double {
-        Double(value) / Double(total)
-    }
-
     public var body: some View {
-        ZStack {
-            Circle()
-                .stroke(lineWidth: 20.0)
-                .foregroundColor(backgroundColor)
-            Circle()
-                .trim(from: 0.0, to: CGFloat(min(self.progress, 1.0)))
-                .stroke(style: StrokeStyle(lineWidth: 20.0, lineCap: .round, lineJoin: .round))
-                .foregroundColor(total == 0 ? .gray : ringColor)
-                .rotationEffect(Angle(degrees: 270.0))
-                .animation(.linear, value: progress)
-
+        Chart(data) { score in
+            SectorMark(
+                angle: PlottableValue.value("Score", score.value),
+                innerRadius: MarkDimension.ratio(2.0 / 3),
+                angularInset: .xxs
+            )
+            .foregroundStyle(score.id.color)
+            .cornerRadius(.l)
+        }
+        .chartBackground { _ in
             VStack {
-                Text("\(value) / \(total)")
-                    .font(.title3)
+                Text(value.formatted() + " / " + total.formatted())
                 Text("Pts")
             }
+        }
+    }
+}
+
+private extension ProgressBar {
+    struct Fraction: Identifiable {
+        // swiftlint:disable:next type_name
+        enum ID {
+            case success
+            case failure
+            case placeholder
+
+            var color: Color {
+                switch self {
+                case .success:
+                    return Color.Artemis.courseScoreProgressBackgroundColor
+                case .failure:
+                    return Color.Artemis.courseScoreProgressRingColor
+                case .placeholder:
+                    return Color.Artemis.courseScoreProgressPlaceholderColor
+                }
+            }
+        }
+
+        var id: ID
+        var value: Int
+    }
+
+    var data: [Fraction] {
+        if total == 0 {
+            return [Fraction(id: .placeholder, value: 1)]
+        } else {
+            let remainder = total - value
+            return [Fraction(id: .failure, value: value), Fraction(id: .success, value: remainder)]
         }
     }
 }
