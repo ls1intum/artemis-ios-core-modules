@@ -24,7 +24,7 @@ public struct ModelingExercise: BaseExercise {
     public var assessmentType: AssessmentType?
     public var allowComplaintsForAutomaticAssessments: Bool?
     public var allowManualFeedbackRequests: Bool?
-    public var includedInOverallScore: IncludedInOverallScore = .includedCompletly
+    public var includedInOverallScore: IncludedInOverallScore = .includedCompletely
     public var exampleSolutionPublicationDate: Date?
     public var studentParticipations: [Participation]?
     public var attachments: [Attachment]? = []

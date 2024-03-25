@@ -18,6 +18,12 @@ public struct CourseForDashboardDTO: Codable {
     public var participationResults: [ParticipationResultDTO]?
 }
 
+public extension CourseForDashboardDTO {
+    init(course: Course) {
+        self.course = course
+    }
+}
+
 extension CourseForDashboardDTO: Identifiable {
     public var id: Int {
         course.id

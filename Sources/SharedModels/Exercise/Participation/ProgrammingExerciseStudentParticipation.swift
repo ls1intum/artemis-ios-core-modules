@@ -1,6 +1,6 @@
 import Foundation
 
-public class ProgrammingExerciseStudentParticipation: StudentParticipation, Codable {
+public struct ProgrammingExerciseStudentParticipation: StudentParticipation, Codable {
 
     public static var type: String {
         "programming"
