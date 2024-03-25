@@ -19,7 +19,7 @@ struct RegexReplacementVisitor<Output> {
 
 enum RegexReplacementVisitors {
     static let channels = RegexReplacementVisitor(regex: #/\[channel\](?<name>.*?)\((?<id>.*?)\)\[/channel\]/#) { match in
-        "[#\(match.name)]()"
+        "[#\(match.name)](mention://channel/\(match.id))"
     }
 
     static let exercises = RegexReplacementVisitor(
@@ -31,7 +31,7 @@ enum RegexReplacementVisitors {
               let url = URL(string: String(match.path), relativeTo: baseURL) else {
             return String(match.0)
         }
-        return "![\(exercise.title)](\(exercise.icon)) [\(match.name)](\(url.absoluteString))"
+        return "![\(exercise.title)](\(exercise.icon)) [\(match.name)](mention://exercise/\(url.lastPathComponent))"
     }
 
     static let ins = RegexReplacementVisitor(regex: #/<ins>(?<ins>.*?)</ins>/#) { match in
@@ -45,11 +45,11 @@ enum RegexReplacementVisitors {
               let url = URL(string: String(match.path), relativeTo: baseURL) else {
             return String(match.0)
         }
-        return "![Lecture](fa-chalkboard-user) [\(match.name)](\(url.absoluteString))"
+        return "![Lecture](fa-chalkboard-user) [\(match.name)](mention://lecture/\(url.lastPathComponent))"
     }
 
     static let members = RegexReplacementVisitor(regex: #/\[user\](?<name>.*?)\((?<login>.*?)\)\[/user\]/#) { match in
-        "[@\(match.name)]()"
+        "[@\(match.name)](mention://member/\(match.login))"
     }
 
     static func visitAll(input: inout String) {
