@@ -64,4 +64,5 @@ public enum UMLDiagramType: String, Codable {
     case petriNet = "PetriNet"
     case syntaxTree = "SyntaxTree"
     case flowchart = "Flowchart"
+    case BPMN = "BPMN"
 }
