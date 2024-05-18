@@ -26,6 +26,9 @@ public struct Course: Codable, Identifiable {
     public var editorGroupName: String?
     public var teachingAssistantGroupName: String?
 
+    // helper attributes, if DTO does not contain complete data
+    public var numberOfLectures: Int?
+
     public init(id: Int, title: String? = "",
                 description: String? = "",
                 courseIcon: String? = nil,
