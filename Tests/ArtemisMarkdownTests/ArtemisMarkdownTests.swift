@@ -28,4 +28,10 @@ final class ArtemisMarkdownTests: XCTestCase {
         XCTAssertEqual(match.name, "Full Name")
         XCTAssertEqual(match.login, "login")
     }
+
+    func testMessagesRegex() throws {
+        let inputString = "#13"
+        let match = try XCTUnwrap(RegexReplacementVisitors.messages.regex.wholeMatch(in: inputString))
+        XCTAssertEqual(match.id, "13")
+    }
 }

@@ -52,13 +52,18 @@ enum RegexReplacementVisitors {
         "[@\(match.name)](mention://member/\(match.login))"
     }
 
+    static let messages = RegexReplacementVisitor(regex: #/\#(?<id>\d+)/#) { match in
+        return "􂄺[\(match.id)](mention://message/\(match.id))"
+    }
+
     static func visitAll(input: inout String) {
         for visit in [
             channels.visit(input:),
             exercises.visit(input:),
             ins.visit(input:),
             lectures.visit(input:),
-            members.visit(input:)
+            members.visit(input:),
+            messages.visit(input:)
         ] {
             visit(&input)
         }
