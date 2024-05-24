@@ -20,25 +20,31 @@ struct RegexReplacementVisitor<Output> {
 enum RegexReplacementVisitors {
 
     // (?<ATTACHMENT>\[attachment].*?\[\/attachment])
-    static let attachments = RegexReplacementVisitor(regex: #/\[attachment\](?<name>.*?)\((?<path>lecture/\d+/.*?)\)\[/attachment\]/#) { match in
+    static let attachments = RegexReplacementVisitor(
+        regex: #/\[attachment\](?<name>.*?)\((?<path>lecture/\d+/.*?)\)\[/attachment\]/#
+    ) { match in
         "[Attachment \(match.name)](mention://attachment/\(match.path))"
     }
 
     // (?<ATTACHMENT_UNITS>\[lecture-unit].*?\[\/lecture-unit])
-    static let attachmentUnits = RegexReplacementVisitor(regex: #/\[lecture-unit\](?<name>.*?)\((?<path>attachment-unit/\d+/.*?)\)\[/lecture-unit\]/#) { match in
+    static let attachmentUnits = RegexReplacementVisitor(
+        regex: #/\[lecture-unit\](?<name>.*?)\((?<path>attachment-unit/\d+/.*?)\)\[/lecture-unit\]/#
+    ) { match in
         "[Lecture unit \(match.name)](mention://lecture-unit/\(match.path))"
     }
 
     // (?<CHANNEL>\[channel].*?\[\/channel])
-    static let channels = RegexReplacementVisitor(regex: #/\[channel\](?<name>.*?)\((?<id>.*?)\)\[/channel\]/#) { match in
+    static let channels = RegexReplacementVisitor(
+        regex: #/\[channel\](?<name>.*?)\((?<id>.*?)\)\[/channel\]/#
+    ) { match in
         "[#\(match.name)](mention://channel/\(match.id))"
     }
 
-    // (?<PROGRAMMING>\[programming].*?\[\/programming])
-    //|(?<MODELING>\[modeling].*?\[\/modeling])
-    //|(?<QUIZ>\[quiz].*?\[\/quiz])
-    //|(?<TEXT>\[text].*?\[\/text])
-    //|(?<FILE_UPLOAD>\[file-upload].*?\[\/file-upload])
+    // (?<PROGRAMMING>\[programming].*?\[\/programming])|
+    // (?<MODELING>\[modeling].*?\[\/modeling])|
+    // (?<QUIZ>\[quiz].*?\[\/quiz])|
+    // (?<TEXT>\[text].*?\[\/text])|
+    // (?<FILE_UPLOAD>\[file-upload].*?\[\/file-upload])
     static let exercises = RegexReplacementVisitor(
         regex: #/\[(?<start>[\w-]*?)\](?<name>.*?)\((?<path>/courses/\d+/exercises/\d+)\)\[/(?<stop>[\w-]*?)\]/#
     ) { match in
@@ -77,7 +83,9 @@ enum RegexReplacementVisitors {
     }
 
     // (?<SLIDE>\[slide].*?\[\/slide])
-    static let slides = RegexReplacementVisitor(regex: #/\[slide\](?<name>.*?)\((?<path>attachment-unit/\d+/slide/\d+)\)\[/slide\]/#) { match in
+    static let slides = RegexReplacementVisitor(
+        regex: #/\[slide\](?<name>.*?)\((?<path>attachment-unit/\d+/slide/\d+)\)\[/slide\]/#
+    ) { match in
         "[Slide \(match.name)](mention://slide/\(match.path))"
     }
 
