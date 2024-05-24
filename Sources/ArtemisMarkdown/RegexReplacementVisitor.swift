@@ -18,10 +18,27 @@ struct RegexReplacementVisitor<Output> {
 }
 
 enum RegexReplacementVisitors {
+
+    // (?<ATTACHMENT>\[attachment].*?\[\/attachment])
+    static let attachments = RegexReplacementVisitor(regex: #/\[attachment\](?<name>.*?)\((?<path>lecture/\d+/.*?)\)\[/attachment\]/#) { match in
+        "[Attachment \(match.name)](mention://attachment/\(match.path))"
+    }
+
+    // (?<ATTACHMENT_UNITS>\[lecture-unit].*?\[\/lecture-unit])
+    static let attachmentUnits = RegexReplacementVisitor(regex: #/\[lecture-unit\](?<name>.*?)\((?<path>attachment-unit/\d+/.*?)\)\[/lecture-unit\]/#) { match in
+        "[Lecture unit \(match.name)](mention://lecture-unit/\(match.path))"
+    }
+
+    // (?<CHANNEL>\[channel].*?\[\/channel])
     static let channels = RegexReplacementVisitor(regex: #/\[channel\](?<name>.*?)\((?<id>.*?)\)\[/channel\]/#) { match in
         "[#\(match.name)](mention://channel/\(match.id))"
     }
 
+    // (?<PROGRAMMING>\[programming].*?\[\/programming])
+    //|(?<MODELING>\[modeling].*?\[\/modeling])
+    //|(?<QUIZ>\[quiz].*?\[\/quiz])
+    //|(?<TEXT>\[text].*?\[\/text])
+    //|(?<FILE_UPLOAD>\[file-upload].*?\[\/file-upload])
     static let exercises = RegexReplacementVisitor(
         regex: #/\[(?<start>[\w-]*?)\](?<name>.*?)\((?<path>/courses/\d+/exercises/\d+)\)\[/(?<stop>[\w-]*?)\]/#
     ) { match in
@@ -38,6 +55,7 @@ enum RegexReplacementVisitors {
         String(match.ins)
     }
 
+    // (?<LECTURE>\[lecture].*?\[\/lecture])
     static let lectures = RegexReplacementVisitor(
         regex: #/\[lecture\](?<name>.*?)\((?<path>/courses/\d+/lectures/\d+)\)\[/lecture\]/#
     ) { match in
@@ -48,22 +66,32 @@ enum RegexReplacementVisitors {
         return "![Lecture](fa-chalkboard-user) [\(match.name)](mention://lecture/\(url.lastPathComponent))"
     }
 
+    // (?<USER>\[user].*?\[\/user])
     static let members = RegexReplacementVisitor(regex: #/\[user\](?<name>.*?)\((?<login>.*?)\)\[/user\]/#) { match in
         "[@\(match.name)](mention://member/\(match.login))"
     }
 
+    // (?<POST>#\d+)
     static let messages = RegexReplacementVisitor(regex: #/\#(?<id>\d+)/#) { match in
-        return "􂄺[\(match.id)](mention://message/\(match.id))"
+        return "[Message #\(match.id)](mention://message/\(match.id))"
+    }
+
+    // (?<SLIDE>\[slide].*?\[\/slide])
+    static let slides = RegexReplacementVisitor(regex: #/\[slide\](?<name>.*?)\((?<path>attachment-unit/\d+/slide/\d+)\)\[/slide\]/#) { match in
+        "[Slide \(match.name)](mention://slide/\(match.path))"
     }
 
     static func visitAll(input: inout String) {
         for visit in [
+            attachments.visit(input:),
+            attachmentUnits.visit(input:),
             channels.visit(input:),
             exercises.visit(input:),
             ins.visit(input:),
             lectures.visit(input:),
             members.visit(input:),
-            messages.visit(input:)
+            messages.visit(input:),
+            slides.visit(input:)
         ] {
             visit(&input)
         }
