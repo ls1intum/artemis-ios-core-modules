@@ -50,7 +50,7 @@ let package = Package(
         .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "1.8.0")),
         .package(url: "https://github.com/mac-cain13/R.swift.git", .upToNextMajor(from: "7.5.0")),
         .package(url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "7.11.0")),
-        .package(url: "https://github.com/Romixery/SwiftStomp.git", .upToNextMajor(from: "1.0.4")),
+        .package(url: "https://github.com/Romixery/SwiftStomp.git", .upToNextMinor(from: "1.1.1")),
         .package(url: "https://github.com/realm/SwiftLint.git", .upToNextMinor(from: "0.55.0")),
         .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0")),
     ],
