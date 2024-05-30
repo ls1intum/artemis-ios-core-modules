@@ -23,6 +23,7 @@ public struct AttachmentUnit: BaseLectureUnit {
 
     public var description: String?
     public var attachment: Attachment?
+    public var slides: [Slide]?
 
     /**
      * Returns the matching icon for the file extension of the attachment
