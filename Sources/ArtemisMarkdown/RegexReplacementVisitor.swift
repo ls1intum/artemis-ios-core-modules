@@ -23,14 +23,14 @@ enum RegexReplacementVisitors {
     static let attachments = RegexReplacementVisitor(
         regex: #/\[attachment\](?<name>.*?)\((?<path>lecture/\d+/.*?)\)\[/attachment\]/#
     ) { match in
-        "[Attachment \(match.name)](mention://attachment/\(match.path))"
+        "![Attachment](fa-file) [\(match.name)](mention://attachment/\(match.path))"
     }
 
     // (?<ATTACHMENT_UNITS>\[lecture-unit].*?\[\/lecture-unit])
     static let attachmentUnits = RegexReplacementVisitor(
         regex: #/\[lecture-unit\](?<name>.*?)\((?<path>attachment-unit/\d+/.*?)\)\[/lecture-unit\]/#
     ) { match in
-        "[Lecture unit \(match.name)](mention://lecture-unit/\(match.path))"
+        "![Lecture unit](fa-file) [\(match.name)](mention://lecture-unit/\(match.path))"
     }
 
     // (?<CHANNEL>\[channel].*?\[\/channel])
@@ -79,14 +79,14 @@ enum RegexReplacementVisitors {
 
     // (?<POST>#\d+)
     static let messages = RegexReplacementVisitor(regex: #/\#(?<id>\d+)/#) { match in
-        return "[Message #\(match.id)](mention://message/\(match.id))"
+        return "![Message](fa-message) [#\(match.id)](mention://message/\(match.id))"
     }
 
     // (?<SLIDE>\[slide].*?\[\/slide])
     static let slides = RegexReplacementVisitor(
         regex: #/\[slide\](?<name>.*?)\((?<path>attachment-unit/\d+/slide/\d+)\)\[/slide\]/#
     ) { match in
-        "[Slide \(match.name)](mention://slide/\(match.path))"
+        "![Slide](fa-file) [\(match.name)](mention://slide/\(match.path))"
     }
 
     static func visitAll(input: inout String) {
@@ -137,11 +137,11 @@ private enum Exercise: String, CaseIterable {
         case .quiz:
             return "fa-check-double"
         case .fileUpload:
-            return "file-upload"
+            return "fa-file-upload"
         case .text:
-            return "text"
+            return "fa-font"
         case .modeling:
-            return "uml"
+            return "fa-diagram-project"
         }
     }
 }
