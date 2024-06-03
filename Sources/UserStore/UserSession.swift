@@ -24,8 +24,7 @@ public class UserSession: ObservableObject {
     @Published public internal(set) var institution: InstitutionIdentifier?
 
     // Use Stub when in screenhot mode
-    // TODO: Invert order
-    public static let shared = !CommandLine.arguments.contains("-Screenshots") ? UserSessionStub() : UserSession()
+    public static let shared = CommandLine.arguments.contains("-Screenshots") ? UserSessionStub() : UserSession()
 
     internal init() {
         setupLoginData()

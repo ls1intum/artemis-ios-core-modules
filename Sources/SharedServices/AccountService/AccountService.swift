@@ -17,6 +17,5 @@ public protocol AccountService {
 }
 
 public enum AccountServiceFactory {
-    // TODO: Invert order
-    public static let shared: AccountService = !CommandLine.arguments.contains("-Screenshots") ? AccountServiceImpl() : AccountServiceStub()
+    public static let shared: AccountService = CommandLine.arguments.contains("-Screenshots") ? AccountServiceImpl() : AccountServiceStub()
 }
