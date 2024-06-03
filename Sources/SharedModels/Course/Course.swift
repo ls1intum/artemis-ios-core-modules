@@ -119,7 +119,7 @@ public struct Course: Codable, Identifiable {
     public static let mock = Course(
         id: 1,
         title: "Interactive Learning",
-        exercises: nil,
+        exercises: [.programming(exercise: .mock)],
         courseInformationSharingConfiguration: .communicationAndMessaging
     )
 }
