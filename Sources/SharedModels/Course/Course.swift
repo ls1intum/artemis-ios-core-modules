@@ -115,6 +115,13 @@ public struct Course: Codable, Identifiable {
         let accuracy = Double(course?.accuracyOfScores ?? 1)
         return round(value * pow(10.0, accuracy)) / pow(10.0, accuracy)
     }
+
+    public static let mock = Course(
+        id: 1,
+        title: "Interactive Learning",
+        exercises: nil,
+        courseInformationSharingConfiguration: .communicationAndMessaging
+    )
 }
 
 extension Course: Hashable {

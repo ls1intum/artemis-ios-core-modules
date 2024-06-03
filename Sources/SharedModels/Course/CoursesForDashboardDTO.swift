@@ -11,5 +11,5 @@ public struct CoursesForDashboardDTO: Codable {
     public var courses: [CourseForDashboardDTO]?
     public var activeExams: [Exam]?
 
-    public init() {}
+    public static let mock = CoursesForDashboardDTO(courses: [.mock], activeExams: nil)
 }

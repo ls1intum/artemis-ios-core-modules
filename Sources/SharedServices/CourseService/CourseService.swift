@@ -19,5 +19,6 @@ public protocol CourseService {
 
 public enum CourseServiceFactory {
 
-    public static let shared: CourseService = CourseServiceImpl()
+    // TODO: Invert
+    public static let shared: CourseService = !CommandLine.arguments.contains("-Screenshots") ? CourseServiceStub() : CourseServiceImpl()
 }

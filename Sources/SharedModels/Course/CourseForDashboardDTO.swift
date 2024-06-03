@@ -16,6 +16,20 @@ public struct CourseForDashboardDTO: Codable {
     public var fileUploadScores: CourseScore?
     public var quizScores: CourseScore?
     public var participationResults: [ParticipationResultDTO]?
+
+    public static let mock = CourseForDashboardDTO(
+        course: .mock,
+        totalScores: CourseScore(
+            maxPoints: 15,
+            reachablePoints: 15,
+            studentScores: StudentScore(
+                absoluteScore: 10,
+                relativeScore: 0.5,
+                currentRelativeScore: 0.5,
+                presentationScore: 1.0
+            )
+        )
+    )
 }
 
 public extension CourseForDashboardDTO {
