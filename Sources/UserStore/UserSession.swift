@@ -11,21 +11,23 @@ import Common
 public class UserSession: ObservableObject {
 
     // Login Data
-    @Published public private(set) var isLoggedIn = false
-    @Published public private(set) var username: String?
-    @Published public private(set) var password: String?
-    @Published public private(set) var tokenExpired = false
+    @Published public internal(set) var isLoggedIn = false
+    @Published public internal(set) var username: String?
+    @Published public internal(set) var password: String?
+    @Published public internal(set) var tokenExpired = false
 
     // Push Notifications
-    @Published private var notificationDeviceConfigurations: [NotificationDeviceConfiguration] = []
+    @Published internal var notificationDeviceConfigurations: [NotificationDeviceConfiguration] = []
     @Published public var notificationSetupError: UserFacingError?
 
     // Institution Selection
-    @Published public private(set) var institution: InstitutionIdentifier?
+    @Published public internal(set) var institution: InstitutionIdentifier?
 
-    public static let shared = UserSession()
+    // Use Stub when in screenhot mode
+    // TODO: Invert order
+    public static let shared = !CommandLine.arguments.contains("-Screenshots") ? UserSessionStub() : UserSession()
 
-    private init() {
+    internal init() {
         setupLoginData()
         setupNotificationData()
         setupInstitutionSelection()
