@@ -35,6 +35,21 @@ public struct Account: Codable {
 
         return userAuthorities.contains(authority)
     }
+
+    public static let mock = Account(
+        id: 1,
+        login: "artemis",
+        name: "Artemis User",
+        firstName: "Artemis",
+        lastName: "User",
+        email: "artemis@cit.tum.de",
+        langKey: "en",
+        authorities: [.user],
+        groups: ["tumuser"],
+        lastNotificationRead: .yesterday,
+        visibleRegistrationNumber: "04242424",
+        createdDate: .distantPast
+    )
 }
 
 public typealias User = Account
