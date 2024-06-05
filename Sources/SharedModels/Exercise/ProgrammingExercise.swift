@@ -52,7 +52,7 @@ public struct ProgrammingExercise: BaseExercise {
 
     public static let mock = ProgrammingExercise(
         id: 1,
-        title: "Something interesting",
+        title: "Using the Mock Object Pattern",
         maxPoints: 15,
         bonusPoints: 0,
         dueDate: .tomorrow,

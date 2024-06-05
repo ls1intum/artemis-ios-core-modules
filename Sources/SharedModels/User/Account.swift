@@ -38,11 +38,11 @@ public struct Account: Codable {
 
     public static let mock = Account(
         id: 1,
-        login: "artemis",
-        name: "Artemis User",
-        firstName: "Artemis",
-        lastName: "User",
-        email: "artemis@cit.tum.de",
+        login: "chloe_mitchell",
+        name: "Chloe Mitchell",
+        firstName: "Chloe",
+        lastName: "Mitchell",
+        email: "chloe_mitchell@gmail.com",
         langKey: "en",
         authorities: [.user],
         groups: ["tumuser"],
