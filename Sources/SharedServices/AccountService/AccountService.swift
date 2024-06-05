@@ -17,5 +17,6 @@ public protocol AccountService {
 }
 
 public enum AccountServiceFactory {
-    public static let shared: AccountService = CommandLine.arguments.contains("-Screenshots") ? AccountServiceImpl() : AccountServiceStub()
+    @StubOrImpl(stub: AccountServiceStub(), impl: AccountServiceImpl())
+    public static var shared: AccountService
 }

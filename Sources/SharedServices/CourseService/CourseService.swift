@@ -18,5 +18,6 @@ public protocol CourseService {
 }
 
 public enum CourseServiceFactory {
-    public static let shared: CourseService = CommandLine.arguments.contains("-Screenshots") ? CourseServiceStub() : CourseServiceImpl()
+    @StubOrImpl(stub: CourseServiceStub(), impl: CourseServiceImpl())
+    public static var shared: CourseService
 }
