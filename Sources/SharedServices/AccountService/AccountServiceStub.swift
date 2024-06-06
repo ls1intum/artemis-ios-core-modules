@@ -10,8 +10,8 @@ import Common
 import SharedModels
 import UserStore
 
-public class AccountServiceStub: AccountService {
-    public func getAccount() async -> DataState<Account> {
+class AccountServiceStub: AccountService {
+    func getAccount() async -> DataState<Account> {
         UserSession.shared.user = Account.mock
         return .done(response: Account.mock)
     }

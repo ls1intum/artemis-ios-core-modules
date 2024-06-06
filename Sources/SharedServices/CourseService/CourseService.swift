@@ -17,7 +17,8 @@ public protocol CourseService {
     func getCourseMembers(courseId: Int, searchLoginOrName: String) async -> DataState<[UserNameAndLoginDTO]>
 }
 
-public enum CourseServiceFactory {
-    @StubOrImpl(stub: CourseServiceStub(), impl: CourseServiceImpl())
-    public static var shared: CourseService
+public enum CourseServiceFactory: DependencyFactory {
+    public static let liveValue: CourseService = CourseServiceImpl()
+
+    public static var testValue: CourseService = CourseServiceStub()
 }
