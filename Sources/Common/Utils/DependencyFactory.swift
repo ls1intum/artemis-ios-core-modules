@@ -21,21 +21,21 @@ import Foundation
 ///
 /// Usage: `NumberFactory.shared`
 public protocol DependencyFactory {
-    associatedtype Service
+    associatedtype Value
 
-    static var shared: Service { get }
+    static var shared: Value { get }
 
-    static var liveValue: Service { get }
+    static var liveValue: Value { get }
 
-    static var testValue: Service { get }
+    static var testValue: Value { get }
 }
 
 public extension DependencyFactory {
-    static var shared: Service {
-        CommandLine.arguments.contains("-Screenshots") ? Self.testValue : Self.liveValue
+    static var shared: Value {
+        CommandLine.arguments.contains("-dependency-factory-test-value") ? Self.testValue : Self.liveValue
     }
 
-    static var testValue: Service {
+    static var testValue: Value {
         Self.liveValue
     }
 }
