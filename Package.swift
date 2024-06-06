@@ -45,72 +45,154 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "1.6.0")),
-        .package(url: "https://github.com/mac-cain13/R.swift.git", from: "7.0.0"),
-        .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0")),
-        .package(url: "https://github.com/realm/SwiftLint.git", from: "0.51.0"),
-        .package(url: "https://github.com/gonzalezreal/swift-markdown-ui", from: "2.0.0"),
-        .package(url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "7.0.0")),
-        .package(url: "https://github.com/Romixery/SwiftStomp.git", .upToNextMajor(from: "1.0.4")),
         .package(url: "https://github.com/daltoniam/Starscream.git", exact: "4.0.4"),
+        .package(url: "https://github.com/gonzalezreal/swift-markdown-ui", .upToNextMajor(from: "2.3.0")),
+        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "1.8.0")),
+        .package(url: "https://github.com/mac-cain13/R.swift.git", .upToNextMajor(from: "7.5.0")),
+        .package(url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "7.11.0")),
+        .package(url: "https://github.com/Romixery/SwiftStomp.git", .upToNextMinor(from: "1.1.1")),
+        .package(url: "https://github.com/realm/SwiftLint.git", .upToNextMinor(from: "0.55.0")),
+        .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "Common",
-            dependencies: ["SwiftyBeaver"],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-        ),
-        .target(
-            name: "UserStore",
-            dependencies: ["Common", .product(name: "RswiftLibrary", package: "R.swift")],
-            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+            name: "Account",
+            dependencies: [
+                "APIClient",
+                "DesignLibrary",
+                "PushNotifications",
+                "SharedModels",
+                "UserStore",
+                .product(name: "RswiftLibrary", package: "R.swift")
+            ],
+            plugins: [
+                .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+            ]
         ),
         .target(
             name: "APIClient",
-            dependencies: ["Common", "UserStore", "SwiftStomp"],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-        ),
-        .target(
-            name: "DesignLibrary",
-            dependencies: ["Common", "Kingfisher", .product(name: "RswiftLibrary", package: "R.swift")],
-            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-        ),
-        .target(
-            name: "SharedModels",
-            dependencies: ["Common", "UserStore", "DesignLibrary", .product(name: "RswiftLibrary", package: "R.swift")],
-            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-        ),
-        .target(
-            name: "SharedServices",
-            dependencies: ["Common", "SharedModels", "APIClient", "UserStore"],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-        ),
-        .target(
-            name: "PushNotifications",
-            dependencies: ["CryptoSwift", "APIClient", "Common", "UserStore", "DesignLibrary", .product(name: "RswiftLibrary", package: "R.swift")],
-            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-        ),
-        .target(
-            name: "ProfileInfo",
-            dependencies: ["APIClient"],
-            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-        ),
-        .target(
-            name: "Login",
-            dependencies: ["APIClient", "PushNotifications", "ProfileInfo", "UserStore", "DesignLibrary", "SharedModels", "SharedServices", "Account", .product(name: "RswiftLibrary", package: "R.swift")],
-            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-        ),
-        .target(
-            name: "Account",
-            dependencies: ["APIClient", "PushNotifications", "UserStore", "DesignLibrary", "SharedModels", .product(name: "RswiftLibrary", package: "R.swift")],
-            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+            dependencies: [
+                "Common",
+                "SwiftStomp",
+                "UserStore"
+            ],
+            plugins: [
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+            ]
         ),
         .target(
             name: "ArtemisMarkdown",
-            dependencies: ["UserStore", "DesignLibrary", .product(name: "MarkdownUI", package: "swift-markdown-ui")],
-            plugins: [.plugin(name: "RswiftGeneratePublicResources", package: "R.swift"), .plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+            dependencies: [
+                "UserStore",
+                "DesignLibrary",
+                .product(name: "MarkdownUI", package: "swift-markdown-ui")
+            ],
+            plugins: [
+                .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+            ]
+        ),
+        .target(
+            name: "Common",
+            dependencies: [
+                "SwiftyBeaver"
+            ],
+            plugins: [
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+            ]
+        ),
+        .target(
+            name: "DesignLibrary",
+            dependencies: [
+                "Common",
+                "Kingfisher",
+                .product(name: "RswiftLibrary", package: "R.swift")
+            ],
+            plugins: [
+                .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+            ]
+        ),
+        .target(
+            name: "Login",
+            dependencies: [
+                "Account",
+                "APIClient",
+                "DesignLibrary",
+                "ProfileInfo",
+                "PushNotifications",
+                "SharedModels",
+                "SharedServices",
+                "UserStore",
+                .product(name: "RswiftLibrary", package: "R.swift")
+            ],
+            plugins: [
+                .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+            ]
+        ),
+        .target(
+            name: "ProfileInfo",
+            dependencies: [
+                "APIClient"
+            ],
+            plugins: [
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+            ]
+        ),
+        .target(
+            name: "PushNotifications",
+            dependencies: [
+                "APIClient",
+                "Common",
+                "CryptoSwift",
+                "DesignLibrary",
+                "UserStore",
+                .product(name: "RswiftLibrary", package: "R.swift")
+            ],
+            plugins: [
+                .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+            ]
+        ),
+        .target(
+            name: "SharedModels",
+            dependencies: [
+                "Common",
+                "DesignLibrary",
+                "UserStore",
+                .product(name: "RswiftLibrary", package: "R.swift")
+            ],
+            plugins: [
+                .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+            ]
+        ),
+        .target(
+            name: "SharedServices",
+            dependencies: [
+                "APIClient",
+                "Common",
+                "SharedModels",
+                "UserStore"
+            ],
+            plugins: [
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+            ]
+        ),
+        .target(
+            name: "UserStore",
+            dependencies: [
+                "Common",
+                .product(name: "RswiftLibrary", package: "R.swift")
+            ],
+            plugins: [
+                .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+            ]
         ),
         .testTarget(
             name: "ArtemisMarkdownTests",

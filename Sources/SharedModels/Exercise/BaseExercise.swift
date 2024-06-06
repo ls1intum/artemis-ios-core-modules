@@ -212,13 +212,13 @@ public enum Mode: String, Codable {
 // IMPORTANT NOTICE: The following strings have to be consistent with the ones defined in Exercise.java
 
 public enum IncludedInOverallScore: String, Codable {
-    case includedCompletly = "INCLUDED_COMPLETELY"
+    case includedCompletely = "INCLUDED_COMPLETELY"
     case includedAsBonus = "INCLUDED_AS_BONUS"
     case notIncluded = "NOT_INCLUDED"
 
     public var description: String {
         switch self {
-        case .includedCompletly:
+        case .includedCompletely:
             return R.string.localizable.includedInOverallScore_includedCompletely()
         case .includedAsBonus:
             return R.string.localizable.includedInOverallScore_includedAsBonus()
@@ -229,7 +229,7 @@ public enum IncludedInOverallScore: String, Codable {
 
     public var color: Color {
         switch self {
-        case .includedCompletly:
+        case .includedCompletely:
             return Color.Artemis.badgeSuccessColor
         case .includedAsBonus:
             return Color.Artemis.badgeWarningColor
