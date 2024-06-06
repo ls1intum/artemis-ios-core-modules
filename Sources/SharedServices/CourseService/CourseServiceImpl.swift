@@ -3,7 +3,7 @@ import SharedModels
 import APIClient
 import Common
 
-class CourseServiceImpl: CourseService {
+struct CourseServiceImpl: CourseService {
 
     let client = APIClient()
 

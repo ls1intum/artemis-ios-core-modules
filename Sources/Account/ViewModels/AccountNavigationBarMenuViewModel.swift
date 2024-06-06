@@ -23,7 +23,7 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
     }
 
     func getAccount() {
-        if let user = UserSession.shared.user {
+        if let user = UserSessionFactory.shared.user {
             account = .done(response: user)
         } else {
             account = .loading
@@ -38,8 +38,8 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
 
             switch result {
             case .success:
-                if let notificationDeviceConfiguration = UserSession.shared.getCurrentNotificationDeviceConfiguration() {
-                    UserSession.shared.saveNotificationDeviceConfiguration(token: notificationDeviceConfiguration.apnsDeviceToken,
+                if let notificationDeviceConfiguration = UserSessionFactory.shared.getCurrentNotificationDeviceConfiguration() {
+                    UserSessionFactory.shared.saveNotificationDeviceConfiguration(token: notificationDeviceConfiguration.apnsDeviceToken,
                                                                            encryptionKey: nil,
                                                                            skippedNotifications: notificationDeviceConfiguration.skippedNotifications)
                 }

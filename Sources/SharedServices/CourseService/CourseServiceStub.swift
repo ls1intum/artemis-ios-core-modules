@@ -9,7 +9,7 @@ import Foundation
 import Common
 import SharedModels
 
-class CourseServiceStub: CourseService {
+struct CourseServiceStub: CourseService {
     func getCourses() async -> DataState<CoursesForDashboardDTO> {
         return .done(response: .mock)
     }

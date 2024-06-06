@@ -20,5 +20,5 @@ public protocol CourseService {
 public enum CourseServiceFactory: DependencyFactory {
     public static let liveValue: CourseService = CourseServiceImpl()
 
-    public static var testValue: CourseService = CourseServiceStub()
+    public static let testValue: CourseService = CourseServiceStub()
 }

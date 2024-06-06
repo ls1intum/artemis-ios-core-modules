@@ -23,13 +23,13 @@ class PushNotificationSettingsViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
 
     init() {
-        UserSession.shared.objectWillChange.sink {
+        UserSessionFactory.shared.objectWillChange.sink {
             DispatchQueue.main.async { [weak self] in
-                self?.didSetupNotifications = UserSession.shared.getCurrentNotificationDeviceConfiguration()?.notificationsEncryptionKey != nil
+                self?.didSetupNotifications = UserSessionFactory.shared.getCurrentNotificationDeviceConfiguration()?.notificationsEncryptionKey != nil
             }
         }.store(in: &cancellables)
 
-        didSetupNotifications = UserSession.shared.getCurrentNotificationDeviceConfiguration()?.notificationsEncryptionKey != nil
+        didSetupNotifications = UserSessionFactory.shared.getCurrentNotificationDeviceConfiguration()?.notificationsEncryptionKey != nil
     }
 
     func getNotificationSettings() async {

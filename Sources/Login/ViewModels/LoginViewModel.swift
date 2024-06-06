@@ -38,19 +38,19 @@ open class LoginViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
 
     public init() {
-        UserSession.shared.objectWillChange.sink {
+        UserSessionFactory.shared.objectWillChange.sink {
             DispatchQueue.main.async { [weak self] in
-                self?.username = UserSession.shared.username ?? ""
-                self?.password = UserSession.shared.password ?? ""
-                self?.loginExpired = UserSession.shared.tokenExpired
-                self?.institution = UserSession.shared.institution ?? .tum
+                self?.username = UserSessionFactory.shared.username ?? ""
+                self?.password = UserSessionFactory.shared.password ?? ""
+                self?.loginExpired = UserSessionFactory.shared.tokenExpired
+                self?.institution = UserSessionFactory.shared.institution ?? .tum
             }
         }.store(in: &cancellables)
 
-        username = UserSession.shared.username ?? ""
-        password = UserSession.shared.password ?? ""
-        loginExpired = UserSession.shared.tokenExpired
-        institution = UserSession.shared.institution ?? .tum
+        username = UserSessionFactory.shared.username ?? ""
+        password = UserSessionFactory.shared.password ?? ""
+        loginExpired = UserSessionFactory.shared.tokenExpired
+        institution = UserSessionFactory.shared.institution ?? .tum
     }
 
     public func login() async {
@@ -80,7 +80,7 @@ open class LoginViewModel: ObservableObject {
     }
 
     public func resetLoginExpired() {
-        UserSession.shared.setTokenExpired(expired: false)
+        UserSessionFactory.shared.setTokenExpired(expired: false)
     }
 
     public func getProfileInfo() async {

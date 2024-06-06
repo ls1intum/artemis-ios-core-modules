@@ -8,7 +8,7 @@
 import Foundation
 import Common
 
-public class UserSessionStub: UserSession {
+class UserSessionStub: UserSession {
     override init() {
         super.init()
         notificationDeviceConfigurations.append(.init(institutionIdentifier: .tum, username: "artemis", skippedNotifications: false))
@@ -17,15 +17,15 @@ public class UserSessionStub: UserSession {
         saveInstitution(identifier: .tum)
     }
 
-    override public func getCurrentNotificationDeviceConfiguration() -> NotificationDeviceConfiguration? {
+    override func getCurrentNotificationDeviceConfiguration() -> NotificationDeviceConfiguration? {
         notificationDeviceConfigurations.first
     }
 
-    override public func setTokenExpired(expired: Bool) {
+    override func setTokenExpired(expired: Bool) {
         return
     }
 
-    override public func setUserLoggedIn(isLoggedIn: Bool) {
+    override func setUserLoggedIn(isLoggedIn: Bool) {
         super.setUserLoggedIn(isLoggedIn: true)
     }
 }

@@ -23,9 +23,6 @@ public class UserSession: ObservableObject {
     // Institution Selection
     @Published public internal(set) var institution: InstitutionIdentifier?
 
-    // Use Stub when in screenhot mode
-    public static let shared = CommandLine.arguments.contains("-Screenshots") ? UserSessionStub() : UserSession()
-
     internal init() {
         setupLoginData()
         setupNotificationData()

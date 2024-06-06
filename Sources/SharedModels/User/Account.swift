@@ -17,8 +17,8 @@ public struct Account: Codable {
 
     public static func hasGroup(group: String?) -> Bool {
         guard let group,
-              UserSession.shared.isLoggedIn,
-              let user = UserSession.shared.user,
+              UserSessionFactory.shared.isLoggedIn,
+              let user = UserSessionFactory.shared.user,
               user.authorities != nil,
               let groups = user.groups else {
             return false
@@ -27,8 +27,8 @@ public struct Account: Codable {
     }
 
     public static func hasAnyAuthorityDirect(authority: Authority) -> Bool {
-        guard UserSession.shared.isLoggedIn,
-              let user = UserSession.shared.user,
+        guard UserSessionFactory.shared.isLoggedIn,
+              let user = UserSessionFactory.shared.user,
               let userAuthorities = user.authorities else {
             return false
         }

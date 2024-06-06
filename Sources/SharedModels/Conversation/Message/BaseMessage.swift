@@ -25,7 +25,7 @@ public extension BaseMessage {
     }
 
     func getReactionFromMe(emojiId: String) -> Reaction? {
-        guard let userId = UserSession.shared.user?.id else { return nil }
+        guard let userId = UserSessionFactory.shared.user?.id else { return nil }
         return (reactions ?? []).first(where: {
             guard let authorId = $0.user?.id else { return false }
             return authorId == userId && $0.emojiId == emojiId
@@ -33,7 +33,7 @@ public extension BaseMessage {
     }
 
     var isCurrentUserAuthor: Bool {
-        guard let userId = UserSession.shared.user?.id,
+        guard let userId = UserSessionFactory.shared.user?.id,
               let authorId = author?.id else { return false }
 
         return userId == authorId

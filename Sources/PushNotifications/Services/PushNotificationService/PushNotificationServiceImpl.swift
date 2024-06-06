@@ -30,7 +30,7 @@ class PushNotificationServiceImpl: PushNotificationService {
     }
 
     func unregister() async -> NetworkResponse {
-        guard let notificationConfiguration = UserSession.shared.getCurrentNotificationDeviceConfiguration(),
+        guard let notificationConfiguration = UserSessionFactory.shared.getCurrentNotificationDeviceConfiguration(),
               !notificationConfiguration.skippedNotifications else {
             return .success
         }
@@ -75,10 +75,10 @@ class PushNotificationServiceImpl: PushNotificationService {
 
         switch result {
         case .success(let response):
-            UserSession.shared.saveNotificationDeviceConfiguration(token: deviceToken, encryptionKey: response.0.secretKey, skippedNotifications: false)
+            UserSessionFactory.shared.saveNotificationDeviceConfiguration(token: deviceToken, encryptionKey: response.0.secretKey, skippedNotifications: false)
             return .success
         case .failure(let error):
-            UserSession.shared.notificationSetupError = UserFacingError(error: error)
+            UserSessionFactory.shared.notificationSetupError = UserFacingError(error: error)
             return .failure(error: error)
         }
     }

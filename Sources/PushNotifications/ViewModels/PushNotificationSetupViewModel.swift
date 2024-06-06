@@ -28,7 +28,7 @@ class PushNotificationSetupViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
 
     init() {
-        UserSession.shared.objectWillChange.sink {
+        UserSessionFactory.shared.objectWillChange.sink {
             DispatchQueue.main.async { [weak self] in
                 self?.updateFromUserSession()
             }
@@ -38,11 +38,11 @@ class PushNotificationSetupViewModel: ObservableObject {
     }
 
     private func updateFromUserSession() {
-        error = UserSession.shared.notificationSetupError
+        error = UserSessionFactory.shared.notificationSetupError
     }
 
     func register() async {
-        UserSession.shared.notificationSetupError = nil
+        UserSessionFactory.shared.notificationSetupError = nil
         do {
             let granted = try await UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .badge, .alert])
 
@@ -55,6 +55,6 @@ class PushNotificationSetupViewModel: ObservableObject {
     }
 
     func skip() {
-        UserSession.shared.saveNotificationDeviceConfiguration(token: nil, encryptionKey: nil, skippedNotifications: true)
+        UserSessionFactory.shared.saveNotificationDeviceConfiguration(token: nil, encryptionKey: nil, skippedNotifications: true)
     }
 }

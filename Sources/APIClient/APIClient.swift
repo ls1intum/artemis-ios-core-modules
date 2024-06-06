@@ -8,7 +8,7 @@ public final class APIClient {
     private let session = URLSession.shared
 
     private var baseUrl: URL? {
-        UserSession.shared.institution?.baseURL ?? InstitutionIdentifier.tum.baseURL
+        UserSessionFactory.shared.institution?.baseURL ?? InstitutionIdentifier.tum.baseURL
     }
 
     /// Instantiate WebClient for Artemis server from Configuration.swift
@@ -189,16 +189,16 @@ public final class APIClient {
             Task {
                 await URLSession.shared.reset()
             }
-            UserSession.shared.setUserLoggedIn(isLoggedIn: false)
-            UserSession.shared.savePassword(password: nil)
-            UserSession.shared.saveUsername(username: nil)
+            UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: false)
+            UserSessionFactory.shared.savePassword(password: nil)
+            UserSessionFactory.shared.saveUsername(username: nil)
         }
     }
 
     private func logoutAndSetTokenExpired() {
         log.debug("Token could not be refreshed")
         perfomLogout()
-        UserSession.shared.setTokenExpired(expired: true)
+        UserSessionFactory.shared.setTokenExpired(expired: true)
     }
 }
 

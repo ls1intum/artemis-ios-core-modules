@@ -48,7 +48,7 @@ public struct Course: Codable, Identifiable {
 
     public var courseIconURL: URL? {
         guard let courseIcon else { return nil }
-        return URL(string: courseIcon, relativeTo: UserSession.shared.institution?.baseURL)
+        return URL(string: courseIcon, relativeTo: UserSessionFactory.shared.institution?.baseURL)
     }
 
     public var courseColor: Color {

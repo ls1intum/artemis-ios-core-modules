@@ -29,7 +29,7 @@ public class ArtemisStompClient {
     }
 
     public func setup() {
-        guard let host = UserSession.shared.institution?.baseURL?.host(),
+        guard let host = UserSessionFactory.shared.institution?.baseURL?.host(),
               let stompUrl = URL(string: "wss://\(host):443/websocket/websocket") else { return }
 
         let headers = [
