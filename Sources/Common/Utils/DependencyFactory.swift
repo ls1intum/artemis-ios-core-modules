@@ -32,7 +32,7 @@ public protocol DependencyFactory {
 
 public extension DependencyFactory {
     static var shared: Value {
-        CommandLine.arguments.contains("-dependency-factory-test-value") ? Self.testValue : Self.liveValue
+        CommandLine.arguments.contains("-FASTLANE_SNAPSHOT") ? Self.testValue : Self.liveValue
     }
 
     static var testValue: Value {
