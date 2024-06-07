@@ -49,6 +49,12 @@ public struct ProgrammingExercise: BaseExercise {
         clone[keyPath: \.studentParticipations] = newParticipations
         return clone
     }
+}
+
+public extension ProgrammingExercise {
+    public init(id: Int) {
+        self.id = id
+    }
 
     public static let mock = ProgrammingExercise(
         id: 1,
@@ -66,12 +72,6 @@ public struct ProgrammingExercise: BaseExercise {
         exampleSolutionPublicationDate: .tomorrow,
         programmingLanguage: .swift
     )
-}
-
-public extension ProgrammingExercise {
-    public init(id: Int) {
-        self.id = id
-    }
 }
 
 public enum ProgrammingLanguage: String, RawRepresentable, Codable {

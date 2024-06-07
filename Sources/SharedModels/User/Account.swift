@@ -35,7 +35,9 @@ public struct Account: Codable {
 
         return userAuthorities.contains(authority)
     }
+}
 
+public extension Account {
     public static let mock = Account(
         id: 1,
         login: "chloe_mitchell",

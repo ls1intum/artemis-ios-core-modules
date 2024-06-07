@@ -16,6 +16,12 @@ public struct CourseForDashboardDTO: Codable {
     public var fileUploadScores: CourseScore?
     public var quizScores: CourseScore?
     public var participationResults: [ParticipationResultDTO]?
+}
+
+public extension CourseForDashboardDTO {
+    init(course: Course) {
+        self.course = course
+    }
 
     public static let mock = CourseForDashboardDTO(
         course: .mock,
@@ -30,12 +36,6 @@ public struct CourseForDashboardDTO: Codable {
             )
         )
     )
-}
-
-public extension CourseForDashboardDTO {
-    init(course: Course) {
-        self.course = course
-    }
 }
 
 extension CourseForDashboardDTO: Identifiable {
