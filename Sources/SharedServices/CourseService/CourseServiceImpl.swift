@@ -3,7 +3,7 @@ import SharedModels
 import APIClient
 import Common
 
-public class CourseServiceImpl: CourseService {
+struct CourseServiceImpl: CourseService {
 
     let client = APIClient()
 
@@ -20,7 +20,7 @@ public class CourseServiceImpl: CourseService {
         }
     }
 
-    public func getCourses() async -> DataState<CoursesForDashboardDTO> {
+    func getCourses() async -> DataState<CoursesForDashboardDTO> {
         let result = await client.sendRequest(GetCoursesRequest())
 
         switch result {
@@ -46,7 +46,7 @@ public class CourseServiceImpl: CourseService {
         }
     }
 
-    public func getCourse(courseId: Int) async -> DataState<CourseForDashboardDTO> {
+    func getCourse(courseId: Int) async -> DataState<CourseForDashboardDTO> {
         let result = await client.sendRequest(GetCourseRequest(courseId: courseId))
 
         switch result {
@@ -72,7 +72,7 @@ public class CourseServiceImpl: CourseService {
         }
     }
 
-    public func getCourseForAssessment(courseId: Int) async -> DataState<Course> {
+    func getCourseForAssessment(courseId: Int) async -> DataState<Course> {
         let result = await client.sendRequest(GetCourseForAssessmentRequest(courseId: courseId))
 
         switch result {
@@ -99,7 +99,7 @@ public class CourseServiceImpl: CourseService {
         }
     }
 
-    public func getCourseMembers(courseId: Int, searchLoginOrName: String) async -> DataState<[UserNameAndLoginDTO]> {
+    func getCourseMembers(courseId: Int, searchLoginOrName: String) async -> DataState<[UserNameAndLoginDTO]> {
         let result = await client.sendRequest(GetCourseMembersSearchRequest(courseId: courseId, loginOrName: searchLoginOrName))
 
         switch result {

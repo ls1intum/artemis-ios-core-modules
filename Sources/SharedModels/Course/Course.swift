@@ -48,7 +48,7 @@ public struct Course: Codable, Identifiable {
 
     public var courseIconURL: URL? {
         guard let courseIcon else { return nil }
-        return URL(string: courseIcon, relativeTo: UserSession.shared.institution?.baseURL)
+        return URL(string: courseIcon, relativeTo: UserSessionFactory.shared.institution?.baseURL)
     }
 
     public var courseColor: Color {
@@ -115,6 +115,13 @@ public struct Course: Codable, Identifiable {
         let accuracy = Double(course?.accuracyOfScores ?? 1)
         return round(value * pow(10.0, accuracy)) / pow(10.0, accuracy)
     }
+
+    public static let mock = Course(
+        id: 1,
+        title: "Interactive Learning",
+        exercises: [.programming(exercise: .mock)],
+        courseInformationSharingConfiguration: .communicationAndMessaging
+    )
 }
 
 extension Course: Hashable {

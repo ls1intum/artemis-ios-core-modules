@@ -17,8 +17,8 @@ public struct Account: Codable {
 
     public static func hasGroup(group: String?) -> Bool {
         guard let group,
-              UserSession.shared.isLoggedIn,
-              let user = UserSession.shared.user,
+              UserSessionFactory.shared.isLoggedIn,
+              let user = UserSessionFactory.shared.user,
               user.authorities != nil,
               let groups = user.groups else {
             return false
@@ -27,14 +27,31 @@ public struct Account: Codable {
     }
 
     public static func hasAnyAuthorityDirect(authority: Authority) -> Bool {
-        guard UserSession.shared.isLoggedIn,
-              let user = UserSession.shared.user,
+        guard UserSessionFactory.shared.isLoggedIn,
+              let user = UserSessionFactory.shared.user,
               let userAuthorities = user.authorities else {
             return false
         }
 
         return userAuthorities.contains(authority)
     }
+}
+
+public extension Account {
+    public static let mock = Account(
+        id: 1,
+        login: "chloe_mitchell",
+        name: "Chloe Mitchell",
+        firstName: "Chloe",
+        lastName: "Mitchell",
+        email: "chloe_mitchell@gmail.com",
+        langKey: "en",
+        authorities: [.user],
+        groups: ["tumuser"],
+        lastNotificationRead: .yesterday,
+        visibleRegistrationNumber: "04242424",
+        createdDate: .distantPast
+    )
 }
 
 public typealias User = Account

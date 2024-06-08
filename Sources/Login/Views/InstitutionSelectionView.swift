@@ -100,7 +100,7 @@ private struct CustomInstanceCell: View {
             showErrorAlert = true
             return
         }
-        UserSession.shared.saveInstitution(identifier: .custom(url))
+        UserSessionFactory.shared.saveInstitution(identifier: .custom(url))
 
         isLoading = true
 
@@ -112,7 +112,7 @@ private struct CustomInstanceCell: View {
                 isLoading = true
             case .failure:
                 showErrorAlert = true
-                UserSession.shared.saveInstitution(identifier: .tum)
+                UserSessionFactory.shared.saveInstitution(identifier: .tum)
             case .done(let response):
                 handleProfileInfoCompletion(response)
                 dismiss()
@@ -154,7 +154,7 @@ private struct InstanceCell: View {
 
     @MainActor
     func select() {
-        UserSession.shared.saveInstitution(identifier: institution)
+        UserSessionFactory.shared.saveInstitution(identifier: institution)
         Task {
             let result = await ProfileInfoServiceFactory.shared.getProfileInfo()
             isLoading = false
@@ -163,7 +163,7 @@ private struct InstanceCell: View {
                 isLoading = true
             case .failure:
                 showErrorAlert = true
-                UserSession.shared.saveInstitution(identifier: .tum)
+                UserSessionFactory.shared.saveInstitution(identifier: .tum)
             case .done(let response):
                 handleProfileInfoCompletion(response)
                 dismiss()

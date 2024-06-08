@@ -16,6 +16,8 @@ public protocol AccountService {
     func getAccount() async -> DataState<Account>
 }
 
-public enum AccountServiceFactory {
-    public static let shared: AccountService = AccountServiceImpl()
+public enum AccountServiceFactory: DependencyFactory {
+    public static let liveValue: AccountService = AccountServiceImpl()
+
+    public static let testValue: AccountService = AccountServiceStub()
 }
