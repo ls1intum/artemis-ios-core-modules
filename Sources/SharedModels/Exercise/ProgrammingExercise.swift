@@ -76,7 +76,7 @@ public extension ProgrammingExercise {
 
     static let mockPastDeadline = ProgrammingExercise(
         id: 1,
-        title: "REST Controllers",
+        title: "SwiftUI Button Style",
         maxPoints: 10,
         bonusPoints: 0,
         dueDate: .yesterday,
