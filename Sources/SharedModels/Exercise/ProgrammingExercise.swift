@@ -72,6 +72,23 @@ public extension ProgrammingExercise {
         exampleSolutionPublicationDate: .tomorrow,
         programmingLanguage: .swift
     )
+
+    static let mockPastDeadline = ProgrammingExercise(
+        id: 1,
+        title: "REST Controllers",
+        maxPoints: 10,
+        bonusPoints: 0,
+        dueDate: .yesterday,
+        releaseDate: .yesterday.addingTimeInterval(-60 * 60 * 24 * 2),
+        assessmentDueDate: .tomorrow.addingTimeInterval(60 * 60 * 24 * 2),
+        difficulty: .EASY,
+        mode: .individual,
+        visibleToStudents: true,
+        assessmentType: .manual,
+        includedInOverallScore: .includedCompletely,
+        exampleSolutionPublicationDate: .yesterday,
+        programmingLanguage: .swift
+    )
 }
 
 public enum ProgrammingLanguage: String, RawRepresentable, Codable {

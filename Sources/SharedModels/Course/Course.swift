@@ -121,7 +121,7 @@ public extension Course {
     static let mock = Course(
         id: 1,
         title: "Interactive Learning",
-        exercises: [.programming(exercise: .mock)],
+        exercises: [.programming(exercise: .mock), .programming(exercise: .mockPastDeadline)],
         courseInformationSharingConfiguration: .communicationAndMessaging,
         instructorGroupName: "tumuser"
     )
