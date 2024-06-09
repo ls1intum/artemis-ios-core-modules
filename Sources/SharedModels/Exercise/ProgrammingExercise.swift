@@ -56,18 +56,18 @@ public extension ProgrammingExercise {
         self.id = id
     }
 
-    public static let mock = ProgrammingExercise(
+    static let mock = ProgrammingExercise(
         id: 1,
         title: "Using the Mock Object Pattern",
         maxPoints: 15,
         bonusPoints: 0,
         dueDate: .tomorrow,
         releaseDate: .yesterday,
-        assessmentDueDate: .tomorrow,
+        assessmentDueDate: .tomorrow.addingTimeInterval(60 * 60 * 24 * 2),
         difficulty: .EASY,
         mode: .individual,
         visibleToStudents: true,
-        assessmentType: .automatic,
+        assessmentType: .manual,
         includedInOverallScore: .includedCompletely,
         exampleSolutionPublicationDate: .tomorrow,
         programmingLanguage: .swift
