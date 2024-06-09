@@ -70,6 +70,7 @@ public extension ProgrammingExercise {
         assessmentType: .manual,
         includedInOverallScore: .includedCompletely,
         exampleSolutionPublicationDate: .tomorrow,
+        studentParticipations: [.programmingExerciseStudent(participation: .mock)],
         programmingLanguage: .swift
     )
 

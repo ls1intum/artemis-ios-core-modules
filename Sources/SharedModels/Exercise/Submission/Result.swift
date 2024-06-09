@@ -175,6 +175,27 @@ public struct Result: Codable {
     }
 }
 
+public extension Result {
+    static let mock = Result(
+        id: 12,
+        completionDate: .yesterday,
+        successful: true,
+        hasFeedback: false,
+        score: 5,
+        assessmentType: .semiAutomatic,
+        rated: false,
+        hasComplaint: false,
+        exampleResult: false,
+        testCaseCount: 2,
+        passedTestCaseCount: 1,
+        codeIssueCount: 1,
+        submission: .programming(submission: .mock),
+        assessor: .mock,
+        feedbacks: [],
+        participation: .programmingExerciseStudent(participation: .mock)
+    )
+}
+
 public enum ResultTemplateStatus: String, RawRepresentable, Codable {
     /**
      * An automatic result is currently being generated and should be available soon.

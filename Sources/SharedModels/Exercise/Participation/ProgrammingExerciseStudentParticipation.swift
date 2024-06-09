@@ -20,3 +20,21 @@ public struct ProgrammingExerciseStudentParticipation: StudentParticipation, Cod
     public var repositoryUrl: String?
     public var buildPlanId: String?
 }
+
+public extension ProgrammingExerciseStudentParticipation {
+    static let mock = ProgrammingExerciseStudentParticipation(
+        student: .mock,
+        team: .none,
+        participantIdentifier: "party",
+        testRun: false,
+        id: 11,
+        initializationState: .finished,
+        initializationDate: .yesterday,
+        individualDueDate: .yesterday,
+        results: [],
+        exercise: .programming(exercise: .mockPastDeadline),
+        submissions: [],
+        repositoryUrl: "none",
+        buildPlanId: "buildplan"
+    )
+}
