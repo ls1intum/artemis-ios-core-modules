@@ -8,7 +8,7 @@
 import Common
 import SharedModels
 
-class ExerciseServiceStub: ExerciseService {
+struct ExerciseServiceStub: ExerciseService {
     func getExercise(exerciseId: Int) async -> DataState<Exercise> {
         return .done(response: .programming(exercise: .mockPastDeadline))
     }

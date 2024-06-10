@@ -101,13 +101,14 @@ public struct Course: Codable, Identifiable {
 }
 
 public extension Course {
-    public init(id: Int, title: String? = "",
-                description: String? = "",
-                courseIcon: String? = nil,
-                semester: String? = "",
-                registrationConfirmationMessage: String? = "",
-                exercises: [Exercise]? = nil,
-                courseInformationSharingConfiguration: CourseInformationSharingConfiguration) {
+    init(id: Int,
+         title: String? = "",
+         description: String? = "",
+         courseIcon: String? = nil,
+         semester: String? = "",
+         registrationConfirmationMessage: String? = "",
+         exercises: [Exercise]? = nil,
+         courseInformationSharingConfiguration: CourseInformationSharingConfiguration) {
         self.id = id
         self.title = title
         self.description = description
