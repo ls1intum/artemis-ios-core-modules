@@ -22,3 +22,16 @@ public struct ProgrammingSubmission: BaseSubmission {
 
     public var buildFailed: Bool?
 }
+
+public extension ProgrammingSubmission {
+    static let mock = ProgrammingSubmission(
+        id: 1,
+        submitted: true,
+        submissionDate: .yesterday,
+        exampleSubmission: false,
+        durationInMinutes: 10,
+        results: [],
+        participation: nil,
+        buildFailed: false
+    )
+}

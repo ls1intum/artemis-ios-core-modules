@@ -17,3 +17,16 @@ public struct ExerciseStatistics: Codable {
     public let numberOfPosts: Int?
     public let numberOfResolvedPosts: Int?
 }
+
+public extension ExerciseStatistics {
+    static let mock = ExerciseStatistics(
+        averageScoreOfExercise: 7.4,
+        maxPointsOfExercise: 10,
+        scoreDistribution: [1, 2, 3],
+        numberOfExerciseScores: 9,
+        numberOfParticipations: 9,
+        numberOfStudentsOrTeamsInCourse: 10,
+        numberOfPosts: 2,
+        numberOfResolvedPosts: 1
+    )
+}
