@@ -17,3 +17,14 @@ public struct ExerciseStatsForAssessmentDashboard: Codable {
     public let complaintsEnabled: Bool?
     public let feedbackRequestEnabled: Bool?
 }
+
+public extension ExerciseStatsForAssessmentDashboard {
+    static let mock = ExerciseStatsForAssessmentDashboard(
+        numberOfStudent: 10,
+        numberOfSubmissions: DueDateStat(inTime: 8, late: 1),
+        totalNumberOfAssessments: DueDateStat(inTime: 5, late: 4),
+        numberOfAssessmentsOfCorrectionRounds: [DueDateStat(inTime: 1, late: 0)],
+        complaintsEnabled: false,
+        feedbackRequestEnabled: false
+    )
+}

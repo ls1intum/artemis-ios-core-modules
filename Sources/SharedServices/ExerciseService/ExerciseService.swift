@@ -24,7 +24,7 @@ public protocol ExerciseService {
     func getExerciseStatsForAssessmentDashboard(exerciseId: Int) async -> DataState<ExerciseStatsForAssessmentDashboard>
 }
 
-public enum ExerciseServiceFactory {
-
-    public static let shared: ExerciseService = ExerciseServiceImpl()
+public enum ExerciseServiceFactory: DependencyFactory {
+    public static let liveValue: ExerciseService = ExerciseServiceImpl()
+    public static let testValue: ExerciseService = ExerciseServiceStub()
 }

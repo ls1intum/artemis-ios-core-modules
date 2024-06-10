@@ -29,26 +29,9 @@ public struct Course: Codable, Identifiable {
     // helper attributes, if DTO does not contain complete data
     public var numberOfLectures: Int?
 
-    public init(id: Int, title: String? = "",
-                description: String? = "",
-                courseIcon: String? = nil,
-                semester: String? = "",
-                registrationConfirmationMessage: String? = "",
-                exercises: [Exercise]? = nil,
-                courseInformationSharingConfiguration: CourseInformationSharingConfiguration) {
-        self.id = id
-        self.title = title
-        self.description = description
-        self.courseIcon = courseIcon
-        self.semester = semester
-        self.registrationConfirmationMessage = registrationConfirmationMessage
-        self.exercises = exercises
-        self.courseInformationSharingConfiguration = courseInformationSharingConfiguration
-    }
-
     public var courseIconURL: URL? {
         guard let courseIcon else { return nil }
-        return URL(string: courseIcon, relativeTo: UserSession.shared.institution?.baseURL)
+        return URL(string: courseIcon, relativeTo: UserSessionFactory.shared.institution?.baseURL)
     }
 
     public var courseColor: Color {
@@ -115,6 +98,34 @@ public struct Course: Codable, Identifiable {
         let accuracy = Double(course?.accuracyOfScores ?? 1)
         return round(value * pow(10.0, accuracy)) / pow(10.0, accuracy)
     }
+}
+
+public extension Course {
+    init(id: Int,
+         title: String? = "",
+         description: String? = "",
+         courseIcon: String? = nil,
+         semester: String? = "",
+         registrationConfirmationMessage: String? = "",
+         exercises: [Exercise]? = nil,
+         courseInformationSharingConfiguration: CourseInformationSharingConfiguration) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.courseIcon = courseIcon
+        self.semester = semester
+        self.registrationConfirmationMessage = registrationConfirmationMessage
+        self.exercises = exercises
+        self.courseInformationSharingConfiguration = courseInformationSharingConfiguration
+    }
+
+    static let mock = Course(
+        id: 1,
+        title: "Interactive Learning",
+        exercises: [.programming(exercise: .mock), .programming(exercise: .mockPastDeadline)],
+        courseInformationSharingConfiguration: .communicationAndMessaging,
+        instructorGroupName: "tumuser"
+    )
 }
 
 extension Course: Hashable {

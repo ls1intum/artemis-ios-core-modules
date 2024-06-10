@@ -14,7 +14,7 @@ class PushNotificationCipher {
 
     static func decrypt(payload: String, iv: String) -> PushNotification? {
         // Decode PrivateKey from base64 to String
-        guard let privateKey = UserSession.shared.getCurrentNotificationDeviceConfiguration()?.notificationsEncryptionKey,
+        guard let privateKey = UserSessionFactory.shared.getCurrentNotificationDeviceConfiguration()?.notificationsEncryptionKey,
               let privateKeyAsData = Data(base64Encoded: privateKey) else {
             return nil
         }

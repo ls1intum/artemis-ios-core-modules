@@ -11,7 +11,7 @@ import Common
 import SharedModels
 import UserStore
 
-public class AccountServiceImpl: AccountService {
+struct AccountServiceImpl: AccountService {
     private let client = APIClient()
 
     struct GetAccountRequest: APIRequest {
@@ -26,12 +26,12 @@ public class AccountServiceImpl: AccountService {
         }
     }
 
-    public func getAccount() async -> DataState<Account> {
+    func getAccount() async -> DataState<Account> {
         let result = await client.sendRequest(GetAccountRequest())
 
         switch result {
         case .success((let account, _)):
-            UserSession.shared.user = account
+            UserSessionFactory.shared.user = account
             return .done(response: account)
         case .failure(let error):
             return DataState(error: error)

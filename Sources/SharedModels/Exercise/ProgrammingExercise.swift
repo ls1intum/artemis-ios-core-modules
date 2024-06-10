@@ -44,15 +44,52 @@ public struct ProgrammingExercise: BaseExercise {
     public var templateParticipation: TemplateParticipation?
     public var solutionParticipation: SolutionParticipation?
 
-    public init(id: Int) {
-        self.id = id
-    }
-
     public func copyWithUpdatedParticipations(newParticipations: [Participation]) -> ProgrammingExercise {
         var clone = self
         clone[keyPath: \.studentParticipations] = newParticipations
         return clone
     }
+}
+
+public extension ProgrammingExercise {
+    public init(id: Int) {
+        self.id = id
+    }
+
+    static let mock = ProgrammingExercise(
+        id: 1,
+        title: "Using the Mock Object Pattern",
+        maxPoints: 15,
+        bonusPoints: 0,
+        dueDate: .tomorrow,
+        releaseDate: .yesterday,
+        assessmentDueDate: .tomorrow.addingTimeInterval(60 * 60 * 24 * 2),
+        difficulty: .EASY,
+        mode: .individual,
+        visibleToStudents: true,
+        assessmentType: .manual,
+        includedInOverallScore: .includedCompletely,
+        exampleSolutionPublicationDate: .tomorrow,
+        studentParticipations: [.programmingExerciseStudent(participation: .mock)],
+        programmingLanguage: .swift
+    )
+
+    static let mockPastDeadline = ProgrammingExercise(
+        id: 1,
+        title: "SwiftUI Button Style",
+        maxPoints: 10,
+        bonusPoints: 0,
+        dueDate: .yesterday,
+        releaseDate: .yesterday.addingTimeInterval(-60 * 60 * 24 * 2),
+        assessmentDueDate: .tomorrow.addingTimeInterval(60 * 60 * 24 * 2),
+        difficulty: .EASY,
+        mode: .individual,
+        visibleToStudents: true,
+        assessmentType: .manual,
+        includedInOverallScore: .includedCompletely,
+        exampleSolutionPublicationDate: .yesterday,
+        programmingLanguage: .swift
+    )
 }
 
 public enum ProgrammingLanguage: String, RawRepresentable, Codable {

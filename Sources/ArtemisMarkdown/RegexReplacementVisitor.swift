@@ -50,7 +50,7 @@ enum RegexReplacementVisitors {
     ) { match in
         guard match.start == match.stop,
               let exercise = Exercise.allCases.first(where: { $0.rawValue == match.start }),
-              let baseURL = UserSession.shared.institution?.baseURL,
+              let baseURL = UserSessionFactory.shared.institution?.baseURL,
               let url = URL(string: String(match.path), relativeTo: baseURL) else {
             return String(match.0)
         }
@@ -65,7 +65,7 @@ enum RegexReplacementVisitors {
     static let lectures = RegexReplacementVisitor(
         regex: #/\[lecture\](?<name>.*?)\((?<path>/courses/\d+/lectures/\d+)\)\[/lecture\]/#
     ) { match in
-        guard let baseURL = UserSession.shared.institution?.baseURL,
+        guard let baseURL = UserSessionFactory.shared.institution?.baseURL,
               let url = URL(string: String(match.path), relativeTo: baseURL) else {
             return String(match.0)
         }

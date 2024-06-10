@@ -22,6 +22,20 @@ public extension CourseForDashboardDTO {
     init(course: Course) {
         self.course = course
     }
+
+    public static let mock = CourseForDashboardDTO(
+        course: .mock,
+        totalScores: CourseScore(
+            maxPoints: 15,
+            reachablePoints: 15,
+            studentScores: StudentScore(
+                absoluteScore: 10,
+                relativeScore: 0.5,
+                currentRelativeScore: 0.5,
+                presentationScore: 1.0
+            )
+        )
+    )
 }
 
 extension CourseForDashboardDTO: Identifiable {

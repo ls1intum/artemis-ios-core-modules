@@ -54,6 +54,26 @@ public struct Channel: BaseConversation {
         }
         return Image(systemName: "lock.fill")
     }
+
+    public static let mock = Channel(
+        type: .channel,
+        id: 1,
+        creationDate: .yesterday,
+        lastMessageDate: .yesterday,
+        creator: .none,
+        lastReadDate: .yesterday,
+        unreadMessagesCount: 0,
+        isFavorite: false,
+        isHidden: false,
+        isMuted: false,
+        isCreator: false,
+        isMember: true,
+        numberOfMembers: 1,
+        name: "Announcements",
+        isPublic: true,
+        isAnnouncementChannel: true,
+        isArchived: false
+    )
 }
 
 public extension Channel {

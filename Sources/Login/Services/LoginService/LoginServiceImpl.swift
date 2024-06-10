@@ -33,8 +33,8 @@ class LoginServiceImpl: LoginService {
 
     func login(username: String, password: String, rememberMe: Bool) async -> NetworkResponse {
         if !rememberMe {
-            UserSession.shared.saveUsername(username: nil)
-            UserSession.shared.savePassword(password: nil)
+            UserSessionFactory.shared.saveUsername(username: nil)
+            UserSessionFactory.shared.savePassword(password: nil)
         }
 
         let result = await client.sendRequest(LoginUser(username: username, password: password, rememberMe: rememberMe), currentTry: 3)
@@ -49,10 +49,10 @@ class LoginServiceImpl: LoginService {
             case .failure(let error):
                 return .failure(error: error)
             case .done:
-                UserSession.shared.setUserLoggedIn(isLoggedIn: true)
+                UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
                 if rememberMe {
-                    UserSession.shared.saveUsername(username: username)
-                    UserSession.shared.savePassword(password: password)
+                    UserSessionFactory.shared.saveUsername(username: username)
+                    UserSessionFactory.shared.savePassword(password: password)
                 }
                 return .success
             }
