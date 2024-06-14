@@ -42,13 +42,25 @@ public struct TextExercise: BaseExercise {
 
     public var exampleSolution: String?
 
-    public init(id: Int) {
-        self.id = id
-    }
-
     public func copyWithUpdatedParticipations(newParticipations: [Participation]) -> TextExercise {
         var clone = self
         clone[keyPath: \.studentParticipations] = newParticipations
         return clone
     }
+}
+
+public extension TextExercise {
+    init(id: Int) {
+        self.id = id
+    }
+
+    static let mock = TextExercise(
+        id: 14,
+        title: "Spaceship Design",
+        dueDate: .now.addingTimeInterval(-120),
+        releaseDate: .yesterday,
+        assessmentDueDate: .tomorrow,
+        mode: .individual,
+        includedInOverallScore: .includedCompletely
+    )
 }
