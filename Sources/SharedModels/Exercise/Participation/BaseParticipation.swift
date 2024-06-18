@@ -59,7 +59,7 @@ public enum Participation: Identifiable, Codable {
 }
 
 public enum InitializationState: String, Codable {
-    case uninitalized = "UNINITIALIZED"
+    case uninitialized = "UNINITIALIZED"
     case repoCopied = "REPO_COPIED"
     case repoConfigured = "REPO_CONFIGURED"
     case buildPlanCopied = "BUILD_PLAN_COPIED"
