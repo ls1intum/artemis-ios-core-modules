@@ -26,10 +26,6 @@ public struct TextSubmission: BaseSubmission {
 }
 
 public extension TextSubmission {
-    init(id: Int?) {
-        self.id = id
-    }
-
     private enum CodingKeys: String, CodingKey {
         case type = "submissionExerciseType"
         case id
