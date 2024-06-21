@@ -156,8 +156,4 @@ public enum CourseInformationSharingConfiguration: String, RawRepresentable, Cod
      * Only Communication is enabled VALUE = 2
      */
     case communicationOnly = "COMMUNICATION_ONLY"
-    /**
-     * Only Messaging is enabled VALUE = 3
-     */
-    case messagingOnly = "MESSAGING_ONLY"
 }
