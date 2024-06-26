@@ -25,7 +25,9 @@ public struct PushNotificationSetupView: View {
             Image("notifications", bundle: .module)
                 .resizable()
                 .scaledToFit()
-                .frame(width: UIScreen.main.bounds.size.width * 0.8)
+                .containerRelativeFrame(.horizontal) { width, _ in
+                    width * 0.8
+                }
             Text(R.string.localizable.push_notification_settings_receive_label())
                 .bold()
             Text(R.string.localizable.push_notification_settings_receive_information())
