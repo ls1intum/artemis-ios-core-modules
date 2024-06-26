@@ -94,6 +94,7 @@ public extension ProgrammingExercise {
 
 public enum ProgrammingLanguage: String, RawRepresentable, Codable {
     case java = "JAVA"
+    case javascript = "JAVASCRIPT"
     case python = "PYTHON"
     case c = "C"
     case haskell = "HASKELL"
