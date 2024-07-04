@@ -103,5 +103,6 @@ public enum ProgrammingLanguage: String, RawRepresentable, Codable {
     case assembler = "ASSEMBLER"
     case swift = "SWIFT"
     case ocaml = "OCAML"
+    case rust = "RUST"
     case empty = "EMPTY"
 }
