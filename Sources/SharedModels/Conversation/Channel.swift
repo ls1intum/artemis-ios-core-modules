@@ -47,7 +47,7 @@ public struct Channel: BaseConversation {
             return Image(systemName: "archivebox.fill")
         }
         if isAnnouncementChannel ?? false {
-            return Image(systemName: "bell.fill")
+            return Image(systemName: "megaphone.fill")
         }
         if isPublic ?? false {
             return Image(systemName: "number")
