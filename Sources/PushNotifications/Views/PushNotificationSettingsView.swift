@@ -56,6 +56,7 @@ public struct PushNotificationSettingsView: View {
                 PushNotificationSetupView(shouldCloseOnSkip: true)
             }
         }
+        .interactiveDismissDisabled(!viewModel.isSaveDisabled)
     }
 }
 
