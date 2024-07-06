@@ -16,7 +16,7 @@ public class ExerciseServiceImpl: ExerciseService {
 
     // MARK: - Get Exercise
     struct GetExerciseRequest: APIRequest {
-        typealias Response = Exercise
+        typealias Response = ExerciseDetailsDTO
 
         var exerciseId: Int
 
@@ -34,7 +34,7 @@ public class ExerciseServiceImpl: ExerciseService {
 
         switch result {
         case .success((let response, _)):
-            return .done(response: response)
+            return .done(response: response.exercise)
         case .failure(let error):
             return .failure(error: UserFacingError(error: error))
         }
