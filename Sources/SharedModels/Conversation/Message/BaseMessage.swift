@@ -15,7 +15,7 @@ public protocol BaseMessage: Codable {
     var updatedDate: Date? { get }
     var content: String? { get }
     var tokenizedContent: String? { get }
-    var authorRoleTransient: UserRole? { get }
+    var authorRole: UserRole? { get }
     var reactions: [Reaction]? { get }
 }
 

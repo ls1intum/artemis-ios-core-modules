@@ -14,7 +14,7 @@ public struct AnswerMessage: BaseMessage {
     public var updatedDate: Date?
     public var content: String?
     public var tokenizedContent: String?
-    public var authorRoleTransient: UserRole?
+    public var authorRole: UserRole?
 
     public var resolvesPost: Bool?
     public var reactions: [Reaction]?
