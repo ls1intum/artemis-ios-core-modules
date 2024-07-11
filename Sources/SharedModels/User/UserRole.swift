@@ -14,17 +14,21 @@ public enum UserRole: String, RawRepresentable, Codable {
     case user = "USER"
 
     public var displayName: String {
-        rawValue.capitalized
+        if self == .user {
+            return "Student"
+        } else {
+            return rawValue.capitalized
+        }
     }
 
     public var badgeColor: Color {
         switch self {
         case .instructor:
-            return .init(red: 204/255, green: 0, blue: 0)
+            return .init(red: 204 / 255, green: 0, blue: 0)
         case .tutor:
-            return .init(red: 253/255, green: 126/255, blue: 20/255)
+            return .init(red: 253 / 255, green: 126 / 255, blue: 20 / 255)
         case .user:
-            return .init(red: 23/255, green: 162/255, blue: 184/255)
+            return .init(red: 23 / 255, green: 162 / 255, blue: 184 / 255)
         }
     }
 }
