@@ -14,10 +14,13 @@ public enum UserRole: String, RawRepresentable, Codable {
     case user = "USER"
 
     public var displayName: String {
-        if self == .user {
-            return "Student"
-        } else {
-            return rawValue.capitalized
+        switch self {
+        case .instructor:
+            R.string.localizable.instructor()
+        case .tutor:
+            R.string.localizable.tutor()
+        case .user:
+            R.string.localizable.student()
         }
     }
 

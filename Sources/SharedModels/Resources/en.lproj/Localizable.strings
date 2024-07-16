@@ -15,3 +15,8 @@
 "archived" = "(Archived)";
 "onlyYou" = "Only you";
 "others" = "%d others";
+
+// MARK: User
+"student" = "Student";
+"instructor" = "Instructor";
+"tutor" = "Tutor";
