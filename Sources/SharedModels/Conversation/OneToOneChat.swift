@@ -31,7 +31,7 @@ public struct OneToOneChat: BaseConversation {
     }
 
     public var icon: Image? {
-        nil
+        Image(systemName: "lock.fill")
     }
 }
 
