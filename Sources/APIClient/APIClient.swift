@@ -59,8 +59,8 @@ public final class APIClient {
              (by specifying RawResponse as ResponseType in Request) return the raw response
              */
             if T.self is RawResponse.Type {
-                let rawData = String(data: data, encoding: .utf8)
-                return .success((RawResponse(rawData: rawData ?? "") as! T, response.statusCode))
+                let rawData = String(decoding: data, as: UTF8.self)
+                return .success((RawResponse(rawData: rawData) as! T, response.statusCode))
             }
             do {
                 let decoder = JSONDecoder()
@@ -139,8 +139,8 @@ public final class APIClient {
              (by specifying RawResponse as ResponseType in Request) return the raw response
              */
             if T.Response.self is RawResponse.Type {
-                let rawData = String(data: data, encoding: .utf8)
-                return .success((RawResponse(rawData: rawData ?? "") as! T.Response, response.statusCode))
+                let rawData = String(decoding: data, as: UTF8.self)
+                return .success((RawResponse(rawData: rawData) as! T.Response, response.statusCode))
             }
             do {
                 let decoder = JSONDecoder()
@@ -209,7 +209,7 @@ extension APIClient {
             """
             \n––––––––––––––––––––––––––––––––––––––––Request––––––––––––––––––––––––––––––––––––––––––
             \(urlRequest.httpMethod ?? "empty") \(urlRequest.url?.absoluteString ?? "empty")
-            Body: \(String(data: urlRequest.httpBody ?? Data(), encoding: .utf8) ?? "")
+            Body: \(String(decoding: urlRequest.httpBody ?? Data(), as: UTF8.self))
             Length: \(urlRequest.httpBody?.debugDescription ?? "0")
             Content-Type: \(urlRequest.value(forHTTPHeaderField: "Content-Type") ?? "unknown")
             –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n
