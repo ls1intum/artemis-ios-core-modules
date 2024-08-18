@@ -95,8 +95,8 @@ public struct TextBlock: Codable {
         let endIndex = endIndex ?? 0
         let text = text ?? ""
 
-        let idData = "\(submissionId);\(startIndex)-\(endIndex);\(text)".data(using: .utf8) ?? Data()
-        self.id = Insecure.SHA1.hash(data: idData).map({ String(format: "%02hhx", $0) }).joined()
+        let idData = "\(submissionId);\(startIndex)-\(endIndex);\(text)".utf8
+        self.id = Insecure.SHA1.hash(data: Data(idData)).map({ String(format: "%02hhx", $0) }).joined()
     }
 }
 
