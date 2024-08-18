@@ -13,5 +13,5 @@ public struct CoursesForDashboardDTO: Codable {
 }
 
 public extension CoursesForDashboardDTO {
-    public static let mock = CoursesForDashboardDTO(courses: [.mock], activeExams: nil)
+    static let mock = CoursesForDashboardDTO(courses: [.mock], activeExams: nil)
 }
