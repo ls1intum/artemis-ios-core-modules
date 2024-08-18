@@ -31,7 +31,7 @@ public class UserSession: ObservableObject {
 
     private func setupInstitutionSelection() {
         if let institutionData = KeychainHelper.shared.read(service: "institution", account: "Artemis") {
-            institution = InstitutionIdentifier(value: String(data: institutionData, encoding: .utf8))
+            institution = InstitutionIdentifier(value: String(decoding: institutionData, as: UTF8.self))
         } else {
             institution = .tum
             saveInstitution(identifier: .tum)
@@ -52,15 +52,15 @@ public class UserSession: ObservableObject {
 
     private func setupLoginData() {
         if let tokenData = KeychainHelper.shared.read(service: "isLoggedIn", account: "Artemis") {
-            isLoggedIn = String(data: tokenData, encoding: .utf8) == "true"
+            isLoggedIn = String(decoding: tokenData, as: UTF8.self) == "true"
         }
 
         if let username = KeychainHelper.shared.read(service: "username", account: "Artemis") {
-            self.username = String(data: username, encoding: .utf8)
+            self.username = String(decoding: username, as: UTF8.self)
         }
 
         if let password = KeychainHelper.shared.read(service: "password", account: "Artemis") {
-            self.password = String(data: password, encoding: .utf8)
+            self.password = String(decoding: password, as: UTF8.self)
         }
     }
 
