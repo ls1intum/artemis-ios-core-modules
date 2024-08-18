@@ -38,7 +38,7 @@ public struct Account: Codable {
 }
 
 public extension Account {
-    public static let mock = Account(
+    static let mock = Account(
         id: 1,
         login: "chloe_mitchell",
         name: "Chloe Mitchell",
