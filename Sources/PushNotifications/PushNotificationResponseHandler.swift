@@ -28,15 +28,9 @@ public class PushNotificationResponseHandler {
         case .quizExerciseStarted:
             guard let target = try? decoder.decode(QuizExerciseStartedTarget.self, from: targetData) else { return nil }
             return "courses/\(target.course)/quiz-exercises/\(target.id)/live"
-        case .newReplyForCoursePost, .newCoursePost, .newAnnouncementPost:
-            guard let target = try? decoder.decode(NewCoursePostTarget.self, from: targetData) else { return nil }
+        case .newReplyForCoursePost, .newCoursePost, .newAnnouncementPost, .newExercisePost, .newReplyForExercisePost, .newLecturePost, .newReplyForLecturePost:
+            guard let target = try? decoder.decode(NewPostTarget.self, from: targetData) else { return nil }
             return "courses/\(target.course)/communication?conversationId=\(target.conversation)"
-        case .newExercisePost, .newReplyForExercisePost:
-            guard let target = try? decoder.decode(NewExercisePostTarget.self, from: targetData) else { return nil }
-            return "courses/\(target.course)/exercises/\(target.exercise ?? target.exerciseId ?? 0)?postId=\(target.id)"
-        case .newLecturePost, .newReplyForLecturePost:
-            guard let target = try? decoder.decode(NewLecturePostTarget.self, from: targetData) else { return nil }
-            return "courses/\(target.course)/lectures/\(target.lecture ?? target.lectureId ?? 0)?postId=\(target.id)"
         case .conversationCreateGroupChat,
                 .conversationAddUserChannel,
                 .conversationAddUserGroupChat,
@@ -56,24 +50,10 @@ private struct QuizExerciseStartedTarget: Codable {
     let id: Int
 }
 
-private struct NewCoursePostTarget: Codable {
+private struct NewPostTarget: Codable {
     let course: Int
     let conversation: Int
     let id: Int
-}
-
-private struct NewExercisePostTarget: Codable {
-    let id: Int
-    let course: Int
-    let exercise: Int?
-    let exerciseId: Int?
-}
-
-private struct NewLecturePostTarget: Codable {
-    let id: Int
-    let course: Int
-    let lecture: Int?
-    let lectureId: Int?
 }
 
 private struct ConversationTarget: Codable {
