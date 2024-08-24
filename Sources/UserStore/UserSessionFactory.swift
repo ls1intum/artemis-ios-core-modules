@@ -8,7 +8,7 @@
 import Common
 
 public enum UserSessionFactory: DependencyFactory {
-    public static let liveValue: UserSession = UserSession()
+    public static let liveValue = UserSession()
 
     public static let testValue: UserSession = UserSessionStub()
 }

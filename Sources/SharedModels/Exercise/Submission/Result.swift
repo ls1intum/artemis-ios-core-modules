@@ -153,7 +153,7 @@ public struct Result: Codable {
                     return .noResult
                 }
             } else if score != nil,
-                      (assessmentDueDate == nil || assessmentDueDate! >= .now) {
+                      assessmentDueDate == nil || assessmentDueDate! >= .now {
                 // Submission is not in due time of exercise, has a result with score and there is no assessmentDueDate for the exercise or it lies in the past.
                 // TODO: handle external submissions with new status "External"
                 return .late
