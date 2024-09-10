@@ -29,6 +29,7 @@ public struct Channel: BaseConversation {
     public var isPublic: Bool?
     public var isAnnouncementChannel: Bool?
     public var isArchived: Bool?
+    public var isCourseWide: Bool?
     public var hasChannelModerationRights: Bool?
     public var isChannelModerator: Bool?
     public var tutorialGroupId: Int?
