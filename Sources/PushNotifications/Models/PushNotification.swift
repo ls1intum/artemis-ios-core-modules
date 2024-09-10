@@ -239,8 +239,8 @@ public enum PushNotificationType: String, Codable {
         case .newReplyForCoursePost:
             guard notificationPlaceholders.count > 5 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewReplyForCoursePost(notificationPlaceholders[0],
-                                                                                             notificationPlaceholders[4],
-                                                                                             notificationPlaceholders[5])
+                                                                                             notificationPlaceholders[3],
+                                                                                             notificationPlaceholders[4])
         case .newReplyForExamPost:
             return nil
         case .newReplyForExercisePost:
@@ -259,11 +259,11 @@ public enum PushNotificationType: String, Codable {
         case .newAnnouncementPost:
             guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewAnnouncementPost(notificationPlaceholders[0],
-                                                                                           notificationPlaceholders[2])
+                                                                                           notificationPlaceholders[1])
         case .newCoursePost:
             guard notificationPlaceholders.count > 2 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewCoursePost(notificationPlaceholders[0],
-                                                                                     notificationPlaceholders[2])
+                                                                                     notificationPlaceholders[1])
         case .newExamPost:
             return nil
         case .newExercisePost:
