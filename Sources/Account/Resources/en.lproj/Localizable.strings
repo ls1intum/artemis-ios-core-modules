@@ -9,6 +9,7 @@
 "registrationNumberLabel" = "Registration Number";
 "joinedLabel" = "Joined Artemis on";
 "accountInformationNavigationTitle" = "Account Information";
+"changeProfilePicture" = "Your profile picture can be changed in Profile Settings on the web.";
 
 // MARK: General
 "close" = "Close";

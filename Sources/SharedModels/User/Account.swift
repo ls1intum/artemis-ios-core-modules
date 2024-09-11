@@ -7,6 +7,7 @@ public struct Account: Codable {
     public let name: String
     public let firstName: String
     public let lastName: String?
+    private let imageUrl: String?
     public let email: String
     public let langKey: String
     public let authorities: [Authority]?
@@ -35,6 +36,14 @@ public struct Account: Codable {
 
         return userAuthorities.contains(authority)
     }
+
+    public var imagePath: URL? {
+        guard let imageUrl else { return nil }
+        guard let urlString = UserSessionFactory.shared.institution?.baseURL?.absoluteString.appending(imageUrl) else {
+            return nil
+        }
+        return URL(string: urlString)
+    }
 }
 
 public extension Account {
@@ -44,6 +53,7 @@ public extension Account {
         name: "Chloe Mitchell",
         firstName: "Chloe",
         lastName: "Mitchell",
+        imageUrl: nil,
         email: "chloe_mitchell@gmail.com",
         langKey: "en",
         authorities: [.user],

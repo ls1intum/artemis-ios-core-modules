@@ -11,10 +11,12 @@ import APIClient
 import SharedModels
 import UserStore
 import PushNotifications
+import SharedServices
 
 @MainActor
 class AccountNavigationBarMenuViewModel: ObservableObject {
     @Published var account: DataState<Account> = .loading
+    @Published var profilePicUrl: URL?
     @Published var error: UserFacingError?
     @Published var isLoading = false
 
@@ -25,6 +27,10 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
     func getAccount() {
         if let user = UserSessionFactory.shared.user {
             account = .done(response: user)
+            profilePicUrl = account.value?.imagePath
+            Task {
+                await updateProfilePicUrl()
+            }
         } else {
             account = .loading
         }
@@ -67,6 +73,21 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
             default:
                 return
             }
+        }
+    }
+
+    /// Updates the saved user with current profile pic url
+    func updateProfilePicUrl() async {
+        guard let account = account.value else { return }
+
+        let result = await AccountServiceFactory.shared.getAccount()
+        switch result {
+        case .done(let account):
+            UserSessionFactory.shared.user = account
+            self.account = .done(response: account)
+            profilePicUrl = account.imagePath
+        default:
+            profilePicUrl = nil
         }
     }
 }

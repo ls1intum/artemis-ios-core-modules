@@ -50,11 +50,22 @@ struct AccountNavigationBarMenuView: View {
         }, label: {
             HStack(alignment: .center, spacing: .s) {
                 Spacer()
-                Image(systemName: "person.fill")
-                Text(viewModel.account.value?.login ?? "xx12xxx")
-                    .redacted(reason: viewModel.account.value == nil ? .placeholder : [])
+                if let pictureUrl = viewModel.profilePicUrl {
+                    ArtemisAsyncImage(imageURL: pictureUrl) {
+                        Image(systemName: "person.fill")
+                    }
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .clipShape(.circle)
+                } else {
+                    Image(systemName: "person.fill")
+                    Text(viewModel.account.value?.login ?? "xx12xxx")
+                        .redacted(reason: viewModel.account.value == nil ? .placeholder : [])
+                }
                 Image(systemName: "arrowtriangle.down.fill")
-                    .scaleEffect(0.5)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 16, height: 10)
             }.frame(width: 150)
         })
         .onChange(of: viewModel.error) { _, error in

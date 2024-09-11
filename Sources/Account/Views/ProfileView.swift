@@ -5,6 +5,7 @@
 //  Created by Sven Andabaka on 19.05.23.
 //
 
+import DesignLibrary
 import SwiftUI
 import SharedModels
 
@@ -17,6 +18,17 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             List {
+                if let pictureUrl = account.imagePath {
+                    Section {
+                        ArtemisAsyncImage(imageURL: pictureUrl) {}
+                            .frame(width: 70, height: 70)
+                            .clipShape(.circle)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .listRowBackground(Color.clear)
+                    } footer: {
+                        Text(R.string.localizable.changeProfilePicture())
+                    }
+                }
                 Section(R.string.localizable.fullNameLabel()) {
                     Text(account.name)
                 }
