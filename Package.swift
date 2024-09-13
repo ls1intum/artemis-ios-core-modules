@@ -64,6 +64,7 @@ let package = Package(
                 "DesignLibrary",
                 "PushNotifications",
                 "SharedModels",
+                "SharedServices",
                 "UserStore",
                 .product(name: "RswiftLibrary", package: "R.swift")
             ],
