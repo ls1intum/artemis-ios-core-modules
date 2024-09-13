@@ -135,8 +135,8 @@
 "artemisApp.singleUserNotification.text.newPlagiarismCaseStudent" = "New plagiarism case concerning the %1$@ exercise \"%2$@\".";
 "artemisApp.singleUserNotification.text.plagiarismCaseVerdictStudent" = "Your plagiarism case concerning the %1$@ exercise \"%2$@\" has a verdict.";
 "artemisApp.conversationNotification.text.newMessageChannel" = "New message in %2$@ channel from %3$@ in course %1$@.";
-"artemisApp.conversationNotification.text.newMessageGroupChat" = "New message in group chat from %2$@ in course %1$@.";
-"artemisApp.conversationNotification.text.newMessageDirect" = "New direct message from %2$@ in course %1$@.";
+"artemisApp.conversationNotification.text.newMessageGroupChat" = "New message in group chat from %2$@ in course %1$@:\n%3$@";
+"artemisApp.conversationNotification.text.newMessageDirect" = "New direct message from %2$@ in course %1$@:\n%3$@";
 "artemisApp.singleUserNotification.text.messageReply" = "You have new reply in a message by %2$@ in course %1$@.";
 
 "artemisApp.groupNotification.text.exerciseUpdated" = "The exercise \"%2$@\" in course \"%1$@\" got updated.";
