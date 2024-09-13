@@ -21,8 +21,8 @@ struct ProfileView: View {
                 if let pictureUrl = account.imagePath {
                     Section {
                         ArtemisAsyncImage(imageURL: pictureUrl) {}
-                            .frame(width: 70, height: 70)
-                            .clipShape(.circle)
+                            .frame(width: 100, height: 100)
+                            .clipShape(.rect(cornerRadius: .m))
                             .frame(maxWidth: .infinity, alignment: .center)
                             .listRowBackground(Color.clear)
                     } footer: {
