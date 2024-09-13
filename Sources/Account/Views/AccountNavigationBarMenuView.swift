@@ -49,7 +49,6 @@ struct AccountNavigationBarMenuView: View {
             }
         }, label: {
             HStack(alignment: .center, spacing: .s) {
-                Spacer()
                 if let pictureUrl = viewModel.profilePicUrl {
                     ArtemisAsyncImage(imageURL: pictureUrl) {
                         Image(systemName: "person.fill")
@@ -66,7 +65,7 @@ struct AccountNavigationBarMenuView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 16, height: 10)
-            }.frame(width: 150)
+            }
         })
         .onChange(of: viewModel.error) { _, error in
             self.error = error
