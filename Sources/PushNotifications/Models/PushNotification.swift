@@ -385,10 +385,12 @@ public enum PushNotificationType: String, Codable {
                                                                                                     notificationPlaceholders[4])
             case "groupChat":
                 return R.string.localizable.artemisAppConversationNotificationTextNewMessageGroupChat(notificationPlaceholders[0],
-                                                                                                      notificationPlaceholders[3])
+                                                                                                      notificationPlaceholders[4],
+                                                                                                      notificationPlaceholders[1])
             case "oneToOneChat":
                 return R.string.localizable.artemisAppConversationNotificationTextNewMessageDirect(notificationPlaceholders[0],
-                                                                                                   notificationPlaceholders[3])
+                                                                                                   notificationPlaceholders[4],
+                                                                                                   notificationPlaceholders[1])
             default:
                 return nil
             }
