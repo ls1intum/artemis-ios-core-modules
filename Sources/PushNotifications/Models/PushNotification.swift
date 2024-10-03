@@ -380,9 +380,10 @@ public enum PushNotificationType: String, Codable {
             guard notificationPlaceholders.count > 5 else { return nil }
             switch notificationPlaceholders[5] {
             case "channel":
-                return R.string.localizable.artemisAppConversationNotificationTextNewMessageChannel(notificationPlaceholders[0],
-                                                                                                    notificationPlaceholders[3],
-                                                                                                    notificationPlaceholders[4])
+                return R.string.localizable.artemisAppConversationNotificationTextNewMessageChannel(notificationPlaceholders[3],
+                                                                                                    notificationPlaceholders[0],
+                                                                                                    notificationPlaceholders[4],
+                                                                                                    notificationPlaceholders[1])
             case "groupChat":
                 return R.string.localizable.artemisAppConversationNotificationTextNewMessageGroupChat(notificationPlaceholders[0],
                                                                                                       notificationPlaceholders[4],
