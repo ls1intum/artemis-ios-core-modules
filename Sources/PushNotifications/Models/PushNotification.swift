@@ -35,6 +35,10 @@ struct PushNotification: Codable {
         type.title
     }
 
+    var subtitle: String? {
+        type.getSubtitle(notificationPlaceholders: notificationPlaceholders)
+    }
+
     var body: String? {
         type.getBody(notificationPlaceholders: notificationPlaceholders)
     }
@@ -208,6 +212,42 @@ public enum PushNotificationType: String, Codable {
         }
     }
 
+    public func getSubtitle(notificationPlaceholders: [String]) -> String? {
+        switch self {
+        case .newReplyForCoursePost,
+             .newReplyForExercisePost,
+             .newReplyForLecturePost:
+            guard !notificationPlaceholders.isEmpty else { return nil }
+            // Course Name
+            return notificationPlaceholders[0]
+        //
+        case .newAnnouncementPost, .newCoursePost:
+            guard !notificationPlaceholders.isEmpty else { return nil }
+            // Course Name
+            return notificationPlaceholders[0]
+        case .newExercisePost, .newLecturePost:
+            guard !notificationPlaceholders.isEmpty else { return nil }
+            // Course Name
+            return notificationPlaceholders[0]
+        //
+        case .conversationNewMessage:
+            guard notificationPlaceholders.count > 5 else { return nil }
+            switch notificationPlaceholders[5] {
+            case "channel", "groupChat", "oneToOneChat":
+                // Course Name
+                return notificationPlaceholders[0]
+            default:
+                return nil
+            }
+        case .conversationNewReplyMessage:
+            guard !notificationPlaceholders.isEmpty else { return nil }
+            // Course Name
+            return notificationPlaceholders[0]
+        default:
+            return nil
+        }
+    }
+
     // TODO: add checks for length
     // swiftlint:disable cyclomatic_complexity function_body_length empty_count
     public func getBody(notificationPlaceholders: [String]) -> String? {
@@ -238,43 +278,34 @@ public enum PushNotificationType: String, Codable {
         //
         case .newReplyForCoursePost:
             guard notificationPlaceholders.count > 5 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewReplyForCoursePost(notificationPlaceholders[0],
-                                                                                             notificationPlaceholders[3],
+            return R.string.localizable.artemisAppGroupNotificationTextNewReplyForCoursePost(notificationPlaceholders[3],
                                                                                              notificationPlaceholders[4])
         case .newReplyForExamPost:
             return nil
         case .newReplyForExercisePost:
             guard notificationPlaceholders.count > 7 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewReplyForExercisePost(notificationPlaceholders[0],
-                                                                                               notificationPlaceholders[3],
+            return R.string.localizable.artemisAppGroupNotificationTextNewReplyForExercisePost(notificationPlaceholders[3],
                                                                                                notificationPlaceholders[4],
                                                                                                notificationPlaceholders[7])
         case .newReplyForLecturePost:
             guard notificationPlaceholders.count > 7 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewReplyForLecturePost(notificationPlaceholders[0],
-                                                                                              notificationPlaceholders[3],
+            return R.string.localizable.artemisAppGroupNotificationTextNewReplyForLecturePost(notificationPlaceholders[3],
                                                                                               notificationPlaceholders[4],
                                                                                               notificationPlaceholders[7])
         //
-        case .newAnnouncementPost:
-            guard notificationPlaceholders.count > 2 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewAnnouncementPost(notificationPlaceholders[0],
-                                                                                           notificationPlaceholders[1])
-        case .newCoursePost:
-            guard notificationPlaceholders.count > 2 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewCoursePost(notificationPlaceholders[0],
-                                                                                     notificationPlaceholders[1])
+        case .newAnnouncementPost, .newCoursePost:
+            guard notificationPlaceholders.count > 1 else { return nil }
+            // Post Content
+            return notificationPlaceholders[1]
         case .newExamPost:
             return nil
         case .newExercisePost:
             guard notificationPlaceholders.count > 4 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewExercisePost(notificationPlaceholders[0],
-                                                                                       notificationPlaceholders[1],
+            return R.string.localizable.artemisAppGroupNotificationTextNewExercisePost(notificationPlaceholders[1],
                                                                                        notificationPlaceholders[4])
         case .newLecturePost:
             guard notificationPlaceholders.count > 4 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewLecturePost(notificationPlaceholders[0],
-                                                                                      notificationPlaceholders[1],
+            return R.string.localizable.artemisAppGroupNotificationTextNewLecturePost(notificationPlaceholders[1],
                                                                                       notificationPlaceholders[4])
         //
         case .courseArchiveStarted:
@@ -381,24 +412,20 @@ public enum PushNotificationType: String, Codable {
             switch notificationPlaceholders[5] {
             case "channel":
                 return R.string.localizable.artemisAppConversationNotificationTextNewMessageChannel(notificationPlaceholders[3],
-                                                                                                    notificationPlaceholders[0],
                                                                                                     notificationPlaceholders[4],
                                                                                                     notificationPlaceholders[1])
             case "groupChat":
-                return R.string.localizable.artemisAppConversationNotificationTextNewMessageGroupChat(notificationPlaceholders[0],
-                                                                                                      notificationPlaceholders[4],
+                return R.string.localizable.artemisAppConversationNotificationTextNewMessageGroupChat(notificationPlaceholders[4],
                                                                                                       notificationPlaceholders[1])
             case "oneToOneChat":
-                return R.string.localizable.artemisAppConversationNotificationTextNewMessageDirect(notificationPlaceholders[0],
-                                                                                                   notificationPlaceholders[4],
+                return R.string.localizable.artemisAppConversationNotificationTextNewMessageDirect(notificationPlaceholders[4],
                                                                                                    notificationPlaceholders[1])
             default:
                 return nil
             }
         case .conversationNewReplyMessage:
             guard notificationPlaceholders.count > 6 else { return nil }
-            return R.string.localizable.artemisAppSingleUserNotificationTextMessageReply(notificationPlaceholders[0],
-                                                                                         notificationPlaceholders[6])
+            return R.string.localizable.artemisAppSingleUserNotificationTextMessageReply(notificationPlaceholders[6], notificationPlaceholders[1])
         case .conversationCreateOneToOneChat:
             return nil
         case .conversationCreateGroupChat:
