@@ -55,6 +55,9 @@ public class PushNotificationHandler {
 
         let content = UNMutableNotificationContent()
         content.title = title
+        if let subtitle = notification.subtitle {
+            content.subtitle = subtitle
+        }
         if let body = notification.body {
             content.body = body
         }
