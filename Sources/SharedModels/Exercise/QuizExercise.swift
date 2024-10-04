@@ -83,12 +83,18 @@ public struct QuizExercise: BaseExercise {
     }
 }
 
-public enum QuizStatus: String, RawRepresentable, Codable {
+public enum QuizStatus: String, RawRepresentable, Codable, CaseIterable {
     case closed = "CLOSED"
     case openForPractice = "OPEN_FOR_PRACTICE"
     case active = "ACTIVE"
     case visible = "VISIBLE"
     case invisible = "INVISIBLE"
+    case unknown
+
+    public init(from decoder: Decoder) throws {
+        let string = try decoder.singleValueContainer().decode(String.self)
+        self = Self.allCases.first { $0.rawValue == string } ?? .unknown
+    }
 }
 
 public enum QuizMode: String, RawRepresentable, Codable {
