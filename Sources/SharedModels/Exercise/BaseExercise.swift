@@ -241,12 +241,13 @@ public enum IncludedInOverallScore: String, Codable {
 
 public enum AssessmentType: String, Codable {
     case automatic = "AUTOMATIC"
+    case automaticAthena = "AUTOMATIC_ATHENA"
     case semiAutomatic = "SEMI_AUTOMATIC"
     case manual = "MANUAL"
 
     public var description: String {
         switch self {
-        case .automatic:
+        case .automatic, .automaticAthena:
             return R.string.localizable.assessmentType_automatic()
         case .semiAutomatic:
             return R.string.localizable.assessmentType_semiAutomatic()
