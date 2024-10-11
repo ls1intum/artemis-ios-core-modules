@@ -302,11 +302,11 @@ public enum PushNotificationType: String, Codable {
         case .newExercisePost:
             guard notificationPlaceholders.count > 4 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewExercisePost(notificationPlaceholders[1],
-                                                                                       notificationPlaceholders[4])
+                                                                                       notificationPlaceholders[3])
         case .newLecturePost:
             guard notificationPlaceholders.count > 4 else { return nil }
             return R.string.localizable.artemisAppGroupNotificationTextNewLecturePost(notificationPlaceholders[1],
-                                                                                      notificationPlaceholders[4])
+                                                                                      notificationPlaceholders[3])
         //
         case .courseArchiveStarted:
             guard notificationPlaceholders.count > 0 else { return nil }
