@@ -97,8 +97,7 @@ public class UserSession: ObservableObject {
     }
 
     public func saveNotificationDeviceConfiguration(token: String?, encryptionKey: String?, skippedNotifications: Bool) {
-        guard let institution,
-              let username else { return }
+        guard let institution else { return }
         let notificationDeviceConfiguration = NotificationDeviceConfiguration(institutionIdentifier: institution,
                                                                               username: username,
                                                                               skippedNotifications: skippedNotifications,
@@ -144,7 +143,7 @@ public class UserSession: ObservableObject {
 
 public struct NotificationDeviceConfiguration: Codable {
     var institutionIdentifier: InstitutionIdentifier
-    var username: String
+    var username: String?
     public var skippedNotifications: Bool
     public var apnsDeviceToken: String?
     public var notificationsEncryptionKey: String?
