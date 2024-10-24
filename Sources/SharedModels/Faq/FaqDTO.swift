@@ -12,5 +12,5 @@ public struct FaqDTO: Codable, Identifiable {
     public var questionTitle: String
     public var questionAnswer: String
     public var categories: Set<String>?
-    public var state: FaqState?
+    public var faqState: FaqState
 }
