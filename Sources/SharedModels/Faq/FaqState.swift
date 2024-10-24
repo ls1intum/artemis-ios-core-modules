@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum FaqState: Codable {
+public enum FaqState: String, Codable {
     case accepted = "ACCEPTED"
     case rejected = "REJECTED"
     case proposed = "PROPOSED"
