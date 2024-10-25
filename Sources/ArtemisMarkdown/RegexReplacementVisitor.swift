@@ -23,14 +23,14 @@ enum RegexReplacementVisitors {
     static let attachments = RegexReplacementVisitor(
         regex: #/\[attachment\](?<name>.*?)\((?<path>lecture/\d+/.*?)\)\[/attachment\]/#
     ) { match in
-        "![Attachment](fa-file) [\(match.name)](mention://attachment/\(match.path))"
+        "![Attachment](local://fa-file) [\(match.name)](mention://attachment/\(match.path))"
     }
 
     // (?<ATTACHMENT_UNITS>\[lecture-unit].*?\[\/lecture-unit])
     static let attachmentUnits = RegexReplacementVisitor(
         regex: #/\[lecture-unit\](?<name>.*?)\((?<path>attachment-unit/\d+/.*?)\)\[/lecture-unit\]/#
     ) { match in
-        "![Lecture unit](fa-file) [\(match.name)](mention://lecture-unit/\(match.path))"
+        "![Lecture unit](local://fa-file) [\(match.name)](mention://lecture-unit/\(match.path))"
     }
 
     // (?<CHANNEL>\[channel].*?\[\/channel])
@@ -54,7 +54,7 @@ enum RegexReplacementVisitors {
               let url = URL(string: String(match.path), relativeTo: baseURL) else {
             return String(match.0)
         }
-        return "![\(exercise.title)](\(exercise.icon)) [\(match.name)](mention://exercise/\(url.lastPathComponent))"
+        return "![\(exercise.title)](local://\(exercise.icon)) [\(match.name)](mention://exercise/\(url.lastPathComponent))"
     }
 
     static let ins = RegexReplacementVisitor(regex: #/<ins>(?<ins>.*?)</ins>/#) { match in
@@ -69,7 +69,7 @@ enum RegexReplacementVisitors {
               let url = URL(string: String(match.path), relativeTo: baseURL) else {
             return String(match.0)
         }
-        return "![Lecture](fa-chalkboard-user) [\(match.name)](mention://lecture/\(url.lastPathComponent))"
+        return "![Lecture](local://fa-chalkboard-user) [\(match.name)](mention://lecture/\(url.lastPathComponent))"
     }
 
     // (?<USER>\[user].*?\[\/user])
@@ -79,14 +79,15 @@ enum RegexReplacementVisitors {
 
     // (?<POST>#\d+)
     static let messages = RegexReplacementVisitor(regex: #/\#(?<id>\d+)/#) { match in
-        return "![Message](fa-message) [#\(match.id)](mention://message/\(match.id))"
+        return "![Message](local://fa-message) [#\(match.id)](mention://message/\(match.id))"
     }
+
 
     // (?<SLIDE>\[slide].*?\[\/slide])
     static let slides = RegexReplacementVisitor(
         regex: #/\[slide\](?<name>.*?)\((?<path>attachment-unit/\d+/slide/\d+)\)\[/slide\]/#
     ) { match in
-        "![Slide](fa-file) [\(match.name)](mention://slide/\(match.path))"
+        "![Slide](local://fa-file) [\(match.name)](mention://slide/\(match.path))"
     }
 
     static func visitAll(input: inout String) {
