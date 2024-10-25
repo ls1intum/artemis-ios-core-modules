@@ -82,6 +82,16 @@ enum RegexReplacementVisitors {
         return "![Message](local://fa-message) [#\(match.id)](mention://message/\(match.id))"
     }
 
+    // (?<FAQ>\[faq].*?\[\/faq]
+    static let faqs = RegexReplacementVisitor(
+        regex: #/\[faq\](?<name>.*?)\((?<path>/courses/\d+/faq\?faqId=\d+)\)\[/faq\]/#
+    ) { match in
+        guard let baseURL = UserSessionFactory.shared.institution?.baseURL,
+              let url = URL(string: String(match.path), relativeTo: baseURL) else {
+            return String(match.0)
+        }
+        return "![FAQ](local://fa-question) [\(match.name)](mention://faq/\(url.query() ?? ""))"
+    }
 
     // (?<SLIDE>\[slide].*?\[\/slide])
     static let slides = RegexReplacementVisitor(
