@@ -14,10 +14,12 @@ public struct ArtemisMarkdownView: View {
     }
 
     public var body: some View {
-        Markdown(string)
+        Markdown(string,
+                 baseURL: UserSessionFactory.shared.institution?.baseURL,
+                 imageBaseURL: UserSessionFactory.shared.institution?.baseURL)
             .markdownTheme(.artemis)
-            .markdownImageProvider(AssetImageProvider(bundle: .module))
-            .markdownInlineImageProvider(AssetInlineImageProvider(bundle: .module))
+            .markdownImageProvider(ArtemisImageProvider())
+            .markdownInlineImageProvider(ArtemisInlineImageProvider())
     }
 }
 
