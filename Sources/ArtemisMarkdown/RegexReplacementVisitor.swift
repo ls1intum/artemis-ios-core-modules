@@ -110,7 +110,8 @@ enum RegexReplacementVisitors {
             lectures.visit(input:),
             members.visit(input:),
             messages.visit(input:),
-            slides.visit(input:)
+            slides.visit(input:),
+            faqs.visit(input:)
         ] {
             visit(&input)
         }
