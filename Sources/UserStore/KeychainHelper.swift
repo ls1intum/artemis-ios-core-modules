@@ -19,7 +19,8 @@ final class KeychainHelper {
             kSecValueData: data,
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
-            kSecAttrAccount: account
+            kSecAttrAccount: account,
+            kSecAttrAccessible: kSecAttrAccessibleAfterFirstUnlock
         ] as CFDictionary
 
         // Add data in query to keychain
@@ -35,7 +36,8 @@ final class KeychainHelper {
             let query = [
                 kSecAttrService: service,
                 kSecAttrAccount: account,
-                kSecClass: kSecClassGenericPassword
+                kSecClass: kSecClassGenericPassword,
+                kSecAttrAccessible: kSecAttrAccessibleAfterFirstUnlock
             ] as CFDictionary
 
             let attributesToUpdate = [kSecValueData: data] as CFDictionary
