@@ -43,17 +43,17 @@ public struct Channel: BaseConversation {
         return name ?? ""
     }
 
-    public var icon: Image? {
+    public var icon: AnyView? {
         if isArchived ?? false {
-            return Image(systemName: "archivebox.fill")
+            return AnyView(Image(systemName: "archivebox.fill").resizable())
         }
         if isAnnouncementChannel ?? false {
-            return Image(systemName: "megaphone.fill")
+            return AnyView(Image(systemName: "megaphone.fill").resizable())
         }
         if isPublic ?? false {
-            return Image(systemName: "number")
+            return AnyView(Image(systemName: "number").resizable())
         }
-        return Image(systemName: "lock.fill")
+        return AnyView(Image(systemName: "lock.fill").resizable())
     }
 
     public static let mock = Channel(

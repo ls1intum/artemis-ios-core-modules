@@ -43,8 +43,8 @@ public struct GroupChat: BaseConversation {
         return "\(membersWithoutUser.map { $0.name ?? "" }.prefix(2).joined(separator: ", ")), \(R.string.localizable.others(membersWithoutUser.count - 2))"
     }
 
-    public var icon: Image? {
-        Image(systemName: "person.3.fill")
+    public var icon: AnyView? {
+        AnyView(Image(systemName: "person.3.fill").resizable())
     }
 }
 
