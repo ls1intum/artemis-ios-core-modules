@@ -143,7 +143,7 @@ extension Course: Hashable {
     }
 }
 
-public enum CourseInformationSharingConfiguration: String, RawRepresentable, Codable, CaseIterable {
+public enum CourseInformationSharingConfiguration: String, ConstantsEnum {
     /**
      * Both Communication and Messaging are disabled VALUE = 0
      */
@@ -158,9 +158,4 @@ public enum CourseInformationSharingConfiguration: String, RawRepresentable, Cod
      */
     case communicationOnly = "COMMUNICATION_ONLY"
     case unknown
-
-    public init(from decoder: Decoder) throws {
-        let string = try decoder.singleValueContainer().decode(String.self)
-        self = Self.allCases.first { $0.rawValue == string } ?? .unknown
-    }
 }

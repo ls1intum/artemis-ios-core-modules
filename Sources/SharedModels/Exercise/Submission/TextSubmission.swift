@@ -100,6 +100,8 @@ public struct TextBlock: Codable {
     }
 }
 
-public enum TextBlockType: String, Codable {
-    case AUTOMATIC, MANUAL
+public enum TextBlockType: String, ConstantsEnum {
+    case automatic = "AUTOMATIC"
+    case manual = "MANUAL"
+    case unknown
 }

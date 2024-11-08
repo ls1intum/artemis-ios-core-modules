@@ -41,17 +41,18 @@ public struct Feedback: Codable, Identifiable, Hashable {
 }
 
 // Based on: https://github.com/ls1intum/Artemis/blob/develop/src/main/java/de/tum/in/www1/artemis/domain/enumeration/FeedbackType.java
-public enum FeedbackType: String, Codable {
-    case AUTOMATIC
-    case AUTOMATIC_ADAPTED
-    case MANUAL
-    case MANUAL_UNREFERENCED
+public enum FeedbackType: String, ConstantsEnum {
+    case automatic = "AUTOMATIC"
+    case automaticAdapted = "AUTOMATIC_ADAPTED"
+    case manual = "MANUAL"
+    case manualUnreferenced = "MANUAL_UNREFERENCED"
+    case unknown
 
     public var isManual: Bool {
-        self == .MANUAL || self == .MANUAL_UNREFERENCED
+        self == .manual || self == .manualUnreferenced
     }
 
     public var isAutomatic: Bool {
-        self == .AUTOMATIC || self == .AUTOMATIC_ADAPTED
+        self == .automatic || self == .automatic
     }
 }

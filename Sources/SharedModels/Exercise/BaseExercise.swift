@@ -249,17 +249,12 @@ public enum IncludedInOverallScore: String, Codable, CaseIterable {
     }
 }
 
-public enum AssessmentType: String, Codable, CaseIterable {
+public enum AssessmentType: String, ConstantsEnum {
     case automatic = "AUTOMATIC"
     case automaticAthena = "AUTOMATIC_ATHENA"
     case semiAutomatic = "SEMI_AUTOMATIC"
     case manual = "MANUAL"
     case unknown
-
-    public init(from decoder: Decoder) throws {
-        let string = try decoder.singleValueContainer().decode(String.self)
-        self = Self.allCases.first { $0.rawValue == string } ?? .unknown
-    }
 
     public var description: String {
         switch self {

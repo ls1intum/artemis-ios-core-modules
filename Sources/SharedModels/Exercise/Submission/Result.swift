@@ -196,7 +196,7 @@ public extension Result {
     )
 }
 
-public enum ResultTemplateStatus: String, RawRepresentable, Codable, CaseIterable {
+public enum ResultTemplateStatus: String, ConstantsEnum {
     /**
      * An automatic result is currently being generated and should be available soon.
      * This is currently only relevant for programming exercises.
@@ -235,24 +235,14 @@ public enum ResultTemplateStatus: String, RawRepresentable, Codable, CaseIterabl
      */
     case missing = "MISSING"
     case unknown
-
-    public init(from decoder: Decoder) throws {
-        let string = try decoder.singleValueContainer().decode(String.self)
-        self = Self.allCases.first { $0.rawValue == string } ?? .unknown
-    }
 }
 
 /**
  * Information about a missing result to communicate problems and give hints how to respond.
  */
-public enum MissingResultInformation: String, RawRepresentable, Codable, CaseIterable {
+public enum MissingResultInformation: String, ConstantsEnum {
     case noInformation = "NONE"
     case failedProgrammingSubmissionOnlineIDE = "FAILED_PROGRAMMING_SUBMISSION_ONLINE_IDE"
     case failedProgrammingSubmissionOfflineIDE = "FAILED_PROGRAMMING_SUBMISSION_OFFLINE_IDE"
     case unknown
-
-    public init(from decoder: Decoder) throws {
-        let string = try decoder.singleValueContainer().decode(String.self)
-        self = Self.allCases.first { $0.rawValue == string } ?? .unknown
-    }
 }

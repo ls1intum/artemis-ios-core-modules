@@ -58,7 +58,7 @@ public enum Participation: Identifiable, Codable {
     }
 }
 
-public enum InitializationState: String, Codable {
+public enum InitializationState: String, ConstantsEnum {
     case uninitialized = "UNINITIALIZED"
     case repoCopied = "REPO_COPIED"
     case repoConfigured = "REPO_CONFIGURED"
@@ -75,6 +75,7 @@ public enum InitializationState: String, Codable {
      */
     case finished = "FINISHED"
     case inactive = "INACTIVE"
+    case unknown
 }
 
 public extension BaseParticipation {

@@ -10,9 +10,10 @@ import Foundation
 /**
  * The CourseWideContext enumeration for linking posts to other contexts besides certain exercises or lectures.
  */
-public enum CourseWideContext: String, RawRepresentable, Codable {
+public enum CourseWideContext: String, ConstantsEnum {
     case techSupport = "TECH_SUPPORT"
     case organization = "ORGANIZATION"
     case random = "RANDOM"
     case announcement = "ANNOUNCEMENT"
+    case unknown
 }

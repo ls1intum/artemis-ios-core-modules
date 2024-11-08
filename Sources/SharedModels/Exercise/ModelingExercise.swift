@@ -53,7 +53,7 @@ public struct ModelingExercise: BaseExercise {
     }
 }
 
-public enum UMLDiagramType: String, Codable, CaseIterable {
+public enum UMLDiagramType: String, ConstantsEnum {
     case classDiagram = "ClassDiagram"
     case objectDiagram = "ObjectDiagram"
     case activityDiagram = "ActivityDiagram"
@@ -66,9 +66,4 @@ public enum UMLDiagramType: String, Codable, CaseIterable {
     case flowchart = "Flowchart"
     case BPMN = "BPMN"
     case unknown
-
-    public init(from decoder: Decoder) throws {
-        let string = try decoder.singleValueContainer().decode(String.self)
-        self = Self.allCases.first { $0.rawValue == string } ?? .unknown
-    }
 }
