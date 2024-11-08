@@ -183,7 +183,7 @@ public final class APIClient {
         return bodyData
     }
 
-    public func perfomLogout() {
+    public func performLogout() {
         log.debug("Logging user out")
         DispatchQueue.main.async {
             Task {
@@ -197,7 +197,7 @@ public final class APIClient {
 
     private func logoutAndSetTokenExpired() {
         log.debug("Token could not be refreshed")
-        perfomLogout()
+        performLogout()
         UserSessionFactory.shared.setTokenExpired(expired: true)
     }
 }
