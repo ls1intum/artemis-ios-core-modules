@@ -84,7 +84,7 @@ public struct TextBlock: Codable {
         self.startIndex = startIndex
         self.endIndex = endIndex
         self.submissionId = submissionId
-        self.type = .MANUAL
+        self.type = .manual
         self.numberOfAffectedSubmissions = nil
     }
 
