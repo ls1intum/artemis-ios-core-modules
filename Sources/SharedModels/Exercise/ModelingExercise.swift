@@ -53,7 +53,7 @@ public struct ModelingExercise: BaseExercise {
     }
 }
 
-public enum UMLDiagramType: String, Codable {
+public enum UMLDiagramType: String, ConstantsEnum {
     case classDiagram = "ClassDiagram"
     case objectDiagram = "ObjectDiagram"
     case activityDiagram = "ActivityDiagram"
@@ -65,4 +65,5 @@ public enum UMLDiagramType: String, Codable {
     case syntaxTree = "SyntaxTree"
     case flowchart = "Flowchart"
     case BPMN = "BPMN"
+    case unknown
 }

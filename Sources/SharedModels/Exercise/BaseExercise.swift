@@ -211,10 +211,16 @@ public enum Mode: String, Codable {
 
 // IMPORTANT NOTICE: The following strings have to be consistent with the ones defined in Exercise.java
 
-public enum IncludedInOverallScore: String, Codable {
+public enum IncludedInOverallScore: String, Codable, CaseIterable {
     case includedCompletely = "INCLUDED_COMPLETELY"
     case includedAsBonus = "INCLUDED_AS_BONUS"
     case notIncluded = "NOT_INCLUDED"
+    case unknown
+
+    public init(from decoder: Decoder) throws {
+        let string = try decoder.singleValueContainer().decode(String.self)
+        self = Self.allCases.first { $0.rawValue == string } ?? .unknown
+    }
 
     public var description: String {
         switch self {
@@ -224,6 +230,8 @@ public enum IncludedInOverallScore: String, Codable {
             return R.string.localizable.includedInOverallScore_includedAsBonus()
         case .notIncluded:
             return R.string.localizable.includedInOverallScore_notIncluded()
+        default:
+            return "??"
         }
     }
 
@@ -235,15 +243,18 @@ public enum IncludedInOverallScore: String, Codable {
             return Color.Artemis.badgeWarningColor
         case .notIncluded:
             return Color.Artemis.badgeSecondaryColor
+        default:
+            return .gray
         }
     }
 }
 
-public enum AssessmentType: String, Codable {
+public enum AssessmentType: String, ConstantsEnum {
     case automatic = "AUTOMATIC"
     case automaticAthena = "AUTOMATIC_ATHENA"
     case semiAutomatic = "SEMI_AUTOMATIC"
     case manual = "MANUAL"
+    case unknown
 
     public var description: String {
         switch self {
@@ -253,6 +264,8 @@ public enum AssessmentType: String, Codable {
             return R.string.localizable.assessmentType_semiAutomatic()
         case .manual:
             return R.string.localizable.assessmentType_manual()
+        default:
+            return "??"
         }
     }
 }

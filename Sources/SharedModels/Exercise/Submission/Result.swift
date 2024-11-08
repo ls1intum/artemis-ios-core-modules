@@ -196,7 +196,7 @@ public extension Result {
     )
 }
 
-public enum ResultTemplateStatus: String, RawRepresentable, Codable {
+public enum ResultTemplateStatus: String, ConstantsEnum {
     /**
      * An automatic result is currently being generated and should be available soon.
      * This is currently only relevant for programming exercises.
@@ -234,13 +234,15 @@ public enum ResultTemplateStatus: String, RawRepresentable, Codable {
      * and not confuse them by showing a previous result that does not match the latest submission.
      */
     case missing = "MISSING"
+    case unknown
 }
 
 /**
  * Information about a missing result to communicate problems and give hints how to respond.
  */
-public enum MissingResultInformation: String, RawRepresentable, Codable {
+public enum MissingResultInformation: String, ConstantsEnum {
     case noInformation = "NONE"
     case failedProgrammingSubmissionOnlineIDE = "FAILED_PROGRAMMING_SUBMISSION_ONLINE_IDE"
     case failedProgrammingSubmissionOfflineIDE = "FAILED_PROGRAMMING_SUBMISSION_OFFLINE_IDE"
+    case unknown
 }

@@ -92,7 +92,7 @@ public extension ProgrammingExercise {
     )
 }
 
-public enum ProgrammingLanguage: String, RawRepresentable, Codable, CaseIterable {
+public enum ProgrammingLanguage: String, ConstantsEnum {
     case java = "JAVA"
     case javascript = "JAVASCRIPT"
     case typescript = "TYPESCRIPT"
@@ -107,9 +107,4 @@ public enum ProgrammingLanguage: String, RawRepresentable, Codable, CaseIterable
     case rust = "RUST"
     case empty = "EMPTY"
     case unknown
-
-    public init(from decoder: Decoder) throws {
-        let string = try decoder.singleValueContainer().decode(String.self)
-        self = Self.allCases.first { $0.rawValue == string } ?? .unknown
-    }
 }

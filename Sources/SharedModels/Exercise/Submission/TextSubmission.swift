@@ -84,7 +84,7 @@ public struct TextBlock: Codable {
         self.startIndex = startIndex
         self.endIndex = endIndex
         self.submissionId = submissionId
-        self.type = .MANUAL
+        self.type = .manual
         self.numberOfAffectedSubmissions = nil
     }
 
@@ -100,6 +100,8 @@ public struct TextBlock: Codable {
     }
 }
 
-public enum TextBlockType: String, Codable {
-    case AUTOMATIC, MANUAL
+public enum TextBlockType: String, ConstantsEnum {
+    case automatic = "AUTOMATIC"
+    case manual = "MANUAL"
+    case unknown
 }

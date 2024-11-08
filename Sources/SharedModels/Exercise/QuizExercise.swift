@@ -48,7 +48,7 @@ public struct QuizExercise: BaseExercise {
     public var duration: Int?
     public var quizQuestions: [QuizQuestion]? = []
     public var status: QuizStatus?
-    public var quizMode: QuizMode? = QuizMode.INDIVIDUAL
+    public var quizMode: QuizMode? = .individual
     public var quizEnded: Bool?
     public var quizBatches: [QuizBatch]? = []
 
@@ -83,18 +83,20 @@ public struct QuizExercise: BaseExercise {
     }
 }
 
-public enum QuizStatus: String, RawRepresentable, Codable {
+public enum QuizStatus: String, ConstantsEnum {
     case closed = "CLOSED"
     case openForPractice = "OPEN_FOR_PRACTICE"
     case active = "ACTIVE"
     case visible = "VISIBLE"
     case invisible = "INVISIBLE"
+    case unknown
 }
 
-public enum QuizMode: String, RawRepresentable, Codable {
-    case SYNCHRONIZED
-    case BATCHED
-    case INDIVIDUAL
+public enum QuizMode: String, ConstantsEnum {
+    case synchronized = "SYNCHRONIZED"
+    case batched = "BATCHED"
+    case individual = "INDIVIDUAL"
+    case unknown
 }
 
 public struct QuizBatch: Codable {

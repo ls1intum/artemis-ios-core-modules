@@ -143,7 +143,7 @@ extension Course: Hashable {
     }
 }
 
-public enum CourseInformationSharingConfiguration: String, RawRepresentable, Codable {
+public enum CourseInformationSharingConfiguration: String, ConstantsEnum {
     /**
      * Both Communication and Messaging are disabled VALUE = 0
      */
@@ -157,4 +157,5 @@ public enum CourseInformationSharingConfiguration: String, RawRepresentable, Cod
      * Only Communication is enabled VALUE = 2
      */
     case communicationOnly = "COMMUNICATION_ONLY"
+    case unknown
 }
