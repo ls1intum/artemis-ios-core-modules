@@ -28,9 +28,6 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
         if let user = UserSessionFactory.shared.user {
             account = .done(response: user)
             profilePicUrl = account.value?.imagePath
-            Task {
-                await updateProfilePicUrl()
-            }
         } else {
             account = .loading
         }
