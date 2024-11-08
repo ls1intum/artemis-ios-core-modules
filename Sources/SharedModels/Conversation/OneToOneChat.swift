@@ -5,6 +5,7 @@
 //  Created by Sven Andabaka on 05.04.23.
 //
 
+import DesignLibrary
 import Foundation
 import SwiftUI
 
@@ -25,13 +26,27 @@ public struct OneToOneChat: BaseConversation {
 
     public var members: [ConversationUser]?
 
-    public var conversationName: String {
-        let otherUser = (members ?? []).first(where: { $0.isRequestingUser == false })
-        return otherUser?.name ?? ""
+    private var otherUser: ConversationUser? {
+        (members ?? []).first(where: { $0.isRequestingUser == false })
     }
 
-    public var icon: Image? {
-        Image(systemName: "lock.fill")
+    public var conversationName: String {
+        otherUser?.name ?? ""
+    }
+
+    public var icon: AnyView? {
+        if let imagePath = otherUser?.imagePath {
+            AnyView(
+                ArtemisAsyncImage(imageURL: imagePath) {
+                    Image(systemName: "lock.fill")
+                        .resizable()
+                }
+                .frame(width: 30, height: 30)
+                .clipShape(.rect(cornerRadius: .s))
+            )
+        } else {
+            AnyView(Image(systemName: "lock.fill").resizable())
+        }
     }
 }
 
