@@ -47,7 +47,7 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
                         encryptionKey: nil,
                         skippedNotifications: notificationDeviceConfiguration.skippedNotifications)
                 }
-                APIClient().perfomLogout()
+                APIClient().performLogout()
             case .failure(let error):
                 if let error = error as? APIClientError {
                     switch error {
@@ -55,12 +55,12 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
                         if statusCode == .methodNotAllowed {
                             // ignore network error and login anyway
                             // TODO: schedule task to retry above functionality
-                            APIClient().perfomLogout()
+                            APIClient().performLogout()
                         }
                     case .networkError:
                         // ignore network error and login anyway
                         // TODO: schedule task to retry above functionality
-                        APIClient().perfomLogout()
+                        APIClient().performLogout()
                     default:
                         // do nothing
                         break
