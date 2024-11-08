@@ -27,7 +27,7 @@ public struct UnknownConversation: BaseConversation {
         return "?"
     }
 
-    public var icon: Image? {
+    public var icon: AnyView? {
         nil
     }
 }

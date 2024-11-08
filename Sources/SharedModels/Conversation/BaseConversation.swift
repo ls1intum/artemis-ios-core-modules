@@ -42,7 +42,7 @@ public protocol BaseConversation: Codable {
 
     // computed properties
     var conversationName: String { get }
-    var icon: Image? { get }
+    var icon: AnyView? { get }
 }
 
 public enum Conversation: Codable, Identifiable {
