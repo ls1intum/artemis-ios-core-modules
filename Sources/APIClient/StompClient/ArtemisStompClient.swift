@@ -104,8 +104,9 @@ extension ArtemisStompClient: SwiftStompDelegate {
 
     public func onConnect(swiftStomp: SwiftStomp, connectType: StompConnectType) {
         log.debug("Stomp: Connect")
-        topics.forEach { topic in
-            subscribeWithoutStream(to: topic.key)
+        let topicKeys = Array(topics.keys)
+        topicKeys.forEach { topic in
+            subscribeWithoutStream(to: topic)
         }
     }
 
