@@ -147,6 +147,7 @@ let package = Package(
             name: "PushNotifications",
             dependencies: [
                 "APIClient",
+                "ArtemisMarkdown",
                 "Common",
                 "CryptoSwift",
                 "DesignLibrary",
