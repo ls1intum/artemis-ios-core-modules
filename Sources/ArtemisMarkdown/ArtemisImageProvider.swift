@@ -14,7 +14,6 @@ struct ArtemisImageProvider: ImageProvider {
     static let assetProvider = AssetImageProvider(name: {
         $0.host(percentEncoded: false) ?? ""
     }, bundle: .module)
-    static let networkProvider = DefaultImageProvider()
 
     @ViewBuilder
     func makeImage(url: URL?) -> some View {
