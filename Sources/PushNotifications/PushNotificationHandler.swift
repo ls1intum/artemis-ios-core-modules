@@ -12,6 +12,17 @@ import UserNotifications
 
 public class PushNotificationHandler {
 
+    public static func extractNotification(from payload: String, iv: String) async -> UNMutableNotificationContent? {
+        log.verbose("Notification received with payload: \(payload)")
+
+        guard let notification = PushNotificationCipher.decrypt(payload: payload, iv: iv) else {
+            log.verbose("Notification could not be decrypted.")
+            return nil
+        }
+
+        return await prepareNotification(notification)
+    }
+
     public static func handle(payload: String, iv: String) {
         log.verbose("Notification received with payload: \(payload)")
 
