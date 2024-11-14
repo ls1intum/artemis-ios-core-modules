@@ -20,9 +20,79 @@ struct ArtemisImageProvider: ImageProvider {
         if url?.absoluteString.contains("local://") == true {
             Self.assetProvider.makeImage(url: url)
         } else {
-            ArtemisAsyncImage(imageURL: url) {}
-                .scaledToFit()
-                .frame(maxWidth: .infinity, maxHeight: 400, alignment: .leading)
+            if #available(iOS 18.0, *) {
+                ImagePreview(url: url)
+            } else {
+                ArtemisAsyncImage(imageURL: url) {}
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity, maxHeight: 400, alignment: .leading)
+            }
+        }
+    }
+}
+
+@available(iOS 18.0, *)
+private struct ImagePreview: View {
+    @Namespace private var namespace
+    @Environment(\.imagePreviewsEnabled) private var enabled
+    let url: URL?
+    private let id = UUID()
+    @State private var showPreview = false
+    @State private var image: UIImage?
+
+    var body: some View {
+        ArtemisAsyncImage(imageURL: url, onSuccess: { result in
+            image = result.image
+        }) {
+        }
+        .scaledToFit()
+        .frame(maxWidth: .infinity, maxHeight: 400, alignment: .leading)
+        .matchedTransitionSource(id: id, in: namespace)
+        .modifier(ConditionalTapModifier(enabled: enabled) {
+            showPreview = true
+        })
+        .navigationDestination(isPresented: $showPreview) {
+            GeometryReader { [image] proxy in
+                if let image {
+                    ZoomableImagePreview(image: image)
+                        .frame(width: proxy.size.width, height: proxy.size.height)
+                } else {
+                    ArtemisAsyncImage(imageURL: url) {}
+                        .scaledToFit()
+                }
+            }
+            .ignoresSafeArea()
+            .navigationTransition(.zoom(sourceID: id, in: namespace))
+        }
+    }
+
+    // Only add the gesture if needed, otherwise this may override other tap gestures
+    private struct ConditionalTapModifier: ViewModifier {
+        let enabled: Bool
+        let action: () -> Void
+
+        func body(content: Content) -> some View {
+            if enabled {
+                content
+                    .onTapGesture(perform: action)
+            } else {
+                content
+            }
+        }
+    }
+}
+
+private enum ImagePreviewEnvironmentKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+public extension EnvironmentValues {
+    var imagePreviewsEnabled: Bool {
+        get {
+            self[ImagePreviewEnvironmentKey.self]
+        }
+        set {
+            self[ImagePreviewEnvironmentKey.self] = newValue
         }
     }
 }
