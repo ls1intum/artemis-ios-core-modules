@@ -115,8 +115,10 @@ extension ArtemisStompClient: SwiftStompDelegate {
     public func onDisconnect(swiftStomp: SwiftStomp, disconnectType: StompDisconnectType) {
         log.debug("Stomp: Disconnect")
         stompClient = nil
-        if !topics.isEmpty {
-            setup()
+        queue.async { [weak self] in
+            if self?.topics.isEmpty == false {
+                self?.setup()
+            }
         }
     }
 
