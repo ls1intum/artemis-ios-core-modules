@@ -60,6 +60,7 @@ class PushNotificationServiceImpl: PushNotificationService {
 
         var token: String
         var deviceType = "APNS"
+        var apiType = 1
 
         var method: HTTPMethod {
             return .post
