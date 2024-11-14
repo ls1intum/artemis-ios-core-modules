@@ -8,6 +8,7 @@
 
 // swiftlint:disable file_length
 
+import ArtemisMarkdown
 import Foundation
 
 enum PushNotificationVersionError: Error {
@@ -278,35 +279,40 @@ public enum PushNotificationType: String, Codable {
         //
         case .newReplyForCoursePost:
             guard notificationPlaceholders.count > 5 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewReplyForCoursePost(notificationPlaceholders[3],
-                                                                                             notificationPlaceholders[4])
+            return R.string.localizable.artemisAppGroupNotificationTextNewReplyForCoursePost(
+                notificationPlaceholders[3],
+                notificationPlaceholders[4].replacingMarkdownImages())
         case .newReplyForExamPost:
             return nil
         case .newReplyForExercisePost:
             guard notificationPlaceholders.count > 7 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewReplyForExercisePost(notificationPlaceholders[3],
-                                                                                               notificationPlaceholders[4],
-                                                                                               notificationPlaceholders[7])
+            return R.string.localizable.artemisAppGroupNotificationTextNewReplyForExercisePost(
+                notificationPlaceholders[3],
+                notificationPlaceholders[4].replacingMarkdownImages(),
+                notificationPlaceholders[7])
         case .newReplyForLecturePost:
             guard notificationPlaceholders.count > 7 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewReplyForLecturePost(notificationPlaceholders[3],
-                                                                                              notificationPlaceholders[4],
-                                                                                              notificationPlaceholders[7])
+            return R.string.localizable.artemisAppGroupNotificationTextNewReplyForLecturePost(
+                notificationPlaceholders[3],
+                notificationPlaceholders[4].replacingMarkdownImages(),
+                notificationPlaceholders[7])
         //
         case .newAnnouncementPost, .newCoursePost:
             guard notificationPlaceholders.count > 1 else { return nil }
             // Post Content
-            return notificationPlaceholders[1]
+            return notificationPlaceholders[1].replacingMarkdownImages()
         case .newExamPost:
             return nil
         case .newExercisePost:
             guard notificationPlaceholders.count > 4 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewExercisePost(notificationPlaceholders[1],
-                                                                                       notificationPlaceholders[3])
+            return R.string.localizable.artemisAppGroupNotificationTextNewExercisePost(
+                notificationPlaceholders[1].replacingMarkdownImages(),
+                notificationPlaceholders[3])
         case .newLecturePost:
             guard notificationPlaceholders.count > 4 else { return nil }
-            return R.string.localizable.artemisAppGroupNotificationTextNewLecturePost(notificationPlaceholders[1],
-                                                                                      notificationPlaceholders[3])
+            return R.string.localizable.artemisAppGroupNotificationTextNewLecturePost(
+                notificationPlaceholders[1].replacingMarkdownImages(),
+                notificationPlaceholders[3])
         //
         case .courseArchiveStarted:
             guard notificationPlaceholders.count > 0 else { return nil }
@@ -411,21 +417,26 @@ public enum PushNotificationType: String, Codable {
             guard notificationPlaceholders.count > 5 else { return nil }
             switch notificationPlaceholders[5] {
             case "channel":
-                return R.string.localizable.artemisAppConversationNotificationTextNewMessageChannel(notificationPlaceholders[3],
-                                                                                                    notificationPlaceholders[4],
-                                                                                                    notificationPlaceholders[1])
+                return R.string.localizable.artemisAppConversationNotificationTextNewMessageChannel(
+                    notificationPlaceholders[3],
+                    notificationPlaceholders[4],
+                    notificationPlaceholders[1].replacingMarkdownImages())
             case "groupChat":
-                return R.string.localizable.artemisAppConversationNotificationTextNewMessageGroupChat(notificationPlaceholders[4],
-                                                                                                      notificationPlaceholders[1])
+                return R.string.localizable.artemisAppConversationNotificationTextNewMessageGroupChat(
+                    notificationPlaceholders[4],
+                    notificationPlaceholders[1].replacingMarkdownImages())
             case "oneToOneChat":
-                return R.string.localizable.artemisAppConversationNotificationTextNewMessageDirect(notificationPlaceholders[4],
-                                                                                                   notificationPlaceholders[1])
+                return R.string.localizable.artemisAppConversationNotificationTextNewMessageDirect(
+                    notificationPlaceholders[4],
+                    notificationPlaceholders[1].replacingMarkdownImages())
             default:
                 return nil
             }
         case .conversationNewReplyMessage:
             guard notificationPlaceholders.count > 6 else { return nil }
-            return R.string.localizable.artemisAppSingleUserNotificationTextMessageReply(notificationPlaceholders[6], notificationPlaceholders[1])
+            return R.string.localizable.artemisAppSingleUserNotificationTextMessageReply(
+                notificationPlaceholders[6],
+                notificationPlaceholders[1].replacingMarkdownImages())
         case .conversationCreateOneToOneChat:
             return nil
         case .conversationCreateGroupChat:

@@ -5,6 +5,7 @@
 //  Created by Anian Schleyer on 25.10.24.
 //
 
+import DesignLibrary
 import MarkdownUI
 import NetworkImage
 import SwiftUI
@@ -13,14 +14,15 @@ struct ArtemisImageProvider: ImageProvider {
     static let assetProvider = AssetImageProvider(name: {
         $0.host(percentEncoded: false) ?? ""
     }, bundle: .module)
-    static let networkProvider = DefaultImageProvider()
 
     @ViewBuilder
     func makeImage(url: URL?) -> some View {
         if url?.absoluteString.contains("local://") == true {
             Self.assetProvider.makeImage(url: url)
         } else {
-            Self.networkProvider.makeImage(url: url)
+            ArtemisAsyncImage(imageURL: url) {}
+                .scaledToFit()
+                .frame(maxWidth: .infinity, maxHeight: 400, alignment: .leading)
         }
     }
 }
