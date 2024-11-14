@@ -104,17 +104,21 @@ extension ArtemisStompClient: SwiftStompDelegate {
 
     public func onConnect(swiftStomp: SwiftStomp, connectType: StompConnectType) {
         log.debug("Stomp: Connect")
-        let topicKeys = Array(topics.keys)
-        topicKeys.forEach { topic in
-            subscribeWithoutStream(to: topic)
+        queue.async { [weak self] in
+            let topicKeys = self?.topics.keys
+            topicKeys?.forEach { topic in
+                self?.subscribeWithoutStream(to: topic)
+            }
         }
     }
 
     public func onDisconnect(swiftStomp: SwiftStomp, disconnectType: StompDisconnectType) {
         log.debug("Stomp: Disconnect")
         stompClient = nil
-        if !topics.isEmpty {
-            setup()
+        queue.async { [weak self] in
+            if self?.topics.isEmpty == false {
+                self?.setup()
+            }
         }
     }
 
