@@ -9,6 +9,28 @@ import Foundation
 
 public class PushNotificationResponseHandler {
 
+    public static func getConversationId(from userInfo: [AnyHashable: Any]) -> Int? {
+        guard let targetString = userInfo[PushNotificationUserInfoKeys.target] as? String,
+              let typeString = userInfo[PushNotificationUserInfoKeys.type] as? String else {
+            return nil
+        }
+
+        guard let type = PushNotificationType(rawValue: typeString) else { return nil }
+
+        switch type {
+        case .newReplyForCoursePost, .newCoursePost, .newAnnouncementPost,
+                .newExercisePost, .newReplyForExercisePost, .newLecturePost,
+                .newReplyForLecturePost, .conversationCreateGroupChat,
+                .conversationAddUserChannel, .conversationAddUserGroupChat,
+                .conversationRemoveUserChannel, .conversationRemoveUserGroupChat,
+                .conversationNewMessage:
+            guard let target = try? JSONDecoder().decode(ConversationTarget.self, from: Data(targetString.utf8)) else { return nil }
+            return target.conversation
+        default:
+            return nil
+        }
+    }
+
     public static func getTarget(userInfo: [AnyHashable: Any]) -> String? {
         guard let targetString = userInfo[PushNotificationUserInfoKeys.target] as? String,
               let typeString = userInfo[PushNotificationUserInfoKeys.type] as? String else {
