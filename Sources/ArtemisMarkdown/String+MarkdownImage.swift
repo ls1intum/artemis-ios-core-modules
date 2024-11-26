@@ -1,4 +1,3 @@
-
 //
 //  String+MarkdownImage.swift
 //  ArtemisCore
