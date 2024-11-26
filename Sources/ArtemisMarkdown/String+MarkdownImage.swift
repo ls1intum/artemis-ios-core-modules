@@ -1,3 +1,4 @@
+
 //
 //  String+MarkdownImage.swift
 //  ArtemisCore
@@ -29,7 +30,7 @@ public extension String {
     private func modifyingMarkdownImagesOutsideStyledBlocks(replaceWith: String? = nil) -> String {
         // Regex for code blocks, references and images outside styled blocks
         let codeBlockPattern = #"(```[\s\S]*?```|(?: {4}|\t)[^\n]*\n?)"#
-        let referencePattern = #"(^>.*(?:\n|$))+"#
+        let referencePattern = #"(?m)(^> ?[^\n]+\n*)+"#
         let imagePattern = #"(?<!\*\*|\*|<ins>|`)(\!\[[^\]]*\]\([^)]*\))(?!\*\*|\*|</ins>|`)"#
 
         guard let codeBlockRegex = try? NSRegularExpression(pattern: codeBlockPattern, options: []),
@@ -44,32 +45,41 @@ public extension String {
         let referencePlaceholder = UUID().uuidString
         var codeBlocks: [String] = []
         var references: [String] = []
-        var withoutCodeBlocks = self
+        var withoutBlocks = self
+        let mutable = NSMutableString(string: withoutBlocks)
 
-        var range = NSRange(withoutCodeBlocks.startIndex..<withoutCodeBlocks.endIndex, in: withoutCodeBlocks)
-        codeBlockRegex.enumerateMatches(in: withoutCodeBlocks, options: [], range: range) { match, _, _ in
-            if let matchRange = match?.range, let range = Range(matchRange, in: withoutCodeBlocks) {
-                let codeBlock = String(withoutCodeBlocks[range])
-                codeBlocks.append(codeBlock)
-                withoutCodeBlocks.replaceSubrange(range, with: codePlaceholder)
+        // Extract code blocks
+        var range = NSRange(withoutBlocks.startIndex..<withoutBlocks.endIndex, in: withoutBlocks)
+        codeBlockRegex.enumerateMatches(in: withoutBlocks, options: [], range: range) { match, _, _ in
+            if let matchRange = match?.range, let range = Range(matchRange, in: withoutBlocks) {
+                codeBlocks.append(String(withoutBlocks[range]))
             }
         }
-        range = NSRange(withoutCodeBlocks.startIndex..<withoutCodeBlocks.endIndex, in: withoutCodeBlocks)
-        referenceRegex.enumerateMatches(in: withoutCodeBlocks, options: [], range: range) { match, _, _ in
-            if let matchRange = match?.range, let range = Range(matchRange, in: withoutCodeBlocks) {
-                let reference = String(withoutCodeBlocks[range])
-                references.append(reference)
-                withoutCodeBlocks.replaceSubrange(range, with: referencePlaceholder)
+
+        // Replace code blocks with placeholder
+        codeBlockRegex.replaceMatches(in: mutable, range: range, withTemplate: codePlaceholder)
+        withoutBlocks = String(mutable)
+
+        // Extract references
+        range = NSRange(withoutBlocks.startIndex..<withoutBlocks.endIndex, in: withoutBlocks)
+        referenceRegex.enumerateMatches(in: withoutBlocks, options: [], range: range) { match, _, _ in
+            print(match)
+            if let matchRange = match?.range, let range = Range(matchRange, in: withoutBlocks) {
+                references.append(String(withoutBlocks[range]))
             }
         }
+
+        // Replace references with placeholder
+        referenceRegex.replaceMatches(in: mutable, range: range, withTemplate: referencePlaceholder)
+        withoutBlocks = String(mutable)
 
         // Surround images with newlines or replace them
-        range = NSRange(withoutCodeBlocks.startIndex..<withoutCodeBlocks.endIndex, in: withoutCodeBlocks)
+        range = NSRange(withoutBlocks.startIndex..<withoutBlocks.endIndex, in: withoutBlocks)
         let replacementPattern = replaceWith ?? "\n\n$1\n\n"
-        withoutCodeBlocks = imageRegex.stringByReplacingMatches(in: withoutCodeBlocks, options: [], range: range, withTemplate: replacementPattern)
+        withoutBlocks = imageRegex.stringByReplacingMatches(in: withoutBlocks, options: [], range: range, withTemplate: replacementPattern)
 
         // Restore the code blocks in the processed text
-        var result = withoutCodeBlocks
+        var result = withoutBlocks
         for codeBlock in codeBlocks {
             if let range = result.range(of: codePlaceholder) {
                 result.replaceSubrange(range, with: codeBlock)
