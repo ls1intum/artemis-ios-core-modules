@@ -126,9 +126,11 @@
 "artemisApp.groupNotification.text.quizExerciseStarted" = "The quiz \"%1$@\" just started.";
 "artemisApp.groupNotification.text.newReplyForExercisePost" = "A message from %1$@ regarding exercise \"%3$@\" got a new reply: \"%2$@\"";
 "artemisApp.groupNotification.text.newReplyForLecturePost" = "A message from %1$@ regarding lecture \"%3$@\" got a new reply: \"%2$@\"";
+"artemisApp.groupNotification.text.newReplyForExamPost" = "A message from %1$@ regarding exam \"%3$@\" got a new reply: \"%2$@\"";
 "artemisApp.groupNotification.text.newReplyForCoursePost" = "A course-wide message from %1$@ got a new reply: \"%2$@\"";
 "artemisApp.groupNotification.text.newExercisePost" = "The exercise \"%2$@\" got a new message: \"%1$@\"";
 "artemisApp.groupNotification.text.newLecturePost" = "The lecture \"%2$@\" got a new message: \"%1$@\"";
+"artemisApp.groupNotification.text.newExamPost" = "The exam \"%2$@\" got a new message: \"%1$@\"";
 "artemisApp.singleUserNotification.text.fileSubmissionSuccessful" = "Your file for the exercise \"%1$@\" was successfully submitted.";
 "artemisApp.singleUserNotification.text.newPlagiarismCaseStudent" = "New plagiarism case concerning the %1$@ exercise \"%2$@\".";
 "artemisApp.singleUserNotification.text.plagiarismCaseVerdictStudent" = "Your plagiarism case concerning the %1$@ exercise \"%2$@\" has a verdict.";
