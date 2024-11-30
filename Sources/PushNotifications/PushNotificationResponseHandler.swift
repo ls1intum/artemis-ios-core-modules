@@ -20,10 +20,10 @@ public class PushNotificationResponseHandler {
         switch type {
         case .newReplyForCoursePost, .newCoursePost, .newAnnouncementPost,
                 .newExercisePost, .newReplyForExercisePost, .newLecturePost,
-                .newReplyForLecturePost, .conversationCreateGroupChat,
-                .conversationAddUserChannel, .conversationAddUserGroupChat,
-                .conversationRemoveUserChannel, .conversationRemoveUserGroupChat,
-                .conversationNewMessage:
+                .newReplyForLecturePost, .newExamPost, .newReplyForExamPost,
+                .conversationCreateGroupChat, .conversationAddUserChannel,
+                .conversationAddUserGroupChat, .conversationRemoveUserChannel,
+                .conversationRemoveUserGroupChat, .conversationNewMessage:
             guard let target = try? JSONDecoder().decode(ConversationTarget.self, from: Data(targetString.utf8)) else { return nil }
             return target.conversation
         default:
@@ -50,7 +50,10 @@ public class PushNotificationResponseHandler {
         case .quizExerciseStarted:
             guard let target = try? decoder.decode(QuizExerciseStartedTarget.self, from: targetData) else { return nil }
             return "courses/\(target.course)/quiz-exercises/\(target.id)/live"
-        case .newReplyForCoursePost, .newCoursePost, .newAnnouncementPost, .newExercisePost, .newReplyForExercisePost, .newLecturePost, .newReplyForLecturePost:
+        case .newReplyForCoursePost, .newCoursePost, .newAnnouncementPost,
+                .newExercisePost, .newReplyForExercisePost,
+                .newLecturePost, .newReplyForLecturePost,
+                .newExamPost, .newReplyForExamPost:
             guard let target = try? decoder.decode(NewPostTarget.self, from: targetData) else { return nil }
             return "courses/\(target.course)/communication?conversationId=\(target.conversation)"
         case .conversationCreateGroupChat,
