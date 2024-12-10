@@ -94,7 +94,7 @@ public enum PushNotificationType: String, Codable {
     case tutorialGroupUnassigned = "TUTORIAL_GROUP_UNASSIGNED"
     //
     case conversationNewMessage = "CONVERSATION_NEW_MESSAGE"
-    case conversationNewReplyMessage = "CONVERSATION NEW REPLY MESSAGE"
+    case conversationNewReplyMessage = "CONVERSATION_NEW_REPLY_MESSAGE"
     case conversationCreateOneToOneChat = "CONVERSATION_CREATE_ONE_TO_ONE_CHAT"
     case conversationCreateGroupChat = "CONVERSATION_CREATE_GROUP_CHAT"
     case conversationAddUserGroupChat = "CONVERSATION_ADD_USER_GROUP_CHAT"
