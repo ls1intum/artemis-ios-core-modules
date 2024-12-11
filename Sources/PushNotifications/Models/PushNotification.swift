@@ -43,6 +43,10 @@ struct PushNotification: Codable {
     var body: String? {
         type.getBody(notificationPlaceholders: notificationPlaceholders)
     }
+
+    var communicationInfo: PushNotificationCommunicationInfo? {
+        type.getCommunicationInfo(notificationPlaceholders: notificationPlaceholders, target: target)
+    }
 }
 
 public enum PushNotificationType: String, Codable {
