@@ -130,6 +130,8 @@ extension ArtemisStompClient: SwiftStompDelegate {
         if headers["compressed"] == "true" {
             if let unzipped = try? (message as? Data)?.gunzipped() {
                 continuation?.yield(unzipped)
+            } else {
+                log.warning("Stomp: Failed to gunzip compressed message")
             }
         } else {
             continuation?.yield(message)
