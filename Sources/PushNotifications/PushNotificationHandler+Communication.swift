@@ -30,27 +30,37 @@ public extension PushNotificationHandler {
         interaction.direction = .incoming
         try? await interaction.donate()
 
+        content.body = info.messageContent
+
         return intent
     }
 
     private static func createIntent(info: PushNotificationCommunicationInfo) async -> INSendMessageIntent {
+        let image = try? await getUserImage(from: info.profilePicUrl)
         let person = INPerson(personHandle: .init(value: info.userId, type: .unknown),
                               nameComponents: try? .init(info.author),
                               displayName: info.author,
-                              image: try? await getUserImage(from: info.profilePicUrl),
+                              image: image,
                               contactIdentifier: info.userId,
                               customIdentifier: info.userId)
 
-        let channelTitle = "\(info.channel) (\(info.course))"
+        let channelTitle: String
+        if info.channel == info.author {
+            channelTitle = info.course
+        } else {
+            channelTitle = "\(info.channel) (\(info.course))"
+        }
 
-        return INSendMessageIntent(recipients: [],
-                                   outgoingMessageType: .outgoingMessageText,
-                                   content: info.messageContent,
-                                   speakableGroupName: .init(spokenPhrase: channelTitle),
-                                   conversationIdentifier: info.channelId,
-                                   serviceName: nil,
-                                   sender: person,
-                                   attachments: nil)
+        let intent = INSendMessageIntent(recipients: [person],
+                                         outgoingMessageType: .outgoingMessageText,
+                                         content: info.messageContent,
+                                         speakableGroupName: .init(spokenPhrase: channelTitle),
+                                         conversationIdentifier: info.channelId,
+                                         serviceName: nil,
+                                         sender: person,
+                                         attachments: nil)
+        intent.setImage(image, forParameterNamed: \.speakableGroupName)
+        return intent
     }
 
     private static func getUserImage(from urlString: String?) async throws -> INImage? {
