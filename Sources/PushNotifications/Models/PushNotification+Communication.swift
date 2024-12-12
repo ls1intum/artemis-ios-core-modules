@@ -64,28 +64,7 @@ extension PushNotificationType {
     }
 }
 
-class PushNotificationCommunicationInfo: Codable, NSSecureCoding {
-    static var supportsSecureCoding = true
-
-    func encode(with coder: NSCoder) {
-        coder.encode(try? JSONEncoder().encode(self) ?? Data())
-    }
-
-    required init?(coder: NSCoder) {
-        if let data = coder.decodeData(),
-           let info = try? JSONDecoder().decode(Self.self, from: data) {
-            author = info.author
-            channel = info.channel
-            course = info.course
-            userId = info.userId
-            channelId = info.channelId
-            messageId = info.messageId
-            profilePicUrl = info.profilePicUrl
-            messageContent = info.messageContent
-        }
-        fatalError("Failed to decode communication info")
-    }
-
+struct PushNotificationCommunicationInfo: Codable {
     let author: String
     let channel: String
     let course: String
@@ -94,15 +73,14 @@ class PushNotificationCommunicationInfo: Codable, NSSecureCoding {
     let messageId: String
     let profilePicUrl: String?
     let messageContent: String
+}
 
-    init(author: String, channel: String, course: String, userId: String, channelId: String, messageId: String, profilePicUrl: String?, messageContent: String) {
-        self.author = author
-        self.channel = channel
-        self.course = course
-        self.userId = userId
-        self.channelId = channelId
-        self.messageId = messageId
-        self.profilePicUrl = profilePicUrl
-        self.messageContent = messageContent
+extension PushNotificationCommunicationInfo {
+    var asData: Data {
+        (try? JSONEncoder().encode(self)) ?? Data()
+    }
+
+    init(with data: Data) throws {
+        self = try JSONDecoder().decode(Self.self, from: data)
     }
 }

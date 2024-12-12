@@ -16,7 +16,8 @@ public extension PushNotificationHandler {
     /// Use this to update the `UNNotificationContent` in the NotificationExtension
     static func getCommunicationIntent(for content: UNMutableNotificationContent?) async -> INSendMessageIntent? {
         guard let content,
-              let info = content.userInfo[PushNotificationUserInfoKeys.communicationInfo] as? PushNotificationCommunicationInfo else {
+              let infoData = content.userInfo[PushNotificationUserInfoKeys.communicationInfo] as? Data,
+              let info = try? PushNotificationCommunicationInfo(with: infoData) else {
             return nil
         }
 
