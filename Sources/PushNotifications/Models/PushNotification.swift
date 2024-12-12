@@ -253,7 +253,6 @@ public enum PushNotificationType: String, Codable {
         }
     }
 
-    // TODO: add checks for length
     // swiftlint:disable cyclomatic_complexity function_body_length empty_count
     public func getBody(notificationPlaceholders: [String]) -> String? {
         switch self {
