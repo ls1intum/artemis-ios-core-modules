@@ -124,20 +124,9 @@
 "artemisApp.groupNotification.text.exerciseReleased" = "A new exercise \"%1$@\" got released.";
 "artemisApp.groupNotification.text.exercisePractice" = "The exercise \"%1$@\" is now open for practice.";
 "artemisApp.groupNotification.text.quizExerciseStarted" = "The quiz \"%1$@\" just started.";
-"artemisApp.groupNotification.text.newReplyForExercisePost" = "A message from %1$@ regarding exercise \"%3$@\" got a new reply: \"%2$@\"";
-"artemisApp.groupNotification.text.newReplyForLecturePost" = "A message from %1$@ regarding lecture \"%3$@\" got a new reply: \"%2$@\"";
-"artemisApp.groupNotification.text.newReplyForExamPost" = "A message from %1$@ regarding exam \"%3$@\" got a new reply: \"%2$@\"";
-"artemisApp.groupNotification.text.newReplyForCoursePost" = "A course-wide message from %1$@ got a new reply: \"%2$@\"";
-"artemisApp.groupNotification.text.newExercisePost" = "The exercise \"%2$@\" got a new message: \"%1$@\"";
-"artemisApp.groupNotification.text.newLecturePost" = "The lecture \"%2$@\" got a new message: \"%1$@\"";
-"artemisApp.groupNotification.text.newExamPost" = "The exam \"%2$@\" got a new message: \"%1$@\"";
 "artemisApp.singleUserNotification.text.fileSubmissionSuccessful" = "Your file for the exercise \"%1$@\" was successfully submitted.";
 "artemisApp.singleUserNotification.text.newPlagiarismCaseStudent" = "New plagiarism case concerning the %1$@ exercise \"%2$@\".";
 "artemisApp.singleUserNotification.text.plagiarismCaseVerdictStudent" = "Your plagiarism case concerning the %1$@ exercise \"%2$@\" has a verdict.";
-"artemisApp.conversationNotification.text.newMessageChannel" = "New message in %1$@ channel from %2$@:\n%3$@";
-"artemisApp.conversationNotification.text.newMessageGroupChat" = "New message in group chat from %1$@:\n%2$@";
-"artemisApp.conversationNotification.text.newMessageDirect" = "New direct message from %1$@:\n%2$@";
-"artemisApp.singleUserNotification.text.messageReply" = "You have new reply in a message by %1$@:\n%2$@";
 
 "artemisApp.groupNotification.text.exerciseUpdated" = "The exercise \"%2$@\" in course \"%1$@\" got updated.";
 "artemisApp.groupNotification.text.courseArchiveStarted" = "The course \"%1$@\" is being archived.";
