@@ -30,6 +30,9 @@ public extension PushNotificationHandler {
         interaction.direction = .incoming
         try? await interaction.donate()
 
+        // Will be read out by Siri, subtitle shown on Apple Watch in Notification Center
+        content.title = info.author
+        content.subtitle = intent.speakableGroupName?.spokenPhrase ?? info.channel
         content.body = info.messageContent
 
         return intent
