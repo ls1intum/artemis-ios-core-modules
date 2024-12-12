@@ -25,7 +25,7 @@ extension PushNotificationType {
                          channelId: channelId,
                          messageId: placeholders[11],
                          profilePicUrl: profilePic,
-                         messageContent: placeholders[5])
+                         messageContent: placeholders[4])
 
         case .newCoursePost, .newExamPost, .newExercisePost, .newLecturePost,
                 .conversationNewMessage:
