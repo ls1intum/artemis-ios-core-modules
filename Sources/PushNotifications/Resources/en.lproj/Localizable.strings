@@ -169,6 +169,9 @@
 "artemisApp.singleUserNotification.text.addUserGroupChat" = "You have been added to a new group chat by %2$@ in course %1$@.";
 "artemisApp.singleUserNotification.text.createGroupChat" = "You have been added to a new group chat by %2$@ in course %1$@.";
 
+// MARK: - Communication
+"repliedTo" = "%1$@ (replied to %2$@)";
+
 // MARK: - General
 "activate" = "Activate";
 "cancel" = "Cancel";

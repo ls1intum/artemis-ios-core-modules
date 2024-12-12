@@ -43,6 +43,10 @@ struct PushNotification: Codable {
     var body: String? {
         type.getBody(notificationPlaceholders: notificationPlaceholders)
     }
+
+    var communicationInfo: PushNotificationCommunicationInfo? {
+        type.getCommunicationInfo(notificationPlaceholders: notificationPlaceholders, target: target)
+    }
 }
 
 public enum PushNotificationType: String, Codable {
@@ -249,7 +253,6 @@ public enum PushNotificationType: String, Codable {
         }
     }
 
-    // TODO: add checks for length
     // swiftlint:disable cyclomatic_complexity function_body_length empty_count
     public func getBody(notificationPlaceholders: [String]) -> String? {
         switch self {
