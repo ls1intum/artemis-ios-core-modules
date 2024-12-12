@@ -25,7 +25,8 @@ extension PushNotificationType {
                          channelId: channelId,
                          messageId: placeholders[11],
                          profilePicUrl: profilePic,
-                         messageContent: placeholders[4].replacingMarkdownImages())
+                         messageContent: placeholders[4].replacingMarkdownImages(),
+                         type: nil)
 
         case .newCoursePost, .newExamPost, .newExercisePost, .newLecturePost,
                 .conversationNewMessage:
@@ -41,7 +42,8 @@ extension PushNotificationType {
                          channelId: channelId,
                          messageId: placeholders[8],
                          profilePicUrl: profilePic,
-                         messageContent: placeholders[1].replacingMarkdownImages())
+                         messageContent: placeholders[1].replacingMarkdownImages(),
+                         type: .init(rawValue: placeholders[5]))
 
         case .newAnnouncementPost:
             // ["courseTitle", "postTitle", "postContent", "postCreationDate", "postAuthorName", "imageUrl", "authorId", "postId"]
@@ -56,7 +58,8 @@ extension PushNotificationType {
                          channelId: channelId,
                          messageId: placeholders[7],
                          profilePicUrl: profilePic,
-                         messageContent: placeholders[1] + "\n" + placeholders[2].replacingMarkdownImages())
+                         messageContent: placeholders[1] + "\n" + placeholders[2].replacingMarkdownImages(),
+                         type: nil)
 
         default:
             return nil
@@ -73,6 +76,13 @@ struct PushNotificationCommunicationInfo: Codable {
     let messageId: String
     let profilePicUrl: String?
     let messageContent: String
+    let type: ConversationType?
+
+    enum ConversationType: String, Codable {
+        case channel
+        case oneToOneChat
+        case groupChat
+    }
 }
 
 extension PushNotificationCommunicationInfo {
