@@ -25,7 +25,7 @@ extension PushNotificationType {
                          channelId: channelId,
                          messageId: placeholders[11],
                          profilePicUrl: profilePic,
-                         messageContent: placeholders[4])
+                         messageContent: placeholders[4].replacingMarkdownImages())
 
         case .newCoursePost, .newExamPost, .newExercisePost, .newLecturePost,
                 .conversationNewMessage:
@@ -41,7 +41,7 @@ extension PushNotificationType {
                          channelId: channelId,
                          messageId: placeholders[8],
                          profilePicUrl: profilePic,
-                         messageContent: placeholders[1])
+                         messageContent: placeholders[1].replacingMarkdownImages())
 
         case .newAnnouncementPost:
             // ["courseTitle", "postTitle", "postContent", "postCreationDate", "postAuthorName", "imageUrl", "authorId", "postId"]
@@ -56,7 +56,7 @@ extension PushNotificationType {
                          channelId: channelId,
                          messageId: placeholders[7],
                          profilePicUrl: profilePic,
-                         messageContent: placeholders[1] + "\n" + placeholders[2])
+                         messageContent: placeholders[1] + "\n" + placeholders[2].replacingMarkdownImages())
 
         default:
             return nil
