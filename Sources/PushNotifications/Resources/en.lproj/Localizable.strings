@@ -73,21 +73,12 @@
 "artemisApp.groupNotification.title.exerciseReleased" = "Exercise released";
 "artemisApp.groupNotification.title.exercisePractice" = "Exercise open for practice";
 "artemisApp.groupNotification.title.quizExerciseStarted" = "Quiz started";
-"artemisApp.groupNotification.title.newReplyForCoursePost" = "New reply for course-wide message";
-"artemisApp.groupNotification.title.newReplyForExamPost" = "New reply for exam message";
-"artemisApp.groupNotification.title.newReplyForExercisePost" = "New reply for exercise message";
-"artemisApp.groupNotification.title.newReplyForLecturePost" = "New reply for lecture message";
-"artemisApp.groupNotification.title.newCoursePost" = "New course-wide message";
-"artemisApp.groupNotification.title.newExamPost" = "New exam message";
-"artemisApp.groupNotification.title.newExercisePost" = "New exercise message";
-"artemisApp.groupNotification.title.newLecturePost" = "New lecture message";
 "artemisApp.groupNotification.title.newAnnouncementPost" = "New announcement";
 "artemisApp.singleUserNotification.title.fileSubmissionSuccessful" = "File submission successful";
 "artemisApp.groupNotification.title.duplicateTestCase" = "Duplicate test case was found.";
 "artemisApp.singleUserNotification.title.newPlagiarismCaseStudent" = "New plagiarism case";
 "artemisApp.singleUserNotification.title.plagiarismCaseVerdictStudent" = "Verdict for your plagiarism case";
 "artemisApp.conversationNotification.title.newMessage" = "New message";
-"artemisApp.singleUserNotification.title.messageReply" = "New message reply in conversation";
 
 "artemisApp.groupNotification.title.exerciseUpdated" = "Exercise updated";
 "artemisApp.groupNotification.title.courseArchiveStarted" = "Course archival started";
@@ -116,6 +107,7 @@
 "artemisApp.singleUserNotification.title.removeUserGroupChat" = "You have been removed from a group chat";
 "artemisApp.singleUserNotification.title.addUserGroupChat" = "You have been added to a group chat";
 "artemisApp.singleUserNotification.title.createGroupChat" = "New group chat";
+"artemisApp.singleUserNotification.title.createDirectChat" = "New direct chat";
 "artemisApp.singleUserNotification.title.mentionedInMessage" = "You were mentioned";
 
 // MARK: Body

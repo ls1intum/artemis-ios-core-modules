@@ -123,25 +123,8 @@ public enum PushNotificationType: String, Codable {
         case .exerciseUpdated:
             return R.string.localizable.artemisAppGroupNotificationTitleExerciseUpdated()
         //
-        case .newReplyForCoursePost:
-            return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForCoursePost()
-        case .newReplyForExamPost:
-            return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForExamPost()
-        case .newReplyForExercisePost:
-            return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForExercisePost()
-        case .newReplyForLecturePost:
-            return R.string.localizable.artemisAppGroupNotificationTitleNewReplyForLecturePost()
-        //
         case .newAnnouncementPost:
             return R.string.localizable.artemisAppGroupNotificationTitleNewAnnouncementPost()
-        case .newCoursePost:
-            return R.string.localizable.artemisAppGroupNotificationTitleNewCoursePost()
-        case .newExamPost:
-            return R.string.localizable.artemisAppGroupNotificationTitleNewExamPost()
-        case .newExercisePost:
-            return R.string.localizable.artemisAppGroupNotificationTitleNewExercisePost()
-        case .newLecturePost:
-            return R.string.localizable.artemisAppGroupNotificationTitleNewLecturePost()
         //
         case .courseArchiveStarted:
             return R.string.localizable.artemisAppGroupNotificationTitleCourseArchiveStarted()
@@ -194,12 +177,8 @@ public enum PushNotificationType: String, Codable {
         case .tutorialGroupUnassigned:
             return R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupUnassigned()
         //
-        case .conversationNewMessage:
-            return R.string.localizable.artemisAppConversationNotificationTitleNewMessage()
-        case .conversationNewReplyMessage:
-            return R.string.localizable.artemisAppSingleUserNotificationTitleMessageReply()
         case .conversationCreateOneToOneChat:
-            return nil
+            return R.string.localizable.artemisAppSingleUserNotificationTitleCreateDirectChat()
         case .conversationCreateGroupChat:
             return R.string.localizable.artemisAppSingleUserNotificationTitleCreateGroupChat()
         case .conversationAddUserGroupChat:
@@ -214,6 +193,12 @@ public enum PushNotificationType: String, Codable {
             return R.string.localizable.artemisAppSingleUserNotificationTitleDeleteChannel()
         case .conversationUserMentioned:
             return R.string.localizable.artemisAppSingleUserNotificationTitleMentionedInMessage()
+        // These are not displayed anymore, but we cannot use nil
+        case .newReplyForCoursePost, .newReplyForExamPost,
+                .newReplyForExercisePost, .newReplyForLecturePost,
+                .newCoursePost, .newExamPost, .newExercisePost, .newLecturePost,
+                .conversationNewMessage, .conversationNewReplyMessage:
+            return R.string.localizable.artemisAppConversationNotificationTitleNewMessage()
         }
     }
 
