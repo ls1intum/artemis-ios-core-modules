@@ -61,7 +61,8 @@ public class PushNotificationResponseHandler {
                 .conversationAddUserGroupChat,
                 .conversationRemoveUserChannel,
                 .conversationRemoveUserGroupChat,
-                .conversationNewMessage:
+                .conversationNewMessage,
+                .conversationNewReplyMessage:
             guard let target = try? decoder.decode(ConversationTarget.self, from: targetData) else { return nil }
             return "courses/\(target.course)/communication?conversationId=\(target.conversation)"
         default:
