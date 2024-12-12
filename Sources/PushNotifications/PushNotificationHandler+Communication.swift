@@ -125,7 +125,7 @@ private extension CachedURLResponse {
     func response(withExpirationDuration duration: Int) -> CachedURLResponse {
         var cachedResponse = self
         if let httpResponse = cachedResponse.response as? HTTPURLResponse,
-           var headers = httpResponse.allHeaderFields as? [String:String],
+           var headers = httpResponse.allHeaderFields as? [String: String],
            let url = httpResponse.url {
             if httpResponse.statusCode == 401 {
                 return cachedResponse
