@@ -70,8 +70,11 @@ public extension PushNotificationHandler {
         }
 
         let request = URLRequest(url: url, timeoutInterval: 15)
+        let session = URLSession(configuration: URLSession.shared.configuration,
+                                 delegate: URLImageCacheDelegate(),
+                                 delegateQueue: URLSession.shared.delegateQueue)
 
-        var (data, response) = try await URLSession.shared.data(for: request)
+        var (data, response) = try await session.data(for: request)
         if (response as? HTTPURLResponse)?.statusCode == 401 {
             // Not logged in, retry if possible
             if let username = UserSessionFactory.shared.username,
@@ -113,5 +116,46 @@ private class LoginService {
         case .failure(let error):
             return false
         }
+    }
+}
+
+// MARK: Custom Cache
+// https://stackoverflow.com/a/46158561
+private extension CachedURLResponse {
+    func response(withExpirationDuration duration: Int) -> CachedURLResponse {
+        var cachedResponse = self
+        if let httpResponse = cachedResponse.response as? HTTPURLResponse,
+           var headers = httpResponse.allHeaderFields as? [String:String],
+           let url = httpResponse.url {
+            if httpResponse.statusCode == 401 {
+                return cachedResponse
+            }
+
+            headers["Cache-Control"] = "max-age=\(duration)"
+            headers.removeValue(forKey: "Expires")
+            headers.removeValue(forKey: "s-maxage")
+
+            if let newResponse = HTTPURLResponse(url: url,
+                                                 statusCode: httpResponse.statusCode,
+                                                 httpVersion: "HTTP/1.1",
+                                                 headerFields: headers) {
+                cachedResponse = CachedURLResponse(response: newResponse,
+                                                   data: cachedResponse.data,
+                                                   userInfo: headers,
+                                                   storagePolicy: cachedResponse.storagePolicy)
+            }
+        }
+        return cachedResponse
+    }
+}
+
+private class URLImageCacheDelegate: NSObject, URLSessionDataDelegate {
+    func urlSession(_ session: URLSession,
+                    dataTask: URLSessionDataTask,
+                    willCacheResponse proposedResponse: CachedURLResponse,
+                    completionHandler: @escaping (CachedURLResponse?) -> Void) {
+        // Store images for 6 hours in cache
+        let newResponse = proposedResponse.response(withExpirationDuration: 60 * 60 * 6)
+        completionHandler(newResponse)
     }
 }
