@@ -21,10 +21,6 @@ public extension PushNotificationHandler {
             return nil
         }
 
-        if let target = content.userInfo[PushNotificationUserInfoKeys.target] as? String {
-            content.threadIdentifier = target
-        }
-
         let intent = await createIntent(info: info)
         let interaction = INInteraction(intent: intent, response: nil)
         interaction.direction = .incoming
@@ -34,6 +30,8 @@ public extension PushNotificationHandler {
         content.title = info.author
         content.subtitle = intent.speakableGroupName?.spokenPhrase ?? info.channel
         content.body = info.messageContent
+
+        content.threadIdentifier = info.isReply ? info.messageId : info.channelId
 
         return intent
     }

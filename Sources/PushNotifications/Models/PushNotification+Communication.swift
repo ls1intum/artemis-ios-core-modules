@@ -26,7 +26,8 @@ extension PushNotificationType {
                          messageId: placeholders[11],
                          profilePicUrl: profilePic,
                          messageContent: placeholders[4].replacingMarkdownImages(),
-                         type: nil)
+                         type: nil,
+                         isReply: true)
 
         case .newCoursePost, .newExamPost, .newExercisePost, .newLecturePost,
                 .conversationNewMessage:
@@ -43,7 +44,8 @@ extension PushNotificationType {
                          messageId: placeholders[8],
                          profilePicUrl: profilePic,
                          messageContent: placeholders[1].replacingMarkdownImages(),
-                         type: .init(rawValue: placeholders[5]))
+                         type: .init(rawValue: placeholders[5]),
+                         isReply: false)
 
         case .newAnnouncementPost:
             // ["courseTitle", "postTitle", "postContent", "postCreationDate", "postAuthorName", "imageUrl", "authorId", "postId"]
@@ -59,7 +61,8 @@ extension PushNotificationType {
                          messageId: placeholders[7],
                          profilePicUrl: profilePic,
                          messageContent: placeholders[1] + "\n" + placeholders[2].replacingMarkdownImages(),
-                         type: nil)
+                         type: nil,
+                         isReply: false)
 
         default:
             return nil
@@ -77,6 +80,7 @@ struct PushNotificationCommunicationInfo: Codable {
     let profilePicUrl: String?
     let messageContent: String
     let type: ConversationType?
+    let isReply: Bool
 
     enum ConversationType: String, Codable {
         case channel
