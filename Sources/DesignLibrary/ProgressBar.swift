@@ -34,7 +34,7 @@ public struct ProgressBar: View {
         backgroundColor: Color = Color.Artemis.courseScoreProgressBackgroundColor,
         ringColor: Color = Color.Artemis.courseScoreProgressRingColor
     ) {
-        self.value = Int(value)
+        self.value = Int(min(value, total)) // Cap at 100%
         self.total = Int(total)
         self.percentage = Int((value * 100 / total).rounded())
         self.backgroundColor = backgroundColor
