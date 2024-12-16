@@ -155,8 +155,8 @@ private class URLImageCacheDelegate: NSObject, URLSessionDataDelegate {
                     dataTask: URLSessionDataTask,
                     willCacheResponse proposedResponse: CachedURLResponse,
                     completionHandler: @escaping (CachedURLResponse?) -> Void) {
-        // Store images for 6 hours in cache
-        let newResponse = proposedResponse.response(withExpirationDuration: 60 * 60 * 6)
+        // Store images for 24 hours in cache
+        let newResponse = proposedResponse.response(withExpirationDuration: 60 * 60 * 24)
         completionHandler(newResponse)
     }
 }
