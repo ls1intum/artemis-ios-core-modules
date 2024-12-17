@@ -74,7 +74,8 @@ public class PushNotificationHandler {
         }
 //        content.categoryIdentifier = type.rawValue
         content.userInfo = [PushNotificationUserInfoKeys.target: notification.target,
-                            PushNotificationUserInfoKeys.type: notification.type.rawValue]
+                            PushNotificationUserInfoKeys.type: notification.type.rawValue,
+                            PushNotificationUserInfoKeys.communicationInfo: notification.communicationInfo?.asData]
         return content
     }
 }
@@ -82,4 +83,5 @@ public class PushNotificationHandler {
 class PushNotificationUserInfoKeys {
     static var target = "target"
     static var type = "type"
+    static var communicationInfo = "communicationInfo"
 }
