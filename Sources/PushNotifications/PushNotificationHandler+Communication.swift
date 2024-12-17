@@ -31,7 +31,7 @@ public extension PushNotificationHandler {
         content.subtitle = intent.speakableGroupName?.spokenPhrase ?? info.channel
         content.body = info.messageContent
 
-        content.threadIdentifier = info.isReply ? info.messageId : info.channelId
+        content.threadIdentifier = info.isReply ? info.messageId : "\(info.channelId)"
 
         return intent
     }
@@ -56,7 +56,7 @@ public extension PushNotificationHandler {
                                          outgoingMessageType: .outgoingMessageText,
                                          content: info.messageContent,
                                          speakableGroupName: .init(spokenPhrase: channelTitle),
-                                         conversationIdentifier: info.channelId,
+                                         conversationIdentifier: "\(info.channelId)",
                                          serviceName: nil,
                                          sender: person,
                                          attachments: nil)

@@ -15,7 +15,7 @@ extension PushNotificationType {
                 .newReplyForLecturePost, .newReplyForExercisePost:
             // ["courseTitle", "postContent", "postCreationData", "postAuthorName", "answerPostContent", "answerPostCreationDate", "authorName", "conversationName", "imageUrl", "userId", "postingId", "parentPostId"]
             guard placeholders.count > 11 else { return nil }
-            let channelId = URLComponents(string: target)?.queryItems?.first { $0.name == "conversationId" }?.value ?? ""
+            let channelId = (try? JSONDecoder().decode(ConversationTarget.self, from: Data(target.utf8)).conversation) ?? 0
             let profilePic = placeholders[8].isEmpty ? nil : placeholders[8]
 
             return .init(author: R.string.localizable.repliedTo(placeholders[6], placeholders[3]),
@@ -33,7 +33,7 @@ extension PushNotificationType {
                 .conversationNewMessage:
             // ["courseTitle", "messageContent", "messageCreationDate", "conversationName", "authorName", "conversationType", "imageUrl", "userId", "postId"]
             guard placeholders.count > 8 else { return nil }
-            let channelId = URLComponents(string: target)?.queryItems?.first { $0.name == "conversationId" }?.value ?? ""
+            let channelId = (try? JSONDecoder().decode(ConversationTarget.self, from: Data(target.utf8)).conversation) ?? 0
             let profilePic = placeholders[6].isEmpty ? nil : placeholders[6]
 
             return .init(author: placeholders[4],
@@ -50,7 +50,7 @@ extension PushNotificationType {
         case .newAnnouncementPost:
             // ["courseTitle", "postTitle", "postContent", "postCreationDate", "postAuthorName", "imageUrl", "authorId", "postId"]
             guard placeholders.count > 7 else { return nil }
-            let channelId = URLComponents(string: target)?.queryItems?.first { $0.name == "conversationId" }?.value ?? ""
+            let channelId = (try? JSONDecoder().decode(ConversationTarget.self, from: Data(target.utf8)).conversation) ?? 0
             let profilePic = placeholders[5].isEmpty ? nil : placeholders[5]
 
             return .init(author: placeholders[4],
@@ -70,12 +70,17 @@ extension PushNotificationType {
     }
 }
 
+private struct ConversationTarget: Codable {
+    let conversation: Int
+    let course: Int
+}
+
 struct PushNotificationCommunicationInfo: Codable {
     let author: String
     let channel: String
     let course: String
     let userId: String
-    let channelId: String
+    let channelId: Int
     let messageId: String
     let profilePicUrl: String?
     let messageContent: String
