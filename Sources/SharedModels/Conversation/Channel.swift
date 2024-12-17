@@ -35,6 +35,7 @@ public struct Channel: BaseConversation {
     public var tutorialGroupId: Int?
     public var tutorialGroupTitle: String?
     public var subType: ChannelSubType?
+    public var subTypeReferenceId: Int?
 
     public var conversationName: String {
         if isArchived ?? false {
