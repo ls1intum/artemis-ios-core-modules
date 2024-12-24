@@ -56,6 +56,12 @@ private struct ImagePreview: View {
                 if let image {
                     ZoomableImagePreview(image: image)
                         .frame(width: proxy.size.width, height: proxy.size.height)
+                        .toolbar {
+                            ToolbarItem(placement: .bottomBar) {
+                                ShareLink(item: Image(uiImage: image),
+                                          preview: SharePreview("Image", image: Image(uiImage: image)))
+                            }
+                        }
                 } else {
                     ArtemisAsyncImage(imageURL: url) {}
                         .scaledToFit()
