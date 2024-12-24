@@ -6,8 +6,6 @@
 //  Copyright © 2023 orgName. All rights reserved.
 //
 
-// swiftlint:disable file_length
-
 import ArtemisMarkdown
 import Foundation
 
