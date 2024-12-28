@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Gzip
 import SwiftStomp
 import UserStore
 import Common
@@ -125,7 +126,16 @@ extension ArtemisStompClient: SwiftStompDelegate {
     public func onMessageReceived(swiftStomp: SwiftStomp, message: Any?, messageId: String, destination: String, headers: [String: String]) {
         log.debug("Stomp: MessageReceived")
         let continuation = continuations[destination]
-        continuation?.yield(message)
+
+        if headers["compressed"] == "true" {
+            if let unzipped = try? (message as? Data)?.gunzipped() {
+                continuation?.yield(unzipped)
+            } else {
+                log.warning("Stomp: Failed to gunzip compressed message")
+            }
+        } else {
+            continuation?.yield(message)
+        }
     }
 
     public func onReceipt(swiftStomp: SwiftStomp, receiptId: String) {
