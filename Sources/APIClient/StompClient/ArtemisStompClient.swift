@@ -127,8 +127,9 @@ extension ArtemisStompClient: SwiftStompDelegate {
         log.debug("Stomp: MessageReceived")
         let continuation = continuations[destination]
 
-        if headers["compressed"] == "true" {
-            if let unzipped = try? (message as? Data)?.gunzipped() {
+        if headers["X-Compressed"] == "true" {
+            if let message = message as? String,
+               let unzipped = try? Data(base64Encoded: message)?.gunzipped() {
                 continuation?.yield(unzipped)
             } else {
                 log.warning("Stomp: Failed to gunzip compressed message")
