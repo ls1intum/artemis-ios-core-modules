@@ -6,8 +6,10 @@
 //
 
 import APIClient
+import CryptoKit
 import Foundation
 import Intents
+import SwiftUI
 import UserNotifications
 import UserStore
 
@@ -37,7 +39,7 @@ public extension PushNotificationHandler {
     }
 
     private static func createIntent(info: PushNotificationCommunicationInfo) async -> INSendMessageIntent {
-        let image = try? await getUserImage(from: info.profilePicUrl)
+        let image = try? await getUserImage(for: info.author, with: info.userId, from: info.profilePicUrl)
         let person = INPerson(personHandle: .init(value: info.userId, type: .unknown),
                               nameComponents: try? .init(info.author),
                               displayName: info.author,
@@ -64,9 +66,16 @@ public extension PushNotificationHandler {
         return intent
     }
 
-    private static func getUserImage(from urlString: String?) async throws -> INImage? {
+    private static func getUserImage(for user: String,
+                                     with id: String,
+                                     from urlString: String?) async throws -> INImage? {
         let baseUrl = UserSessionFactory.shared.institution?.baseURL
         guard let urlString, let url = URL(string: urlString, relativeTo: baseUrl) else {
+            // Default profile picture fallback
+            let imageData = await ImageRenderer(content: DefaultProfilePic(name: user, userId: id)).uiImage?.pngData()
+            if let imageData {
+                return INImage(imageData: imageData)
+            }
             return nil
         }
 
@@ -86,6 +95,43 @@ public extension PushNotificationHandler {
         }
 
         return INImage(imageData: data)
+    }
+}
+
+private struct DefaultProfilePic: View {
+    let name: String
+    let userId: String
+
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(backgroundColor)
+                .frame(width: 100, height: 100)
+            Text(initials)
+                .font(.system(size: 42, weight: .bold, design: .rounded))
+                .fontDesign(.rounded)
+                .foregroundStyle(.white)
+        }
+    }
+
+    private var initials: String {
+        let nameComponents = name.split(separator: " ")
+        let initialFirstName = nameComponents.first?.prefix(1) ?? ""
+        let initialLastName = nameComponents.last?.prefix(1) ?? ""
+        let initials = initialFirstName + initialLastName
+        if initials.isEmpty {
+            return "NA"
+        } else {
+            return String(initials)
+        }
+    }
+
+    private var backgroundColor: Color {
+        // We can't use userId.hashValue because it changes between every program execution
+        var sha = SHA256()
+        sha.update(data: Data(userId.utf8))
+        let hash = abs(sha.finalize().reduce(0) { $0 << 8 | Int($1) }) % 255
+        return Color(hue: Double(hash) / 255, saturation: 0.5, brightness: 0.5)
     }
 }
 
