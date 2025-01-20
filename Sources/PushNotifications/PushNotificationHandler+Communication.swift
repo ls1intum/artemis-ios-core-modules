@@ -106,9 +106,9 @@ private struct DefaultProfilePic: View {
         ZStack {
             Rectangle()
                 .fill(backgroundColor)
-                .frame(width: 50, height: 50)
+                .frame(width: 100, height: 100)
             Text(initials)
-                .font(.system(size: 22, weight: .bold, design: .rounded))
+                .font(.system(size: 42, weight: .bold, design: .rounded))
                 .fontDesign(.rounded)
                 .foregroundStyle(.white)
         }
