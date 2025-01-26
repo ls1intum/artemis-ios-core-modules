@@ -1,5 +1,6 @@
 import Foundation
 import Common
+import UserNotifications
 import UserStore
 
 // swiftlint:disable force_cast
@@ -193,6 +194,8 @@ public final class APIClient {
             UserSessionFactory.shared.savePassword(password: nil)
             UserSessionFactory.shared.saveUsername(username: nil)
         }
+        // Remove notification about being logged out
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
 
     private func logoutAndSetTokenExpired() {
