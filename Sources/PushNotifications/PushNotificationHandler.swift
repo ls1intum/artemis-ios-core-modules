@@ -78,10 +78,37 @@ public class PushNotificationHandler {
                             PushNotificationUserInfoKeys.communicationInfo: notification.communicationInfo?.asData]
         return content
     }
+
+    /// Schedules a local notification that will be sent to the user when the current
+    /// login session, and thus the push notification token, is invalidated
+    public static func scheduleNotificationForSessionExpired() {
+        guard let cookies = URLSession.shared.configuration.httpCookieStorage?.cookies else {
+            return
+        }
+        let jwtCookie = cookies.first { $0.name == "jwt" }
+        if let jwtCookie, let expiryDate = jwtCookie.expiresDate {
+            let triggerComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: expiryDate)
+            let trigger = UNCalendarNotificationTrigger(dateMatching: triggerComponents,
+                                                        repeats: false)
+
+            let content = UNMutableNotificationContent()
+            content.title = R.string.localizable.sessionExpiredTitle()
+            content.body = R.string.localizable.sessionExpiredBody()
+
+            let notification = UNNotificationRequest(identifier: LocalNotificationIdentifiers.sessionExpired,
+                                                     content: content,
+                                                     trigger: trigger)
+            UNUserNotificationCenter.current().add(notification)
+        }
+    }
 }
 
 class PushNotificationUserInfoKeys {
     static var target = "target"
     static var type = "type"
     static var communicationInfo = "communicationInfo"
+}
+
+public class LocalNotificationIdentifiers {
+    public static let sessionExpired = "sessionExpiredNotification"
 }

@@ -109,6 +109,7 @@
 "artemisApp.singleUserNotification.title.createGroupChat" = "New group chat";
 "artemisApp.singleUserNotification.title.createDirectChat" = "New direct chat";
 "artemisApp.singleUserNotification.title.mentionedInMessage" = "You were mentioned";
+"sessionExpiredTitle" = "Session expired";
 
 // MARK: Body
 "artemisApp.singleUserNotification.text.exerciseSubmissionAssessed" = "Your submission for the %2$@ exercise \"%3$@\" in the course \"%1$@\" has been assessed.";
@@ -149,6 +150,7 @@
 "artemisApp.singleUserNotification.text.removeUserGroupChat" = "You have been removed from group chat by %2$@ in course %1$@.";
 "artemisApp.singleUserNotification.text.addUserGroupChat" = "You have been added to a new group chat by %2$@ in course %1$@.";
 "artemisApp.singleUserNotification.text.createGroupChat" = "You have been added to a new group chat by %2$@ in course %1$@.";
+"sessionExpiredBody" = "Please log in again to Artemis to continue receiving notifications.";
 
 // MARK: - Communication
 "repliedTo" = "%1$@ (replied to %2$@)";
