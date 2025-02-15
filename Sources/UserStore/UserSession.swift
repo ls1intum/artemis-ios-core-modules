@@ -120,6 +120,21 @@ public class UserSession: ObservableObject {
         notificationDeviceConfigurations.first(where: { $0.institutionIdentifier == institution && $0.username == username })
     }
 
+    /// Gets the currently active key for decrypting notifications.
+    /// This force-loads the latest keychain data because the notification extension can outlive the app,
+    /// thus the key may have changed while the UserSession is still in memory
+    public func getCurrentNotificationEncryptionKey() -> Data? {
+        setupLoginData()
+        setupInstitutionSelection()
+        setupNotificationData()
+        guard let config = getCurrentNotificationDeviceConfiguration(),
+              let key = config.notificationsEncryptionKey,
+              let keyAsData = Data(base64Encoded: key) else {
+            return nil
+        }
+        return keyAsData
+    }
+
     public func saveInstitution(identifier: InstitutionIdentifier?) {
         self.institution = identifier
 

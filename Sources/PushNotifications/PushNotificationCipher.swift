@@ -13,9 +13,7 @@ import Common
 class PushNotificationCipher {
 
     static func decrypt(payload: String, iv: String) -> PushNotification? {
-        // Decode PrivateKey from base64 to String
-        guard let privateKey = UserSessionFactory.shared.getCurrentNotificationDeviceConfiguration()?.notificationsEncryptionKey,
-              let privateKeyAsData = Data(base64Encoded: privateKey) else {
+        guard let privateKey = UserSessionFactory.shared.getCurrentNotificationEncryptionKey() else {
             return nil
         }
 
@@ -24,7 +22,7 @@ class PushNotificationCipher {
             return nil
         }
 
-        let uint8Key = [UInt8](privateKeyAsData)
+        let uint8Key = [UInt8](privateKey)
         let uint8Iv = [UInt8](ivAsData)
 
         guard let payloadAsData = Data(base64Encoded: payload) else {
