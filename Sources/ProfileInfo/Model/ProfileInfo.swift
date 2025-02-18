@@ -24,9 +24,20 @@ public struct ProfileInfo: Codable {
     public let useExternal: Bool
     public let buildPlanURLTemplate: String?
     public let activeProfiles: [String]
+    public let compatibleVersions: PlatformVersionCompatibility?
 }
 
 public struct Build: Codable {
     public let name: String
     public let version: String
+}
+
+public struct PlatformVersionCompatibility: Codable {
+    public let android: AppVersionCompatibility
+    public let ios: AppVersionCompatibility
+}
+
+public struct AppVersionCompatibility: Codable {
+    public let min: String
+    public let recommended: String
 }
