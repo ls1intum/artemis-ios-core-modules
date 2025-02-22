@@ -76,7 +76,29 @@ public class PushNotificationHandler {
         content.userInfo = [PushNotificationUserInfoKeys.target: notification.target,
                             PushNotificationUserInfoKeys.type: notification.type.rawValue,
                             PushNotificationUserInfoKeys.communicationInfo: notification.communicationInfo?.asData]
+        if notification.communicationInfo != nil {
+            content.categoryIdentifier = PushNotificationActionIdentifiers.communication
+        }
+
         return content
+    }
+
+    /// Registers supported notification actions to iOS.
+    /// Call this upon application launch.
+    public static func registerNotificationCategories() {
+        let replyAction = UNTextInputNotificationAction(
+            identifier: PushNotificationActionIdentifiers.reply,
+            title: "Reply",
+            textInputButtonTitle: "Send",
+            textInputPlaceholder: "Reply")
+
+        let communicationCategory = UNNotificationCategory(
+            identifier: PushNotificationActionIdentifiers.communication,
+            actions: [replyAction],
+            intentIdentifiers: [],
+            options: [])
+
+        UNUserNotificationCenter.current().setNotificationCategories([communicationCategory])
     }
 
     /// Schedules a local notification that will be sent to the user when the current
@@ -103,10 +125,15 @@ public class PushNotificationHandler {
     }
 }
 
-class PushNotificationUserInfoKeys {
+public class PushNotificationActionIdentifiers {
+    public static let reply = "reply"
+    static let communication = "communication"
+}
+
+public class PushNotificationUserInfoKeys {
     static var target = "target"
     static var type = "type"
-    static var communicationInfo = "communicationInfo"
+    public static var communicationInfo = "communicationInfo"
 }
 
 public class LocalNotificationIdentifiers {
