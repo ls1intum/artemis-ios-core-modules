@@ -15,13 +15,16 @@ extension PushNotificationType {
                 .newReplyForLecturePost, .newReplyForExercisePost:
             // ["courseTitle", "postContent", "postCreationData", "postAuthorName", "answerPostContent", "answerPostCreationDate", "authorName", "conversationName", "imageUrl", "userId", "postingId", "parentPostId"]
             guard placeholders.count > 11 else { return nil }
-            let channelId = (try? JSONDecoder().decode(ConversationTarget.self, from: Data(target.utf8)).conversation) ?? 0
+            let target = try? JSONDecoder().decode(ConversationTarget.self, from: Data(target.utf8))
+            let channelId = target?.conversation ?? 0
+            let courseId = target?.course ?? 0
             let profilePic = placeholders[8].isEmpty ? nil : placeholders[8]
 
             return .init(author: R.string.localizable.repliedTo(placeholders[6], placeholders[3]),
                          channel: placeholders[7],
                          course: placeholders[0],
                          userId: placeholders[9],
+                         courseId: courseId,
                          channelId: channelId,
                          messageId: placeholders[11],
                          profilePicUrl: profilePic,
@@ -33,13 +36,16 @@ extension PushNotificationType {
                 .conversationNewMessage:
             // ["courseTitle", "messageContent", "messageCreationDate", "conversationName", "authorName", "conversationType", "imageUrl", "userId", "postId"]
             guard placeholders.count > 8 else { return nil }
-            let channelId = (try? JSONDecoder().decode(ConversationTarget.self, from: Data(target.utf8)).conversation) ?? 0
+           let target = try? JSONDecoder().decode(ConversationTarget.self, from: Data(target.utf8))
+           let channelId = target?.conversation ?? 0
+           let courseId = target?.course ?? 0
             let profilePic = placeholders[6].isEmpty ? nil : placeholders[6]
 
             return .init(author: placeholders[4],
                          channel: placeholders[3],
                          course: placeholders[0],
                          userId: placeholders[7],
+                         courseId: courseId,
                          channelId: channelId,
                          messageId: placeholders[8],
                          profilePicUrl: profilePic,
@@ -50,13 +56,15 @@ extension PushNotificationType {
         case .newAnnouncementPost:
             // ["courseTitle", "postTitle", "postContent", "postCreationDate", "postAuthorName", "imageUrl", "authorId", "postId"]
             guard placeholders.count > 7 else { return nil }
-            let channelId = (try? JSONDecoder().decode(ConversationTarget.self, from: Data(target.utf8)).conversation) ?? 0
+            let target = try? JSONDecoder().decode(ConversationTarget.self, from: Data(target.utf8))
+            let channelId = target?.conversation ?? 0
+            let courseId = target?.course ?? 0
             let profilePic = placeholders[5].isEmpty ? nil : placeholders[5]
 
             return .init(author: placeholders[4],
                          channel: R.string.localizable.artemisAppGroupNotificationTitleNewAnnouncementPost(),
                          course: placeholders[0],
-                         userId: placeholders[6],
+                         userId: placeholders[6], courseId: courseId,
                          channelId: channelId,
                          messageId: placeholders[7],
                          profilePicUrl: profilePic,
@@ -75,13 +83,14 @@ private struct ConversationTarget: Codable {
     let course: Int
 }
 
-struct PushNotificationCommunicationInfo: Codable {
+public struct PushNotificationCommunicationInfo: Codable {
     let author: String
     let channel: String
     let course: String
     let userId: String
-    let channelId: Int
-    let messageId: String
+    public let courseId: Int
+    public let channelId: Int
+    public let messageId: String
     let profilePicUrl: String?
     let messageContent: String
     let type: ConversationType?
@@ -94,7 +103,7 @@ struct PushNotificationCommunicationInfo: Codable {
     }
 }
 
-extension PushNotificationCommunicationInfo {
+public extension PushNotificationCommunicationInfo {
     var asData: Data {
         (try? JSONEncoder().encode(self)) ?? Data()
     }

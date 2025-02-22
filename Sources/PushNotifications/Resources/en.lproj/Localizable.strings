@@ -154,6 +154,8 @@
 
 // MARK: - Communication
 "repliedTo" = "%1$@ (replied to %2$@)";
+"reply" = "Reply";
+"send" = "Send";
 
 // MARK: - General
 "activate" = "Activate";
