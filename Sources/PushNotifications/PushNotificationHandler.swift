@@ -88,9 +88,9 @@ public class PushNotificationHandler {
     public static func registerNotificationCategories() {
         let replyAction = UNTextInputNotificationAction(
             identifier: PushNotificationActionIdentifiers.reply,
-            title: "Reply",
-            textInputButtonTitle: "Send",
-            textInputPlaceholder: "Reply")
+            title: R.string.localizable.reply(),
+            textInputButtonTitle: R.string.localizable.send(),
+            textInputPlaceholder: R.string.localizable.reply())
 
         let communicationCategory = UNNotificationCategory(
             identifier: PushNotificationActionIdentifiers.communication,
