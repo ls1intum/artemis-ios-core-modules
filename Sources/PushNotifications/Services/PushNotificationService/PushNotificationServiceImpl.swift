@@ -61,6 +61,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         var token: String
         var deviceType = "APNS"
         var apiType = 1
+        var versionCode = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
         var method: HTTPMethod {
             return .post
