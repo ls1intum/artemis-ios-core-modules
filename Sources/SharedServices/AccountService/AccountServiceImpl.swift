@@ -22,7 +22,7 @@ struct AccountServiceImpl: AccountService {
         }
 
         var resourceName: String {
-            return "api/public/account"
+            return "api/core/public/account"
         }
     }
 
