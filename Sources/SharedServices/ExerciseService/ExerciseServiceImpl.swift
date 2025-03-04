@@ -25,7 +25,7 @@ public class ExerciseServiceImpl: ExerciseService {
         }
 
         var resourceName: String {
-            return "api/exercises/\(exerciseId)/details"
+            return "api/exercise/exercises/\(exerciseId)/details"
         }
     }
 
@@ -51,7 +51,7 @@ public class ExerciseServiceImpl: ExerciseService {
         }
 
         var resourceName: String {
-            "api/exercises/\(exerciseId)/for-assessment-dashboard"
+            "api/exercise/exercises/\(exerciseId)/for-assessment-dashboard"
         }
     }
 
@@ -81,7 +81,7 @@ public class ExerciseServiceImpl: ExerciseService {
         }
 
         var resourceName: String {
-            "api/management/statistics/exercise-statistics"
+            "api/core/management/statistics/exercise-statistics"
         }
     }
 
@@ -108,7 +108,7 @@ public class ExerciseServiceImpl: ExerciseService {
         }
 
         var resourceName: String {
-            "api/exercises/\(exerciseId)/stats-for-assessment-dashboard"
+            "api/exercise/exercises/\(exerciseId)/stats-for-assessment-dashboard"
         }
     }
 

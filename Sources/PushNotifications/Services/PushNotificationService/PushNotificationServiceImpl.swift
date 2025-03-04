@@ -25,7 +25,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         }
 
         var resourceName: String {
-            return "api/push_notification/unregister"
+            return "api/communication/push_notification/unregister"
         }
     }
 
@@ -68,7 +68,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         }
 
         var resourceName: String {
-            return "api/push_notification/register"
+            return "api/communication/push_notification/register"
         }
     }
 
@@ -93,7 +93,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         }
 
         var resourceName: String {
-            return "api/notification-settings"
+            return "api/communication/notification-settings"
         }
     }
 
@@ -119,7 +119,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         }
 
         var resourceName: String {
-            return "api/notification-settings"
+            return "api/communication/notification-settings"
         }
 
         func encode(to encoder: Encoder) throws {

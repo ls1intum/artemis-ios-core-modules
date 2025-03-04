@@ -16,7 +16,7 @@ struct CourseServiceImpl: CourseService {
         }
 
         var resourceName: String {
-            return "api/courses/for-dashboard"
+            return "api/core/courses/for-dashboard"
         }
     }
 
@@ -42,7 +42,7 @@ struct CourseServiceImpl: CourseService {
         }
 
         var resourceName: String {
-            return "api/courses/\(courseId)/for-dashboard"
+            return "api/core/courses/\(courseId)/for-dashboard"
         }
     }
 
@@ -68,7 +68,7 @@ struct CourseServiceImpl: CourseService {
         var courseId: Int
 
         var resourceName: String {
-            return "api/courses/\(courseId)/for-assessment-dashboard"
+            return "api/core/courses/\(courseId)/for-assessment-dashboard"
         }
     }
 
@@ -95,7 +95,7 @@ struct CourseServiceImpl: CourseService {
         }
 
         var resourceName: String {
-            "api/courses/\(courseId)/members/search?loginOrName=\(loginOrName)"
+            "api/core/courses/\(courseId)/members/search?loginOrName=\(loginOrName)"
         }
     }
 
