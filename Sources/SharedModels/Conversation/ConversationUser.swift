@@ -37,6 +37,12 @@ public extension ConversationUser {
     init(id: Int64) {
         self.id = id
     }
+
+    init(id: Int64, name: String, imageUrl: String?) {
+        self.id = id
+        self.imageUrl = imageUrl
+        self.name = name
+    }
 }
 
 // MARK: Hashable
