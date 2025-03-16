@@ -44,6 +44,11 @@ public struct OneToOneChat: BaseConversation {
                 .frame(width: 30, height: 30)
                 .clipShape(.rect(cornerRadius: .s))
             )
+        } else if let name = otherUser?.name, let id = otherUser?.id {
+            AnyView(
+                ProfilePictureInitialsView(name: name, userId: "\(id)", size: 30)
+                    .clipShape(.rect(cornerRadius: .s))
+            )
         } else {
             AnyView(Image(systemName: "lock.fill").resizable())
         }
