@@ -29,6 +29,7 @@ struct PushNotification: Codable {
     let target: String
     let type: PushNotificationType
     let version: Int
+    let courseNotificationDTO: CoursePushNotification?
 
     var title: String? {
         type.title
