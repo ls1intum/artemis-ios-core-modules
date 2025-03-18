@@ -25,6 +25,7 @@ public struct Message: BaseMessage {
     public var resolved: Bool?
     public var answerCount: Int?
     public var voteCount: Int?
+    public var isSaved: Bool?
 }
 
 public extension Message {
