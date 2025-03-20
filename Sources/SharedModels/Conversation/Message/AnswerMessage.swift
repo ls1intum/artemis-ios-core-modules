@@ -19,6 +19,7 @@ public struct AnswerMessage: BaseMessage {
     public var resolvesPost: Bool?
     public var reactions: [Reaction]?
     public var post: Message?
+    public var isSaved: Bool?
 }
 
 public extension AnswerMessage {
