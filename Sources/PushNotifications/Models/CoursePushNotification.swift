@@ -18,15 +18,21 @@ public enum CoursePushNotification: Codable {
     case newPost(notification: NewPostNotification)
     case unknown
 
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Keys.self)
-        let type = try container.decode(CourseNotificationType.self, forKey: Keys.type)
+    /// Initializer for using different CodingKeys.
+    /// This is necessary because Notifications that aren't push notifications have a different name for `type`.
+    public init<Key>(from decoder: Decoder, typeKey: Key, parametersKey: Key) throws where Key: CodingKey {
+        let container = try decoder.container(keyedBy: Key.self)
+        let type = try container.decode(CourseNotificationType.self, forKey: typeKey)
         switch type {
         case .newPostNotification:
-            self = .newPost(notification: try container.decode(NewPostNotification.self, forKey: Keys.parameters))
+            self = .newPost(notification: try container.decode(NewPostNotification.self, forKey: parametersKey))
         case .unknown:
             self = .unknown
         }
+    }
+
+    public init(from decoder: Decoder) throws {
+        try self.init(from: decoder, typeKey: Keys.type, parametersKey: Keys.parameters)
     }
 
     /// Not needed, but we conform to Codable to prevent annoyances in `PushNotification`
