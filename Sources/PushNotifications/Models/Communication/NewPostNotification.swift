@@ -22,7 +22,7 @@ public class NewPostNotification: CourseBaseNotification {
 
 extension NewPostNotification: DisplayableNotification {
     public var title: String {
-        "New message"
+        R.string.localizable.artemisAppConversationNotificationTitleNewMessage()
     }
 
     public var subtitle: String? {
