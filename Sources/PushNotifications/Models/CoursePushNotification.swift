@@ -33,7 +33,7 @@ public enum CoursePushNotification: Codable {
     public func encode(to encoder: Encoder) throws {}
 }
 
-enum CourseNotificationType: String, Codable, ConstantsEnum {
+public enum CourseNotificationType: String, Codable, ConstantsEnum {
     case newPostNotification
     case unknown
 }
