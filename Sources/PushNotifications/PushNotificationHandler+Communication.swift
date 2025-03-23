@@ -7,6 +7,7 @@
 
 import APIClient
 import CryptoKit
+import DesignLibrary
 import Foundation
 import Intents
 import SwiftUI
@@ -72,7 +73,8 @@ public extension PushNotificationHandler {
         let baseUrl = UserSessionFactory.shared.institution?.baseURL
         guard let urlString, let url = URL(string: urlString, relativeTo: baseUrl) else {
             // Default profile picture fallback
-            let imageData = await ImageRenderer(content: DefaultProfilePic(name: user, userId: id)).uiImage?.pngData()
+            let pictureView = ProfilePictureInitialsView(name: user, userId: id, size: 100)
+            let imageData = await ImageRenderer(content: pictureView).uiImage?.pngData()
             if let imageData {
                 return INImage(imageData: imageData)
             }
@@ -98,43 +100,6 @@ public extension PushNotificationHandler {
     }
 }
 
-private struct DefaultProfilePic: View {
-    let name: String
-    let userId: String
-
-    var body: some View {
-        ZStack {
-            Rectangle()
-                .fill(backgroundColor)
-                .frame(width: 100, height: 100)
-            Text(initials)
-                .font(.system(size: 42, weight: .bold, design: .rounded))
-                .fontDesign(.rounded)
-                .foregroundStyle(.white)
-        }
-    }
-
-    private var initials: String {
-        let nameComponents = name.split(separator: " ")
-        let initialFirstName = nameComponents.first?.prefix(1) ?? ""
-        let initialLastName = nameComponents.last?.prefix(1) ?? ""
-        let initials = initialFirstName + initialLastName
-        if initials.isEmpty {
-            return "NA"
-        } else {
-            return String(initials)
-        }
-    }
-
-    private var backgroundColor: Color {
-        // We can't use userId.hashValue because it changes between every program execution
-        var sha = SHA256()
-        sha.update(data: Data(userId.utf8))
-        let hash = abs(sha.finalize().reduce(0) { $0 << 8 | Int($1) }) % 255
-        return Color(hue: Double(hash) / 255, saturation: 0.5, brightness: 0.5)
-    }
-}
-
 private class LoginService {
     private let client = APIClient()
 
@@ -149,7 +114,7 @@ private class LoginService {
         }
 
         var resourceName: String {
-            return "api/public/authenticate"
+            return "api/core/public/authenticate"
         }
     }
 
