@@ -37,6 +37,15 @@ public enum CoursePushNotification: Codable {
 
     /// Not needed, but we conform to Codable to prevent annoyances in `PushNotification`
     public func encode(to encoder: Encoder) throws {}
+
+    public var displayable: DisplayableNotification? {
+        switch self {
+        case .newPost(let notification):
+            notification
+        default:
+            nil
+        }
+    }
 }
 
 public enum CourseNotificationType: String, Codable, ConstantsEnum {
@@ -50,17 +59,12 @@ public protocol CourseBaseNotification: Codable {
     var courseIconUrl: String? { get }
 }
 
-public class NewPostNotification: CourseBaseNotification {
-    public let courseId: Int?
-    public let courseTitle: String?
-    public let courseIconUrl: String?
+public protocol DisplayableNotification {
+    var title: String { get }
+    var subtitle: String? { get }
+    var body: String? { get }
+}
 
-    public let postId: Int?
-    public let postMarkdownContent: String?
-    public let channelId: Int?
-    public let channelName: String?
-    public let channelType: String?
-    public let authorName: String?
-    public let authorImageUrl: String?
-    public let authorId: Int?
+public extension DisplayableNotification {
+    var bodyLineLimit: Int { 3 }
 }
