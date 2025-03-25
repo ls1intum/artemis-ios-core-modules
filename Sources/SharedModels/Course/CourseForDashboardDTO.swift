@@ -16,6 +16,7 @@ public struct CourseForDashboardDTO: Codable {
     public var fileUploadScores: CourseScore?
     public var quizScores: CourseScore?
     public var participationResults: [ParticipationResultDTO]?
+    public var courseNotificationCount: Int?
 }
 
 public extension CourseForDashboardDTO {

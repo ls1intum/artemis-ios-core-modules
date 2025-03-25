@@ -13,7 +13,7 @@ import Foundation
 /// ```swift
 /// public enum ProgrammingLanguage: String, ConstantsEnum {
 ///     case java = "JAVA"
-///     case swift = "SWIFT
+///     case swift = "SWIFT"
 ///     case unknown
 /// }
 /// ```
