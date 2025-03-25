@@ -153,6 +153,7 @@ let package = Package(
                 "Common",
                 "CryptoSwift",
                 "DesignLibrary",
+                "SharedModels",
                 "UserStore",
                 .product(name: "RswiftLibrary", package: "R.swift")
             ],
