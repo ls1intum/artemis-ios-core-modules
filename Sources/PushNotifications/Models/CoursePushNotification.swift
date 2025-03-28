@@ -15,6 +15,7 @@ public enum CoursePushNotification: Codable {
         case parameters
     }
 
+    case newAnnouncement(notification: NewAnnouncementNotification)
     case newPost(notification: NewPostNotification)
     case attachmentChanged(notification: AttachmentChangedNotification)
     case exerciseAssessed(notification: ExerciseAssessedNotification)
@@ -28,19 +29,21 @@ public enum CoursePushNotification: Codable {
         let container = try decoder.container(keyedBy: Key.self)
         let type = try container.decode(CourseNotificationType.self, forKey: typeKey)
         let decodeNotification = NotificationDecoder(key: parametersKey, container: container)
-        switch type {
+        self = switch type {
+        case .newAnnouncementNotification:
+            .newAnnouncement(notification: try decodeNotification())
         case .newPostNotification:
-            self = .newPost(notification: try decodeNotification())
+            .newPost(notification: try decodeNotification())
         case .attachmentChangedNotification:
-            self = .attachmentChanged(notification: try decodeNotification())
+            .attachmentChanged(notification: try decodeNotification())
         case .exerciseAssessedNotification:
-            self = .exerciseAssessed(notification: try decodeNotification())
+            .exerciseAssessed(notification: try decodeNotification())
         case .exerciseOpenForPracticeNotification:
-            self = .exerciseOpenForPractice(notification: try decodeNotification())
+            .exerciseOpenForPractice(notification: try decodeNotification())
         case .exerciseUpdatedNotification:
-            self = .exerciseUpdated(notification: try decodeNotification())
+            .exerciseUpdated(notification: try decodeNotification())
         case .unknown:
-            self = .unknown
+            .unknown
         }
     }
 
@@ -73,6 +76,7 @@ private struct NotificationDecoder<Key: CodingKey> {
 }
 
 public enum CourseNotificationType: String, Codable, ConstantsEnum {
+    case newAnnouncementNotification
     case newPostNotification
     case attachmentChangedNotification
     case exerciseAssessedNotification
