@@ -15,14 +15,15 @@ public enum CoursePushNotification: Codable {
         case parameters
     }
 
-    case newAnnouncement(notification: NewAnnouncementNotification)
-    case newAnswer(notification: NewAnswerNotification)
-    case newPost(notification: NewPostNotification)
-    case attachmentChanged(notification: AttachmentChangedNotification)
-    case exerciseAssessed(notification: ExerciseAssessedNotification)
-    case exerciseOpenForPractice(notification: ExerciseOpenForPracticeNotification)
-    case exerciseUpdated(notification: ExerciseUpdatedNotification)
-    case newExercise(notification: NewExerciseNotification)
+    case newAnnouncement(NewAnnouncementNotification)
+    case newAnswer(NewAnswerNotification)
+    case newPost(NewPostNotification)
+    case attachmentChanged(AttachmentChangedNotification)
+    case exerciseAssessed(ExerciseAssessedNotification)
+    case exerciseOpenForPractice(ExerciseOpenForPracticeNotification)
+    case exerciseUpdated(ExerciseUpdatedNotification)
+    case newExercise(NewExerciseNotification)
+    case newManualFeedbackRequest(NewManualFeedbackRequestNotification)
     case unknown
 
     /// Initializer for using different CodingKeys.
@@ -32,24 +33,18 @@ public enum CoursePushNotification: Codable {
         let type = try container.decode(CourseNotificationType.self, forKey: typeKey)
         let decodeNotification = NotificationDecoder(key: parametersKey, container: container)
         self = switch type {
-        case .newAnnouncementNotification:
-            .newAnnouncement(notification: try decodeNotification())
-        case .newAnswerNotification:
-            .newAnswer(notification: try decodeNotification())
-        case .newPostNotification:
-            .newPost(notification: try decodeNotification())
-        case .attachmentChangedNotification:
-            .attachmentChanged(notification: try decodeNotification())
-        case .exerciseAssessedNotification:
-            .exerciseAssessed(notification: try decodeNotification())
-        case .exerciseOpenForPracticeNotification:
-            .exerciseOpenForPractice(notification: try decodeNotification())
-        case .exerciseUpdatedNotification:
-            .exerciseUpdated(notification: try decodeNotification())
-        case .newExerciseNotification:
-            .newExercise(notification: try decodeNotification())
-        case .unknown:
-            .unknown
+        // Communication
+        case .newAnnouncementNotification: .newAnnouncement(try decodeNotification())
+        case .newAnswerNotification: .newAnswer(try decodeNotification())
+        case .newPostNotification: .newPost(try decodeNotification())
+        // General
+        case .attachmentChangedNotification: .attachmentChanged(try decodeNotification())
+        case .exerciseAssessedNotification: .exerciseAssessed(try decodeNotification())
+        case .exerciseOpenForPracticeNotification: .exerciseOpenForPractice(try decodeNotification())
+        case .exerciseUpdatedNotification: .exerciseUpdated(try decodeNotification())
+        case .newExerciseNotification: .newExercise(try decodeNotification())
+        case .newManualFeedbackRequestNotification: .newManualFeedbackRequest(try decodeNotification())
+        case .unknown: .unknown
         }
     }
 
@@ -90,6 +85,7 @@ public enum CourseNotificationType: String, Codable, ConstantsEnum {
     case exerciseOpenForPracticeNotification
     case exerciseUpdatedNotification
     case newExerciseNotification
+    case newManualFeedbackRequestNotification
     case unknown
 }
 
