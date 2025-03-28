@@ -18,6 +18,7 @@ public enum CoursePushNotification: Codable {
     case newPost(notification: NewPostNotification)
     case attachmentChanged(notification: AttachmentChangedNotification)
     case exerciseAssessed(notification: ExerciseAssessedNotification)
+    case exerciseOpenForPractice(notification: ExerciseOpenForPracticeNotification)
     case unknown
 
     /// Initializer for using different CodingKeys.
@@ -33,6 +34,8 @@ public enum CoursePushNotification: Codable {
             self = .attachmentChanged(notification: try decodeNotification())
         case .exerciseAssessedNotification:
             self = .exerciseAssessed(notification: try decodeNotification())
+        case .exerciseOpenForPracticeNotification:
+            self = .exerciseOpenForPractice(notification: try decodeNotification())
         case .unknown:
             self = .unknown
         }
@@ -70,6 +73,7 @@ public enum CourseNotificationType: String, Codable, ConstantsEnum {
     case newPostNotification
     case attachmentChangedNotification
     case exerciseAssessedNotification
+    case exerciseOpenForPracticeNotification
     case unknown
 }
 
