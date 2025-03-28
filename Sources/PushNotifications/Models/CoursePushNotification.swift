@@ -16,6 +16,7 @@ public enum CoursePushNotification: Codable {
     }
 
     case newAnnouncement(notification: NewAnnouncementNotification)
+    case newAnswer(notification: NewAnswerNotification)
     case newPost(notification: NewPostNotification)
     case attachmentChanged(notification: AttachmentChangedNotification)
     case exerciseAssessed(notification: ExerciseAssessedNotification)
@@ -32,6 +33,8 @@ public enum CoursePushNotification: Codable {
         self = switch type {
         case .newAnnouncementNotification:
             .newAnnouncement(notification: try decodeNotification())
+        case .newAnswerNotification:
+            .newAnswer(notification: try decodeNotification())
         case .newPostNotification:
             .newPost(notification: try decodeNotification())
         case .attachmentChangedNotification:
@@ -77,6 +80,7 @@ private struct NotificationDecoder<Key: CodingKey> {
 
 public enum CourseNotificationType: String, Codable, ConstantsEnum {
     case newAnnouncementNotification
+    case newAnswerNotification
     case newPostNotification
     case attachmentChangedNotification
     case exerciseAssessedNotification
