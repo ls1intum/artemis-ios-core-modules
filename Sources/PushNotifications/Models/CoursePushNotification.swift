@@ -19,6 +19,7 @@ public enum CoursePushNotification: Codable {
     case attachmentChanged(notification: AttachmentChangedNotification)
     case exerciseAssessed(notification: ExerciseAssessedNotification)
     case exerciseOpenForPractice(notification: ExerciseOpenForPracticeNotification)
+    case exerciseUpdated(notification: ExerciseUpdatedNotification)
     case unknown
 
     /// Initializer for using different CodingKeys.
@@ -36,6 +37,8 @@ public enum CoursePushNotification: Codable {
             self = .exerciseAssessed(notification: try decodeNotification())
         case .exerciseOpenForPracticeNotification:
             self = .exerciseOpenForPractice(notification: try decodeNotification())
+        case .exerciseUpdatedNotification:
+            self = .exerciseUpdated(notification: try decodeNotification())
         case .unknown:
             self = .unknown
         }
@@ -60,7 +63,7 @@ public enum CoursePushNotification: Codable {
 
 // Helper for making decoding above much more compact
 // by making use of compiler's automatic type derivation
-struct NotificationDecoder<Key: CodingKey> {
+private struct NotificationDecoder<Key: CodingKey> {
     let key: Key
     let container: KeyedDecodingContainer<Key>
 
@@ -74,6 +77,7 @@ public enum CourseNotificationType: String, Codable, ConstantsEnum {
     case attachmentChangedNotification
     case exerciseAssessedNotification
     case exerciseOpenForPracticeNotification
+    case exerciseUpdatedNotification
     case unknown
 }
 
