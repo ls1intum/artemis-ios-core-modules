@@ -15,7 +15,17 @@ public enum CoursePushNotification: Codable {
         case parameters
     }
 
-    case newPost(notification: NewPostNotification)
+    case newAnnouncement(NewAnnouncementNotification)
+    case newAnswer(NewAnswerNotification)
+    case newMention(NewMentionNotification)
+    case newPost(NewPostNotification)
+    case attachmentChanged(AttachmentChangedNotification)
+    case exerciseAssessed(ExerciseAssessedNotification)
+    case exerciseOpenForPractice(ExerciseOpenForPracticeNotification)
+    case exerciseUpdated(ExerciseUpdatedNotification)
+    case newExercise(NewExerciseNotification)
+    case newManualFeedbackRequest(NewManualFeedbackRequestNotification)
+    case quizStarted(QuizExerciseStartedNotification)
     case unknown
 
     /// Initializer for using different CodingKeys.
@@ -23,11 +33,22 @@ public enum CoursePushNotification: Codable {
     public init<Key>(from decoder: Decoder, typeKey: Key, parametersKey: Key) throws where Key: CodingKey {
         let container = try decoder.container(keyedBy: Key.self)
         let type = try container.decode(CourseNotificationType.self, forKey: typeKey)
-        switch type {
-        case .newPostNotification:
-            self = .newPost(notification: try container.decode(NewPostNotification.self, forKey: parametersKey))
-        case .unknown:
-            self = .unknown
+        let decodeNotification = NotificationDecoder(key: parametersKey, container: container)
+        self = switch type {
+        // Communication
+        case .newAnnouncementNotification: .newAnnouncement(try decodeNotification())
+        case .newAnswerNotification: .newAnswer(try decodeNotification())
+        case .newMentionNotification: .newMention(try decodeNotification())
+        case .newPostNotification: .newPost(try decodeNotification())
+        // General
+        case .attachmentChangedNotification: .attachmentChanged(try decodeNotification())
+        case .exerciseAssessedNotification: .exerciseAssessed(try decodeNotification())
+        case .exerciseOpenForPracticeNotification: .exerciseOpenForPractice(try decodeNotification())
+        case .exerciseUpdatedNotification: .exerciseUpdated(try decodeNotification())
+        case .newExerciseNotification: .newExercise(try decodeNotification())
+        case .newManualFeedbackRequestNotification: .newManualFeedbackRequest(try decodeNotification())
+        case .quizExerciseStartedNotification: .quizStarted(try decodeNotification())
+        case .unknown: .unknown
         }
     }
 
@@ -48,8 +69,31 @@ public enum CoursePushNotification: Codable {
     }
 }
 
+// Helper for making decoding above much more compact
+// by making use of compiler's automatic type derivation
+private struct NotificationDecoder<Key: CodingKey> {
+    let key: Key
+    let container: KeyedDecodingContainer<Key>
+
+    func callAsFunction<T: Codable>() throws -> T {
+        try container.decode(T.self, forKey: key)
+    }
+}
+
 public enum CourseNotificationType: String, Codable, ConstantsEnum {
+    // Communication
+    case newAnnouncementNotification
+    case newAnswerNotification
+    case newMentionNotification
     case newPostNotification
+    // General
+    case attachmentChangedNotification
+    case exerciseAssessedNotification
+    case exerciseOpenForPracticeNotification
+    case exerciseUpdatedNotification
+    case newExerciseNotification
+    case newManualFeedbackRequestNotification
+    case quizExerciseStartedNotification
     case unknown
 }
 
