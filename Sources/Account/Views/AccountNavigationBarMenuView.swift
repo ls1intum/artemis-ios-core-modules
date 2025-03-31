@@ -15,10 +15,7 @@ struct AccountNavigationBarMenuView: View {
 
     @Binding var error: UserFacingError?
 
-    @State private var showNotificationSettings = false
     @State private var showProfile = false
-
-    let notificationsVisible: Bool
 
     var body: some View {
         Menu(content: {
@@ -29,17 +26,6 @@ struct AccountNavigationBarMenuView: View {
                     HStack {
                         Image(systemName: "person.fill")
                         Text(account.login)
-                        Spacer()
-                    }
-                })
-            }
-            if notificationsVisible {
-                Button(action: {
-                    showNotificationSettings = true
-                }, label: {
-                    HStack {
-                        Image(systemName: "gearshape.fill")
-                        Text(R.string.localizable.notificationSettingsLabel())
                         Spacer()
                     }
                 })
@@ -70,9 +56,6 @@ struct AccountNavigationBarMenuView: View {
         .onChange(of: viewModel.error) { _, error in
             self.error = error
         }
-        .sheet(isPresented: $showNotificationSettings) {
-            PushNotificationSettingsView()
-        }
         .sheet(isPresented: $showProfile) {
             if let account = viewModel.account.value {
                 ProfileView(account: account)
@@ -87,20 +70,18 @@ struct AccountMenu: ViewModifier {
 
     @Binding var error: UserFacingError?
 
-    let notificationsVisible: Bool
-
     func body(content: Content) -> some View {
         content
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    AccountNavigationBarMenuView(error: $error, notificationsVisible: notificationsVisible)
+                    AccountNavigationBarMenuView(error: $error)
                 }
             }
     }
 }
 
 public extension View {
-    func accountMenu(error: Binding<UserFacingError?>, notificationsVisible: Bool = true) -> some View {
-        modifier(AccountMenu(error: error, notificationsVisible: notificationsVisible))
+    func accountMenu(error: Binding<UserFacingError?>) -> some View {
+        modifier(AccountMenu(error: error))
     }
 }
