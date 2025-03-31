@@ -17,3 +17,13 @@ public struct NewExerciseNotification: CourseBaseNotification {
     public var dueDate: String?
     public var numberOfPoints: Int?
 }
+
+extension NewExerciseNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.artemisAppGroupNotificationTitleExerciseReleased()
+    }
+
+    public var body: String? {
+        R.string.localizable.artemisAppGroupNotificationTextExerciseReleased(exerciseTitle ?? "")
+    }
+}

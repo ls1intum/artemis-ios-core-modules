@@ -79,6 +79,8 @@
 "artemisApp.singleUserNotification.title.newPlagiarismCaseStudent" = "New plagiarism case";
 "artemisApp.singleUserNotification.title.plagiarismCaseVerdictStudent" = "Verdict for your plagiarism case";
 "artemisApp.conversationNotification.title.newMessage" = "New message";
+"newReply" = "New Reply";
+"newManualFeedbackRequest" = "New manual feedback request";
 
 "artemisApp.groupNotification.title.exerciseUpdated" = "Exercise updated";
 "artemisApp.groupNotification.title.courseArchiveStarted" = "Course archival started";
@@ -114,9 +116,9 @@
 // MARK: Body
 "artemisApp.singleUserNotification.text.exerciseSubmissionAssessed" = "Your submission for the %2$@ exercise \"%3$@\" in the course \"%1$@\" has been assessed.";
 "artemisApp.groupNotification.text.attachmentChange" = "The attachment \"%2$@\" of \"%3$@\" in the course \"%1$@\" was updated.";
-"artemisApp.groupNotification.text.exerciseReleased" = "A new exercise \"%1$@\" got released.";
-"artemisApp.groupNotification.text.exercisePractice" = "The exercise \"%1$@\" is now open for practice.";
-"artemisApp.groupNotification.text.quizExerciseStarted" = "The quiz \"%1$@\" just started.";
+"artemisApp.groupNotification.text.exerciseReleased" = "A new exercise %1$@ got released.";
+"artemisApp.groupNotification.text.exercisePractice" = "The exercise %1$@ is now open for practice.";
+"artemisApp.groupNotification.text.quizExerciseStarted" = "The quiz %1$@ just started.";
 "artemisApp.singleUserNotification.text.fileSubmissionSuccessful" = "Your file for the exercise \"%1$@\" was successfully submitted.";
 "artemisApp.singleUserNotification.text.newPlagiarismCaseStudent" = "New plagiarism case concerning the %1$@ exercise \"%2$@\".";
 "artemisApp.singleUserNotification.text.plagiarismCaseVerdictStudent" = "Your plagiarism case concerning the %1$@ exercise \"%2$@\" has a verdict.";
@@ -133,6 +135,10 @@
 "artemisApp.groupNotification.text.illegalSubmission" = "The exercise %1$@ has illegal submissions of students.";
 "artemisApp.groupNotification.text.programmingTestCasesChanged" = "The test cases of the programming exercise \"%2$@\" in the course \"%1$@\" were updated. The students' submissions should be rebuilt and tested in order to create new results.";
 "artemisApp.groupNotification.text.newManualFeedbackRequest" = "The programming exercise \"%2$@\" in the course \"%1$@\" has a new manual feedback request. Please assess the feedback before the deadline.";
+"attatchmentChangedBody" = "The attachment %1$@ was updated.";
+"submissionAssessedBody" = "Your submission for the %1$@ exercise %2$@ was assessed.";
+"exerciseUpdatedBody" = "The exercise %1$@ was updated.";
+"manualFeedbackRequestBody" = "The programming exercise %1$@ has a new manual feedback request. Please assess the feedback before the deadline.";
 
 "artemisApp.singleUserNotification.text.tutorialGroupRegistrationStudent" = "You have been registered to the tutorial group %1$@ by %2$@.";
 "artemisApp.singleUserNotification.text.tutorialGroupDeregistrationStudent" = "You have been deregistered from the tutorial group %1$@ by %2$@.";

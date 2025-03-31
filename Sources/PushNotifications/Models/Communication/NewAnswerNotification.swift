@@ -23,3 +23,17 @@ public struct NewAnswerNotification: CourseBaseNotification {
     public var channelName: String?
     public var channelId: Int?
 }
+
+extension NewAnswerNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.newReply()
+    }
+
+    public var subtitle: String? {
+        postAuthorName
+    }
+
+    public var body: String? {
+        postMarkdownContent
+    }
+}

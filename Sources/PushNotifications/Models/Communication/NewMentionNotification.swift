@@ -23,3 +23,13 @@ public struct NewMentionNotification: CourseBaseNotification {
     public var channelName: String?
     public var channelId: Int?
 }
+
+extension NewMentionNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.userMentionSettingsName()
+    }
+
+    public var body: String? {
+        postMarkdownContent
+    }
+}

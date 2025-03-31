@@ -13,3 +13,13 @@ public struct ExerciseUpdatedNotification: CourseBaseNotification {
     public var exerciseId: Int?
     public var exerciseTitle: String?
 }
+
+extension ExerciseUpdatedNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.artemisAppGroupNotificationTitleExerciseUpdated()
+    }
+
+    public var body: String? {
+        R.string.localizable.exerciseUpdatedBody(exerciseTitle ?? "")
+    }
+}
