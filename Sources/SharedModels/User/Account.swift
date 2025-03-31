@@ -38,12 +38,10 @@ public struct Account: Codable {
     }
 
     public var imagePath: URL? {
-        guard var imageUrl else { return nil }
-        if imageUrl.starts(with: "/") {
-            imageUrl.removeFirst()
-        }
-        let baseUrl = UserSessionFactory.shared.institution?.baseURL
-        return baseUrl?.appending(path: imageUrl)
+        guard let imageUrl else { return nil }
+        return UserSessionFactory.shared.institution?.baseURL?
+            .appending(path: "/api/core/files")
+            .appending(path: imageUrl)
     }
 }
 
