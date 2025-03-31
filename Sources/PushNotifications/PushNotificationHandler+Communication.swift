@@ -70,7 +70,7 @@ public extension PushNotificationHandler {
     private static func getUserImage(for user: String,
                                      with id: String,
                                      from urlString: String?) async throws -> INImage? {
-        let baseUrl = UserSessionFactory.shared.institution?.baseURL
+        let baseUrl = UserSessionFactory.shared.institution?.baseURL?.appending(path: "/api/core/files")
         guard let urlString, let url = URL(string: urlString, relativeTo: baseUrl) else {
             // Default profile picture fallback
             let pictureView = ProfilePictureInitialsView(name: user, userId: id, size: 100)
