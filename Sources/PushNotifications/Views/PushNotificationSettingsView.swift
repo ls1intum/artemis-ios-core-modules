@@ -8,6 +8,7 @@
 import DesignLibrary
 import SwiftUI
 
+// TODO: Replace with new View, then delete (here for reference)
 public struct PushNotificationSettingsView: View {
 
     @Environment(\.dismiss) var dismiss
