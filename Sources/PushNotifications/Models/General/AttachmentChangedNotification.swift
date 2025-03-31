@@ -15,3 +15,17 @@ public struct AttachmentChangedNotification: CourseBaseNotification {
     public var exerciseId: Int?
     public var lectureId: Int?
 }
+
+extension AttachmentChangedNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.artemisAppGroupNotificationTitleAttachmentChange()
+    }
+
+    public var subtitle: String? {
+        exerciseOrLectureName
+    }
+
+    public var body: String? {
+        R.string.localizable.attatchmentChangedBody(attachmentName ?? "attachment")
+    }
+}

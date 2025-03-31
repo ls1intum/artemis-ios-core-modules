@@ -18,3 +18,13 @@ public struct NewAnnouncementNotification: CourseBaseNotification {
     public var authorId: Int?
     public var channelId: Int?
 }
+
+extension NewAnnouncementNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.newAnnouncementPostSettingsName()
+    }
+
+    public var body: String? {
+        postMarkdownContent
+    }
+}

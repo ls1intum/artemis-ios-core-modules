@@ -13,3 +13,13 @@ public struct NewManualFeedbackRequestNotification: CourseBaseNotification {
     public var exerciseId: Int?
     public var exerciseTitle: String?
 }
+
+extension NewManualFeedbackRequestNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.newManualFeedbackRequest()
+    }
+
+    public var body: String? {
+        R.string.localizable.manualFeedbackRequestBody(exerciseTitle ?? "")
+    }
+}

@@ -16,3 +16,13 @@ public struct ExerciseAssessedNotification: CourseBaseNotification {
     public var numberOfPoints: Int?
     public var score: Int?
 }
+
+extension ExerciseAssessedNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.artemisAppSingleUserNotificationTitleExerciseSubmissionAssessed()
+    }
+
+    public var body: String? {
+        R.string.localizable.submissionAssessedBody(exerciseType ?? "", exerciseTitle ?? "")
+    }
+}

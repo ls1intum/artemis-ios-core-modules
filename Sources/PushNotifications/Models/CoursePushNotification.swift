@@ -111,4 +111,5 @@ public protocol DisplayableNotification {
 
 public extension DisplayableNotification {
     var bodyLineLimit: Int { 3 }
+    var subtitle: String? { nil }
 }
