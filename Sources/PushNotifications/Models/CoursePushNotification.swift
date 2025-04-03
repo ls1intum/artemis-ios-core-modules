@@ -61,8 +61,18 @@ public enum CoursePushNotification: Codable {
 
     public var displayable: DisplayableNotification? {
         switch self {
-        case .newPost(let notification):
-            notification
+        case .newAnnouncement(let notification): notification
+        case .newAnswer(let notification): notification
+        case .newMention(let notification): notification
+        case .newPost(let notification): notification
+
+        case .attachmentChanged(let notification): notification
+        case .exerciseAssessed(let notification): notification
+        case .exerciseOpenForPractice(let notification): notification
+        case .exerciseUpdated(let notification): notification
+        case .newExercise(let notification): notification
+        case .newManualFeedbackRequest(let notification): notification
+        case .quizStarted(let notification): notification
         default:
             nil
         }

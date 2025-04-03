@@ -30,6 +30,6 @@ extension NewMentionNotification: DisplayableNotification {
     }
 
     public var body: String? {
-        postMarkdownContent
+        replyMarkdownContent ?? postMarkdownContent
     }
 }

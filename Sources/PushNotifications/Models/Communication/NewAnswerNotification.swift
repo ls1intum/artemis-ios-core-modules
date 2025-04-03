@@ -30,10 +30,10 @@ extension NewAnswerNotification: DisplayableNotification {
     }
 
     public var subtitle: String? {
-        postAuthorName
+        replyAuthorName
     }
 
     public var body: String? {
-        postMarkdownContent
+        replyMarkdownContent
     }
 }
