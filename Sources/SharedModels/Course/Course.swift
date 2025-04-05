@@ -32,7 +32,8 @@ public struct Course: Codable, Identifiable {
 
     public var courseIconURL: URL? {
         guard let courseIcon else { return nil }
-        return URL(string: courseIcon, relativeTo: UserSessionFactory.shared.institution?.baseURL)
+        let baseUrl = UserSessionFactory.shared.institution?.baseURL?.appending(path: "api/core/files")
+        return baseUrl?.appending(path: courseIcon)
     }
 
     public var courseColor: Color {
