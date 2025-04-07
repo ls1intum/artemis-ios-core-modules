@@ -27,7 +27,7 @@ class LoginServiceImpl: LoginService {
         }
 
         var resourceName: String {
-            return "api/core/public/authenticate"
+            return "api/public/authenticate"
         }
     }
 
