@@ -14,3 +14,13 @@ public struct TutorialGroupDeletedNotification: CourseBaseNotification {
     public var groupId: Int?
     public var moderatorName: String?
 }
+
+extension TutorialGroupDeletedNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.artemisAppTutorialGroupNotificationTitleTutorialGroupDeleted()
+    }
+
+    public var body: String? {
+        R.string.localizable.artemisAppTutorialGroupNotificationTextTutorialGroupDeleted(groupTitle ?? "")
+    }
+}

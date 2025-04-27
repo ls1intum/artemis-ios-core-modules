@@ -375,8 +375,7 @@ public enum PushNotificationType: String, Codable {
                                                                                              notificationPlaceholders[1])
         case .conversationAddUserChannel:
             guard notificationPlaceholders.count > 2 else { return nil }
-            return R.string.localizable.artemisAppSingleUserNotificationTextAddUserChannel(notificationPlaceholders[0],
-                                                                                           notificationPlaceholders[1],
+            return R.string.localizable.artemisAppSingleUserNotificationTextAddUserChannel(notificationPlaceholders[1],
                                                                                            notificationPlaceholders[2])
         case .conversationRemoveUserGroupChat:
             guard notificationPlaceholders.count > 1 else { return nil }
@@ -384,13 +383,11 @@ public enum PushNotificationType: String, Codable {
                                                                                                 notificationPlaceholders[1])
         case .conversationRemoveUserChannel:
             guard notificationPlaceholders.count > 2 else { return nil }
-            return R.string.localizable.artemisAppSingleUserNotificationTextRemoveUserChannel(notificationPlaceholders[0],
-                                                                                              notificationPlaceholders[1],
+            return R.string.localizable.artemisAppSingleUserNotificationTextRemoveUserChannel(notificationPlaceholders[1],
                                                                                               notificationPlaceholders[2])
         case .conversationDeleteChannel:
             guard notificationPlaceholders.count > 2 else { return nil }
-            return R.string.localizable.artemisAppSingleUserNotificationTextDeleteChannel(notificationPlaceholders[0],
-                                                                                          notificationPlaceholders[1],
+            return R.string.localizable.artemisAppSingleUserNotificationTextDeleteChannel(notificationPlaceholders[1],
                                                                                           notificationPlaceholders[2])
         default:
             return nil

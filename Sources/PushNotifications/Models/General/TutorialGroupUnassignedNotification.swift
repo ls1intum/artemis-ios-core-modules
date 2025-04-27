@@ -14,3 +14,13 @@ public struct TutorialGroupUnassignedNotification: CourseBaseNotification {
     public var groupId: Int?
     public var moderatorName: String?
 }
+
+extension TutorialGroupUnassignedNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupUnassigned()
+    }
+
+    public var body: String? {
+        R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupUnassigned(groupTitle ?? "", moderatorName ?? "user")
+    }
+}

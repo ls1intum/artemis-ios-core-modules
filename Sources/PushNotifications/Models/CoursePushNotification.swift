@@ -42,6 +42,7 @@ public enum CoursePushNotification: Codable {
     case tutorialUnassigned(TutorialGroupUnassignedNotification)
     case unknown
 
+    // swiftlint:disable:next cyclomatic_complexity
     /// Initializer for using different CodingKeys.
     /// This is necessary because Notifications that aren't push notifications have a different name for `type`.
     public init<Key>(from decoder: Decoder, typeKey: Key, parametersKey: Key) throws where Key: CodingKey {
@@ -98,12 +99,17 @@ public enum CoursePushNotification: Codable {
         case .removedFromChannel(let notification): notification
 
         case .attachmentChanged(let notification): notification
+        case .deregisteredFromTutorial(let notification): notification
         case .exerciseAssessed(let notification): notification
         case .exerciseOpenForPractice(let notification): notification
         case .exerciseUpdated(let notification): notification
         case .newExercise(let notification): notification
         case .newManualFeedbackRequest(let notification): notification
         case .quizStarted(let notification): notification
+        case .registeredToTutorial(let notification): notification
+        case .tutorialAssigned(let notification): notification
+        case .tutorialDeleted(let notification): notification
+        case .tutorialUnassigned(let notification): notification
         default:
             nil
         }

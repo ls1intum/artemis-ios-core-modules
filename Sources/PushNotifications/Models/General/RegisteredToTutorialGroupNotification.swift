@@ -14,3 +14,13 @@ public struct RegisteredToTutorialGroupNotification: CourseBaseNotification {
     public var groupId: Int?
     public var moderatorName: String?
 }
+
+extension RegisteredToTutorialGroupNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.artemisAppSingleUserNotificationTitleTutorialGroupRegistrationStudent()
+    }
+
+    public var body: String? {
+        R.string.localizable.artemisAppSingleUserNotificationTextTutorialGroupRegistrationStudent(groupTitle ?? "", moderatorName ?? "user")
+    }
+}
