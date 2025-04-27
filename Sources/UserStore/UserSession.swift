@@ -24,9 +24,9 @@ public class UserSession: ObservableObject {
     @Published public internal(set) var institution: InstitutionIdentifier?
 
     internal init() {
-        setupLoginData()
-        setupNotificationData()
         setupInstitutionSelection()
+        setupNotificationData()
+        setupLoginData()
     }
 
     private func setupInstitutionSelection() {
@@ -51,16 +51,17 @@ public class UserSession: ObservableObject {
     }
 
     private func setupLoginData() {
-        if let tokenData = KeychainHelper.shared.read(service: .isLoggedInKey, account: "Artemis") {
-            isLoggedIn = String(decoding: tokenData, as: UTF8.self) == "true"
-        }
-
         if let username = KeychainHelper.shared.read(service: .usernameKey, account: "Artemis") {
             self.username = String(decoding: username, as: UTF8.self)
         }
 
         if let password = KeychainHelper.shared.read(service: .passwordKey, account: "Artemis") {
             self.password = String(decoding: password, as: UTF8.self)
+        }
+
+        /// Set isLoggedIn last to prevent other areas of the app from using data before it is loaded
+        if let loggedInData = KeychainHelper.shared.read(service: .isLoggedInKey, account: "Artemis") {
+            isLoggedIn = String(decoding: loggedInData, as: UTF8.self) == "true"
         }
     }
 
