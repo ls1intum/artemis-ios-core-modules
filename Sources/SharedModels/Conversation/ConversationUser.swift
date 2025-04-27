@@ -26,7 +26,7 @@ public struct ConversationUser: UserPublicInfo {
     public var imagePath: URL? {
         guard let imageUrl else { return nil }
         return UserSessionFactory.shared.institution?.baseURL?
-            .appending(path: "/api/core/files")
+            .appending(path: "api/core/files")
             .appending(path: imageUrl)
     }
 }
