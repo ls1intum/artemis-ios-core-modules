@@ -16,11 +16,13 @@ public enum CoursePushNotification: Codable {
     }
 
     case addedToChannel(AddedToChannelNotification)
+    case channelDeleted(ChannelDeletedNotification)
     case newAnnouncement(NewAnnouncementNotification)
     case newAnswer(NewAnswerNotification)
     case newMention(NewMentionNotification)
     case newPost(NewPostNotification)
     case attachmentChanged(AttachmentChangedNotification)
+    case deregisteredFromTutorial(DeregisteredFromTutorialGroupNotification)
     case exerciseAssessed(ExerciseAssessedNotification)
     case exerciseOpenForPractice(ExerciseOpenForPracticeNotification)
     case exerciseUpdated(ExerciseUpdatedNotification)
@@ -37,13 +39,15 @@ public enum CoursePushNotification: Codable {
         let decodeNotification = NotificationDecoder(key: parametersKey, container: container)
         self = switch type {
         // Communication
-        case .addedToChannel: .addedToChannel(try decodeNotification())
+        case .addedToChannelNotification: .addedToChannel(try decodeNotification())
+        case .channelDeletedNotification: .channelDeleted(try decodeNotification())
         case .newAnnouncementNotification: .newAnnouncement(try decodeNotification())
         case .newAnswerNotification: .newAnswer(try decodeNotification())
         case .newMentionNotification: .newMention(try decodeNotification())
         case .newPostNotification: .newPost(try decodeNotification())
         // General
         case .attachmentChangedNotification: .attachmentChanged(try decodeNotification())
+        case .deregisteredFromTutorialGroupNotification: .deregisteredFromTutorial(try decodeNotification())
         case .exerciseAssessedNotification: .exerciseAssessed(try decodeNotification())
         case .exerciseOpenForPracticeNotification: .exerciseOpenForPractice(try decodeNotification())
         case .exerciseUpdatedNotification: .exerciseUpdated(try decodeNotification())
@@ -94,13 +98,15 @@ private struct NotificationDecoder<Key: CodingKey> {
 
 public enum CourseNotificationType: String, Codable, ConstantsEnum {
     // Communication
-    case addedToChannel
+    case addedToChannelNotification
+    case channelDeletedNotification
     case newAnnouncementNotification
     case newAnswerNotification
     case newMentionNotification
     case newPostNotification
     // General
     case attachmentChangedNotification
+    case deregisteredFromTutorialGroupNotification
     case exerciseAssessedNotification
     case exerciseOpenForPracticeNotification
     case exerciseUpdatedNotification
