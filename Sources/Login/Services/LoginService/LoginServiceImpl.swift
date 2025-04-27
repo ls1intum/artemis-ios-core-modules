@@ -49,11 +49,11 @@ class LoginServiceImpl: LoginService {
             case .failure(let error):
                 return .failure(error: error)
             case .done:
-                UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
                 if rememberMe {
                     UserSessionFactory.shared.saveUsername(username: username)
                     UserSessionFactory.shared.savePassword(password: password)
                 }
+                UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
                 return .success
             }
         case .failure(let error):
