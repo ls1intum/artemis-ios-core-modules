@@ -5,6 +5,7 @@
 //  Created by Sven Andabaka on 09.01.23.
 //
 
+import Combine
 import Foundation
 import Common
 
@@ -19,6 +20,11 @@ public class UserSession: ObservableObject {
     // Push Notifications
     @Published internal var notificationDeviceConfigurations: [NotificationDeviceConfiguration] = []
     @Published public var notificationSetupError: UserFacingError?
+    public var notificationChangePublisher: NotificationChangePublisher {
+        $notificationDeviceConfigurations.map { configs in
+            configs.first(where: { $0.username == self.username && $0.institutionIdentifier == self.institution })
+        }
+    }
 
     // Institution Selection
     @Published public internal(set) var institution: InstitutionIdentifier?
@@ -59,7 +65,7 @@ public class UserSession: ObservableObject {
             self.password = String(decoding: password, as: UTF8.self)
         }
 
-        /// Set isLoggedIn last to prevent other areas of the app from using data before it is loaded
+        // Set isLoggedIn last to prevent using any other data before it is loaded
         if let loggedInData = KeychainHelper.shared.read(service: .isLoggedInKey, account: "Artemis") {
             isLoggedIn = String(decoding: loggedInData, as: UTF8.self) == "true"
         }
@@ -172,3 +178,6 @@ fileprivate extension String {
     static let institutionKey = "Institution"
     static let isLoggedInKey = "LoginStatus"
 }
+
+// This is super ugly, yet the cleanest way
+public typealias NotificationChangePublisher = Publishers.Map<Published<[NotificationDeviceConfiguration]>.Publisher, NotificationDeviceConfiguration?>
