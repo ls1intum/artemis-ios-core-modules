@@ -14,3 +14,14 @@ public struct AddedToChannelNotification: CourseBaseNotification {
     public var channelName: String?
     public var channelId: Int?
 }
+
+extension AddedToChannelNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.artemisAppSingleUserNotificationTitleAddUserChannel()
+    }
+
+    public var body: String? {
+        guard let channelName, let channelModerator else { return nil }
+        return R.string.localizable.artemisAppSingleUserNotificationTextAddUserChannel(channelName, channelModerator)
+    }
+}

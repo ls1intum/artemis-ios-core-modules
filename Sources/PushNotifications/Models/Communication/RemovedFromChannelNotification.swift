@@ -14,3 +14,14 @@ public struct RemovedFromChannelNotification: CourseBaseNotification {
     public var channelName: String?
     public var channelId: Int?
 }
+
+extension RemovedFromChannelNotification: DisplayableNotification {
+    public var title: String {
+        R.string.localizable.artemisAppSingleUserNotificationTitleRemoveUserChannel()
+    }
+
+    public var body: String? {
+        guard let channelName, let channelModerator else { return nil }
+        return R.string.localizable.artemisAppSingleUserNotificationTextRemoveUserChannel(channelName, channelModerator)
+    }
+}

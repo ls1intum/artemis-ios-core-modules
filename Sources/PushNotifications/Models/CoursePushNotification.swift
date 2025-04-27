@@ -89,10 +89,13 @@ public enum CoursePushNotification: Codable {
 
     public var displayable: DisplayableNotification? {
         switch self {
+        case .addedToChannel(let notification): notification
+        case .channelDeleted(let notification): notification
         case .newAnnouncement(let notification): notification
         case .newAnswer(let notification): notification
         case .newMention(let notification): notification
         case .newPost(let notification): notification
+        case .removedFromChannel(let notification): notification
 
         case .attachmentChanged(let notification): notification
         case .exerciseAssessed(let notification): notification
