@@ -11,7 +11,7 @@ import SharedModels
 public enum CoursePushNotification: Codable {
 
     fileprivate enum Keys: String, CodingKey {
-        case type
+        case type = "notificationType"
         case parameters
     }
 
