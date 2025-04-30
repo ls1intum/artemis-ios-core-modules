@@ -292,6 +292,37 @@ private struct CategoryImpl: Codable {
     let color: String
 }
 
+extension Exercise {
+    var status: String {
+        let teamId = baseExercise.studentAssignedTeamId
+        let teamOk = !(baseExercise.teamMode ?? false)
+        || !(baseExercise.studentAssignedTeamIdComputed ?? false)
+        || teamId != nil
+
+        let participation = getSpecificStudentParticipation(testRun: false)
+
+        let uninitialized  = (baseExercise.dueDate ?? .tomorrow) > .now && participation == nil
+        let missedDueDate  = (baseExercise.dueDate ?? .tomorrow) < .now && participation == nil
+
+        if !teamOk {
+            return R.string.localizable.userNotAssignedToTeamShort()
+        } else if uninitialized {
+            return R.string.localizable.notYetStarted()
+        } else if missedDueDate {
+            return R.string.localizable.exerciseMissedDeadlineShort()
+        } else if participation?.initializationState == .finished {
+            return R.string.localizable.userSubmittedShort()
+        } else if participation?.initializationState == .initialized,
+                  case .quiz = self {
+            return R.string.localizable.userParticipatingShort()
+        } else if case .quiz(let quiz) = self, quiz.notStarted {
+            return R.string.localizable.notYetStarted()
+        } else {
+            return "–"
+        }
+    }
+}
+
 extension Exercise: Hashable {
     public static func == (lhs: Exercise, rhs: Exercise) -> Bool {
         lhs.id == rhs.id
