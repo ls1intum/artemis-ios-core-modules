@@ -68,6 +68,65 @@ class LoginServiceImpl: LoginService {
             return NetworkResponse(error: error)
         }
     }
+
+    struct LoginChallengeRequest: APIRequest {
+        typealias Response = PasskeyLoginChallenge
+
+        var resourceName: String {
+            "webauthn/authenticate/options"
+        }
+
+        var method: HTTPMethod { .post }
+    }
+
+    func getPasskeyLoginChallenge() async -> Result<PasskeyLoginChallenge, UserFacingError> {
+        let data = await client.sendRequest(LoginChallengeRequest())
+        switch data {
+        case .success((let response, _)):
+            return .success(response)
+        case .failure(let error):
+            return .failure(.init(error: error))
+        }
+    }
+
+    struct LoginRequest: APIRequest {
+        typealias Response = RawResponse
+
+        var resourceName: String {
+            "login/webauthn"
+        }
+
+        var method: HTTPMethod { .post }
+
+        let authenticatorAttachment = "platform"
+        let type = "public-key"
+        let id: String
+        let rawId: String
+        let response: LoginResponse
+    }
+
+    struct LoginResponse: Codable {
+        let authenticatorData: String
+        let clientDataJSON: String
+        let signature: String
+        let userHandle: String
+    }
+
+    func loginWithPasskey(authenticatorData: String, clientDataJSON: String, signature: String, userHandle: String, credentialId: String) async -> Result<Bool, UserFacingError> {
+        let loginResponse = LoginResponse(authenticatorData: authenticatorData,
+                                          clientDataJSON: clientDataJSON,
+                                          signature: signature,
+                                          userHandle: userHandle)
+
+        let request = LoginRequest(id: credentialId, rawId: credentialId, response: loginResponse)
+        let response = await client.sendRequest(request)
+        switch response {
+        case .success((let success, _)):
+            return .success(true)
+        case .failure(let error):
+            return .failure(.init(error: error))
+        }
+    }
 }
 
 enum LoginError: Error {

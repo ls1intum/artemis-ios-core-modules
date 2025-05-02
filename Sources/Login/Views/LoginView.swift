@@ -27,6 +27,13 @@ public struct LoginView: View {
                         .multilineTextAlignment(.center)
                         .padding(.top, -.l)
 
+                    Button("Sign in with Passkey") {
+                        Task {
+                            await viewModel.loginWithPasskey(controller: authorizationController)
+                        }
+                    }
+                    .buttonStyle(ArtemisButton())
+
                     VStack(spacing: .l) {
                         VStack(alignment: .leading, spacing: .xxs) {
                             Text(R.string.localizable.login_username_label())

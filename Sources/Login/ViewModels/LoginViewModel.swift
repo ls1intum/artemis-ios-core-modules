@@ -7,7 +7,7 @@ import SharedModels
 import UserStore
 
 @MainActor
-open class LoginViewModel: ObservableObject {
+open class LoginViewModel: NSObject, ObservableObject {
     @Published public var username: String = "" {
         didSet {
             usernameValidation()
@@ -36,8 +36,11 @@ open class LoginViewModel: ObservableObject {
     @Published public var institution: InstitutionIdentifier = .tum
 
     private var cancellables: Set<AnyCancellable> = Set()
+    internal let service = LoginServiceFactory.shared
 
-    public init() {
+    override public init() {
+        super.init()
+
         UserSessionFactory.shared.objectWillChange.sink {
             DispatchQueue.main.async { [weak self] in
                 self?.username = UserSessionFactory.shared.username ?? ""
@@ -54,7 +57,7 @@ open class LoginViewModel: ObservableObject {
     }
 
     public func login() async {
-        let response = await LoginServiceFactory.shared.login(username: username, password: password, rememberMe: rememberMe)
+        let response = await service.login(username: username, password: password, rememberMe: rememberMe)
 
         switch response {
         case .failure(let error):
