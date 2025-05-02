@@ -86,7 +86,7 @@ public extension PushNotificationHandler {
                                  delegate: URLImageCacheDelegate(),
                                  delegateQueue: URLSession.shared.delegateQueue)
         if let token = UserSessionFactory.shared.getToken() {
-            let properties: [HTTPCookiePropertyKey : Any] = [
+            let properties: [HTTPCookiePropertyKey: Any] = [
                 .name: "jwt",
                 .value: token,
                 .secure: true,

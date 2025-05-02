@@ -38,14 +38,14 @@ public struct PasskeyUser: Codable {
 
 // MARK: Data+Base64Url
 public extension Data {
-    public func base64URLEncodedString() -> String {
+    func base64URLEncodedString() -> String {
         self.base64EncodedString()
             .replacingOccurrences(of: "+", with: "-")
             .replacingOccurrences(of: "/", with: "_")
             .replacingOccurrences(of: "=", with: "")
     }
 
-    public init?(base64UrlEncoded: String) {
+    init?(base64UrlEncoded: String) {
         var base64 = base64UrlEncoded
         base64 = base64.replacingOccurrences(of: "-", with: "+")
         base64 = base64.replacingOccurrences(of: "_", with: "/")
