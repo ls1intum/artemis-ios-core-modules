@@ -29,7 +29,7 @@ public struct LoginView: View {
                         .multilineTextAlignment(.center)
                         .padding(.top, -.l)
 
-                    Button("Sign in with Passkey") {
+                    Button(R.string.localizable.signInPasskey()) {
                         Task {
                             await viewModel.loginWithPasskey(controller: authorizationController)
                         }
