@@ -5,6 +5,7 @@
 //  Created by Sven Andabaka on 09.01.23.
 //
 
+import Account
 import Common
 
 public protocol LoginService {

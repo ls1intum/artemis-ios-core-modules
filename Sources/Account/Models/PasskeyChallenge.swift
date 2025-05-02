@@ -9,35 +9,35 @@ import Foundation
 
 public struct PasskeyLoginChallenge: Codable {
     let challenge: String
-    let rpId: String
+    public let rpId: String
 
-    var challengeData: Data {
+    public var challengeData: Data {
         Data(base64UrlEncoded: challenge) ?? Data()
     }
 }
 
 public struct PasskeyRegistrationChallenge: Codable {
-    let user: PasskeyUser
-    let rp: Rp
+    public let user: PasskeyUser
+    public let rp: RelayParty
     let challenge: String
 
-    var challengeData: Data {
+    public var challengeData: Data {
         Data(base64UrlEncoded: challenge) ?? Data()
     }
 }
 
-struct Rp: Codable {
-    let id: String
+public struct RelayParty: Codable {
+    public let id: String
 }
 
-struct PasskeyUser: Codable {
-    let name: String
-    let id: String
-    let displayName: String
+public struct PasskeyUser: Codable {
+    public let name: String
+    public let id: String
+    public let displayName: String
 }
 
 // MARK: Data+Base64Url
-extension Data {
+public extension Data {
     func base64URLEncodedString() -> String {
         self.base64EncodedString()
             .replacingOccurrences(of: "+", with: "-")

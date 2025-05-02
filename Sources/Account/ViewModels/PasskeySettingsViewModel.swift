@@ -1,5 +1,5 @@
 //
-//  PasskeySetupViewModel.swift
+//  PasskeySettingsViewModel.swift
 //  ArtemisCore
 //
 //  Created by Anian Schleyer on 02.05.25.
@@ -11,13 +11,20 @@ import os
 import SwiftUI
 
 @Observable
-class PasskeySetupViewModel: NSObject, ASAuthorizationControllerDelegate {
-    private let service = LoginServiceFactory.shared
+class PasskeySettingsViewModel: NSObject, ASAuthorizationControllerDelegate {
+    private let service = PasskeyServiceFactory.shared
+
+    var passkeys: DataState<[Passkey]> = .loading
+
     var error: UserFacingError?
     var isLoading = false
 
+    func loadPasskeys() async {
+        passkeys = await service.getPasskeys()
+    }
+
     /// Initiates a request to iOS to generate a new passkey
-    public func registerPasskey(controller: AuthorizationController) async {
+    func registerPasskey(controller: AuthorizationController) async {
         isLoading = true
         defer {
             isLoading = false
@@ -64,7 +71,7 @@ class PasskeySetupViewModel: NSObject, ASAuthorizationControllerDelegate {
         let credentialId = registration.credentialID.base64URLEncodedString()
         let attestationObject = registration.rawAttestationObject?.base64URLEncodedString() ?? ""
         let clientDataJSON = registration.rawClientDataJSON.base64URLEncodedString()
-        
+
         let credResponse = CredentialResponse(attestationObject: attestationObject,
                                               clientDataJSON: clientDataJSON)
         let credential = PasskeyCredential(id: credentialId,
@@ -76,7 +83,7 @@ class PasskeySetupViewModel: NSObject, ASAuthorizationControllerDelegate {
         case .failure(let error):
             self.error = .init(title: "Failed to register passkey: \(error.localizedDescription)")
         default:
-            break
+            await loadPasskeys()
         }
     }
 }

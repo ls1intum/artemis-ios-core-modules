@@ -10,6 +10,9 @@
 "joinedLabel" = "Joined Artemis on";
 "accountInformationNavigationTitle" = "Account Information";
 "changeProfilePicture" = "Your profile picture can be changed in Profile Settings on the web.";
+"passkeys" = "Passkeys";
+"noPasskeys" = "No passkeys";
+"noPasskeysDescription" = "You have not registered any passkeys to your account yet.";
 
 // MARK: General
 "close" = "Close";
