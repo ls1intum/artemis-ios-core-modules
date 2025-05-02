@@ -16,6 +16,7 @@ struct AccountNavigationBarMenuView: View {
     @Binding var error: UserFacingError?
 
     @State private var showProfile = false
+    @State private var showPasskeySettings = false
 
     var body: some View {
         Menu(content: {
@@ -29,6 +30,9 @@ struct AccountNavigationBarMenuView: View {
                         Spacer()
                     }
                 })
+            }
+            Button("Manage Passkeys", systemImage: "key.fill") {
+                showPasskeySettings = true
             }
             Button(R.string.localizable.logoutLabel()) {
                 viewModel.logout()
@@ -62,6 +66,9 @@ struct AccountNavigationBarMenuView: View {
             } else {
                 Text(R.string.localizable.loading())
             }
+        }
+        .sheet(isPresented: $showPasskeySettings) {
+            PasskeySettingsView()
         }
     }
 }

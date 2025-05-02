@@ -1,5 +1,5 @@
 //
-//  PasskeySetupViewModel.swift
+//  PasskeySettingsViewModel.swift
 //  ArtemisCore
 //
 //  Created by Anian Schleyer on 02.05.25.
@@ -11,13 +11,13 @@ import os
 import SwiftUI
 
 @Observable
-class PasskeySetupViewModel: NSObject, ASAuthorizationControllerDelegate {
-    private let service = LoginServiceFactory.shared
+class PasskeySettingsViewModel: NSObject, ASAuthorizationControllerDelegate {
+    private let service = PasskeyServiceFactory.shared
     var error: UserFacingError?
     var isLoading = false
 
     /// Initiates a request to iOS to generate a new passkey
-    public func registerPasskey(controller: AuthorizationController) async {
+    func registerPasskey(controller: AuthorizationController) async {
         isLoading = true
         defer {
             isLoading = false

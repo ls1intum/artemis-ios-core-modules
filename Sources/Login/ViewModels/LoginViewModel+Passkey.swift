@@ -5,15 +5,12 @@
 //  Created by Anian Schleyer on 01.05.25.
 //
 
+import Account
 import APIClient
 import AuthenticationServices
 import SwiftUI
 import os
 import UserStore
-
-extension Logger {
-    static let authorization = Logger(subsystem: "Login", category: "Passkey")
-}
 
 extension LoginViewModel: ASAuthorizationControllerDelegate {
     /// Initiates a Passkey login
