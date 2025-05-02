@@ -69,15 +69,10 @@ extension LoginViewModel: ASAuthorizationControllerDelegate {
                                                       credentialId: credentialId)
 
         switch response {
-        case .success(let success):
-            if success {
-                UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
-                UserSessionFactory.shared.saveUsername(username: userHandle)
-            } else {
-                self.error = .init(title: "Failed to log in. Please try again later.")
-            }
         case .failure(let error):
-            self.error = error
+            self.error = .init(title: error.localizedDescription)
+        default:
+            break
         }
     }
 }

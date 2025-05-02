@@ -8,6 +8,7 @@
 import Account
 import APIClient
 import Common
+import Foundation
 import PushNotifications
 import SharedServices
 import UserStore
@@ -53,6 +54,9 @@ class LoginServiceImpl: LoginService {
                     UserSessionFactory.shared.saveUsername(username: username)
                     UserSessionFactory.shared.savePassword(password: password)
                 }
+                let cookies = URLSession.shared.configuration.httpCookieStorage?.cookies
+                let jwt = cookies?.first { $0.name == "jwt" }
+                UserSessionFactory.shared.saveToken(jwt?.value)
                 UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
                 return .success
             }
@@ -112,7 +116,7 @@ class LoginServiceImpl: LoginService {
         let userHandle: String
     }
 
-    func loginWithPasskey(authenticatorData: String, clientDataJSON: String, signature: String, userHandle: String, credentialId: String) async -> Result<Bool, UserFacingError> {
+    func loginWithPasskey(authenticatorData: String, clientDataJSON: String, signature: String, userHandle: String, credentialId: String) async -> NetworkResponse {
         let loginResponse = LoginResponse(authenticatorData: authenticatorData,
                                           clientDataJSON: clientDataJSON,
                                           signature: signature,
@@ -122,9 +126,14 @@ class LoginServiceImpl: LoginService {
         let response = await client.sendRequest(request)
         switch response {
         case .success((let success, _)):
-            return .success(true)
+            let cookies = URLSession.shared.configuration.httpCookieStorage?.cookies
+            let jwt = cookies?.first { $0.name == "jwt" }
+            UserSessionFactory.shared.saveToken(jwt?.value)
+            UserSessionFactory.shared.saveUsername(username: userHandle)
+            UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
+            return .success
         case .failure(let error):
-            return .failure(.init(error: error))
+            return .failure(error: error)
         }
     }
 }

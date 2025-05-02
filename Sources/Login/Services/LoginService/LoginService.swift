@@ -21,7 +21,7 @@ public protocol LoginService {
     /**
      * Perform a login request with a signed passkey challenge.
      */
-    func loginWithPasskey(authenticatorData: String, clientDataJSON: String, signature: String, userHandle: String, credentialId: String) async -> Result<Bool, UserFacingError>
+    func loginWithPasskey(authenticatorData: String, clientDataJSON: String, signature: String, userHandle: String, credentialId: String) async -> NetworkResponse
 }
 
 enum LoginServiceFactory {

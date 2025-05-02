@@ -1,3 +1,4 @@
+import AuthenticationServices
 import Common
 import DesignLibrary
 import Foundation
@@ -8,6 +9,7 @@ public struct LoginView: View {
         case username, password
     }
 
+    @Environment(\.authorizationController) var authorizationController
     @StateObject private var viewModel = LoginViewModel()
 
     @State private var isInstitutionSelectionPresented = false
