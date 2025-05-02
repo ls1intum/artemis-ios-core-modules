@@ -136,6 +136,55 @@ class LoginServiceImpl: LoginService {
             return .failure(error: error)
         }
     }
+
+    struct RegistrationChallengeRequest: APIRequest {
+        typealias Response = PasskeyRegistrationChallenge
+
+        var resourceName: String {
+            "webauthn/register/options"
+        }
+
+        var method: HTTPMethod { .post }
+    }
+
+    func getPasskeyRegistrationChallenge() async -> Result<PasskeyRegistrationChallenge, UserFacingError> {
+        let data = await client.sendRequest(RegistrationChallengeRequest())
+        switch data {
+        case .success((let response, _)):
+            return .success(response)
+        case .failure(let error):
+            return .failure(.init(error: error))
+        }
+    }
+
+    struct RegisterRequest: APIRequest {
+        typealias Response = RawResponse
+
+        var resourceName: String {
+            "webauthn/register"
+        }
+
+        var method: HTTPMethod { .post }
+
+        let publicKey: PublicKey
+    }
+
+    struct PublicKey: Codable {
+        let credential: PasskeyCredential
+        let label: String
+    }
+
+    func registerPasskey(credential: PasskeyCredential) async -> NetworkResponse {
+        let publicKey = PublicKey(credential: credential, label: "Passkey iOS")
+        let request = RegisterRequest(publicKey: publicKey)
+        let response = await client.sendRequest(request)
+        switch response {
+        case .success((let response, _)):
+            return .success
+        case .failure(let error):
+            return .failure(error: error)
+        }
+    }
 }
 
 enum LoginError: Error {

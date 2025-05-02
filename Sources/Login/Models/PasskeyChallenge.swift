@@ -16,6 +16,26 @@ public struct PasskeyLoginChallenge: Codable {
     }
 }
 
+public struct PasskeyRegistrationChallenge: Codable {
+    let user: PasskeyUser
+    let rp: Rp
+    let challenge: String
+
+    var challengeData: Data {
+        Data(base64UrlEncoded: challenge) ?? Data()
+    }
+}
+
+struct Rp: Codable {
+    let id: String
+}
+
+struct PasskeyUser: Codable {
+    let name: String
+    let id: String
+    let displayName: String
+}
+
 // MARK: Data+Base64Url
 extension Data {
     func base64URLEncodedString() -> String {
