@@ -8,6 +8,7 @@
 import Account
 import APIClient
 import Common
+import Foundation
 import PushNotifications
 import SharedServices
 import UserStore
@@ -53,6 +54,9 @@ class LoginServiceImpl: LoginService {
                     UserSessionFactory.shared.saveUsername(username: username)
                     UserSessionFactory.shared.savePassword(password: password)
                 }
+                let cookies = URLSession.shared.configuration.httpCookieStorage?.cookies
+                let jwt = cookies?.first { $0.name == "jwt" }
+                UserSessionFactory.shared.saveToken(jwt?.value)
                 UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
                 return .success
             }
@@ -66,6 +70,119 @@ class LoginServiceImpl: LoginService {
                 return NetworkResponse(error: error)
             }
             return NetworkResponse(error: error)
+        }
+    }
+
+    struct LoginChallengeRequest: APIRequest {
+        typealias Response = PasskeyLoginChallenge
+
+        var resourceName: String {
+            "webauthn/authenticate/options"
+        }
+
+        var method: HTTPMethod { .post }
+    }
+
+    func getPasskeyLoginChallenge() async -> Result<PasskeyLoginChallenge, UserFacingError> {
+        let data = await client.sendRequest(LoginChallengeRequest())
+        switch data {
+        case .success((let response, _)):
+            return .success(response)
+        case .failure(let error):
+            return .failure(.init(error: error))
+        }
+    }
+
+    struct LoginRequest: APIRequest {
+        typealias Response = RawResponse
+
+        var resourceName: String {
+            "login/webauthn"
+        }
+
+        var method: HTTPMethod { .post }
+
+        let authenticatorAttachment = "platform"
+        let type = "public-key"
+        let id: String
+        let rawId: String
+        let response: LoginResponse
+    }
+
+    struct LoginResponse: Codable {
+        let authenticatorData: String
+        let clientDataJSON: String
+        let signature: String
+        let userHandle: String
+    }
+
+    func loginWithPasskey(authenticatorData: String, clientDataJSON: String, signature: String, userHandle: String, credentialId: String) async -> NetworkResponse {
+        let loginResponse = LoginResponse(authenticatorData: authenticatorData,
+                                          clientDataJSON: clientDataJSON,
+                                          signature: signature,
+                                          userHandle: userHandle)
+
+        let request = LoginRequest(id: credentialId, rawId: credentialId, response: loginResponse)
+        let response = await client.sendRequest(request)
+        switch response {
+        case .success((let success, _)):
+            let cookies = URLSession.shared.configuration.httpCookieStorage?.cookies
+            let jwt = cookies?.first { $0.name == "jwt" }
+            UserSessionFactory.shared.saveToken(jwt?.value)
+            UserSessionFactory.shared.saveUsername(username: userHandle)
+            UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
+            return .success
+        case .failure(let error):
+            return .failure(error: error)
+        }
+    }
+
+    struct RegistrationChallengeRequest: APIRequest {
+        typealias Response = PasskeyRegistrationChallenge
+
+        var resourceName: String {
+            "webauthn/register/options"
+        }
+
+        var method: HTTPMethod { .post }
+    }
+
+    func getPasskeyRegistrationChallenge() async -> Result<PasskeyRegistrationChallenge, UserFacingError> {
+        let data = await client.sendRequest(RegistrationChallengeRequest())
+        switch data {
+        case .success((let response, _)):
+            return .success(response)
+        case .failure(let error):
+            return .failure(.init(error: error))
+        }
+    }
+
+    struct RegisterRequest: APIRequest {
+        typealias Response = RawResponse
+
+        var resourceName: String {
+            "webauthn/register"
+        }
+
+        var method: HTTPMethod { .post }
+
+        let publicKey: PublicKey
+    }
+
+    struct PublicKey: Codable {
+        let credential: PasskeyCredential
+        let label: String
+    }
+
+    func registerPasskey(credential: PasskeyCredential) async -> NetworkResponse {
+        let publicKey = PublicKey(credential: credential, label: "Passkey iOS")
+        let request = RegisterRequest(publicKey: publicKey)
+        let response = await client.sendRequest(request)
+        switch response {
+        case .success((let response, _)):
+            return .success
+        case .failure(let error):
+            return .failure(error: error)
         }
     }
 }

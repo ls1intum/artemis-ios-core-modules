@@ -193,6 +193,7 @@ public final class APIClient {
             UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: false)
             UserSessionFactory.shared.savePassword(password: nil)
             UserSessionFactory.shared.saveUsername(username: nil)
+            UserSessionFactory.shared.saveToken(nil)
         }
         // Remove notification about being logged out
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()

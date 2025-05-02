@@ -75,6 +75,22 @@ public class UserSession: ObservableObject {
         tokenExpired = expired
     }
 
+    public func getToken() -> String? {
+        if let tokenData = KeychainHelper.shared.read(service: .jwtKey, account: "Artemis") {
+            return String(decoding: tokenData, as: UTF8.self)
+        } else {
+            return nil
+        }
+    }
+
+    public func saveToken(_ token: String?) {
+        if let token {
+            KeychainHelper.shared.save(Data(token.utf8), service: .jwtKey, account: "Artemis")
+        } else {
+            KeychainHelper.shared.delete(service: .jwtKey, account: "Artemis")
+        }
+    }
+
     public func setUserLoggedIn(isLoggedIn: Bool) {
         self.isLoggedIn = isLoggedIn
         let isLoggedInData = Data(isLoggedIn.description.utf8)
@@ -160,6 +176,7 @@ public class UserSession: ObservableObject {
         KeychainHelper.shared.delete(service: .passwordKey, account: "Artemis")
         KeychainHelper.shared.delete(service: .institutionKey, account: "Artemis")
         KeychainHelper.shared.delete(service: .notificationConfigKey, account: "Artemis")
+        KeychainHelper.shared.delete(service: .jwtKey, account: "Artemis")
     }
 }
 
@@ -177,6 +194,7 @@ fileprivate extension String {
     static let notificationConfigKey = "NotificationConfigurations"
     static let institutionKey = "Institution"
     static let isLoggedInKey = "LoginStatus"
+    static let jwtKey = "jwt"
 }
 
 // This is super ugly, yet the cleanest way

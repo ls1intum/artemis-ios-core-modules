@@ -1,3 +1,4 @@
+import AuthenticationServices
 import Common
 import DesignLibrary
 import Foundation
@@ -8,6 +9,7 @@ public struct LoginView: View {
         case username, password
     }
 
+    @Environment(\.authorizationController) var authorizationController
     @StateObject private var viewModel = LoginViewModel()
 
     @State private var isInstitutionSelectionPresented = false
@@ -26,6 +28,13 @@ public struct LoginView: View {
                         .font(.customBody)
                         .multilineTextAlignment(.center)
                         .padding(.top, -.l)
+
+                    Button(R.string.localizable.signInPasskey()) {
+                        Task {
+                            await viewModel.loginWithPasskey(controller: authorizationController)
+                        }
+                    }
+                    .buttonStyle(ArtemisButton())
 
                     VStack(spacing: .l) {
                         VStack(alignment: .leading, spacing: .xxs) {
