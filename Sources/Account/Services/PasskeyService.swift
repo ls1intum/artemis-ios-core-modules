@@ -9,6 +9,11 @@ import Common
 
 protocol PasskeyService {
     /**
+     * Perform a request to fetch a user's passkeys.
+     */
+    func getPasskeys() async -> DataState<[Passkey]>
+
+    /**
      * Perform a request to the server to obtain a registration challenge for passkeys.
      */
     func getPasskeyRegistrationChallenge() async -> Result<PasskeyRegistrationChallenge, UserFacingError>

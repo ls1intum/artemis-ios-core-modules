@@ -13,8 +13,15 @@ import SwiftUI
 @Observable
 class PasskeySettingsViewModel: NSObject, ASAuthorizationControllerDelegate {
     private let service = PasskeyServiceFactory.shared
+
+    var passkeys: DataState<[Passkey]> = .loading
+
     var error: UserFacingError?
     var isLoading = false
+
+    func loadPasskeys() async {
+        passkeys = await service.getPasskeys()
+    }
 
     /// Initiates a request to iOS to generate a new passkey
     func registerPasskey(controller: AuthorizationController) async {
@@ -64,7 +71,7 @@ class PasskeySettingsViewModel: NSObject, ASAuthorizationControllerDelegate {
         let credentialId = registration.credentialID.base64URLEncodedString()
         let attestationObject = registration.rawAttestationObject?.base64URLEncodedString() ?? ""
         let clientDataJSON = registration.rawClientDataJSON.base64URLEncodedString()
-        
+
         let credResponse = CredentialResponse(attestationObject: attestationObject,
                                               clientDataJSON: clientDataJSON)
         let credential = PasskeyCredential(id: credentialId,
@@ -76,7 +83,7 @@ class PasskeySettingsViewModel: NSObject, ASAuthorizationControllerDelegate {
         case .failure(let error):
             self.error = .init(title: "Failed to register passkey: \(error.localizedDescription)")
         default:
-            break
+            await loadPasskeys()
         }
     }
 }

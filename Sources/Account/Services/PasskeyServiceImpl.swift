@@ -9,10 +9,29 @@ import APIClient
 import Common
 import Foundation
 import os
-import UserStore
 
 class PasskeyServiceImpl: PasskeyService {
     private let client = APIClient()
+
+    struct GetPasskeysRequest: APIRequest {
+        typealias Response = [Passkey]
+
+        var resourceName: String {
+            "api/core/passkey/user"
+        }
+
+        var method: HTTPMethod { .get }
+    }
+
+    func getPasskeys() async -> DataState<[Passkey]> {
+        let response = await client.sendRequest(GetPasskeysRequest())
+        switch response {
+        case .success((let response, _)):
+            return .done(response: response)
+        case .failure(let error):
+            return .failure(error: .init(error: error))
+        }
+    }
 
     struct RegistrationChallengeRequest: APIRequest {
         typealias Response = PasskeyRegistrationChallenge
