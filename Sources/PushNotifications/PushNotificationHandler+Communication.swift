@@ -71,7 +71,7 @@ public extension PushNotificationHandler {
                                      with id: String,
                                      from urlString: String?) async throws -> INImage? {
         let baseUrl = UserSessionFactory.shared.institution?.baseURL?.appending(path: "api/core/files")
-        guard let urlString, let url = URL(string: urlString, relativeTo: baseUrl) else {
+        guard let urlString, let url = baseUrl?.appending(path: urlString) else {
             // Default profile picture fallback
             let pictureView = ProfilePictureInitialsView(name: user, userId: id, size: 100)
             let imageData = await ImageRenderer(content: pictureView).uiImage?.pngData()
@@ -85,49 +85,21 @@ public extension PushNotificationHandler {
         let session = URLSession(configuration: URLSession.shared.configuration,
                                  delegate: URLImageCacheDelegate(),
                                  delegateQueue: URLSession.shared.delegateQueue)
-
-        var (data, response) = try await session.data(for: request)
-        if (response as? HTTPURLResponse)?.statusCode == 401 {
-            // Not logged in, retry if possible
-            if let username = UserSessionFactory.shared.username,
-               let password = UserSessionFactory.shared.password,
-               await LoginService().login(username: username, password: password) {
-                (data, response) = try await URLSession.shared.data(for: request)
+        if let token = UserSessionFactory.shared.getToken() {
+            let properties: [HTTPCookiePropertyKey : Any] = [
+                .name: "jwt",
+                .value: token,
+                .secure: true,
+                .domain: UserSessionFactory.shared.institution?.baseURL?.absoluteString ?? ""
+            ]
+            if let cookie = HTTPCookie(properties: properties) {
+                session.configuration.httpCookieStorage?.setCookie(cookie)
             }
         }
 
+        let (data, _) = try await session.data(for: request)
+
         return INImage(imageData: data)
-    }
-}
-
-private class LoginService {
-    private let client = APIClient()
-
-    struct LoginUser: APIRequest {
-        typealias Response = RawResponse
-
-        var username: String
-        var password: String
-
-        var method: HTTPMethod {
-            return .post
-        }
-
-        var resourceName: String {
-            return "api/core/public/authenticate"
-        }
-    }
-
-    /// Tries to perform a login request and returns whether it was successful
-    func login(username: String, password: String) async -> Bool {
-        let result = await client.sendRequest(LoginUser(username: username, password: password), currentTry: 3)
-
-        switch result {
-        case .success:
-            return true
-        case .failure(let error):
-            return false
-        }
     }
 }
 
