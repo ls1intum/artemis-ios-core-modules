@@ -292,7 +292,7 @@ private struct CategoryImpl: Codable {
     let color: String
 }
 
-extension Exercise {
+public extension Exercise {
     var status: String {
         let teamId = baseExercise.studentAssignedTeamId
         let teamOk = !(baseExercise.teamMode ?? false)
