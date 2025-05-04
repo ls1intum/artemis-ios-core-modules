@@ -11,13 +11,6 @@
 "assessmentType_semiAutomatic" = "semi-automatic";
 "assessmentType_manual" = "manual";
 
-"userNotAssignedToTeamShort" = "No team yet";
-"exerciseMissedDeadlineShort" = "Missed due date";
-"notYetStarted" = "Not yet started";
-"userNotParticipatedShort" = "Not participated";
-"userParticipatingShort" = "Currently participating";
-"userSubmittedShort" = "Already submitted";
-
 // MARK: Conversation
 "archived" = "(Archived)";
 "onlyYou" = "Only you";
