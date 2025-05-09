@@ -13,6 +13,7 @@ import Intents
 import SwiftUI
 import UserNotifications
 import UserStore
+import Login
 
 public extension PushNotificationHandler {
     /// Prepares an intent for showing a communication notification
@@ -99,7 +100,16 @@ public extension PushNotificationHandler {
             }
         }
 
-        let (data, _) = try await session.data(for: request)
+        let (data, response) = try await session.data(for: request)
+        #warning("Response handling can be removed after June 2025")
+        if (response as? HTTPURLResponse)?.statusCode == 401 {
+            // Not logged in, retry if possible
+            if let username = UserSessionFactory.shared.username,
+               let password = UserSessionFactory.shared.password,
+               await LoginService().login(username: username, password: password) {
+                (data, response) = try await URLSession.shared.data(for: request)
+            }
+        }
 
         return INImage(imageData: data)
     }
