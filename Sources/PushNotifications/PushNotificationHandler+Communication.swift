@@ -81,7 +81,7 @@ public extension PushNotificationHandler {
             return nil
         }
 
-        let request = URLRequest(url: url, timeoutInterval: 15)
+        var request = URLRequest(url: url, timeoutInterval: 15)
         let session = URLSession(configuration: URLSession.shared.configuration,
                                  delegate: URLImageCacheDelegate(),
                                  delegateQueue: URLSession.shared.delegateQueue)
@@ -90,10 +90,12 @@ public extension PushNotificationHandler {
                 .name: "jwt",
                 .value: token,
                 .secure: true,
-                .domain: UserSessionFactory.shared.institution?.baseURL?.absoluteString ?? ""
+                .domain: UserSessionFactory.shared.institution?.baseURL?.absoluteString ?? "",
+                .path: "/",
+                .version: 0
             ]
             if let cookie = HTTPCookie(properties: properties) {
-                session.configuration.httpCookieStorage?.setCookie(cookie)
+                request.allHTTPHeaderFields = HTTPCookie.requestHeaderFields(with: [cookie])
             }
         }
 
