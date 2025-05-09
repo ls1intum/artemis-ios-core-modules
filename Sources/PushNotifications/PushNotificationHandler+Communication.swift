@@ -13,6 +13,7 @@ import Intents
 import SwiftUI
 import UserNotifications
 import UserStore
+import Login
 
 public extension PushNotificationHandler {
     /// Prepares an intent for showing a communication notification
