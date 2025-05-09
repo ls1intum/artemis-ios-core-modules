@@ -100,7 +100,7 @@ public extension PushNotificationHandler {
             }
         }
 
-        let (data, response) = try await session.data(for: request)
+        var (data, response) = try await session.data(for: request)
         #warning("Response handling can be removed after June 2025")
         if (response as? HTTPURLResponse)?.statusCode == 401 {
             // Not logged in, retry if possible
