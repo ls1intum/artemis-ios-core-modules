@@ -127,7 +127,7 @@ private struct NotificationDecoder<Key: CodingKey> {
     }
 }
 
-public enum CourseNotificationType: String, Codable, ConstantsEnum {
+public enum CourseNotificationType: String, Codable, CodingKeyRepresentable, ConstantsEnum {
     // Communication
     case addedToChannelNotification
     case channelDeletedNotification
