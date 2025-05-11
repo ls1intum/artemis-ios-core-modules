@@ -24,13 +24,13 @@ enum NotificationSettingsPresetIdentifier: String, ConstantsEnum {
     var title: String {
         switch self {
         case .custom:
-            "Custom"
+            R.string.localizable.settingsPresetCustom()
         case .defaultUserCourseNotificationSettingPreset:
-            "Default"
+            R.string.localizable.settingsPresetDefault()
         case .allActivityUserCourseNotificationSettingPreset:
-            "All activity"
+            R.string.localizable.settingsPresetAllActivity()
         case .ignoreUserCourseNotificationSettingPreset:
-            "Ignore all"
+            R.string.localizable.settingsPresetIgnoreAll()
         case .unknown:
             ""
         }
@@ -39,13 +39,13 @@ enum NotificationSettingsPresetIdentifier: String, ConstantsEnum {
     var description: String {
         switch self {
         case .custom:
-            "Set the settings to your specific needs."
+            R.string.localizable.settingsPresetDescriptionCustom()
         case .defaultUserCourseNotificationSettingPreset:
-            "Receive only essential notifications about the course."
+            R.string.localizable.settingsPresetDescriptionDefault()
         case .allActivityUserCourseNotificationSettingPreset:
-            "Receive all notifications to stay on track at all times."
+            R.string.localizable.settingsPresetDescriptionAllActivity()
         case .ignoreUserCourseNotificationSettingPreset:
-            "Receive no notifications for the course."
+            R.string.localizable.settingsPresetDescriptionIgnoreAll()
         case .unknown:
             ""
         }

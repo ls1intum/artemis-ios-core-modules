@@ -4,16 +4,6 @@
 // MARK: - Notification Settings
 "notificationSettingsTitle" = "Notification Settings";
 
-// MARK: Section Titles
-"courseWideDiscussionNotificationsSectionTitle" = "Course-wide Discussion Notifications";
-"examNotificationsSectionTitle" = "Exam Notifications";
-"exerciseNotificationsSectionTitle" = "Exercise Notifications";
-"lectureNotificationsSectionTitle" = "Lecture Notifications";
-"tutorialGroupNotificationsSectionTitle" = "Tutorial Group Notifications";
-"tutorNotificationsSectionTitle" = "Tutor Notifications";
-"userMentionSectionTitle" = "User Mention Notifications";
-
-// MARK: Settings Names
 "newMessageSettingsName" = "New message";
 "newReplySettingsName" = "New thread answer";
 "newMentionSettingsName" = "You were mentioned";
@@ -43,6 +33,18 @@
 "tutorialRegisteredSettingsName" = "Tutorial registration";
 "tutorialDeregisteredSettingsName" = "Tutorial deregistration";
 "tutorialUnassignedSettingsName" = "Tutorial unassigned";
+
+// MARK: Settings presets
+"settingsPresetCustom" = "Custom";
+"settingsPresetAllActivity" = "All activity";
+"settingsPresetIgnoreAll" = "Ignore all";
+"settingsPresetDefault" = "Default";
+
+"settingsPresetDescriptionCustom" = "Set the settings to your specific needs.";
+"settingsPresetDescriptionAllActivity" = "Receive all notifications to stay on track at all times.";
+"settingsPresetDescriptionIgnoreAll" = "Receive no notifications for the course.";
+"settingsPresetDescriptionDefault" = "Receive only essential notifications about the course.";
+
 
 // MARK: - Push Notifications
 // MARK: Title
