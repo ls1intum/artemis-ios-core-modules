@@ -7,12 +7,15 @@
 
 import Foundation
 import Common
-import UserStore
+import SwiftUI
 
 @Observable
 class NotificationSettingsViewModel {
     private let service = PushNotificationServiceFactory.shared
     private let courseId: Int
+
+    var isLoading = false
+    var error: UserFacingError?
 
     init(courseId: Int) {
         self.courseId = courseId
@@ -51,5 +54,29 @@ class NotificationSettingsViewModel {
 
     func loadSettings() async {
         self.settings = await service.getNotificationSettings(for: courseId)
+    }
+
+    func update(type: CourseNotificationType, enabled: Bool) async {
+        isLoading = true
+        defer {
+            isLoading = false
+        }
+
+        let number = info.value?.notificationTypes.first {
+            $0.value == type
+        }?.key ?? "0"
+
+        settings.value?.notificationTypeChannels[number]?[.push]?.toggle()
+        settings.value?.selectedPreset = 0
+
+        let channelSetting = settings.value?.notificationTypeChannels[number] ?? [:]
+
+        let result = await service.updateSetting(in: courseId, for: number, setting: channelSetting)
+        switch result {
+        case .failure(let error):
+            self.error = .init(title: error.localizedDescription)
+        default:
+            break
+        }
     }
 }

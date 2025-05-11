@@ -31,9 +31,9 @@ public protocol PushNotificationService {
     func getNotificationSettings(for courseId: Int) async -> DataState<NotificationSettings>
 
     /**
-     * Save Notification Settings
+     * Update Notification Settings for the given notification type
      */
-    func saveNotificationSettings(_ settings: [PushNotificationSetting]) async -> DataState<[PushNotificationSetting]>
+    func updateSetting(in courseId: Int, for typeNumber: String, setting: [NotificationChannel: Bool]) async -> NetworkResponse
 }
 
 public enum PushNotificationServiceFactory {

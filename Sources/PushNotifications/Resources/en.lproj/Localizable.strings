@@ -14,57 +14,35 @@
 "userMentionSectionTitle" = "User Mention Notifications";
 
 // MARK: Settings Names
-"newCoursePostSettingsName" = "New Course Message";
-"newReplyForCoursePostSettingsName" = "New Reply for Course Message";
-"newAnnouncementPostSettingsName" = "New Announcement";
+"newMessageSettingsName" = "New message";
+"newReplySettingsName" = "New thread answer";
+"newMentionSettingsName" = "You were mentioned";
+"newAnnouncementSettingsName" = "New announcement";
 
-"newExamMessageSettingsName" = "New Exam Message";
-"newReplyForExamMessageSettingsName" = "New Reply for Exam Message";
+"exerciseReleasedSettingsName" = "New exercise";
+"exerciseOpenForPracticeSettingsName" = "Exercise open for practice";
+"exerciseAssessedSettingsName" = "Exercise assessed";
+"exerciseUpdatedSettingsName" = "Exercise updated";
+"quizStartedSettingsName" = "Quiz exercise started";
+"attachmentChangedSettingsName" = "Attachment changed";
+"feedbackRequestSettingsName" = "Feedback requested";
+"duplicateTestSettingsName" = "Test duplicate warning";
 
-"exerciseReleasedSettingsName" = "Exercise released";
-"exerciseOpenForPracticeSettingsName" = "Exercise Open for Practice";
-"exerciseSubmissionAssessedSettingsName" = "Exercise Submission assessed";
-"fileSubmissionSuccessfulSettingsName" = "File Submission Successful";
-"newExercisePostSettingsName" = "New Exercise Message";
-"newReplyForExercisePostSettingsName" = "New Reply for Exercise Message";
+"newSimilaritySettingsName" = "New similarity";
+"newPlagiarismSettingsName" = "New plagiarism case";
+"buildUpdateSettingsName" = "Build update";
+"testCaseChangedSettingsName" = "Test cases changed";
+"plagiarismVerdictSettingsName" = "Plagiarism verdict";
 
-"attachmentChangesSettingsName" = "Attachment Changes";
-"newLecturePostSettingsName" = "New Lecture Message";
-"newReplyForLecturePostSettingsName" = "New Reply for Lecture Message";
+"deleteChannelSettingsName" = "Channel deleted";
+"addChannelSettingsName" = "Added to channel";
+"removeChannelSettingsName" = "Removed from channel";
 
-"registrationTutorialGroupSettingsName" = "Registration and Deregistration for Tutorial Group";
-"tutorialGroupUpdateDeleteSettingsName" = "Update and Delete of Tutorial Groups";
-
-"assignUnassignTutorialGroupSettingsName" = "Assign and Unassign of Tutorial Groups";
-
-"userMentionSettingsName" = "New User Mention";
-
-// MARK: Settings Descriptions
-"newCoursePostDescription" = "Receive a notification when a new course-wide message has been created";
-"newReplyForCoursePostDescription" = "Receive a notification when a new reply for a course-wide message has been created";
-"newAnnouncementPostDescription" = "Receive a notification when a new announcement has been created";
-
-"newExamMessageSettingsDescription" = "Get notified when a new exam message has been created";
-"newReplyForExamMessageSettingsDescription" = "Get notified when a new reply for an exam message has been created";
-
-"exerciseReleasedDescription" = "Get notified when a new exercise has been released";
-"exerciseOpenForPracticeDescription" = "Get notified when an exercise has been opened for practice (e.g. Quiz)";
-"exerciseSubmissionAssessedDescription" = "Get notified when your exercise submissions get assessed";
-"fileSubmissionSuccessfulDescription" = "Receive a notification after you successfully submitted a file upload exercise";
-"newExercisePostDescription" = "Get notified when a new exercise message has been created";
-"newReplyForExercisePostDescription" = "Get notified when a new reply for an exercise message has been created";
-
-"attachmentChangesDescription" = "Receive a notification when an attachment was changed";
-"newLecturePostDescription" = "Get notified when a new lecture message has been created";
-"newReplyForLecturePostDescription" = "Get notified when a new reply for a lecture message has been created";
-
-"registrationTutorialGroupStudentDescription" = "Get notified when you were registered or deregistered from a tutorial group";
-"tutorialGroupUpdateDeleteDescription" = "Get notified when a tutorial group for which you are registered or a tutor was updated or deleted";
-
-"registrationTutorialGroupTutorDescription" = "Get notified when a student was registered or deregistered from your tutorial group";
-"assignUnassignTutorialGroupDescription" = "Get notified when you were assigned or unassigned to lead a tutorial group";
-
-"userMentionSettingsDescription" = "Receive a notification when you are mentioned in a message or reply";
+"tutorialAssignedSettingsName" = "Tutorial assigned";
+"tutorialDeletedSettingsName" = "Tutorial deleted";
+"tutorialRegisteredSettingsName" = "Tutorial registration";
+"tutorialDeregisteredSettingsName" = "Tutorial deregistration";
+"tutorialUnassignedSettingsName" = "Tutorial unassigned";
 
 // MARK: - Push Notifications
 // MARK: Title

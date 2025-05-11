@@ -108,19 +108,19 @@ class PushNotificationServiceImpl: PushNotificationService {
     }
 
     struct GetNotificationSettingsRequest: APIRequest {
-        typealias Response = [PushNotificationSetting]
+        typealias Response = NotificationSettings
 
-        var method: HTTPMethod {
-            return .get
-        }
+        var method: HTTPMethod { .get }
+
+        let courseId: Int
 
         var resourceName: String {
-            return "api/communication/notification-settings"
+            return "api/communication/notification/\(courseId)/settings"
         }
     }
 
-    func getNotificationSettings() async -> DataState<[PushNotificationSetting]> {
-        let result = await client.sendRequest(GetNotificationSettingsRequest())
+    func getNotificationSettings(for courseId: Int) async -> DataState<NotificationSettings> {
+        let result = await client.sendRequest(GetNotificationSettingsRequest(courseId: courseId))
 
         switch result {
         case .success(let (response, _)):
@@ -131,33 +131,27 @@ class PushNotificationServiceImpl: PushNotificationService {
         }
     }
 
-    struct SaveNotificationSettingsRequest: APIRequest {
-        typealias Response = [PushNotificationSetting]
+    struct UpdateNotificationSettingRequest: APIRequest {
+        typealias Response = RawResponse
 
-        var notificationSettings: [PushNotificationSetting]
+        var method: HTTPMethod { .put }
 
-        var method: HTTPMethod {
-            return .put
-        }
+        let courseId: Int
+        let notificationTypeChannels: [String: [NotificationChannel: Bool]]
 
         var resourceName: String {
-            return "api/communication/notification-settings"
-        }
-
-        func encode(to encoder: Encoder) throws {
-            var container = encoder.singleValueContainer()
-            try container.encode(notificationSettings)
+            return "api/communication/notification/\(courseId)/setting-specification"
         }
     }
 
-    func saveNotificationSettings(_ settings: [PushNotificationSetting]) async -> DataState<[PushNotificationSetting]> {
-        let result = await client.sendRequest(SaveNotificationSettingsRequest(notificationSettings: settings))
+    func updateSetting(in courseId: Int, for typeNumber: String, setting: [NotificationChannel: Bool]) async -> NetworkResponse {
+        let result = await client.sendRequest(UpdateNotificationSettingRequest(courseId: courseId, notificationTypeChannels: [typeNumber: setting]))
 
         switch result {
         case .success(let (response, _)):
-            return .done(response: response)
+            return .success
         case .failure(let error):
-            log.error(error, "Could not save Notification Settings")
+            log.error(error, "Could not update Notification Setting")
             return .failure(error: UserFacingError(error: error))
         }
     }

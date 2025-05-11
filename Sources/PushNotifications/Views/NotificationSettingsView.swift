@@ -37,6 +37,20 @@ public struct NotificationSettingsView: View {
         }
         .navigationTitle(R.string.localizable.notificationSettingsTitle())
         .navigationBarTitleDisplayMode(.inline)
+        .alert(isPresented: Binding(get: {
+            viewModel.error != nil
+        }, set: { newValue in
+            if !newValue {
+                viewModel.error = nil
+            }
+        }), error: viewModel.error, actions: {})
+        .toolbar {
+            if viewModel.isLoading {
+                ToolbarItem(placement: .topBarTrailing) {
+                    ProgressView()
+                }
+            }
+        }
         .onAppear {
             Task {
                 await viewModel.loadInfo()
@@ -62,6 +76,7 @@ public struct NotificationSettingsView: View {
                     }
                 }
             }
+            .disabled(true) // TODO: Enable picker
         } footer: {
             Text(viewModel.currentPreset.description)
         }
@@ -74,12 +89,22 @@ struct NotificationSettingView: View {
     let settingType: CourseNotificationType
     let setting: [NotificationChannel: Bool]
 
+    var binding: Binding<Bool> {
+        .init {
+            setting[.push] ?? false
+        } set: { newValue in
+            Task {
+                await viewModel.update(type: settingType, enabled: newValue)
+            }
+        }
+    }
+
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(settingType.rawValue)
-                .font(.headline)
-            if let setting = self.setting[.push] {
-                Toggle(isOn: .constant(setting)) {}
+        if let setting = self.setting[.push] {
+            Toggle(isOn: binding) {
+                // TODO: Add example or description
+                Text(settingType.settingsTitle)
+                    .font(.headline)
             }
         }
     }

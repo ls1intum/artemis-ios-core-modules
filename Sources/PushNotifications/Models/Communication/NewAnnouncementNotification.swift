@@ -21,7 +21,7 @@ public struct NewAnnouncementNotification: CourseBaseNotification {
 
 extension NewAnnouncementNotification: DisplayableNotification {
     public var title: String {
-        R.string.localizable.newAnnouncementPostSettingsName()
+        R.string.localizable.newAnnouncementSettingsName()
     }
 
     public var body: String? {

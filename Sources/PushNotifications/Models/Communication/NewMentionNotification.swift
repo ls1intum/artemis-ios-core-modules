@@ -26,7 +26,7 @@ public struct NewMentionNotification: CourseBaseNotification {
 
 extension NewMentionNotification: DisplayableNotification {
     public var title: String {
-        R.string.localizable.userMentionSettingsName()
+        R.string.localizable.newMentionSettingsName()
     }
 
     public var body: String? {
