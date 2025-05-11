@@ -21,14 +21,19 @@ public protocol PushNotificationService {
     func unregister() async -> NetworkResponse
 
     /**
-     * Get Notification Settings
+     * Get Notification Settings Info
      */
-    func getNotificationSettings() async -> DataState<[PushNotificationSetting]>
+    func getNotificationSettingsInfo() async -> DataState<NotificationSettingsInfo>
 
     /**
-     * Save Notification Settings
+     * Get Notification Settings
      */
-    func saveNotificationSettings(_ settings: [PushNotificationSetting]) async -> DataState<[PushNotificationSetting]>
+    func getNotificationSettings(for courseId: Int) async -> DataState<NotificationSettings>
+
+    /**
+     * Update Notification Settings for the given notification type
+     */
+    func updateSetting(in courseId: Int, for typeNumber: String, setting: [NotificationChannel: Bool]) async -> NetworkResponse
 }
 
 public enum PushNotificationServiceFactory {
