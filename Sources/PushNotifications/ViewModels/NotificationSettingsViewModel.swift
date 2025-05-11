@@ -56,6 +56,35 @@ class NotificationSettingsViewModel {
         self.settings = await service.getNotificationSettings(for: courseId)
     }
 
+    func selectPreset(with identifier: NotificationSettingsPresetIdentifier) async {
+        isLoading = true
+        defer {
+            isLoading = false
+        }
+        let oldSettings = settings.value
+
+        let newPreset = presets.first { $0.identifier == identifier }
+
+        settings.value?.selectedPreset = newPreset?.typeId ?? 0
+        var newSettings: [String: [NotificationChannel: Bool]] = [:]
+        newPreset?.presetMap.forEach { key, value in
+            let number = info.value?.notificationTypes.first {
+                $0.value == key
+            }?.key ?? "0"
+            newSettings[number] = value
+        }
+        settings.value?.notificationTypeChannels = newSettings
+
+        let result = await service.selectPreset(in: courseId, with: newPreset?.typeId ?? 0)
+        switch result {
+        case .failure(let error):
+            self.error = .init(title: error.localizedDescription)
+            self.settings.value = oldSettings
+        default:
+            break
+        }
+    }
+
     func update(type: CourseNotificationType, enabled: Bool) async {
         isLoading = true
         defer {
@@ -75,6 +104,8 @@ class NotificationSettingsViewModel {
         switch result {
         case .failure(let error):
             self.error = .init(title: error.localizedDescription)
+            // Undo toggle
+            settings.value?.notificationTypeChannels[number]?[.push]?.toggle()
         default:
             break
         }
