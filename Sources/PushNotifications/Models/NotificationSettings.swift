@@ -8,10 +8,15 @@
 import Foundation
 import SharedModels
 
-struct NotificationSettingsInfo: Codable {
+public struct NotificationSettingsInfo: Codable {
     let notificationTypes: [String: CourseNotificationType]
     let channels: [NotificationChannel]
     let presets: [NotificationSettingsPreset]
+}
+
+public struct NotificationSettings: Codable {
+    let selectedPreset: Int
+    let notificationTypeChannels: [String: [NotificationChannel: Bool]]
 }
 
 enum NotificationChannel: String, CodingKeyRepresentable, ConstantsEnum {
@@ -21,13 +26,6 @@ enum NotificationChannel: String, CodingKeyRepresentable, ConstantsEnum {
     case unknown
 }
 
-struct NotificationSettingsPreset: Codable {
-    let identifier: String
-    let typeId: Int
-    let presetMap: [CourseNotificationType: [NotificationChannel: Bool]]
-}
-
-struct NotificationSettings: Codable {
-    let selectedPreset: Int
-    let notificationTypeChannels: [String: [NotificationChannel: Bool]]
+protocol NotificationSetting {
+    var settingsTitle: String { get }
 }

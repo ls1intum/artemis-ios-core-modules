@@ -21,9 +21,14 @@ public protocol PushNotificationService {
     func unregister() async -> NetworkResponse
 
     /**
+     * Get Notification Settings Info
+     */
+    func getNotificationSettingsInfo() async -> DataState<NotificationSettingsInfo>
+
+    /**
      * Get Notification Settings
      */
-    func getNotificationSettings() async -> DataState<[PushNotificationSetting]>
+    func getNotificationSettings(for courseId: Int) async -> DataState<NotificationSettings>
 
     /**
      * Save Notification Settings

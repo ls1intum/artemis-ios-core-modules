@@ -85,6 +85,28 @@ class PushNotificationServiceImpl: PushNotificationService {
         }
     }
 
+    struct GetNotificationSettingsInfoRequest: APIRequest {
+        typealias Response = NotificationSettingsInfo
+
+        var method: HTTPMethod { .get }
+
+        var resourceName: String {
+            return "api/communication/notification/info"
+        }
+    }
+
+    func getNotificationSettingsInfo() async -> DataState<NotificationSettingsInfo> {
+        let result = await client.sendRequest(GetNotificationSettingsInfoRequest())
+
+        switch result {
+        case .success(let (response, _)):
+            return .done(response: response)
+        case .failure(let error):
+            log.error(error, "Could not load Notification Settings Info")
+            return .failure(error: UserFacingError(error: error))
+        }
+    }
+
     struct GetNotificationSettingsRequest: APIRequest {
         typealias Response = [PushNotificationSetting]
 
