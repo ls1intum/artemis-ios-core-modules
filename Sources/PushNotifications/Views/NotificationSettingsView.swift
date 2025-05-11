@@ -26,6 +26,11 @@ public struct NotificationSettingsView: View {
                 Form {
                     presetPicker
 
+                    Section {
+                        ArtemisHintBox(text: R.string.localizable.settingsDisclaimer(), hintType: .info)
+                            .listRowInsets(EdgeInsets(top: -1, leading: -1, bottom: -1, trailing: -1))
+                    }
+
                     ForEach(settings, id: \.0.hashValue) { type, setting in
                         NotificationSettingView(viewModel: viewModel,
                                                 settingType: type,
