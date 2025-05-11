@@ -155,4 +155,34 @@ class PushNotificationServiceImpl: PushNotificationService {
             return .failure(error: UserFacingError(error: error))
         }
     }
+
+    struct SelectNotificationSettingPresetRequest: APIRequest {
+        typealias Response = RawResponse
+
+        var method: HTTPMethod { .put }
+
+        let courseId: Int
+        let preset: Int
+
+        func encode(to encoder: any Encoder) throws {
+            var container = encoder.singleValueContainer()
+            try container.encode(preset)
+        }
+
+        var resourceName: String {
+            return "api/communication/notification/\(courseId)/setting-preset"
+        }
+    }
+
+    func selectPreset(in courseId: Int, with preset: Int) async -> NetworkResponse {
+        let result = await client.sendRequest(SelectNotificationSettingPresetRequest(courseId: courseId, preset: preset))
+
+        switch result {
+        case .success(let (response, _)):
+            return .success
+        case .failure(let error):
+            log.error(error, "Could not update Notification Preset")
+            return .failure(error: UserFacingError(error: error))
+        }
+    }
 }

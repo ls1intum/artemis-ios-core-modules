@@ -34,6 +34,11 @@ public protocol PushNotificationService {
      * Update Notification Settings for the given notification type
      */
     func updateSetting(in courseId: Int, for typeNumber: String, setting: [NotificationChannel: Bool]) async -> NetworkResponse
+
+    /**
+     * Use a notification preset from the server
+     */
+    func selectPreset(in courseId: Int, with preset: Int) async -> NetworkResponse
 }
 
 public enum PushNotificationServiceFactory {

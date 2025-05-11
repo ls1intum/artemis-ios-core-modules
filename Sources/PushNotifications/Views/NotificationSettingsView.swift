@@ -26,6 +26,11 @@ public struct NotificationSettingsView: View {
                 Form {
                     presetPicker
 
+                    Section {
+                        ArtemisHintBox(text: R.string.localizable.settingsDisclaimer(), hintType: .info)
+                            .listRowInsets(EdgeInsets(top: -1, leading: -1, bottom: -1, trailing: -1))
+                    }
+
                     ForEach(settings, id: \.0.hashValue) { type, setting in
                         NotificationSettingView(viewModel: viewModel,
                                                 settingType: type,
@@ -61,9 +66,19 @@ public struct NotificationSettingsView: View {
         }
     }
 
+    var presetBinding: Binding<NotificationSettingsPresetIdentifier> {
+        .init {
+            viewModel.currentPreset
+        } set: { newValue in
+            Task {
+                await viewModel.selectPreset(with: newValue)
+            }
+        }
+    }
+
     var presetPicker: some View {
         Section {
-            Picker("Setting", selection: .constant(viewModel.currentPreset)) {
+            Picker("Setting", selection: presetBinding) {
                 ForEach(NotificationSettingsPresetIdentifier.allCases, id: \.self) { preset in
                     if preset != .unknown {
                         Button {
@@ -76,7 +91,6 @@ public struct NotificationSettingsView: View {
                     }
                 }
             }
-            .disabled(true) // TODO: Enable picker
         } footer: {
             Text(viewModel.currentPreset.description)
         }

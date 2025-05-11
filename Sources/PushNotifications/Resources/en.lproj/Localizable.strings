@@ -3,6 +3,7 @@
 
 // MARK: - Notification Settings
 "notificationSettingsTitle" = "Notification Settings";
+"settingsDisclaimer" = "These settings manage push notifications, e.g. those on the iOS Lock Screen and Apple Watch.\nTo manage Email notifications, please use a browser.";
 
 "newMessageSettingsName" = "New message";
 "newReplySettingsName" = "New thread answer";
