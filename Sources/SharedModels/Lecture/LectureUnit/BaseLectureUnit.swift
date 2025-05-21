@@ -40,7 +40,6 @@ public enum LectureUnit: Codable {
         case .attachmentVideo(let lectureUnit): return lectureUnit
         case .exercise(let lectureUnit): return lectureUnit
         case .text(let lectureUnit): return lectureUnit
-        case .video(let lectureUnit): return lectureUnit
         case .online(let lectureUnit): return lectureUnit
         case .unknown(let lectureUnit): return lectureUnit
         }
