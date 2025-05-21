@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  BaseLectureUnit.swift
 //  
 //
 //  Created by Sven Andabaka on 02.05.23.
@@ -29,16 +29,15 @@ public enum LectureUnit: Codable {
         case type
     }
 
-    case attachment(lectureUnit: AttachmentUnit)
+    case attachmentVideo(lectureUnit: AttachmentVideoUnit)
     case exercise(lectureUnit: ExerciseUnit)
     case text(lectureUnit: TextUnit)
-    case video(lectureUnit: VideoUnit)
     case online(lectureUnit: OnlineUnit)
     case unknown(lectureUnit: UnknownLectureUnit)
 
     public var baseUnit: any BaseLectureUnit {
         switch self {
-        case .attachment(let lectureUnit): return lectureUnit
+        case .attachmentVideo(let lectureUnit): return lectureUnit
         case .exercise(let lectureUnit): return lectureUnit
         case .text(let lectureUnit): return lectureUnit
         case .video(let lectureUnit): return lectureUnit
@@ -55,17 +54,16 @@ public enum LectureUnit: Codable {
         let container = try decoder.container(keyedBy: Keys.self)
         let type = try container.decode(String.self, forKey: Keys.type)
         switch type {
-        case AttachmentUnit.type: self = .attachment(lectureUnit: try AttachmentUnit(from: decoder))
+        case AttachmentVideoUnit.type: self = .attachment(lectureUnit: try AttachmentVideoUnit(from: decoder))
         case ExerciseUnit.type: self = .exercise(lectureUnit: try ExerciseUnit(from: decoder))
         case TextUnit.type: self = .text(lectureUnit: try TextUnit(from: decoder))
-        case VideoUnit.type: self = .video(lectureUnit: try VideoUnit(from: decoder))
         case OnlineUnit.type: self = .online(lectureUnit: try OnlineUnit(from: decoder))
         default: self = .unknown(lectureUnit: try UnknownLectureUnit(from: decoder))
         }
     }
 
     public init?(lectureUnit: BaseLectureUnit) {
-        if let lectureUnit = lectureUnit as? AttachmentUnit {
+        if let lectureUnit = lectureUnit as? AttachmentVideoUnit {
             self = .attachment(lectureUnit: lectureUnit)
             return
         }
@@ -75,10 +73,6 @@ public enum LectureUnit: Codable {
         }
         if let lectureUnit = lectureUnit as? TextUnit {
             self = .text(lectureUnit: lectureUnit)
-            return
-        }
-        if let lectureUnit = lectureUnit as? VideoUnit {
-            self = .video(lectureUnit: lectureUnit)
             return
         }
         if let lectureUnit = lectureUnit as? OnlineUnit {
