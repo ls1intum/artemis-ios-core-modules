@@ -32,7 +32,9 @@ public struct AttachmentVideoUnit: BaseLectureUnit {
      */
     public var image: Image {
         guard let path = attachment?.pathExtension else {
-            // TODO: Video image
+            if let videoSource {
+                return Image("video-solid", bundle: .module)
+            }
             return Image("file-solid", bundle: .module)
         }
         switch path {
