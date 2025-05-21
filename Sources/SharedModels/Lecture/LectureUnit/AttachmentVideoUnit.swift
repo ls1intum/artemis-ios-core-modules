@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  AttachmentVideoUnit.swift
 //  
 //
 //  Created by Sven Andabaka on 02.05.23.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public struct AttachmentUnit: BaseLectureUnit {
+public struct AttachmentVideoUnit: BaseLectureUnit {
     public static var type: String {
         "attachment"
     }
@@ -25,11 +25,14 @@ public struct AttachmentUnit: BaseLectureUnit {
     public var attachment: Attachment?
     public var slides: [Slide]?
 
+    public var videoSource: String?
+
     /**
      * Returns the matching icon for the file extension of the attachment
      */
     public var image: Image {
         guard let path = attachment?.pathExtension else {
+            // TODO: Video image
             return Image("file-solid", bundle: .module)
         }
         switch path {
