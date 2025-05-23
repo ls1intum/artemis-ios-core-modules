@@ -53,7 +53,7 @@ public enum LectureUnit: Codable {
         let container = try decoder.container(keyedBy: Keys.self)
         let type = try container.decode(String.self, forKey: Keys.type)
         switch type {
-        case AttachmentVideoUnit.type: self = .attachment(lectureUnit: try AttachmentVideoUnit(from: decoder))
+        case AttachmentVideoUnit.type: self = .attachmentVideo(lectureUnit: try AttachmentVideoUnit(from: decoder))
         case ExerciseUnit.type: self = .exercise(lectureUnit: try ExerciseUnit(from: decoder))
         case TextUnit.type: self = .text(lectureUnit: try TextUnit(from: decoder))
         case OnlineUnit.type: self = .online(lectureUnit: try OnlineUnit(from: decoder))
@@ -63,7 +63,7 @@ public enum LectureUnit: Codable {
 
     public init?(lectureUnit: BaseLectureUnit) {
         if let lectureUnit = lectureUnit as? AttachmentVideoUnit {
-            self = .attachment(lectureUnit: lectureUnit)
+            self = .attachmentVideo(lectureUnit: lectureUnit)
             return
         }
         if let lectureUnit = lectureUnit as? ExerciseUnit {
