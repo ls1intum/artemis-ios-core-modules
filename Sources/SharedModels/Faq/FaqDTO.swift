@@ -8,7 +8,7 @@
 import Foundation
 
 public struct FaqDTO: Codable, Identifiable {
-    public var id: Int64
+    public var id: Int64?
     public var questionTitle: String
     public var questionAnswer: String
     public var categories: Set<String>?
