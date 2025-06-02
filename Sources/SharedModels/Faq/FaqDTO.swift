@@ -12,13 +12,9 @@ public struct FaqDTO: Codable, Identifiable {
     public var id: Int64?
     public var questionTitle: String
     public var questionAnswer: String
-    public var categories: Set<String>?
+    public var categories: [FaqCategory]?
     public var faqState: FaqState
     public var course: Course?
-
-    public var categoriesAsModel: [FaqCategory]? {
-        categories?.compactMap(FaqCategory.init(jsonString:))
-    }
 
     public init() {
         questionTitle = ""
@@ -26,9 +22,19 @@ public struct FaqDTO: Codable, Identifiable {
         categories = []
         faqState = .unknown
     }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decodeIfPresent(Int64.self, forKey: .id)
+        self.questionTitle = try container.decode(String.self, forKey: .questionTitle)
+        self.questionAnswer = try container.decode(String.self, forKey: .questionAnswer)
+        self.categories = try container.decodeIfPresent([String].self, forKey: .categories)?.compactMap(FaqCategory.init(jsonString:))
+        self.faqState = try container.decode(FaqState.self, forKey: .faqState)
+        self.course = try container.decodeIfPresent(Course.self, forKey: .course)
+    }
 }
 
-public struct FaqCategory: Codable {
+public struct FaqCategory: Codable, Hashable {
     public let color: String
     public let category: String
 
