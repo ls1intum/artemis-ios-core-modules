@@ -13,4 +13,5 @@ public struct FaqDTO: Codable, Identifiable {
     public var questionAnswer: String
     public var categories: Set<String>?
     public var faqState: FaqState
+    public var course: Course?
 }
