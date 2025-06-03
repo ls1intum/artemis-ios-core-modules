@@ -23,16 +23,6 @@ public struct FaqDTO: Codable, Identifiable {
         faqState = .unknown
     }
 
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decodeIfPresent(Int64.self, forKey: .id)
-        self.questionTitle = try container.decode(String.self, forKey: .questionTitle)
-        self.questionAnswer = try container.decode(String.self, forKey: .questionAnswer)
-        self.categories = try container.decodeIfPresent([String].self, forKey: .categories)?.compactMap(FaqCategory.init(jsonString:))
-        self.faqState = try container.decode(FaqState.self, forKey: .faqState)
-        self.course = try container.decodeIfPresent(Course.self, forKey: .course)
-    }
-
     enum CodingKeys: CodingKey {
         case id
         case questionTitle
@@ -41,15 +31,28 @@ public struct FaqDTO: Codable, Identifiable {
         case faqState
         case course
     }
-    
+}
+
+extension FaqDTO {
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        id = try container.decodeIfPresent(Int64.self, forKey: .id)
+        questionTitle = try container.decode(String.self, forKey: .questionTitle)
+        questionAnswer = try container.decode(String.self, forKey: .questionAnswer)
+        categories = try container.decodeIfPresent([String].self, forKey: .categories)?.compactMap(FaqCategory.init(jsonString:))
+        faqState = try container.decode(FaqState.self, forKey: .faqState)
+    }
+
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(self.id, forKey: .id)
-        try container.encode(self.questionTitle, forKey: .questionTitle)
-        try container.encode(self.questionAnswer, forKey: .questionAnswer)
-        try container.encodeIfPresent(self.categories?.map(\.asJsonString), forKey: .categories)
-        try container.encode(self.faqState, forKey: .faqState)
-        try container.encodeIfPresent(self.course, forKey: .course)
+
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encode(questionTitle, forKey: .questionTitle)
+        try container.encode(questionAnswer, forKey: .questionAnswer)
+        try container.encodeIfPresent(categories?.map(\.asJsonString), forKey: .categories)
+        try container.encode(faqState, forKey: .faqState)
+        try container.encodeIfPresent(course, forKey: .course)
     }
 }
 
