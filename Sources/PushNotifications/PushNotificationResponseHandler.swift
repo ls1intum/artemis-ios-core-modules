@@ -50,7 +50,8 @@ public class PushNotificationResponseHandler {
         case .quizExerciseStarted:
             guard let target = try? decoder.decode(QuizExerciseStartedTarget.self, from: targetData) else { return nil }
             return "courses/\(target.course)/quiz-exercises/\(target.id)/live"
-        case .newReplyForCoursePost, .newCoursePost, .newAnnouncementPost,
+        case .newReplyForCoursePost, .newCoursePost,
+                .newAnnouncementPost, .conversationUserMentioned,
                 .newExercisePost, .newReplyForExercisePost,
                 .newLecturePost, .newReplyForLecturePost,
                 .newExamPost, .newReplyForExamPost:
