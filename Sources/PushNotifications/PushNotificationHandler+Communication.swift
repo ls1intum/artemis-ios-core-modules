@@ -5,7 +5,6 @@
 //  Created by Anian Schleyer on 12.12.24.
 //
 
-import APIClient
 import CryptoKit
 import DesignLibrary
 import Foundation
@@ -99,26 +98,7 @@ public extension PushNotificationHandler {
             }
         }
 
-        var (data, response) = try await session.data(for: request)
-        #warning("Response handling can be removed after June 2025")
-        if (response as? HTTPURLResponse)?.statusCode == 401 {
-            struct Login: APIRequest {
-                typealias Response = RawResponse
-                var resourceName: String { "api/core/public/authenticate" }
-
-                var username: String
-                var password: String
-                var rememberMe: Bool
-
-                var method: HTTPMethod { .post }
-            }
-            // Not logged in, retry if possible
-            if let username = UserSessionFactory.shared.username,
-               let password = UserSessionFactory.shared.password {
-                await APIClient().sendRequest(Login(username: username, password: password, rememberMe: true), currentTry: 3)
-                (data, response) = try await URLSession.shared.data(for: request)
-            }
-        }
+        let (data, _) = try await session.data(for: request)
 
         return INImage(imageData: data)
     }
