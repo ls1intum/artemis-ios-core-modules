@@ -17,7 +17,7 @@ public class PushNotificationResponseHandler {
         return info.channelId
     }
 
-    public static func getTarget(from userInfo: [AnyHashable: Any]) -> String? {
+    public static func getTarget(userInfo: [AnyHashable: Any]) -> String? {
         return userInfo[PushNotificationUserInfoKeys.target] as? String
     }
 }
