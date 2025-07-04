@@ -42,10 +42,9 @@ public enum CoursePushNotification: Codable {
     case tutorialUnassigned(TutorialGroupUnassignedNotification)
     case unknown
 
-    // swiftlint:disable:next cyclomatic_complexity
     /// Initializer for using different CodingKeys.
     /// This is necessary because Notifications that aren't push notifications have a different name for `type`.
-    public init<Key>(from decoder: Decoder, typeKey: Key, parametersKey: Key) throws where Key: CodingKey {
+    public init<Key>(from decoder: Decoder, typeKey: Key, parametersKey: Key) throws where Key: CodingKey { // swiftlint:disable:this cyclomatic_complexity
         let container = try decoder.container(keyedBy: Key.self)
         let type = try container.decode(CourseNotificationType.self, forKey: typeKey)
         let decodeNotification = NotificationDecoder(key: parametersKey, container: container)
@@ -173,4 +172,8 @@ public protocol DisplayableNotification {
 public extension DisplayableNotification {
     var bodyLineLimit: Int { 3 }
     var subtitle: String? { nil }
+}
+
+public protocol NavigatableNotification {
+    var relativePath: String? { get }
 }
