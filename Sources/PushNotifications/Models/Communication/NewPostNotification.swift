@@ -33,3 +33,9 @@ extension NewPostNotification: DisplayableNotification {
         postMarkdownContent
     }
 }
+
+extension NewPostNotification: NavigatableNotification {
+    public var relativePath: String? {
+        communicationPath(courseId: courseId, conversationId: channelId)
+    }
+}

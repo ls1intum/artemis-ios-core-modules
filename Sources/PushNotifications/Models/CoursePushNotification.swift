@@ -177,3 +177,14 @@ public extension DisplayableNotification {
 public protocol NavigatableNotification {
     var relativePath: String? { get }
 }
+
+extension NavigatableNotification {
+    func communicationPath(courseId: Int?, conversationId: Int?, threadId: Int? = nil) -> String? {
+        guard let courseId, let conversationId else { return nil }
+        var path = "courses/\(courseId)/communication?conversationId=\(conversationId)"
+        if let threadId {
+            path += "&focusPostId=\(threadId)"
+        }
+        return path
+    }
+}
