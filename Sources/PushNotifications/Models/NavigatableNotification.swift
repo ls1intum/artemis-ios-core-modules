@@ -10,11 +10,14 @@ public protocol NavigatableNotification {
 }
 
 extension NavigatableNotification {
-    func communicationPath(courseId: Int?, conversationId: Int?, threadId: Int? = nil) -> String? {
+    func communicationPath(courseId: Int?, conversationId: Int?, threadId: Int? = nil, conversationName: String? = nil) -> String? {
         guard let courseId, let conversationId else { return nil }
         var path = "courses/\(courseId)/communication?conversationId=\(conversationId)"
         if let threadId {
             path += "&focusPostId=\(threadId)"
+        }
+        if let conversationName {
+            path += "&conversationName=\(conversationName.replacing(" ", with: ""))"
         }
         return path
     }

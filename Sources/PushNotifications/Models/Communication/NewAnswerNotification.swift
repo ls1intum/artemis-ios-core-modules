@@ -40,6 +40,6 @@ extension NewAnswerNotification: DisplayableNotification {
 
 extension NewAnswerNotification: NavigatableNotification {
     public var relativePath: String? {
-        communicationPath(courseId: courseId, conversationId: channelId, threadId: replyId)
+        communicationPath(courseId: courseId, conversationId: channelId, threadId: postId, conversationName: channelName ?? "Conversation")
     }
 }
