@@ -12,6 +12,7 @@ public enum CoursePushNotification: Codable {
 
     fileprivate enum Keys: String, CodingKey {
         case type = "notificationType"
+        case courseId
         case parameters
     }
 
@@ -121,8 +122,14 @@ private struct NotificationDecoder<Key: CodingKey> {
     let key: Key
     let container: KeyedDecodingContainer<Key>
 
-    func callAsFunction<T: Codable>() throws -> T {
-        try container.decode(T.self, forKey: key)
+    func callAsFunction<T: Codable & CourseBaseNotification>() throws -> T {
+        var value = try container.decode(T.self, forKey: key)
+        // We need to decode courseId separately because it is not part of the parameters
+        if let idKey = Key(stringValue: "courseId") {
+            let courseId = try container.decodeIfPresent(Int.self, forKey: idKey)
+            value.courseId = courseId
+        }
+        return value
     }
 }
 
@@ -158,7 +165,7 @@ public enum CourseNotificationType: String, Codable, CodingKeyRepresentable, Con
 }
 
 public protocol CourseBaseNotification: Codable {
-    var courseId: Int? { get }
+    var courseId: Int? { get set }
     var courseTitle: String? { get }
     var courseIconUrl: String? { get }
 }
