@@ -133,7 +133,7 @@ public class PushNotificationActionIdentifiers {
 
 public class PushNotificationUserInfoKeys {
     static var target = "target"
-    public static var communicationInfo = "communicationInfo"
+    static var communicationInfo = "communicationInfo"
 }
 
 public class LocalNotificationIdentifiers {

@@ -20,4 +20,11 @@ public class PushNotificationResponseHandler {
     public static func getTarget(userInfo: [AnyHashable: Any]) -> String? {
         return userInfo[PushNotificationUserInfoKeys.target] as? String
     }
+
+    public static func getCommunicationInfo(userInfo: [AnyHashable: Any]) -> PushNotificationCommunicationInfo? {
+        guard let infoData = userInfo[PushNotificationUserInfoKeys.communicationInfo] as? Data else {
+            return nil
+        }
+        return try? PushNotificationCommunicationInfo(with: infoData)
+    }
 }
