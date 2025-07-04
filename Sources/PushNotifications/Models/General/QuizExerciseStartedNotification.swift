@@ -23,3 +23,10 @@ extension QuizExerciseStartedNotification: DisplayableNotification {
         R.string.localizable.artemisAppGroupNotificationTextQuizExerciseStarted(exerciseTitle ?? "")
     }
 }
+
+extension QuizExerciseStartedNotification: NavigatableNotification {
+    public var relativePath: String? {
+        exercisePath(courseId: courseId, exerciseId: exerciseId)
+    }
+}
+

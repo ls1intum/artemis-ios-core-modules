@@ -27,3 +27,10 @@ extension NewExerciseNotification: DisplayableNotification {
         R.string.localizable.artemisAppGroupNotificationTextExerciseReleased(exerciseTitle ?? "")
     }
 }
+
+extension NewExerciseNotification: NavigatableNotification {
+    public var relativePath: String? {
+        exercisePath(courseId: courseId, exerciseId: exerciseId)
+    }
+}
+

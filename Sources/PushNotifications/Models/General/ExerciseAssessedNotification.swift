@@ -26,3 +26,9 @@ extension ExerciseAssessedNotification: DisplayableNotification {
         R.string.localizable.submissionAssessedBody(exerciseType ?? "", exerciseTitle ?? "")
     }
 }
+
+extension ExerciseAssessedNotification: NavigatableNotification {
+    public var relativePath: String? {
+        exercisePath(courseId: courseId, exerciseId: exerciseId)
+    }
+}

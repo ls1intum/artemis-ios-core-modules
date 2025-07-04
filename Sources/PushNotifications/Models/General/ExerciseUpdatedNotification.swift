@@ -23,3 +23,10 @@ extension ExerciseUpdatedNotification: DisplayableNotification {
         R.string.localizable.exerciseUpdatedBody(exerciseTitle ?? "")
     }
 }
+
+extension ExerciseUpdatedNotification: NavigatableNotification {
+    public var relativePath: String? {
+        exercisePath(courseId: courseId, exerciseId: exerciseId)
+    }
+}
+

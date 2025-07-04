@@ -23,3 +23,9 @@ extension NewManualFeedbackRequestNotification: DisplayableNotification {
         R.string.localizable.manualFeedbackRequestBody(exerciseTitle ?? "")
     }
 }
+
+extension NewManualFeedbackRequestNotification: NavigatableNotification {
+    public var relativePath: String? {
+        exercisePath(courseId: courseId, exerciseId: exerciseId)
+    }
+}
