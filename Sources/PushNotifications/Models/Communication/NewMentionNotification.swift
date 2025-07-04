@@ -33,3 +33,9 @@ extension NewMentionNotification: DisplayableNotification {
         replyMarkdownContent ?? postMarkdownContent
     }
 }
+
+extension NewMentionNotification: NavigatableNotification {
+    public var relativePath: String? {
+        communicationPath(courseId: courseId, conversationId: channelId, threadId: postId)
+    }
+}

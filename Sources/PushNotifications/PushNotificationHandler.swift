@@ -62,21 +62,22 @@ public class PushNotificationHandler {
     }
 
     private static func prepareNotification(_ notification: PushNotification) async -> UNMutableNotificationContent? {
-        guard let title = notification.title else { return nil }
+        guard let notificationDto = notification.courseNotificationDTO,
+              let displayable = notificationDto.displayable else { return nil }
 
         let content = UNMutableNotificationContent()
-        content.title = title
-        if let subtitle = notification.subtitle {
+        content.title = displayable.title
+        if let subtitle = displayable.subtitle {
             content.subtitle = subtitle
         }
-        if let body = notification.body {
+        if let body = displayable.body {
             content.body = body
         }
-//        content.categoryIdentifier = type.rawValue
-        content.userInfo = [PushNotificationUserInfoKeys.target: notification.target,
-                            PushNotificationUserInfoKeys.type: notification.type.rawValue,
-                            PushNotificationUserInfoKeys.communicationInfo: notification.communicationInfo?.asData]
-        if notification.communicationInfo != nil {
+
+        let target = (displayable as? NavigatableNotification)?.relativePath
+        content.userInfo = [PushNotificationUserInfoKeys.target: target,
+                            PushNotificationUserInfoKeys.communicationInfo: notificationDto.communicationInfo?.asData]
+        if notificationDto.communicationInfo != nil {
             content.categoryIdentifier = PushNotificationActionIdentifiers.communication
         }
 
@@ -132,8 +133,7 @@ public class PushNotificationActionIdentifiers {
 
 public class PushNotificationUserInfoKeys {
     static var target = "target"
-    static var type = "type"
-    public static var communicationInfo = "communicationInfo"
+    static var communicationInfo = "communicationInfo"
 }
 
 public class LocalNotificationIdentifiers {

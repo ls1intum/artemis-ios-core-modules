@@ -25,3 +25,9 @@ extension AddedToChannelNotification: DisplayableNotification {
         return R.string.localizable.artemisAppSingleUserNotificationTextAddUserChannel(channelName, channelModerator)
     }
 }
+
+extension AddedToChannelNotification: NavigatableNotification {
+    public var relativePath: String? {
+        communicationPath(courseId: courseId, conversationId: channelId)
+    }
+}

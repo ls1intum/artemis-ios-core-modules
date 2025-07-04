@@ -23,3 +23,10 @@ extension ExerciseOpenForPracticeNotification: DisplayableNotification {
         R.string.localizable.artemisAppGroupNotificationTextExercisePractice(exerciseTitle ?? "")
     }
 }
+
+extension ExerciseOpenForPracticeNotification: NavigatableNotification {
+    public var relativePath: String? {
+        exercisePath(courseId: courseId, exerciseId: exerciseId)
+    }
+}
+

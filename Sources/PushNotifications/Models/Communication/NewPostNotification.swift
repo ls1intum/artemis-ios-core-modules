@@ -6,7 +6,7 @@
 //
 
 public class NewPostNotification: CourseBaseNotification {
-    public let courseId: Int?
+    public var courseId: Int?
     public let courseTitle: String?
     public let courseIconUrl: String?
 
@@ -31,5 +31,11 @@ extension NewPostNotification: DisplayableNotification {
 
     public var body: String? {
         postMarkdownContent
+    }
+}
+
+extension NewPostNotification: NavigatableNotification {
+    public var relativePath: String? {
+        communicationPath(courseId: courseId, conversationId: channelId)
     }
 }

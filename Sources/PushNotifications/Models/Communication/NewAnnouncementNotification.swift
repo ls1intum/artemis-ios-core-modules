@@ -28,3 +28,9 @@ extension NewAnnouncementNotification: DisplayableNotification {
         postMarkdownContent
     }
 }
+
+extension NewAnnouncementNotification: NavigatableNotification {
+    public var relativePath: String? {
+        communicationPath(courseId: courseId, conversationId: channelId)
+    }
+}

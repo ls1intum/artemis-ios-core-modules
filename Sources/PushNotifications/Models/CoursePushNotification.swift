@@ -12,6 +12,7 @@ public enum CoursePushNotification: Codable {
 
     fileprivate enum Keys: String, CodingKey {
         case type = "notificationType"
+        case courseId
         case parameters
     }
 
@@ -42,10 +43,9 @@ public enum CoursePushNotification: Codable {
     case tutorialUnassigned(TutorialGroupUnassignedNotification)
     case unknown
 
-    // swiftlint:disable:next cyclomatic_complexity
     /// Initializer for using different CodingKeys.
     /// This is necessary because Notifications that aren't push notifications have a different name for `type`.
-    public init<Key>(from decoder: Decoder, typeKey: Key, parametersKey: Key) throws where Key: CodingKey {
+    public init<Key>(from decoder: Decoder, typeKey: Key, parametersKey: Key) throws where Key: CodingKey { // swiftlint:disable:this cyclomatic_complexity
         let container = try decoder.container(keyedBy: Key.self)
         let type = try container.decode(CourseNotificationType.self, forKey: typeKey)
         let decodeNotification = NotificationDecoder(key: parametersKey, container: container)
@@ -122,8 +122,14 @@ private struct NotificationDecoder<Key: CodingKey> {
     let key: Key
     let container: KeyedDecodingContainer<Key>
 
-    func callAsFunction<T: Codable>() throws -> T {
-        try container.decode(T.self, forKey: key)
+    func callAsFunction<T: Codable & CourseBaseNotification>() throws -> T {
+        var value = try container.decode(T.self, forKey: key)
+        // We need to decode courseId separately because it is not part of the parameters
+        if let idKey = Key(stringValue: "courseId") {
+            let courseId = try container.decodeIfPresent(Int.self, forKey: idKey)
+            value.courseId = courseId
+        }
+        return value
     }
 }
 
@@ -159,7 +165,7 @@ public enum CourseNotificationType: String, Codable, CodingKeyRepresentable, Con
 }
 
 public protocol CourseBaseNotification: Codable {
-    var courseId: Int? { get }
+    var courseId: Int? { get set }
     var courseTitle: String? { get }
     var courseIconUrl: String? { get }
 }

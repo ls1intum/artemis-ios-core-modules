@@ -37,3 +37,9 @@ extension NewAnswerNotification: DisplayableNotification {
         replyMarkdownContent
     }
 }
+
+extension NewAnswerNotification: NavigatableNotification {
+    public var relativePath: String? {
+        communicationPath(courseId: courseId, conversationId: channelId, threadId: replyId)
+    }
+}
