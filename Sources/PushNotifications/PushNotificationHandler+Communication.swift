@@ -33,19 +33,19 @@ public extension PushNotificationHandler {
         content.subtitle = intent.speakableGroupName?.spokenPhrase ?? info.channel
         content.body = info.messageContent
 
-        content.threadIdentifier = info.isReply ? info.messageId : "\(info.channelId)"
+        content.threadIdentifier = info.isReply ? "\(info.messageId)" : "\(info.channelId)"
 
         return intent
     }
 
     private static func createIntent(info: PushNotificationCommunicationInfo) async -> INSendMessageIntent {
-        let image = try? await getUserImage(for: info.author, with: info.userId, from: info.profilePicUrl)
-        let person = INPerson(personHandle: .init(value: info.userId, type: .unknown),
+        let image = try? await getUserImage(for: info.author, with: "\(info.userId)", from: info.profilePicUrl)
+        let person = INPerson(personHandle: .init(value: "\(info.userId)", type: .unknown),
                               nameComponents: try? .init(info.author),
                               displayName: info.author,
                               image: image,
-                              contactIdentifier: info.userId,
-                              customIdentifier: info.userId)
+                              contactIdentifier: "\(info.userId)",
+                              customIdentifier: "\(info.userId)")
 
         let channelTitle: String
         if info.channel == info.author || info.type == .oneToOneChat {
