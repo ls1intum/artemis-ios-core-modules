@@ -48,7 +48,7 @@ public extension PushNotificationHandler {
                               customIdentifier: "\(info.userId)")
 
         let channelTitle: String
-        if info.channel == info.author || info.type == .oneToOneChat {
+        if info.channel == info.author {
             channelTitle = info.course
         } else {
             channelTitle = "\(info.channel) (\(info.course))"

@@ -29,4 +29,3 @@ extension QuizExerciseStartedNotification: NavigatableNotification {
         exercisePath(courseId: courseId, exerciseId: exerciseId)
     }
 }
-

@@ -33,4 +33,3 @@ extension NewExerciseNotification: NavigatableNotification {
         exercisePath(courseId: courseId, exerciseId: exerciseId)
     }
 }
-

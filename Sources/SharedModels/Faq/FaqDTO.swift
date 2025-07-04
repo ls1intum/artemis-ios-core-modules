@@ -33,8 +33,8 @@ public struct FaqDTO: Codable, Identifiable {
     }
 }
 
-extension FaqDTO {
-    public init(from decoder: any Decoder) throws {
+public extension FaqDTO {
+    init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         id = try container.decodeIfPresent(Int64.self, forKey: .id)

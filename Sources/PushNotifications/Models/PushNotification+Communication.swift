@@ -20,7 +20,6 @@ extension CoursePushNotification {
                                                      messageId: notification.postId ?? 0,
                                                      profilePicUrl: notification.authorImageUrl,
                                                      messageContent: notification.postMarkdownContent?.replacingMarkdownImages() ?? "",
-                                                     type: nil,
                                                      isReply: false)
         case .newAnswer(let notification):
             return PushNotificationCommunicationInfo(author: R.string.localizable.repliedTo(notification.replyAuthorName ?? "", notification.postAuthorName ?? ""),
@@ -32,7 +31,6 @@ extension CoursePushNotification {
                                                      messageId: notification.replyId ?? 0,
                                                      profilePicUrl: notification.replyImageUrl,
                                                      messageContent: notification.replyMarkdownContent?.replacingMarkdownImages() ?? "",
-                                                     type: nil,
                                                      isReply: true)
         case .newMention(let notification):
             let isReply = notification.replyId != nil
@@ -45,7 +43,6 @@ extension CoursePushNotification {
                                                      messageId: (isReply ? notification.replyId : notification.postId) ?? 0,
                                                      profilePicUrl: notification.replyImageUrl,
                                                      messageContent: (notification.replyMarkdownContent ?? notification.postMarkdownContent)?.replacingMarkdownImages() ?? "",
-                                                     type: nil,
                                                      isReply: isReply)
         case .newPost(let notification):
             return PushNotificationCommunicationInfo(author: notification.authorName ?? "",
@@ -57,17 +54,11 @@ extension CoursePushNotification {
                                                      messageId: notification.postId ?? 0,
                                                      profilePicUrl: notification.authorImageUrl,
                                                      messageContent: notification.postMarkdownContent?.replacingMarkdownImages() ?? "",
-                                                     type: nil, // TODO: Check if needed
                                                      isReply: false)
         default:
             return nil
         }
     }
-}
-
-private struct ConversationTarget: Codable {
-    let conversation: Int
-    let course: Int
 }
 
 public struct PushNotificationCommunicationInfo: Codable {
@@ -80,14 +71,7 @@ public struct PushNotificationCommunicationInfo: Codable {
     public let messageId: Int
     let profilePicUrl: String?
     let messageContent: String
-    let type: ConversationType?
     let isReply: Bool
-
-    enum ConversationType: String, Codable {
-        case channel
-        case oneToOneChat
-        case groupChat
-    }
 }
 
 public extension PushNotificationCommunicationInfo {
