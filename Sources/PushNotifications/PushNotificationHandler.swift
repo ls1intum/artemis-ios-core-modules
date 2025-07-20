@@ -90,12 +90,23 @@ public class PushNotificationHandler {
         let replyAction = UNTextInputNotificationAction(
             identifier: PushNotificationActionIdentifiers.reply,
             title: R.string.localizable.reply(),
+            icon: .init(systemImageName: "arrowshape.turn.up.left"),
             textInputButtonTitle: R.string.localizable.send(),
             textInputPlaceholder: R.string.localizable.reply())
 
+        let saveMessageAction = UNNotificationAction(
+            identifier: PushNotificationActionIdentifiers.saveMessage,
+            title: "Save",
+            icon: .init(systemImageName: "bookmark"))
+
+        let muteChannelAction = UNNotificationAction(
+            identifier: PushNotificationActionIdentifiers.muteChannel,
+            title: "Mute channel",
+            icon: .init(systemImageName: "speaker.slash"))
+
         let communicationCategory = UNNotificationCategory(
             identifier: PushNotificationActionIdentifiers.communication,
-            actions: [replyAction],
+            actions: [replyAction, saveMessageAction, muteChannelAction],
             intentIdentifiers: [],
             options: [])
 
@@ -128,6 +139,8 @@ public class PushNotificationHandler {
 
 public class PushNotificationActionIdentifiers {
     public static let reply = "reply"
+    public static let saveMessage = "saveMessage"
+    public static let muteChannel = "muteChannel"
     static let communication = "communication"
 }
 
