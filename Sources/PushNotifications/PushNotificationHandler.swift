@@ -96,12 +96,12 @@ public class PushNotificationHandler {
 
         let saveMessageAction = UNNotificationAction(
             identifier: PushNotificationActionIdentifiers.saveMessage,
-            title: "Save",
+            title: R.string.localizable.saveMessage(),
             icon: .init(systemImageName: "bookmark"))
 
         let muteChannelAction = UNNotificationAction(
             identifier: PushNotificationActionIdentifiers.muteChannel,
-            title: "Mute channel",
+            title: R.string.localizable.muteChannel(),
             icon: .init(systemImageName: "speaker.slash"))
 
         let communicationCategory = UNNotificationCategory(
