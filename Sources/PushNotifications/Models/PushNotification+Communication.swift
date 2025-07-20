@@ -71,7 +71,7 @@ public struct PushNotificationCommunicationInfo: Codable {
     public let messageId: Int
     let profilePicUrl: String?
     let messageContent: String
-    let isReply: Bool
+    public let isReply: Bool
 }
 
 public extension PushNotificationCommunicationInfo {
