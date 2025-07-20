@@ -55,24 +55,13 @@
 "artemisApp.groupNotification.title.exercisePractice" = "Exercise open for practice";
 "artemisApp.groupNotification.title.quizExerciseStarted" = "Quiz started";
 "artemisApp.groupNotification.title.newAnnouncementPost" = "New announcement";
-"artemisApp.singleUserNotification.title.fileSubmissionSuccessful" = "File submission successful";
 "artemisApp.groupNotification.title.duplicateTestCase" = "Duplicate test case was found.";
-"artemisApp.singleUserNotification.title.newPlagiarismCaseStudent" = "New plagiarism case";
-"artemisApp.singleUserNotification.title.plagiarismCaseVerdictStudent" = "Verdict for your plagiarism case";
 "artemisApp.conversationNotification.title.newMessage" = "New message";
 "newReply" = "New Reply";
 "newManualFeedbackRequest" = "New manual feedback request";
 
 "artemisApp.groupNotification.title.exerciseUpdated" = "Exercise updated";
-"artemisApp.groupNotification.title.courseArchiveStarted" = "Course archival started";
-"artemisApp.groupNotification.title.courseArchiveFinished" = "Course archival finished";
-"artemisApp.groupNotification.title.courseArchiveFailed" = "Course archival failed";
-"artemisApp.groupNotification.title.examArchiveStarted" = "Exam archival started";
-"artemisApp.groupNotification.title.examArchiveFinished" = "Exam archival finished";
-"artemisApp.groupNotification.title.examArchiveFailed" = "Exam archival failed";
-"artemisApp.groupNotification.title.illegalSubmission" = "Illegal submission of a student.";
 "artemisApp.groupNotification.title.programmingTestCasesChanged" = "Test cases for programming exercise changed";
-"artemisApp.groupNotification.title.newManualFeedbackRequest" = "A new manual feedback request has been submitted";
 
 "artemisApp.singleUserNotification.title.tutorialGroupRegistrationStudent" = "You have been registered to a tutorial group";
 "artemisApp.singleUserNotification.title.tutorialGroupDeregistrationStudent" = "You have been deregistered from a tutorial group";
@@ -95,25 +84,11 @@
 "sessionExpiredTitle" = "Session expired";
 
 // MARK: Body
-"artemisApp.singleUserNotification.text.exerciseSubmissionAssessed" = "Your submission for the %2$@ exercise \"%3$@\" in the course \"%1$@\" has been assessed.";
-"artemisApp.groupNotification.text.attachmentChange" = "The attachment \"%2$@\" of \"%3$@\" in the course \"%1$@\" was updated.";
 "artemisApp.groupNotification.text.exerciseReleased" = "A new exercise %1$@ got released.";
 "artemisApp.groupNotification.text.exercisePractice" = "The exercise %1$@ is now open for practice.";
 "artemisApp.groupNotification.text.quizExerciseStarted" = "The quiz %1$@ just started.";
-"artemisApp.singleUserNotification.text.fileSubmissionSuccessful" = "Your file for the exercise \"%1$@\" was successfully submitted.";
-"artemisApp.singleUserNotification.text.newPlagiarismCaseStudent" = "New plagiarism case concerning the %1$@ exercise \"%2$@\".";
-"artemisApp.singleUserNotification.text.plagiarismCaseVerdictStudent" = "Your plagiarism case concerning the %1$@ exercise \"%2$@\" has a verdict.";
 
 "artemisApp.groupNotification.text.exerciseUpdated" = "The exercise \"%2$@\" in course \"%1$@\" got updated.";
-"artemisApp.groupNotification.text.courseArchiveStarted" = "The course \"%1$@\" is being archived.";
-"artemisApp.groupNotification.text.courseArchiveFinishedWithoutErrors" = "The course \"%1$@\" has been archived.";
-"artemisApp.groupNotification.text.courseArchiveFinishedWithErrors" = "The course \"%1$@\" has been archived. Some exercises couldn't be included in the archive:\n\n %2$@";
-"artemisApp.groupNotification.text.courseArchiveFailed" = "There was a problem archiving course \"%1$@\": \n\n";
-"artemisApp.groupNotification.text.examArchiveStarted" = "The exam \"%1$@\" is being archived.";
-"artemisApp.groupNotification.text.examArchiveFinishedWithoutErrors" = "The exam \"%1$@\" has been archived.";
-"artemisApp.groupNotification.text.examArchiveFinishedWithErrors" = "The exam \"%1$@\" has been archived. Some exercises couldn't be included in the archive:\n\n %2$@";
-"artemisApp.groupNotification.text.examArchiveFailed" = "There was a problem archiving exam \"%1$@\": \n\n %2$@";
-"artemisApp.groupNotification.text.illegalSubmission" = "The exercise %1$@ has illegal submissions of students.";
 "artemisApp.groupNotification.text.programmingTestCasesChanged" = "The test cases of the programming exercise \"%2$@\" in the course \"%1$@\" were updated. The students' submissions should be rebuilt and tested in order to create new results.";
 "artemisApp.groupNotification.text.newManualFeedbackRequest" = "The programming exercise \"%2$@\" in the course \"%1$@\" has a new manual feedback request. Please assess the feedback before the deadline.";
 "attatchmentChangedBody" = "The attachment %1$@ was updated.";
@@ -143,6 +118,8 @@
 "repliedTo" = "%1$@ (replied to %2$@)";
 "reply" = "Reply";
 "send" = "Send";
+"saveMessage" = "Save message";
+"muteChannel" = "Mute channel";
 
 // MARK: - General
 "activate" = "Activate";
