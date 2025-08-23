@@ -35,6 +35,25 @@
 "tutorialDeregisteredSettingsName" = "Tutorial deregistration";
 "tutorialUnassignedSettingsName" = "Tutorial unassigned";
 
+// MARK: Settings subtitles
+"newMessageSettingsSubtitle" = "Someone sent a message into a conversation that you are a part of.";
+"newReplySettingsSubtitle" = "Someone replied in a thread you created or participated in.";
+"newMentionSettingsSubtitle" = "Someone @mentioned you in a message";
+
+"exerciseReleasedSettingsSubtitle" = "A new exercise was released.";
+"attachmentChangedSettingsSubtitle" = "An attachement of a lecture or exercise has changed.";
+"feedbackRequestSettingsSubtitle" = "Feedback about an assessment was requested.";
+"duplicateTestSettingsSubtitle" = "Warning about duplicate test cases of an exercise.";
+
+"deleteChannelSettingsSubtitle" = "Someone deleted a channel that you were a part of.";
+"addChannelSettingsSubtitle" = "Someone added you to a chennel.";
+"removeChannelSettingsSubtitle" = "Someone removed you from a channel.";
+
+"tutorialAssignedSettingsSubtitle" = "You were assigned to hold a tutorial.";
+"tutorialRegisteredSettingsSubtitle" = "You were registered to participate in a tutorial group.";
+"tutorialDeregisteredSettingsSubtitle" = "You were deregistered from a tutorial group.";
+"tutorialUnassignedSettingsSubtitle" = "You were unassigned from holding a tutorial.";
+
 // MARK: Settings presets
 "settingsPresetCustom" = "Custom";
 "settingsPresetAllActivity" = "All activity";

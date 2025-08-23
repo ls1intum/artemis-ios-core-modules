@@ -83,4 +83,39 @@ extension CourseNotificationType {
             ""
         }
     }
+
+    var settingsSubtitle: String? {
+        switch self {
+        case .addedToChannelNotification:
+            R.string.localizable.addChannelSettingsSubtitle()
+        case .channelDeletedNotification:
+            R.string.localizable.deleteChannelSettingsSubtitle()
+        case .newAnswerNotification:
+            R.string.localizable.newReplySettingsSubtitle()
+        case .newMentionNotification:
+            R.string.localizable.newMentionSettingsSubtitle()
+        case .newPostNotification:
+            R.string.localizable.newMessageSettingsSubtitle()
+        case .removedFromChannelNotification:
+            R.string.localizable.removeChannelSettingsSubtitle()
+        case .attachmentChangedNotification:
+            R.string.localizable.attachmentChangedSettingsSubtitle()
+        case .deregisteredFromTutorialGroupNotification:
+            R.string.localizable.tutorialDeregisteredSettingsSubtitle()
+        case .duplicateTestCaseNotification:
+            R.string.localizable.duplicateTestSettingsSubtitle()
+        case .newExerciseNotification:
+            R.string.localizable.exerciseReleasedSettingsSubtitle()
+        case .newManualFeedbackRequestNotification:
+            R.string.localizable.feedbackRequestSettingsSubtitle()
+        case .registeredToTutorialGroupNotification:
+            R.string.localizable.tutorialRegisteredSettingsSubtitle()
+        case .tutorialGroupAssignedNotification:
+            R.string.localizable.tutorialAssignedSettingsSubtitle()
+        case .tutorialGroupUnassignedNotification:
+            R.string.localizable.tutorialUnassignedSettingsSubtitle()
+        default:
+            nil
+        }
+    }
 }

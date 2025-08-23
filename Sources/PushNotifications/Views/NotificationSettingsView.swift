@@ -116,9 +116,11 @@ struct NotificationSettingView: View {
     var body: some View {
         if let setting = self.setting[.push] {
             Toggle(isOn: binding) {
-                // TODO: Add example or description
                 Text(settingType.settingsTitle)
                     .font(.headline)
+                if let subtitle = settingType.settingsSubtitle {
+                    Text(subtitle)
+                }
             }
         }
     }
