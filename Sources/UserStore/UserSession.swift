@@ -16,6 +16,8 @@ public class UserSession: ObservableObject {
     @Published public internal(set) var username: String?
     @Published public internal(set) var password: String?
     @Published public internal(set) var tokenExpired = false
+    /// Temporarily save login method to recommend passkeys
+    @Published public var didLogInWithPassword = false
 
     // Push Notifications
     @Published internal var notificationDeviceConfigurations: [NotificationDeviceConfiguration] = []

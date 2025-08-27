@@ -20,6 +20,9 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
     @Published var error: UserFacingError?
     @Published var isLoading = false
 
+    @Published var recommendPasskey = false
+    @Published var showPasskeySettings = false
+
     init() {
         getAccount()
     }
@@ -31,6 +34,21 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
         } else {
             account = .loading
         }
+    }
+
+    func checkPasskeyRecommendation() async {
+//        if UserSessionFactory.shared.didLogInWithPassword && !recommendPasskey {
+            if let passkeys = await PasskeyServiceFactory.shared.getPasskeys().value,
+               passkeys.isEmpty {
+                // User logged in with password, but has no passkeys
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    // We need a delay, otherwise the sheet gets dismissed because
+                    // the view might get reconstructed during presentation (I guess ?)
+                    self.recommendPasskey = true
+                }
+            }
+            UserSessionFactory.shared.didLogInWithPassword = false
+//        }
     }
 
     func logout() {

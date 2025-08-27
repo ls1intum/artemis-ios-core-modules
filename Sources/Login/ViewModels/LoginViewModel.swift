@@ -78,6 +78,9 @@ open class LoginViewModel: NSObject, ObservableObject {
             }
         default:
             isLoading = false
+            if UserSessionFactory.shared.isLoggedIn {
+                UserSessionFactory.shared.didLogInWithPassword = true
+            }
             return
         }
     }

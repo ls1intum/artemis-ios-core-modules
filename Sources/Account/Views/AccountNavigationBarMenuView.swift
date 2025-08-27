@@ -57,6 +57,9 @@ struct AccountNavigationBarMenuView: View {
                     .frame(width: 16, height: 10)
             }
         })
+        .task {
+            await viewModel.checkPasskeyRecommendation()
+        }
         .onChange(of: viewModel.error) { _, error in
             self.error = error
         }
@@ -69,6 +72,11 @@ struct AccountNavigationBarMenuView: View {
         }
         .sheet(isPresented: $showPasskeySettings) {
             PasskeySettingsView()
+        }
+        .sheet(isPresented: $viewModel.recommendPasskey) {
+            NavigationStack {
+                PasskeyRecommendationView()
+            }
         }
     }
 }
