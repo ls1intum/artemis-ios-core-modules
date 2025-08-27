@@ -78,7 +78,8 @@ open class LoginViewModel: NSObject, ObservableObject {
             }
         default:
             isLoading = false
-            if UserSessionFactory.shared.isLoggedIn {
+            let isTumUrl = UserSessionFactory.shared.institution?.baseURL?.absoluteString.contains(".tum.") ?? false
+            if UserSessionFactory.shared.isLoggedIn && isTumUrl {
                 UserSessionFactory.shared.didLogInWithPassword = true
             }
             return
