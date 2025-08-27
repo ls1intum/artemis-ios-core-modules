@@ -86,4 +86,23 @@ class PasskeySettingsViewModel: NSObject, ASAuthorizationControllerDelegate {
             await loadPasskeys()
         }
     }
+
+    func deletePasskey(_ passkey: Passkey) async {
+        isLoading = true
+        defer {
+            isLoading = false
+        }
+        let service = PasskeyServiceFactory.shared
+        let result = await service.deletePasskey(passkey)
+        switch result {
+        case .failure(let error):
+            self.error = .init(title: error.localizedDescription)
+        default:
+            withAnimation {
+                passkeys.value = passkeys.value?.filter {
+                    $0.credentialId != passkey.credentialId
+                }
+            }
+        }
+    }
 }

@@ -22,6 +22,11 @@ protocol PasskeyService {
      * Perform a request to the server to register a passkey.
      */
     func registerPasskey(credential: PasskeyCredential) async -> NetworkResponse
+
+    /**
+     * Perform a request to the server to delete a passkey.
+     */
+    func deletePasskey(_ passkey: Passkey) async -> NetworkResponse
 }
 
 enum PasskeyServiceFactory {
