@@ -30,7 +30,7 @@ struct PasskeySettingsView: View {
                         }
                         .font(.footnote)
                     }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                    .swipeActions(edge: .trailing) {
                         Button("Delete", systemImage: "minus.circle", role: .destructive) {
                             Task {
                                 await viewModel.deletePasskey(passkey)
