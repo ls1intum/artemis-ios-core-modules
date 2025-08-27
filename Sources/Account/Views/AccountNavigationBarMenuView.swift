@@ -11,7 +11,7 @@ import Common
 import PushNotifications
 
 struct AccountNavigationBarMenuView: View {
-    @StateObject private var viewModel = AccountNavigationBarMenuViewModel()
+    @State private var viewModel = AccountNavigationBarMenuViewModel()
 
     @Binding var error: UserFacingError?
 

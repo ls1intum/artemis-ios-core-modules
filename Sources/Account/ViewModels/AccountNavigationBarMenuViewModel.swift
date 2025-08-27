@@ -13,14 +13,14 @@ import UserStore
 import PushNotifications
 import SharedServices
 
-@MainActor
-class AccountNavigationBarMenuViewModel: ObservableObject {
-    @Published var account: DataState<Account> = .loading
-    @Published var profilePicUrl: URL?
-    @Published var error: UserFacingError?
-    @Published var isLoading = false
+@MainActor @Observable
+class AccountNavigationBarMenuViewModel {
+    var account: DataState<Account> = .loading
+    var profilePicUrl: URL?
+    var error: UserFacingError?
+    var isLoading = false
 
-    @Published var recommendPasskey = false
+    var recommendPasskey = false
 
     init() {
         getAccount()
@@ -35,18 +35,22 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
         }
     }
 
-    func checkPasskeyRecommendation() async {
-        if UserSessionFactory.shared.didLogInWithPassword && !recommendPasskey {
-            if let passkeys = await PasskeyServiceFactory.shared.getPasskeys().value,
-               passkeys.isEmpty {
-                // User logged in with password, but has no passkeys
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    // We need a delay, otherwise the sheet gets dismissed because
-                    // the view might get reconstructed during presentation (I guess ?)
-                    self.recommendPasskey = true
+    func checkPasskeyRecommendation() {
+        // Wait for view re-renderings before checking
+        // Re-renders change identity and interferes with showing the sheet
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self else { return }
+            if UserSessionFactory.shared.didLogInWithPassword {
+                Task { [weak self] in
+                    guard let self else { return }
+                    // Recommend only if there are no passkeys for this user
+                    if let passkeys = await PasskeyServiceFactory.shared.getPasskeys().value,
+                       passkeys.isEmpty {
+                        recommendPasskey = true
+                    }
                 }
+                UserSessionFactory.shared.didLogInWithPassword = false
             }
-            UserSessionFactory.shared.didLogInWithPassword = false
         }
     }
 
