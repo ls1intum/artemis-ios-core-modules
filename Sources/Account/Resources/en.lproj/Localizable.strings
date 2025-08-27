@@ -10,10 +10,16 @@
 "joinedLabel" = "Joined Artemis on";
 "accountInformationNavigationTitle" = "Account Information";
 "changeProfilePicture" = "Your profile picture can be changed in Profile Settings on the web.";
-"passkeys" = "Passkeys";
-"noPasskeys" = "No passkeys";
-"noPasskeysDescription" = "You have not registered any passkeys to your account yet.";
 
 // MARK: General
 "close" = "Close";
 "loading" = "Loading...";
+"notNow" = "Not now";
+
+// MARK: Passkeys
+"passkeyRecommendationTitle" = "Stay secure with Passkeys";
+"passkeyRecommendationBody" = "Passkeys are a good way to improve your account's security. Your device securely creates and stores a key to log in to your Artemis account.\n\nUnlike a password, passkeys can not be easily guessed or stolen using social engineering attacks.";
+"setUpPasskeys" = "Set up passkeys";
+"passkeys" = "Passkeys";
+"noPasskeys" = "No passkeys";
+"noPasskeysDescription" = "You have not registered any passkeys to your account yet.";
