@@ -48,8 +48,8 @@ class AccountNavigationBarMenuViewModel {
                        passkeys.isEmpty {
                         recommendPasskey = true
                     }
+                    UserSessionFactory.shared.didLogInWithPassword = false
                 }
-                UserSessionFactory.shared.didLogInWithPassword = false
             }
         }
     }
