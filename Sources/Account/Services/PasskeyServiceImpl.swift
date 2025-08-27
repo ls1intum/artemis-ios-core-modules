@@ -81,6 +81,28 @@ class PasskeyServiceImpl: PasskeyService {
             return .failure(error: error)
         }
     }
+
+    struct DeletePasskeyRequest: APIRequest {
+        typealias Response = RawResponse
+
+        var resourceName: String {
+            "api/core/passkey/\(passkey.credentialId)"
+        }
+
+        var passkey: Passkey
+
+        var method: HTTPMethod { .delete }
+    }
+
+    func deletePasskey(_ passkey: Passkey) async -> NetworkResponse {
+        let response = await client.sendRequest(DeletePasskeyRequest(passkey: passkey))
+        switch response {
+        case .success((let response, _)):
+            return .success
+        case .failure(let error):
+            return .failure(error: error)
+        }
+    }
 }
 
 enum LoginError: Error {
