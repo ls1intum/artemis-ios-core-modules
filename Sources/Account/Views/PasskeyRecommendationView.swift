@@ -24,15 +24,16 @@ struct PasskeyRecommendationView: View {
                     .font(.title.bold())
 
                 Text(R.string.localizable.passkeyRecommendationBody())
-                    .multilineTextAlignment(.center)
             }
+            .multilineTextAlignment(.center)
         }
         .contentMargins(.xl, for: .scrollContent)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 20) {
                 NavigationLink {
-                    PasskeySettingsView()
+                    PasskeySettingsView(parentDismiss: dismiss.callAsFunction)
+                        .navigationBarBackButtonHidden()
                 } label: {
                     Text(R.string.localizable.setUpPasskeys())
                         .frame(maxWidth: .infinity)

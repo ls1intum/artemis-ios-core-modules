@@ -21,7 +21,6 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
     @Published var isLoading = false
 
     @Published var recommendPasskey = false
-    @Published var showPasskeySettings = false
 
     init() {
         getAccount()
@@ -37,18 +36,18 @@ class AccountNavigationBarMenuViewModel: ObservableObject {
     }
 
     func checkPasskeyRecommendation() async {
-//        if UserSessionFactory.shared.didLogInWithPassword && !recommendPasskey {
+        if UserSessionFactory.shared.didLogInWithPassword && !recommendPasskey {
             if let passkeys = await PasskeyServiceFactory.shared.getPasskeys().value,
                passkeys.isEmpty {
                 // User logged in with password, but has no passkeys
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     // We need a delay, otherwise the sheet gets dismissed because
                     // the view might get reconstructed during presentation (I guess ?)
                     self.recommendPasskey = true
                 }
             }
             UserSessionFactory.shared.didLogInWithPassword = false
-//        }
+        }
     }
 
     func logout() {

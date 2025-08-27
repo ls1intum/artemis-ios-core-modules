@@ -71,7 +71,9 @@ struct AccountNavigationBarMenuView: View {
             }
         }
         .sheet(isPresented: $showPasskeySettings) {
-            PasskeySettingsView()
+            NavigationStack {
+                PasskeySettingsView()
+            }
         }
         .sheet(isPresented: $viewModel.recommendPasskey) {
             NavigationStack {
