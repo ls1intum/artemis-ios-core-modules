@@ -34,7 +34,8 @@ extension CoursePushNotification {
                                                      isReply: true)
         case .newMention(let notification):
             let isReply = notification.replyId != nil
-            return PushNotificationCommunicationInfo(author: notification.postAuthorName ?? "",
+            let authorName = notification.replyAuthorName ?? notification.postAuthorName
+            return PushNotificationCommunicationInfo(author: authorName ?? "",
                                                      channel: notification.channelName ?? "",
                                                      course: notification.courseTitle ?? "",
                                                      userId: notification.replyAuthorId ?? 0,
