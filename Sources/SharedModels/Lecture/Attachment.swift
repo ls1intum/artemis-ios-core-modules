@@ -1,7 +1,6 @@
 import Foundation
 
-public struct FileAttachment: BaseAttachment {
-
+public struct Attachment: Codable {
     public var id: Int
     public var name: String?
     public var visibleToStudents: Bool?
@@ -10,7 +9,9 @@ public struct FileAttachment: BaseAttachment {
     public var uploadDate: Date?
     public var releaseDate: Date?
 
-    public static var type: String {
-        "FILE"
+    public var pathExtension: String? {
+        guard let name = link else { return nil }
+        let filename: NSString = name as NSString
+        return filename.pathExtension.uppercased()
     }
 }
