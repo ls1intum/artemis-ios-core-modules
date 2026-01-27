@@ -36,6 +36,7 @@ class AccountNavigationBarMenuViewModel {
     }
 
     func checkPasskeyRecommendation() {
+        guard Bundle.main.bundleIdentifier == "de.tum.cit.ase.artemis" else { return }
         // Wait for view re-renderings before checking
         // Re-renders change identity and interferes with showing the sheet
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
