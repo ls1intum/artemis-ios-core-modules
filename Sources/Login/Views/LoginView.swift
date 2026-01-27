@@ -64,6 +64,7 @@ public struct LoginView: View {
                         footer
                     }
                     .frame(minHeight: geometry.size.height - 2 * .l)
+                    .frame(maxWidth: .infinity)
                 }
                 .contentMargins(.l, for: .scrollContent)
             }
