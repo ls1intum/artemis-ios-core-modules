@@ -13,7 +13,6 @@ public struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
 
     @State private var isInstitutionSelectionPresented = false
-    @State private var scrollPosition: String?
     @FocusState private var focusedField: FocusField?
 
     public init() {}
@@ -82,6 +81,16 @@ public struct LoginView: View {
             }
         }
         .scrollDismissesKeyboard(.interactively)
+        .toolbar {
+            if #unavailable(iOS 26) {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button(R.string.localizable.done()) {
+                        focusedField = nil
+                    }
+                }
+            }
+        }
         .loadingIndicator(isLoading: $viewModel.isLoading)
         .alert(isPresented: $viewModel.showError, error: viewModel.error, actions: {})
         .alert(isPresented: $viewModel.loginExpired) {
