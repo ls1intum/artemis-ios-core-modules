@@ -71,7 +71,11 @@ open class LoginViewModel: NSObject, ObservableObject {
                 }
             } else if let apiClientError = error as? APIClientError {
                 isLoading = false
-                self.error = UserFacingError(error: apiClientError)
+                if case let .httpURLResponseError(statusCode, _) = apiClientError, statusCode == .unauthorized {
+                    self.error = UserFacingError(title: "Username or password incorrect.\nPlease try again.")
+                } else {
+                    self.error = UserFacingError(error: apiClientError)
+                }
             } else {
                 isLoading = false
                 self.error = UserFacingError(title: error.localizedDescription)

@@ -31,8 +31,10 @@ struct AccountNavigationBarMenuView: View {
                     }
                 })
             }
-            Button("Manage Passkeys", systemImage: "key.fill") {
-                showPasskeySettings = true
+            if Bundle.main.bundleIdentifier == "de.tum.cit.ase.artemis" {
+                Button("Manage Passkeys", systemImage: "key.fill") {
+                    showPasskeySettings = true
+                }
             }
             Button(R.string.localizable.logoutLabel()) {
                 viewModel.logout()
