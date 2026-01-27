@@ -65,7 +65,6 @@ public struct LoginView: View {
                     }
                     .frame(minHeight: geometry.size.height - 2 * .l)
                 }
-                .scrollPosition(id: $scrollPosition)
                 .contentMargins(.l, for: .scrollContent)
             }
         }
