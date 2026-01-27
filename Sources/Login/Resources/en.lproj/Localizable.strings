@@ -1,7 +1,6 @@
 // MARK: - General
 "ok" = "OK";
 "select" = "Select";
-"done" = "Done";
 
 // MARK: - LoginView
 "account_screen_title" = "Welcome to Artemis!";
