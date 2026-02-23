@@ -5,7 +5,7 @@
 //  Created by Anian Schleyer on 23.02.26.
 //
 
-import Foundation
+import Common
 import UserStore
 import WebKit
 
@@ -15,6 +15,7 @@ import WebKit
 class SAML2LoginViewModel {
     let page: WebPage
     let config: WebPage.Configuration
+    var error: UserFacingError?
 
     init() {
         var config = WebPage.Configuration()
@@ -31,7 +32,13 @@ class SAML2LoginViewModel {
     }
 
     func login(cookies: [HTTPCookie]) async {
-        _ = await LoginServiceFactory.shared.loginSAML2(rememberMe: true, samlCookies: cookies)
+        let result = await LoginServiceFactory.shared.loginSAML2(rememberMe: true, samlCookies: cookies)
+        switch result {
+        case .failure(let error):
+            self.error = .init(title: error.localizedDescription)
+        default:
+            break
+        }
     }
 }
 

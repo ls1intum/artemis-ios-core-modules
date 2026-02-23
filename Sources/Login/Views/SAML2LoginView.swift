@@ -27,6 +27,15 @@ struct SAML2LoginView: View {
                         }
                     }
                 }
+                .alert(viewModel.error?.title ?? "", isPresented:
+                    Binding {
+                        viewModel.error != nil
+                    } set: { newValue in
+                        if !newValue {
+                            viewModel.error = nil
+                        }
+                    }
+                ) {}
         }
     }
 }
