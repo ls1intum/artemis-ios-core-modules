@@ -25,11 +25,17 @@ public struct ProfileInfo: Codable {
     public let buildPlanURLTemplate: String?
     public let activeProfiles: [String]
     public let compatibleVersions: PlatformVersionCompatibility?
+    public let saml2: Saml2?
 }
 
 public struct Build: Codable {
     public let name: String
     public let version: String
+}
+
+public struct Saml2: Codable {
+    public let buttonLabel: String
+    public let identityProviderName: String
 }
 
 public struct PlatformVersionCompatibility: Codable {

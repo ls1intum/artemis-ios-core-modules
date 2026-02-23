@@ -12,6 +12,7 @@ public struct LoginView: View {
     @Environment(\.authorizationController) var authorizationController
     @StateObject private var viewModel = LoginViewModel()
 
+    @State private var saml2Presented = false
     @State private var isInstitutionSelectionPresented = false
     @FocusState private var focusedField: FocusField?
 
@@ -41,6 +42,13 @@ public struct LoginView: View {
                             .buttonStyle(ArtemisButton())
                         }
 
+                        if let saml2 = viewModel.saml2, #available(iOS 26.0, *) {
+                            Button(saml2.buttonLabel) {
+                                saml2Presented = true
+                            }
+                            .buttonStyle(ArtemisButton())
+                        }
+
                         VStack(spacing: .l) {
                             usernameInput
                             passwordInput
@@ -64,7 +72,6 @@ public struct LoginView: View {
                         footer
                     }
                     .frame(minHeight: geometry.size.height - 2 * .l)
-                    .frame(maxWidth: .infinity)
                 }
                 .contentMargins(.l, for: .scrollContent)
             }
@@ -103,6 +110,11 @@ public struct LoginView: View {
                     }
                 )
             )
+        }
+        .sheet(isPresented: $saml2Presented) {
+            if #available(iOS 26.0, *) {
+                SAML2LoginView()
+            }
         }
         .task {
             await viewModel.getProfileInfo()

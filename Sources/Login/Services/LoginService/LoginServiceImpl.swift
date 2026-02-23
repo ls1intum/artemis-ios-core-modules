@@ -12,6 +12,7 @@ import Foundation
 import PushNotifications
 import SharedServices
 import UserStore
+import WebKit
 
 class LoginServiceImpl: LoginService {
     private let client = APIClient()
@@ -70,6 +71,44 @@ class LoginServiceImpl: LoginService {
                 return NetworkResponse(error: error)
             }
             return NetworkResponse(error: error)
+        }
+    }
+
+    func loginSAML2(rememberMe: Bool, samlCookies: [HTTPCookie]) async -> NetworkResponse {
+        if !rememberMe {
+            UserSessionFactory.shared.saveUsername(username: nil)
+            UserSessionFactory.shared.savePassword(password: nil)
+        }
+
+        guard let loginUrl = UserSessionFactory.shared.institution?.baseURL?.appending(path: "api/core/public/saml2") else {
+            return .failure(error: URLError(.badURL))
+        }
+
+        var request = URLRequest(url: loginUrl)
+        request.httpMethod = "POST"
+        request.httpBody = Data("\(rememberMe)".utf8)
+
+        let session = URLSession(configuration: .ephemeral)
+        session.configuration.httpCookieStorage?.setCookies(samlCookies,
+                                                            for: loginUrl,
+                                                            mainDocumentURL: loginUrl)
+
+        do {
+            _ = try await session.data(for: request)
+
+            let cookies = session.configuration.httpCookieStorage?.cookies
+            let jwt = cookies?.first { $0.name == "jwt" }
+
+            if let jwt {
+                UserSessionFactory.shared.saveToken(jwt.value)
+                URLSession.shared.configuration.httpCookieStorage?.setCookie(jwt)
+                UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
+                return .success
+            }
+
+            return .failure(error: URLError(.cancelled))
+        } catch {
+            return .failure(error: error)
         }
     }
 

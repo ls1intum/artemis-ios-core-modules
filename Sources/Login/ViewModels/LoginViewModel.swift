@@ -27,6 +27,7 @@ open class LoginViewModel: NSObject, ObservableObject {
     @Published public var loginExpired = false
     @Published public var captchaRequired = false
 
+    @Published public var saml2: Saml2?
     @Published public var externalUserManagementUrl: DataState<URL> = .loading
     @Published public var externalUserManagementName: DataState<String> = .loading
     @Published public var externalPasswordResetLink: DataState<URL> = .loading
@@ -132,6 +133,7 @@ open class LoginViewModel: NSObject, ObservableObject {
         } else {
             self.externalPasswordResetLink = .loading
         }
+        saml2 = profileInfo?.saml2
         showUsernameWarning = false
         usernameValidation()
     }
