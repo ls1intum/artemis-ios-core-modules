@@ -49,14 +49,16 @@ public struct LoginView: View {
                             .buttonStyle(ArtemisButton())
                         }
 
-                        VStack(spacing: .l) {
-                            usernameInput
-                            passwordInput
-                            Toggle(R.string.localizable.login_remember_me_label(), isOn: $viewModel.rememberMe)
-                                .toggleStyle(.switch)
-                                .tint(Color.Artemis.toggleColor)
+                        if viewModel.saml2?.passwordLoginDisabled != true {
+                            VStack(spacing: .l) {
+                                usernameInput
+                                passwordInput
+                                Toggle(R.string.localizable.login_remember_me_label(), isOn: $viewModel.rememberMe)
+                                    .toggleStyle(.switch)
+                                    .tint(Color.Artemis.toggleColor)
+                            }
+                            .frame(maxWidth: 520)
                         }
-                        .frame(maxWidth: 520)
 
                         Button(R.string.localizable.login_perform_login_button_text()) {
                             viewModel.isLoading = true
