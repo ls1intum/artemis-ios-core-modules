@@ -7,12 +7,18 @@
 
 import Account
 import Common
+import WebKit
 
 public protocol LoginService {
     /**
      * Perform a login request to the server.
      */
     func login(username: String, password: String, rememberMe: Bool) async -> NetworkResponse
+
+    /**
+     * Perform a SAML2 login request to the server.
+     */
+    func loginSAML2(rememberMe: Bool, samlCookies: [HTTPCookie]) async -> NetworkResponse
 
     /**
      * Perform a request to the server to obtain a login challenge for passkeys.

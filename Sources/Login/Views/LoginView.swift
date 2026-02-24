@@ -12,6 +12,7 @@ public struct LoginView: View {
     @Environment(\.authorizationController) var authorizationController
     @StateObject private var viewModel = LoginViewModel()
 
+    @State private var saml2Presented = false
     @State private var isInstitutionSelectionPresented = false
     @FocusState private var focusedField: FocusField?
 
@@ -41,14 +42,23 @@ public struct LoginView: View {
                             .buttonStyle(ArtemisButton())
                         }
 
-                        VStack(spacing: .l) {
-                            usernameInput
-                            passwordInput
-                            Toggle(R.string.localizable.login_remember_me_label(), isOn: $viewModel.rememberMe)
-                                .toggleStyle(.switch)
-                                .tint(Color.Artemis.toggleColor)
+                        if let saml2 = viewModel.saml2, #available(iOS 26.0, *) {
+                            Button(saml2.buttonLabel) {
+                                saml2Presented = true
+                            }
+                            .buttonStyle(ArtemisButton())
                         }
-                        .frame(maxWidth: 520)
+
+                        if viewModel.saml2?.passwordLoginDisabled != true {
+                            VStack(spacing: .l) {
+                                usernameInput
+                                passwordInput
+                                Toggle(R.string.localizable.login_remember_me_label(), isOn: $viewModel.rememberMe)
+                                    .toggleStyle(.switch)
+                                    .tint(Color.Artemis.toggleColor)
+                            }
+                            .frame(maxWidth: 520)
+                        }
 
                         Button(R.string.localizable.login_perform_login_button_text()) {
                             viewModel.isLoading = true
@@ -103,6 +113,11 @@ public struct LoginView: View {
                     }
                 )
             )
+        }
+        .sheet(isPresented: $saml2Presented) {
+            if #available(iOS 26.0, *) {
+                SAML2LoginView()
+            }
         }
         .task {
             await viewModel.getProfileInfo()
