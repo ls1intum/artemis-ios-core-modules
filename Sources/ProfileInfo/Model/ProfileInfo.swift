@@ -35,7 +35,8 @@ public struct Build: Codable {
 
 public struct Saml2: Codable {
     public let buttonLabel: String
-    public let identityProviderName: String
+    public let identityProviderName: String?
+    public let passwordLoginDisabled: Bool
 }
 
 public struct PlatformVersionCompatibility: Codable {
