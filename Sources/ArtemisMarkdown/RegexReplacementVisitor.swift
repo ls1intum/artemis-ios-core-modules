@@ -94,10 +94,16 @@ enum RegexReplacementVisitors {
     }
 
     // (?<SLIDE>\[slide].*?\[\/slide])
-    static let slides = RegexReplacementVisitor(
+    static let slidesLegacy = RegexReplacementVisitor(
         regex: #/\[slide\](?<name>.*?)\((?<path>attachment-unit/\d+/slide/\d+)\)\[/slide\]/#
     ) { match in
         "![Slide](local://fa-file) [\(match.name)](mention://slide/\(match.path))"
+    }
+
+    static let slides = RegexReplacementVisitor(
+        regex: #/\[slide\](?<name>.*?)\(\#(?<path>\d+)\)\[/slide\]/#
+    ) { match in
+        "![\(match.name)](/api/core/files/slides/\(match.path))"
     }
 
     static func visitAll(input: inout String) {
@@ -109,8 +115,9 @@ enum RegexReplacementVisitors {
             ins.visit(input:),
             lectures.visit(input:),
             members.visit(input:),
-            messages.visit(input:),
             slides.visit(input:),
+            messages.visit(input:),
+            slidesLegacy.visit(input:),
             faqs.visit(input:)
         ] {
             visit(&input)
