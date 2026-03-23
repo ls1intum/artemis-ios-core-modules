@@ -22,4 +22,5 @@ public struct FeatureAvailability {
 
 public enum Feature: String {
     case courseNotifications = "CourseSpecificNotifications"
+    case globalSearch = "GlobalSearch"
 }
