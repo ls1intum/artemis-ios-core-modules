@@ -25,7 +25,7 @@ public struct Course: Codable, Identifiable {
     public var instructorGroupName: String?
     public var editorGroupName: String?
     public var teachingAssistantGroupName: String?
-    public var faqEnabled: Bool?
+    public var numberOfAcceptedFaqs: Int?
 
     // helper attributes, if DTO does not contain complete data
     public var numberOfLectures: Int?
