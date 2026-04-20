@@ -58,16 +58,16 @@ public struct LoginView: View {
                                     .tint(Color.Artemis.toggleColor)
                             }
                             .frame(maxWidth: 520)
-                        }
 
-                        Button(R.string.localizable.login_perform_login_button_text()) {
-                            viewModel.isLoading = true
-                            Task {
-                                await viewModel.login()
+                            Button(R.string.localizable.login_perform_login_button_text()) {
+                                viewModel.isLoading = true
+                                Task {
+                                    await viewModel.login()
+                                }
                             }
+                            .disabled(viewModel.username.isEmpty || viewModel.password.count < 8)
+                            .buttonStyle(ArtemisButton())
                         }
-                        .disabled(viewModel.username.isEmpty || viewModel.password.count < 8)
-                        .buttonStyle(ArtemisButton())
 
                         Spacer()
 
