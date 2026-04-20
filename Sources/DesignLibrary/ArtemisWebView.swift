@@ -11,6 +11,7 @@ import Combine
 
 public struct ArtemisWebView: UIViewRepresentable {
 
+    private let html: String?
     @Binding var urlRequest: URLRequest
     @Binding var contentHeight: CGFloat
     @Binding var isLoading: Bool
@@ -23,6 +24,16 @@ public struct ArtemisWebView: UIViewRepresentable {
 
     public init(urlRequest: Binding<URLRequest>, contentHeight: Binding<CGFloat>, isLoading: Binding<Bool>, customJSHeightQuery: String? = nil) {
         self._urlRequest = urlRequest
+        self.html = nil
+        self._contentHeight = contentHeight
+        self._isLoading = isLoading
+        self.customJSHeightQuery = customJSHeightQuery
+        isScrollEnabled = false
+    }
+
+    public init(html: String, contentHeight: Binding<CGFloat>, isLoading: Binding<Bool>, customJSHeightQuery: String? = nil) {
+        self.html = html
+        self._urlRequest = .constant(.init(url: .applicationDirectory))
         self._contentHeight = contentHeight
         self._isLoading = isLoading
         self.customJSHeightQuery = customJSHeightQuery
@@ -31,6 +42,16 @@ public struct ArtemisWebView: UIViewRepresentable {
 
     public init(urlRequest: Binding<URLRequest>, isLoading: Binding<Bool>, customJSHeightQuery: String? = nil) {
         self._urlRequest = urlRequest
+        self.html = nil
+        self._contentHeight = .constant(.s)
+        self._isLoading = isLoading
+        self.customJSHeightQuery = customJSHeightQuery
+        isScrollEnabled = true
+    }
+
+    public init(html: String, isLoading: Binding<Bool>, customJSHeightQuery: String? = nil) {
+        self.html = html
+        self._urlRequest = .constant(.init(url: .applicationDirectory))
         self._contentHeight = .constant(.s)
         self._isLoading = isLoading
         self.customJSHeightQuery = customJSHeightQuery
@@ -59,10 +80,14 @@ public struct ArtemisWebView: UIViewRepresentable {
         if let cookie = URLSession.shared.authenticationCookie?.first {
             webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
         }
-        // TODO: this does not supress the warning
+
         DispatchQueue.main.async {
             if isLoading {
-                webView.load(urlRequest)
+                if let html {
+                    webView.loadHTMLString(html, baseURL: nil)
+                } else {
+                    webView.load(urlRequest)
+                }
             }
         }
     }
