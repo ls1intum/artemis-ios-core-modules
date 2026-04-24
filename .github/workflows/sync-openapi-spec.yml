@@ -1,6 +1,7 @@
 name: Sync OpenAPI spec from Artemis
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 * * * *"
   
@@ -11,6 +12,8 @@ jobs:
     steps:
       - name: Checkout target repo
         uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download OpenAPI file
         run: |
@@ -29,3 +32,4 @@ jobs:
           branch: sync-openapi
           title: "`Development`: Sync OpenAPI spec"
           base: main
+          token: ${{ secrets.GITHUB_TOKEN }}
