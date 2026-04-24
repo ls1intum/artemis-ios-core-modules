@@ -2,6 +2,7 @@ name: Sync OpenAPI spec from Artemis
 
 on:
   workflow_dispatch:
+  push:
   schedule:
     - cron: "0 * * * *"
   
