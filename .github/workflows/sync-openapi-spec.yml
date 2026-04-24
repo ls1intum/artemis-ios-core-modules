@@ -1,24 +1,21 @@
 name: Sync OpenAPI spec from Artemis
 
 on:
-  workflow_call:
-    inputs:
-      sha:
-        required: true
-        type: string
-
+  schedule:
+    - cron: "0 * * * *"
+  
 jobs:
   sync:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout target repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Download OpenAPI file
         run: |
           curl -o openapi.yaml \
-            https://raw.githubusercontent.com/ls1intum/Artemis/${{ inputs.sha }}/openapi/openapi.yaml
+            https://raw.githubusercontent.com/ls1intum/Artemis/develop/openapi/openapi.yaml
 
       - name: Copy file
         run: |
@@ -31,6 +28,4 @@ jobs:
           commit-message: "Update OpenAPI spec"
           branch: sync-openapi
           title: "`Development`: Sync OpenAPI spec"
-          body: |
-            Synced from Artemis commit ${{ inputs.sha }}
           base: main
