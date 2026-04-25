@@ -22,7 +22,7 @@ jobs:
       - name: Copy file
         run: |
           mkdir -p Sources/GeneratedServices
-          mv openapi.yaml Sources/GeneratedServices/openapi.yml
+          mv openapi.yaml Sources/OpenAPI/openapi.yaml
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
