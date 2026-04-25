@@ -1,0 +1,11 @@
+generate:
+  - client
+
+accessModifier: public
+namingStrategy: idiomatic
+additionalImports:
+  - SharedModels
+
+filter:
+  tags:
+    - calendar
