@@ -53,9 +53,9 @@ let package = Package(
         .package(url: "https://github.com/realm/SwiftLint.git", .upToNextMinor(from: "0.55.0")),
         .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0")),
         .package(url: "https://github.com/1024jp/GzipSwift.git", .upToNextMajor(from: "6.1.0")),
-        .package(url: "https://github.com/apple/swift-openapi-generator", from: "1.6.0"),
-        .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.7.0"),
-        .package(url: "https://github.com/apple/swift-openapi-urlsession", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-openapi-generator", .upToNextMajor(from: "1.11.0")),
+        .package(url: "https://github.com/apple/swift-openapi-runtime", .upToNextMajor(from: "1.11.0")),
+        .package(url: "https://github.com/apple/swift-openapi-urlsession", .upToNextMajor(from: "1.3.0")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
