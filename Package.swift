@@ -53,6 +53,9 @@ let package = Package(
         .package(url: "https://github.com/realm/SwiftLint.git", .upToNextMinor(from: "0.55.0")),
         .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0")),
         .package(url: "https://github.com/1024jp/GzipSwift.git", .upToNextMajor(from: "6.1.0")),
+        .package(url: "https://github.com/apple/swift-openapi-generator", .upToNextMajor(from: "1.11.0")),
+        .package(url: "https://github.com/apple/swift-openapi-runtime", .upToNextMajor(from: "1.11.0")),
+        .package(url: "https://github.com/apple/swift-openapi-urlsession", .upToNextMajor(from: "1.3.0")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -77,12 +80,16 @@ let package = Package(
             name: "APIClient",
             dependencies: [
                 "Common",
+                "SharedModels",
                 "SwiftStomp",
                 "UserStore",
-                .product(name: "Gzip", package: "GzipSwift")
+                .product(name: "Gzip", package: "GzipSwift"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(name: "OpenAPIURLSession", package: "swift-openapi-urlsession"),
             ],
             plugins: [
-                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+                .plugin(name: "OpenAPIGenerator", package: "swift-openapi-generator"),
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint"),
             ]
         ),
         .target(
@@ -171,6 +178,7 @@ let package = Package(
                 .product(name: "RswiftLibrary", package: "R.swift")
             ],
             plugins: [
+                .plugin(name: "OpenAPIGenerator", package: "swift-openapi-generator"),
                 .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
                 .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
             ]

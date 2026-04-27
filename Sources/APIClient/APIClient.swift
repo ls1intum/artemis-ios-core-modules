@@ -6,9 +6,9 @@ import UserStore
 // swiftlint:disable force_cast
 public final class APIClient {
 
-    private let session = URLSession.shared
+    internal let session = URLSession.shared
 
-    private var baseUrl: URL? {
+    internal var baseUrl: URL? {
         UserSessionFactory.shared.institution?.baseURL ?? InstitutionIdentifier.tum.baseURL
     }
 
