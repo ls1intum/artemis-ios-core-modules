@@ -89,7 +89,7 @@ public extension PushNotificationHandler {
                 .name: "jwt",
                 .value: token,
                 .secure: true,
-                .domain: UserSessionFactory.shared.institution?.baseURL?.absoluteString ?? "",
+                .domain: UserSessionFactory.shared.institution?.baseURL?.host() ?? "",
                 .path: "/",
                 .version: 0
             ]
