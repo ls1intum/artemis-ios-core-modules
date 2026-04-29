@@ -244,6 +244,24 @@ extension APIClient {
     }
 }
 
+public extension APIClient {
+    static func setupCurrentJWT() {
+        if let token = UserSessionFactory.shared.getToken() {
+            let properties: [HTTPCookiePropertyKey: Any] = [
+                .name: "jwt",
+                .value: token,
+                .secure: true,
+                .domain: UserSessionFactory.shared.institution?.baseURL?.host() ?? "",
+                .path: "/",
+                .version: 0
+            ]
+            if let cookie = HTTPCookie(properties: properties) {
+                URLSession.shared.configuration.httpCookieStorage?.setCookie(cookie)
+            }
+        }
+    }
+}
+
 private extension Formatter {
     static let iso8601withFractionalSeconds: DateFormatter = {
         let formatter = DateFormatter()
