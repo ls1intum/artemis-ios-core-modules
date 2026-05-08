@@ -14,8 +14,13 @@ extension APIClient {
 
     /// API Client generated from OpenAPI Spec
     var generated: Client {
-        Client(serverURL: baseUrl!,
-               transport: URLSessionTransport(configuration: .init(session: session)))
+        var baseUrlString = baseUrl!.absoluteString
+        if baseUrlString.hasSuffix("/") {
+            // OpenAPI Client does not work if baseUrl ends with /
+            baseUrlString.removeLast()
+        }
+        return Client(serverURL: URL(string: baseUrlString)!,
+                      transport: URLSessionTransport(configuration: .init(session: session)))
     }
 
     public func call<T>(caller name: String = #function,
