@@ -20,6 +20,7 @@ extension APIClient {
             baseUrlString.removeLast()
         }
         return Client(serverURL: URL(string: baseUrlString)!,
+                      configuration: Configuration(dateTranscoder: CustomDateTranscoder()),
                       transport: URLSessionTransport(configuration: .init(session: session)))
     }
 
@@ -53,5 +54,17 @@ extension APIClient {
                 """)
             return .failure(error: .init(title: error.localizedDescription))
         }
+    }
+}
+
+private struct CustomDateTranscoder: DateTranscoder {
+    func encode(_ date: Date) throws -> String {
+        Formatter.iso8601.string(from: date)
+    }
+
+    func decode(_ string: String) throws -> Date {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .customISO8601
+        return try decoder.decode(Date.self, from: Data("\"\(string)\"".utf8))
     }
 }
