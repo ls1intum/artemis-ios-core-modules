@@ -175,7 +175,8 @@ let package = Package(
                 "Common",
                 "DesignLibrary",
                 "UserStore",
-                .product(name: "RswiftLibrary", package: "R.swift")
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(name: "RswiftLibrary", package: "R.swift"),
             ],
             plugins: [
                 .plugin(name: "OpenAPIGenerator", package: "swift-openapi-generator"),
