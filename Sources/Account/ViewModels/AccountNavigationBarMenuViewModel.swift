@@ -13,7 +13,8 @@ import UserStore
 import PushNotifications
 import SharedServices
 
-@MainActor @Observable
+@MainActor
+@Observable
 class AccountNavigationBarMenuViewModel {
     var account: DataState<Account> = .loading
     var profilePicUrl: URL?
