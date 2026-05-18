@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserStore
 import WebKit
 import Combine
 
@@ -84,7 +85,7 @@ public struct ArtemisWebView: UIViewRepresentable {
         DispatchQueue.main.async {
             if isLoading {
                 if let html {
-                    webView.loadHTMLString(html, baseURL: nil)
+                    webView.loadHTMLString(html, baseURL: UserSessionFactory.shared.institution?.baseURL)
                 } else {
                     webView.load(urlRequest)
                 }
