@@ -118,6 +118,7 @@ let package = Package(
             dependencies: [
                 "Common",
                 "Kingfisher",
+                "UserStore",
                 .product(name: "RswiftLibrary", package: "R.swift")
             ],
             plugins: [
