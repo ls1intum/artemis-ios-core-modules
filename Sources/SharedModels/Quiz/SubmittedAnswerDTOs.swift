@@ -25,3 +25,5 @@ public extension DTO.MultipleChoiceSubmittedAnswerFromLiveClient {
         self.init(value1: .init(_type: "multiple-choice"), value2: dto)
     }
 }
+
+public typealias QuizTrainingAnswer = Operations.SubmitForTraining.Input.Body.JsonPayload
