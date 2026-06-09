@@ -30,6 +30,9 @@ public struct Course: Codable, Identifiable {
     // helper attributes, if DTO does not contain complete data
     public var numberOfLectures: Int?
 
+    /// Enabled state of the Iris course chat, copied over from `CourseForDashboardDTO`.
+    public var irisEnabledInCourse: Bool?
+
     public var courseIconURL: URL? {
         guard let courseIcon else { return nil }
         let baseUrl = UserSessionFactory.shared.institution?.baseURL?.appending(path: "api/core/files")
