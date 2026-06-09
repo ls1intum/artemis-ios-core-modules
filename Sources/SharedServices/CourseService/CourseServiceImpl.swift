@@ -51,6 +51,9 @@ struct CourseServiceImpl: CourseService {
 
         switch result {
         case let .success((response, _)):
+            // Mirror the web client and copy it onto the course so views can read it directly.
+            var response = response
+            response.course.irisEnabledInCourse = response.irisEnabledInCourse
             return .done(response: response)
         case let .failure(error):
             return .failure(error: UserFacingError(error: error))
