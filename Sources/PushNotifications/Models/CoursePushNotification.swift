@@ -41,6 +41,7 @@ public enum CoursePushNotification: Codable {
     case tutorialAssigned(TutorialGroupAssignedNotification)
     case tutorialDeleted(TutorialGroupDeletedNotification)
     case tutorialUnassigned(TutorialGroupUnassignedNotification)
+    case irisResponse(IrisResponseNotification)
     case unknown
 
     /// Initializer for using different CodingKeys.
@@ -77,6 +78,7 @@ public enum CoursePushNotification: Codable {
         case .tutorialGroupAssignedNotification: .tutorialAssigned(try decodeNotification())
         case .tutorialGroupDeletedNotification: .tutorialDeleted(try decodeNotification())
         case .tutorialGroupUnassignedNotification: .tutorialUnassigned(try decodeNotification())
+        case .irisResponseNotification: .irisResponse(try decodeNotification())
         case .unknown: .unknown
         }
     }
@@ -110,6 +112,7 @@ public enum CoursePushNotification: Codable {
         case .tutorialAssigned(let notification): notification
         case .tutorialDeleted(let notification): notification
         case .tutorialUnassigned(let notification): notification
+        case .irisResponse(let notification): notification
         default:
             nil
         }
@@ -161,6 +164,7 @@ public enum CourseNotificationType: String, Codable, CodingKeyRepresentable, Con
     case tutorialGroupAssignedNotification
     case tutorialGroupDeletedNotification
     case tutorialGroupUnassignedNotification
+    case irisResponseNotification
     case unknown
 }
 
