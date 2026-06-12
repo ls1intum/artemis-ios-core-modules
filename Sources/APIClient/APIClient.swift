@@ -6,6 +6,12 @@ import UserStore
 // swiftlint:disable force_cast
 public final class APIClient {
 
+    /// HTTP header name through which the app identifies its client type to the server.
+    private static let clientHeaderField = "X-Artemis-Client"
+
+    /// Value sent in ``clientHeaderField`` to identify requests as originating from the iOS app.
+    private static let clientHeaderValue = "ios"
+
     internal let session = URLSession.shared
 
     internal var baseUrl: URL? {
@@ -21,7 +27,8 @@ public final class APIClient {
     ///   - request: A MultipartFormDataRequest object that provides HTTPmethod, path, data to send and type of response.
     ///   - currentTry: A counter which try the current is, used for retry mechanism
     public func sendRequest<T: Decodable>(_ request: MultipartFormDataRequest, currentTry: Int = 1) async -> Result<(T, Int), APIClientError> {
-        let urlRequest = request.asURLRequest()
+        var urlRequest = request.asURLRequest()
+        urlRequest.setValue(Self.clientHeaderValue, forHTTPHeaderField: Self.clientHeaderField)
         printRequest(urlRequest: urlRequest)
 
         do {
@@ -90,6 +97,7 @@ public final class APIClient {
 
         urlRequest.httpMethod = request.method.description
         urlRequest.url?.append(queryItems: request.params)
+        urlRequest.setValue(Self.clientHeaderValue, forHTTPHeaderField: Self.clientHeaderField)
         // urlRequests are not forcing to ignore cached data. That's why it might be possible to see older data. Also the statusCode 304 (send on server-side) will be changed to a 200. For more information see (https://stackoverflow.com/q/46696624)
 
         // NOTE: GET requests with body are never sent
