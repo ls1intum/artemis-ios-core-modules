@@ -91,7 +91,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         var method: HTTPMethod { .get }
 
         var resourceName: String {
-            return "api/communication/notification/info"
+            return "api/notification/courses/info"
         }
     }
 
@@ -115,7 +115,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         let courseId: Int
 
         var resourceName: String {
-            return "api/communication/notification/\(courseId)/settings"
+            return "api/notification/courses/\(courseId)/settings"
         }
     }
 
@@ -140,7 +140,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         let notificationTypeChannels: [String: [NotificationChannel: Bool]]
 
         var resourceName: String {
-            return "api/communication/notification/\(courseId)/setting-specification"
+            return "api/notification/courses/\(courseId)/setting-specification"
         }
     }
 
@@ -170,7 +170,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         }
 
         var resourceName: String {
-            return "api/communication/notification/\(courseId)/setting-preset"
+            return "api/notification/courses/\(courseId)/setting-preset"
         }
     }
 
