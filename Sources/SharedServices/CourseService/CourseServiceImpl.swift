@@ -16,7 +16,7 @@ struct CourseServiceImpl: CourseService {
         }
 
         var resourceName: String {
-            return "api/core/courses/for-dashboard"
+            return "api/course/courses/for-dashboard"
         }
     }
 
