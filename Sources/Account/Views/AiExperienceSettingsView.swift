@@ -6,12 +6,16 @@
 //
 
 import DesignLibrary
+import SafariServices
 import SharedModels
 import SwiftUI
 
 struct AiExperienceSettingsView: View {
     @State private var viewModel = AiExperienceSettingsViewModel()
+    @State private var isLearnMorePresented = false
     @Environment(\.dismiss) var dismiss
+
+    private let infoURL = URL(string: "https://artemis.tum.de/ai-experience-info")
 
     private var errorBinding: Binding<Bool> {
         Binding(get: { viewModel.error != nil }, set: { if !$0 { viewModel.error = nil } })
@@ -41,6 +45,12 @@ struct AiExperienceSettingsView: View {
             } footer: {
                 VStack(alignment: .leading, spacing: .s) {
                     Text(R.string.localizable.aiExperienceFooter())
+                    if infoURL != nil {
+                        Button(R.string.localizable.aiLearnMoreLink()) {
+                            isLearnMorePresented = true
+                        }
+                        .font(.footnote)
+                    }
                     if let timestamp = viewModel.selectionTimestamp {
                         Text(R.string.localizable.aiLastChangedLabel()) + Text(" ") + Text(timestamp, style: .date)
                     }
@@ -49,6 +59,12 @@ struct AiExperienceSettingsView: View {
         }
         .navigationTitle(R.string.localizable.aiExperienceNavigationTitle())
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $isLearnMorePresented) {
+            if let infoURL {
+                SafariView(url: infoURL)
+                    .ignoresSafeArea()
+            }
+        }
         .task { await viewModel.load() }
         .loadingIndicator(isLoading: $viewModel.isLoading)
         .alert(viewModel.error?.title ?? "", isPresented: errorBinding) {
@@ -185,4 +201,17 @@ struct AiExperienceSettingsView: View {
         .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: .m))
         .padding(.top, .s)
     }
+}
+
+/// Presents a URL in an in-app `SFSafariViewController`. Using an embedded web view
+/// avoids the host app's universal-link interception, which would otherwise show a
+/// "Link not supported by App" alert for `artemis.tum.de` URLs on a real device.
+private struct SafariView: UIViewControllerRepresentable {
+    let url: URL
+
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        SFSafariViewController(url: url)
+    }
+
+    func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {}
 }
