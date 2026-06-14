@@ -17,6 +17,7 @@ struct AccountNavigationBarMenuView: View {
 
     @State private var showProfile = false
     @State private var showPasskeySettings = false
+    @State private var showAiSettings = false
 
     var body: some View {
         Menu(content: {
@@ -35,6 +36,9 @@ struct AccountNavigationBarMenuView: View {
                 Button("Manage Passkeys", systemImage: "key.fill") {
                     showPasskeySettings = true
                 }
+            }
+            Button(R.string.localizable.aiExperienceNavigationTitle(), systemImage: "sparkles") {
+                showAiSettings = true
             }
             Button(R.string.localizable.logoutLabel()) {
                 viewModel.logout()
@@ -75,6 +79,11 @@ struct AccountNavigationBarMenuView: View {
         .sheet(isPresented: $showPasskeySettings) {
             NavigationStack {
                 PasskeySettingsView()
+            }
+        }
+        .sheet(isPresented: $showAiSettings) {
+            NavigationStack {
+                AiExperienceSettingsView()
             }
         }
         .sheet(isPresented: $viewModel.recommendPasskey) {
