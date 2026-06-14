@@ -79,6 +79,8 @@ extension CourseNotificationType {
             R.string.localizable.tutorialDeletedSettingsName()
         case .tutorialGroupUnassignedNotification:
             R.string.localizable.tutorialUnassignedSettingsName()
+        case .irisResponseNotification:
+            "Iris"
         case .unknown:
             ""
         }
