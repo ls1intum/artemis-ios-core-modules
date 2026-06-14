@@ -17,7 +17,7 @@ class PasskeyServiceImpl: PasskeyService {
         typealias Response = [Passkey]
 
         var resourceName: String {
-            "api/core/passkey/user"
+            "api/account/passkeys/user"
         }
 
         var method: HTTPMethod { .get }
@@ -86,7 +86,7 @@ class PasskeyServiceImpl: PasskeyService {
         typealias Response = RawResponse
 
         var resourceName: String {
-            "api/core/passkey/\(passkey.credentialId)"
+            "api/account/passkeys/\(passkey.credentialId)"
         }
 
         var passkey: Passkey
