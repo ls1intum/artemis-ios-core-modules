@@ -17,8 +17,8 @@ public struct IrisResponseNotification: CourseBaseNotification {
 
 extension IrisResponseNotification: DisplayableNotification {
     public var title: String {
-        if chatTitle != nil {
-            "Iris - \(chatTitle!)"
+        if let chatTitle {
+            "Iris - \(chatTitle)"
         } else {
             "Iris"
         }
