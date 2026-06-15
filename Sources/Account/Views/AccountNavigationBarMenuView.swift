@@ -8,10 +8,15 @@
 import SwiftUI
 import DesignLibrary
 import Common
+import ProfileInfo
 import PushNotifications
 
 struct AccountNavigationBarMenuView: View {
     @State private var viewModel = AccountNavigationBarMenuViewModel()
+
+    /// Whether the connected instance has the Iris/AI module enabled. The AI experience settings are only
+    /// relevant in that case (e.g. instances set up without any AI experience should not show this).
+    @ModuleFeatureAvailability(.iris) private var isIrisAvailable
 
     @Binding var error: UserFacingError?
 
@@ -37,8 +42,10 @@ struct AccountNavigationBarMenuView: View {
                     showPasskeySettings = true
                 }
             }
-            Button(R.string.localizable.aiExperienceNavigationTitle(), systemImage: "sparkles") {
-                showAiSettings = true
+            if isIrisAvailable {
+                Button(R.string.localizable.aiExperienceNavigationTitle(), systemImage: "sparkles") {
+                    showAiSettings = true
+                }
             }
             Button(R.string.localizable.logoutLabel()) {
                 viewModel.logout()
@@ -65,6 +72,7 @@ struct AccountNavigationBarMenuView: View {
         })
         .task {
             await viewModel.checkPasskeyRecommendation()
+            await FeatureList.shared.checkAvailability()
         }
         .onChange(of: viewModel.error) { _, error in
             self.error = error

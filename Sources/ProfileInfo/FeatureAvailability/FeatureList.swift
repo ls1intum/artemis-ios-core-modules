@@ -13,6 +13,7 @@ public class FeatureList {
     public static let shared = FeatureList()
 
     var availableFeatures = [String]()
+    var availableModuleFeatures = [String]()
     public var compatibleVersions: PlatformVersionCompatibility?
 
     private var lastChecked: Date = .distantPast
@@ -31,6 +32,7 @@ public class FeatureList {
                 lastChecked = .distantPast
             case .done(let response):
                 availableFeatures = response.features
+                availableModuleFeatures = response.activeModuleFeatures ?? []
                 compatibleVersions = response.compatibleVersions
                 lastChecked = .now
             default:

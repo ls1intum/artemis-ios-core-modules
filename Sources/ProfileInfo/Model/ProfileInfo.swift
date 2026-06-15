@@ -24,6 +24,7 @@ public struct ProfileInfo: Codable {
     public let useExternal: Bool
     public let buildPlanURLTemplate: String?
     public let activeProfiles: [String]
+    public let activeModuleFeatures: [String]?
     public let compatibleVersions: PlatformVersionCompatibility?
     public let saml2: Saml2?
 }
