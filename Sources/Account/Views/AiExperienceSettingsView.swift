@@ -15,8 +15,6 @@ struct AiExperienceSettingsView: View {
     @State private var isLearnMorePresented = false
     @Environment(\.dismiss) var dismiss
 
-    private let infoURL = URL(string: "https://artemis.tum.de/ai-experience-info")
-
     private var errorBinding: Binding<Bool> {
         Binding(get: { viewModel.error != nil }, set: { if !$0 { viewModel.error = nil } })
     }
@@ -45,7 +43,7 @@ struct AiExperienceSettingsView: View {
             } footer: {
                 VStack(alignment: .leading, spacing: .s) {
                     Text(R.string.localizable.aiExperienceFooter())
-                    if infoURL != nil {
+                    if viewModel.infoURL != nil {
                         Button(R.string.localizable.aiLearnMoreLink()) {
                             isLearnMorePresented = true
                         }
@@ -60,7 +58,7 @@ struct AiExperienceSettingsView: View {
         .navigationTitle(R.string.localizable.aiExperienceNavigationTitle())
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $isLearnMorePresented) {
-            if let infoURL {
+            if let infoURL = viewModel.infoURL {
                 SafariView(url: infoURL)
                     .ignoresSafeArea()
             }

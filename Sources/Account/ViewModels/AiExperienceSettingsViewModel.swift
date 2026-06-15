@@ -22,6 +22,11 @@ class AiExperienceSettingsViewModel {
     var error: UserFacingError?
     var isLoading = false
 
+    /// Link to the AI experience info page on the user's currently selected Artemis instance.
+    var infoURL: URL? {
+        UserSessionFactory.shared.institution?.baseURL?.appendingPathComponent("ai-experience-info")
+    }
+
     init() {
         let user = UserSessionFactory.shared.user
         selection = user?.selectedLLMUsage
