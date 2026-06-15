@@ -10,10 +10,18 @@ import SafariServices
 import SharedModels
 import SwiftUI
 
-struct AiExperienceSettingsView: View {
+public struct AiExperienceSettingsView: View {
     @State private var viewModel = AiExperienceSettingsViewModel()
     @State private var isLearnMorePresented = false
     @Environment(\.dismiss) var dismiss
+
+    /// Called after the user changes their AI selection, with the new value.
+    /// Lets a presenting screen (e.g. the Iris consent gate) react without observing the cached account.
+    private let onSelectionChange: ((AiSelectionDecision?) -> Void)?
+
+    public init(onSelectionChange: ((AiSelectionDecision?) -> Void)? = nil) {
+        self.onSelectionChange = onSelectionChange
+    }
 
     private var errorBinding: Binding<Bool> {
         Binding(get: { viewModel.error != nil }, set: { if !$0 { viewModel.error = nil } })
@@ -21,12 +29,15 @@ struct AiExperienceSettingsView: View {
 
     private let options: [AiSelectionDecision] = [.cloudAI, .localAI, .noAI]
 
-    var body: some View {
+    public var body: some View {
         Form {
             Section {
                 ForEach(options, id: \.self) { option in
                     Button {
-                        Task { await viewModel.select(option) }
+                        Task {
+                            await viewModel.select(option)
+                            onSelectionChange?(viewModel.selection)
+                        }
                     } label: {
                         row(for: option)
                     }
@@ -201,9 +212,6 @@ struct AiExperienceSettingsView: View {
     }
 }
 
-/// Presents a URL in an in-app `SFSafariViewController`. Using an embedded web view
-/// avoids the host app's universal-link interception, which would otherwise show a
-/// "Link not supported by App" alert for `artemis.tum.de` URLs on a real device.
 private struct SafariView: UIViewControllerRepresentable {
     let url: URL
 
