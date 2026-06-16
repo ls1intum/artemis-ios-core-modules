@@ -72,7 +72,6 @@ struct AccountNavigationBarMenuView: View {
         })
         .task {
             await viewModel.checkPasskeyRecommendation()
-            await FeatureList.shared.checkAvailability()
         }
         .onChange(of: viewModel.error) { _, error in
             self.error = error
