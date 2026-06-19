@@ -8,15 +8,21 @@
 import SwiftUI
 import DesignLibrary
 import Common
+import ProfileInfo
 import PushNotifications
 
 struct AccountNavigationBarMenuView: View {
     @State private var viewModel = AccountNavigationBarMenuViewModel()
 
+    /// Whether the connected instance has the Iris/AI module enabled. The AI experience settings are only
+    /// relevant in that case (e.g. instances set up without any AI experience should not show this).
+    @ModuleFeatureAvailability(.iris) private var isIrisAvailable
+
     @Binding var error: UserFacingError?
 
     @State private var showProfile = false
     @State private var showPasskeySettings = false
+    @State private var showAiSettings = false
 
     var body: some View {
         Menu(content: {
@@ -34,6 +40,11 @@ struct AccountNavigationBarMenuView: View {
             if Bundle.main.bundleIdentifier == "de.tum.cit.ase.artemis" {
                 Button("Manage Passkeys", systemImage: "key.fill") {
                     showPasskeySettings = true
+                }
+            }
+            if isIrisAvailable {
+                Button(R.string.localizable.aiExperienceNavigationTitle(), systemImage: "sparkles") {
+                    showAiSettings = true
                 }
             }
             Button(R.string.localizable.logoutLabel()) {
@@ -75,6 +86,11 @@ struct AccountNavigationBarMenuView: View {
         .sheet(isPresented: $showPasskeySettings) {
             NavigationStack {
                 PasskeySettingsView()
+            }
+        }
+        .sheet(isPresented: $showAiSettings) {
+            NavigationStack {
+                AiExperienceSettingsView()
             }
         }
         .sheet(isPresented: $viewModel.recommendPasskey) {

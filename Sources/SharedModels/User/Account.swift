@@ -15,6 +15,8 @@ public struct Account: Codable {
     public let lastNotificationRead: Date?
     public let visibleRegistrationNumber: String?
     public let createdDate: Date?
+    public let selectedLLMUsage: AiSelectionDecision?
+    public let selectedLLMUsageTimestamp: Date?
 
     public static func hasGroup(group: String?) -> Bool {
         guard let group,
@@ -59,11 +61,25 @@ public extension Account {
         groups: ["tumuser"],
         lastNotificationRead: .yesterday,
         visibleRegistrationNumber: "04242424",
-        createdDate: .distantPast
+        createdDate: .distantPast,
+        selectedLLMUsage: .cloudAI,
+        selectedLLMUsageTimestamp: .distantPast
     )
 }
 
 public typealias User = Account
+
+/// The user's AI usage consent. Mirrors the server `AiSelectionDecision`.
+public enum AiSelectionDecision: String, Codable {
+    case noAI = "NO_AI"
+    case localAI = "LOCAL_AI"
+    case cloudAI = "CLOUD_AI"
+
+    /// `true` if Iris/AI features may run for this choice (not opted out).
+    public var isAIEnabled: Bool {
+        self == .cloudAI || self == .localAI
+    }
+}
 
 public enum Authority: String, RawRepresentable, Codable {
     case admin = "ROLE_ADMIN"

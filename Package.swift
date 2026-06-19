@@ -65,6 +65,7 @@ let package = Package(
             dependencies: [
                 "APIClient",
                 "DesignLibrary",
+                "ProfileInfo",
                 "PushNotifications",
                 "SharedModels",
                 "SharedServices",

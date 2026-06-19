@@ -15,4 +15,8 @@ struct AccountServiceStub: AccountService {
         UserSessionFactory.shared.user = Account.mock
         return .done(response: Account.mock)
     }
+
+    func updateLLMSelection(_ selection: AiSelectionDecision) async -> NetworkResponse {
+        return .success
+    }
 }

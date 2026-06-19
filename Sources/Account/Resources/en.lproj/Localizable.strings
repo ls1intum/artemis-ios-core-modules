@@ -16,6 +16,32 @@
 "loading" = "Loading...";
 "notNow" = "Not now";
 
+// MARK: AI Experience Settings
+"aiExperienceNavigationTitle" = "AI Experience";
+"aiExperienceHeader" = "Choose Your AI Experience";
+"aiExperienceSubtitle" = "Your data, your choice. You can change this at any time.";
+"aiCloudTitle" = "Cloud AI";
+"aiCloudDescription" = "Fast, high-quality AI powered by cutting-edge cloud models";
+"aiCloudFeatureLLM" = "State-of-the-art LLMs like GPT-5";
+"aiCloudFeatureQuality" = "High response quality";
+"aiCloudFeatureSpeed" = "Fast response times";
+"aiCloudFeatureGdpr" = "GDPR-compliant processing on Azure";
+"aiCloudFeatureData" = "All data stored on university datacenters";
+"aiLocalTitle" = "On-premise";
+"aiLocalDescription" = "Ideal for highest privacy, but with some limitations";
+"aiLocalFeatureLLM" = "Latest open-source LLMs like GPT-OSS";
+"aiLocalFeatureQuality" = "Lower response quality";
+"aiLocalFeatureSpeed" = "Slower response times";
+"aiLocalFeatureProcessing" = "Processing only in university datacenters";
+"aiLocalFeatureData" = "All data stored on university datacenters";
+"aiNoneTitle" = "No AI";
+"aiNoneDescription" = "Use Artemis without AI assistance. Iris and AI-powered feedback will be unavailable.";
+"aiRecommendedBadge" = "Recommended";
+"aiExperimentalBadge" = "Experimental";
+"aiExperienceFooter" = "Artemis will never send your personal data such as your registration number or your email address to a large language model.";
+"aiLearnMoreLink" = "Learn more about your options";
+"aiLastChangedLabel" = "Last changed";
+
 // MARK: Passkeys
 "passkeyRecommendationTitle" = "Stay secure with Passkeys";
 "passkeyRecommendationBody" = "Passkeys are a good way to improve your account's security. Your device securely creates and stores a key to log in to your Artemis account.\n\nUnlike a password, passkeys can not be easily guessed or stolen using social engineering attacks.";

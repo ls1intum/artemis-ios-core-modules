@@ -37,4 +37,31 @@ struct AccountServiceImpl: AccountService {
             return DataState(error: error)
         }
     }
+
+    struct SelectLLMUsageRequest: APIRequest {
+        typealias Response = RawResponse
+
+        let selection: AiSelectionDecision
+
+        var method: HTTPMethod {
+            return .put
+        }
+
+        var resourceName: String {
+            return "api/account/users/select-llm-usage"
+        }
+    }
+
+    func updateLLMSelection(_ selection: AiSelectionDecision) async -> NetworkResponse {
+        let result = await client.sendRequest(SelectLLMUsageRequest(selection: selection))
+
+        switch result {
+        case .success:
+            // Refresh the cached account so the new choice is reflected app-wide (e.g. the Iris gate).
+            _ = await getAccount()
+            return .success
+        case .failure(let error):
+            return .failure(error: error)
+        }
+    }
 }
