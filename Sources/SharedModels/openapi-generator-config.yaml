@@ -7,3 +7,4 @@ namingStrategy: idiomatic
 filter:
   tags:
     - calendar
+    - quiz-training
