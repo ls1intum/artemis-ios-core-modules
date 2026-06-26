@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: Artemis Application Server API
   contact: {name: Stephan Krusche, email: krusche@tum.de}
-  version: "9.4"
+  version: "9.6"
 servers:
 - {url: 'http://localhost:8080', description: Generated server url}
 tags:
@@ -473,6 +473,10 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            X-Has-Next:
+              style: simple
+              schema: {type: boolean}
           content:
             application/json:
               schema:
@@ -1598,6 +1602,7 @@ components:
           items: {$ref: '#/components/schemas/TutorialGroupSession'}
       required: [id, isOnline, language, sessions, title, tutorId, tutorLogin, tutorName]
     DragAndDropSubmittedAnswerFromLiveClient:
+      required: [type]
       type: object
       properties:
         quizQuestion: {$ref: '#/components/schemas/EntityIdRef'}
@@ -1605,6 +1610,10 @@ components:
           type: array
           items: {$ref: '#/components/schemas/DragAndDropMappingFromLiveClient'}
           uniqueItems: true
+        type:
+          type: string
+          default: drag-and-drop
+          enum: [drag-and-drop]
     QualityIssueLocation:
       type: object
       description: Location of a quality issue within the problem statement
@@ -1712,6 +1721,7 @@ components:
         dragItem: {$ref: '#/components/schemas/DragItem'}
         dropLocation: {$ref: '#/components/schemas/DropLocation'}
     MultipleChoiceSubmittedAnswerFromLiveClient:
+      required: [type]
       type: object
       properties:
         quizQuestion: {$ref: '#/components/schemas/EntityIdRef'}
@@ -1719,6 +1729,10 @@ components:
           type: array
           items: {$ref: '#/components/schemas/EntityIdRef'}
           uniqueItems: true
+        type:
+          type: string
+          default: multiple-choice
+          enum: [multiple-choice]
     ProblemStatementGenerationResponse:
       type: object
       description: Response containing generated problem statement
@@ -2051,6 +2065,7 @@ components:
         explanation: {type: string}
         isCorrect: {type: boolean}
     ShortAnswerSubmittedAnswerFromLiveClient:
+      required: [type]
       type: object
       properties:
         quizQuestion: {$ref: '#/components/schemas/EntityIdRef'}
@@ -2058,6 +2073,10 @@ components:
           type: array
           items: {$ref: '#/components/schemas/ShortAnswerSubmittedTextFromLiveClient'}
           uniqueItems: true
+        type:
+          type: string
+          default: short-answer
+          enum: [short-answer]
     QuizQuestionRefinementFailure:
       description: Failed refinement result containing an error message
       required: [error]
