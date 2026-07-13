@@ -83,7 +83,7 @@ public struct QuizExercise: BaseExercise {
     }
 
     public var canStartLiveQuiz: Bool {
-        if dueDate ?? .distantPast > .now && (studentParticipations ?? []).isEmpty {
+        if dueDate ?? .distantFuture > .now && (studentParticipations ?? []).isEmpty {
             return true
         }
         return false
