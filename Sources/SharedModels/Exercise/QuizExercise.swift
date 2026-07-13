@@ -81,6 +81,20 @@ public struct QuizExercise: BaseExercise {
     private var startedQuizBatch: Bool {
         (quizBatches ?? []).contains(where: { $0.started ?? false })
     }
+
+    public var canStartLiveQuiz: Bool {
+        if dueDate ?? .distantPast > .now && (studentParticipations ?? []).isEmpty {
+            return true
+        }
+        return false
+    }
+
+    public var canStartPractice: Bool {
+        if dueDate ?? .distantFuture < .now || quizEnded == true {
+            return true
+        }
+        return false
+    }
 }
 
 public enum QuizStatus: String, ConstantsEnum {
