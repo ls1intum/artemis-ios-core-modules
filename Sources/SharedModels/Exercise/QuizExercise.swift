@@ -91,12 +91,15 @@ public struct QuizExercise: BaseExercise {
 
     public var canOpenQuiz: Bool {
         if let studentParticipations,
-           let participation = studentParticipations.last,
-           let batch = quizBatches?.last,
-           batch.ended != true &&
-            participation.baseParticipation.individualDueDate ?? .distantFuture > .now {
-            return true
+           let participation = studentParticipations.last {
+            if let batch = quizBatches?.last,
+               batch.ended != true &&
+                participation.baseParticipation.individualDueDate ?? .distantFuture > .now {
+                return true
+            }
+            return participation.baseParticipation.individualDueDate ?? .distantFuture > .now
         }
+           
         return false
     }
 
