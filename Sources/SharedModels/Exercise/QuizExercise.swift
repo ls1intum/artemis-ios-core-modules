@@ -89,6 +89,17 @@ public struct QuizExercise: BaseExercise {
         return false
     }
 
+    public var canOpenQuiz: Bool {
+        if let studentParticipations,
+           let participation = studentParticipations.last,
+           let batch = quizBatches?.last,
+           batch.ended != true &&
+            participation.baseParticipation.individualDueDate ?? .distantFuture > .now {
+            return true
+        }
+        return false
+    }
+
     public var canStartPractice: Bool {
         if dueDate ?? .distantFuture < .now || quizEnded == true {
             return true
