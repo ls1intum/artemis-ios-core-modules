@@ -99,7 +99,7 @@ public struct QuizExercise: BaseExercise {
             }
             return participation.baseParticipation.individualDueDate ?? .distantFuture > .now
         }
-           
+
         return false
     }
 
