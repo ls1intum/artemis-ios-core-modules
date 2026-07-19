@@ -10,3 +10,4 @@ filter:
     - quiz-training
     - quiz-participation
     - quiz-submission
+    - quiz-exercise-batch
