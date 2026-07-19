@@ -9,6 +9,12 @@ import Foundation
 
 public extension DTO.QuizQuestionWithoutSolution {
     func asQuestionWithSolution() -> DTO.QuizQuestionWithSolution? {
+        asDndWithSolution() ?? asSaWithSolution() ?? asMcWithSolution()
+    }
+}
+
+private extension DTO.QuizQuestionWithoutSolution {
+    func asDndWithSolution() -> DTO.QuizQuestionWithSolution? {
         if let dragItems, let dropLocations {
             let scoringTypeMapped: DTO.DragAndDropQuizQuestionWithSolution.ScoringTypePayload? = switch scoringType {
             case .allOrNothing: .allOrNothing
@@ -31,7 +37,10 @@ public extension DTO.QuizQuestionWithoutSolution {
                                       dragItems: dragItems,
                                       correctMappings: nil))
         }
+        return nil
+    }
 
+    func asSaWithSolution() -> DTO.QuizQuestionWithSolution? {
         if let spots {
             let scoringTypeMapped: DTO.ShortAnswerQuizQuestionWithSolution.ScoringTypePayload? = switch scoringType {
             case .allOrNothing: .allOrNothing
@@ -55,7 +64,10 @@ public extension DTO.QuizQuestionWithoutSolution {
                                       matchLetterCase: matchLetterCase,
                                       correctMappings: nil))
         }
+        return nil
+    }
 
+    func asMcWithSolution() -> DTO.QuizQuestionWithSolution? {
         if let answerOptions {
             let scoringTypeMapped: DTO.MultipleChoiceQuizQuestionWithSolution.ScoringTypePayload? = switch scoringType {
             case .allOrNothing: .allOrNothing
@@ -80,7 +92,6 @@ public extension DTO.QuizQuestionWithoutSolution {
                                          answerOptions: answerOptionsMapped,
                                          singleChoice: singleChoice))
         }
-
         return nil
     }
 }
