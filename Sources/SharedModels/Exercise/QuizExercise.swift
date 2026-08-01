@@ -98,7 +98,7 @@ public struct QuizExercise: BaseExercise {
         }
 
         let isBeforeDueDate = Date.now < participation?.baseParticipation.individualDueDate ?? dueDate ?? .distantFuture
-        return isBeforeDueDate == !isPracticeMode
+        return isBeforeDueDate && !isPracticeMode
     }
 
     public var canStartPractice: Bool {
