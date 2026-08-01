@@ -83,24 +83,22 @@ public struct QuizExercise: BaseExercise {
     }
 
     public var canStartLiveQuiz: Bool {
-        if dueDate ?? .distantFuture > .now && (studentParticipations ?? []).isEmpty {
-            return true
-        }
-        return false
+        let isBeforeDueDate = Date.now < dueDate ?? .distantFuture
+        return isBeforeDueDate && (studentParticipations ?? []).isEmpty
     }
 
-    public var canOpenQuiz: Bool {
-        if let studentParticipations,
-           let participation = studentParticipations.last {
-            if let batch = quizBatches?.last,
-               batch.ended != true &&
-                participation.baseParticipation.individualDueDate ?? .distantFuture > .now {
-                return true
-            }
-            return participation.baseParticipation.individualDueDate ?? .distantFuture > .now
+    public var canResumeQuiz: Bool {
+        let participation = studentParticipations?.last
+
+        let isPracticeMode: Bool
+        if case let .student(participation) = participation {
+            isPracticeMode = participation.testRun == true
+        } else {
+            isPracticeMode = false
         }
 
-        return false
+        let isBeforeDueDate = Date.now < participation?.baseParticipation.individualDueDate ?? dueDate ?? .distantFuture
+        return isBeforeDueDate == !isPracticeMode
     }
 
     public var canStartPractice: Bool {
