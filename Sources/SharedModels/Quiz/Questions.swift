@@ -8,90 +8,75 @@
 import Foundation
 
 public extension DTO.QuizQuestionWithoutSolution {
-    func asQuestionWithSolution() -> DTO.QuizQuestionWithSolution? {
-        asDndWithSolution() ?? asSaWithSolution() ?? asMcWithSolution()
-    }
-}
-
-private extension DTO.QuizQuestionWithoutSolution {
-    func asDndWithSolution() -> DTO.QuizQuestionWithSolution? {
-        if let dragItems, let dropLocations {
-            let scoringTypeMapped: DTO.DragAndDropQuizQuestionWithSolution.ScoringTypePayload? = switch scoringType {
+    // swiftlint:disable:next function_body_length
+    func asQuestionWithSolution() -> DTO.QuizQuestionWithSolution? { // swiftlint:disable:this cyclomatic_complexity
+        switch self {
+        case .dragAndDrop(let dnd):
+            let scoringTypeMapped: DTO.DragAndDropQuizQuestionWithSolution.ScoringTypePayload? = switch dnd.scoringType {
             case .allOrNothing: .allOrNothing
             case .proportionalWithPenalty: .proportionalWithPenalty
             case .proportionalWithoutPenalty: .proportionalWithoutPenalty
             default: nil
             }
-            return .dragAndDrop(.init(id: id,
-                                      title: title,
-                                      text: text,
-                                      hint: hint,
-                                      points: points,
+            return .dragAndDrop(.init(id: dnd.id,
+                                      title: dnd.title,
+                                      text: dnd.text,
+                                      hint: dnd.hint,
+                                      points: dnd.points,
                                       scoringType: scoringTypeMapped,
-                                      randomizeOrder: randomizeOrder,
-                                      invalid: invalid,
-                                      _type: _type,
-                                      explanation: nil,
-                                      backgroundFilePath: backgroundFilePath,
-                                      dropLocations: dropLocations,
-                                      dragItems: dragItems,
+                                      randomizeOrder: dnd.randomizeOrder,
+                                      invalid: dnd.invalid,
+                                      _type: dnd._type,
+                                      explanation: dnd.explanation,
+                                      backgroundFilePath: dnd.backgroundFilePath,
+                                      dropLocations: dnd.dropLocations,
+                                      dragItems: dnd.dragItems,
                                       correctMappings: nil))
-        }
-        return nil
-    }
-
-    func asSaWithSolution() -> DTO.QuizQuestionWithSolution? {
-        if let spots {
-            let scoringTypeMapped: DTO.ShortAnswerQuizQuestionWithSolution.ScoringTypePayload? = switch scoringType {
+        case .shortAnswer(let sa):
+            let scoringTypeMapped: DTO.ShortAnswerQuizQuestionWithSolution.ScoringTypePayload? = switch sa.scoringType {
             case .allOrNothing: .allOrNothing
             case .proportionalWithPenalty: .proportionalWithPenalty
             case .proportionalWithoutPenalty: .proportionalWithoutPenalty
             default: nil
             }
-            return .shortAnswer(.init(id: id,
-                                      title: title,
-                                      text: text,
-                                      hint: hint,
-                                      points: points,
+            return .shortAnswer(.init(id: sa.id,
+                                      title: sa.title,
+                                      text: sa.text,
+                                      hint: sa.hint,
+                                      points: sa.points,
                                       scoringType: scoringTypeMapped,
-                                      randomizeOrder: randomizeOrder,
-                                      invalid: invalid,
-                                      _type: _type,
-                                      explanation: nil,
-                                      spots: spots,
-                                      solutions: nil,
-                                      similarityValue: similarityValue,
-                                      matchLetterCase: matchLetterCase,
+                                      randomizeOrder: sa.randomizeOrder,
+                                      invalid: sa.invalid,
+                                      _type: sa._type,
+                                      explanation: sa.explanation,
+                                      spots: sa.spots,
+                                      solutions: sa.solutions,
+                                      similarityValue: sa.similarityValue,
+                                      matchLetterCase: sa.matchLetterCase,
                                       correctMappings: nil))
-        }
-        return nil
-    }
-
-    func asMcWithSolution() -> DTO.QuizQuestionWithSolution? {
-        if let answerOptions {
-            let scoringTypeMapped: DTO.MultipleChoiceQuizQuestionWithSolution.ScoringTypePayload? = switch scoringType {
+        case .multipleChoice(let mc):
+            let scoringTypeMapped: DTO.MultipleChoiceQuizQuestionWithSolution.ScoringTypePayload? = switch mc.scoringType {
             case .allOrNothing: .allOrNothing
             case .proportionalWithPenalty: .proportionalWithPenalty
             case .proportionalWithoutPenalty: .proportionalWithoutPenalty
             default: nil
             }
 
-            let answerOptionsMapped: [DTO.AnswerOptionWithSolution] = answerOptions.map {
+            let answerOptionsMapped: [DTO.AnswerOptionWithSolution] = (mc.answerOptions ?? []).map {
                 DTO.AnswerOptionWithSolution(id: $0.id, text: $0.text, hint: $0.hint, invalid: $0.invalid, explanation: nil, isCorrect: nil)
             }
-            return .multipleChoice(.init(id: id,
-                                         title: title,
-                                         text: text,
-                                         hint: hint,
-                                         points: points,
+            return .multipleChoice(.init(id: mc.id,
+                                         title: mc.title,
+                                         text: mc.text,
+                                         hint: mc.hint,
+                                         points: mc.points,
                                          scoringType: scoringTypeMapped,
-                                         randomizeOrder: randomizeOrder,
-                                         invalid: invalid,
-                                         _type: _type,
-                                         explanation: nil,
+                                         randomizeOrder: mc.randomizeOrder,
+                                         invalid: mc.invalid,
+                                         _type: mc._type,
+                                         explanation: mc.explanation,
                                          answerOptions: answerOptionsMapped,
-                                         singleChoice: singleChoice))
+                                         singleChoice: mc.singleChoice))
         }
-        return nil
     }
 }
