@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: Artemis Application Server API
   contact: {name: Stephan Krusche, email: krusche@tum.de}
-  version: "9.9"
+  version: "10.0"
 servers:
 - {url: 'http://localhost:8080', description: Generated server url}
 tags:
@@ -1357,6 +1357,17 @@ components:
         started: {type: boolean}
         ended: {type: boolean}
         password: {type: string}
+    ExerciseVariantGroupReference:
+      type: object
+      properties:
+        id: {type: integer, format: int64}
+        title: {type: string}
+        maxPoints: {type: number, format: double}
+        releaseDate: {type: string, format: date-time}
+        startDate: {type: string, format: date-time}
+        dueDate: {type: string, format: date-time}
+        assessmentDueDate: {type: string, format: date-time}
+        exampleSolutionPublicationDate: {type: string, format: date-time}
     QuizQuestionRefinementSuccess:
       description: Successful refinement result containing the refined question and
         an explanation of the changes
@@ -1868,8 +1879,10 @@ components:
           enum: [ALL_OR_NOTHING, PROPORTIONAL_WITH_PENALTY, PROPORTIONAL_WITHOUT_PENALTY]
         randomizeOrder: {type: boolean}
         invalid: {type: boolean}
-        type: {type: string}
-        explanation: {type: string}
+        type:
+          type: string
+          default: drag-and-drop
+          enum: [drag-and-drop]
         backgroundFilePath: {type: string}
         dropLocations:
           type: array
@@ -1877,6 +1890,7 @@ components:
         dragItems:
           type: array
           items: {$ref: '#/components/schemas/DragItem'}
+      required: [type]
     DragAndDropSubmittedAnswerFromLiveClient:
       required: [type]
       type: object
@@ -1935,6 +1949,7 @@ components:
           enum: [INDIVIDUAL, TEAM]
         maxPoints: {type: number, format: double}
         bonusPoints: {type: number, format: double}
+        exerciseVariantGroup: {$ref: '#/components/schemas/ExerciseVariantGroupReference'}
         quizQuestions:
           type: array
           items: {$ref: '#/components/schemas/QuizQuestionWithSolution'}
@@ -2107,6 +2122,7 @@ components:
           enum: [INDIVIDUAL, TEAM]
         maxPoints: {type: number, format: double}
         bonusPoints: {type: number, format: double}
+        exerciseVariantGroup: {$ref: '#/components/schemas/ExerciseVariantGroupReference'}
         quizQuestions:
           type: array
           items: {$ref: '#/components/schemas/QuizQuestionWithoutSolution'}
@@ -2316,12 +2332,15 @@ components:
           enum: [ALL_OR_NOTHING, PROPORTIONAL_WITH_PENALTY, PROPORTIONAL_WITHOUT_PENALTY]
         randomizeOrder: {type: boolean}
         invalid: {type: boolean}
-        type: {type: string}
-        explanation: {type: string}
+        type:
+          type: string
+          default: multiple-choice
+          enum: [multiple-choice]
         answerOptions:
           type: array
           items: {$ref: '#/components/schemas/AnswerOptionWithoutSolution'}
         singleChoice: {type: boolean}
+      required: [type]
     DomainObject:
       type: object
       properties:
@@ -2339,8 +2358,10 @@ components:
           enum: [ALL_OR_NOTHING, PROPORTIONAL_WITH_PENALTY, PROPORTIONAL_WITHOUT_PENALTY]
         randomizeOrder: {type: boolean}
         invalid: {type: boolean}
-        type: {type: string}
-        explanation: {type: string}
+        type:
+          type: string
+          default: short-answer
+          enum: [short-answer]
         spots:
           type: array
           items: {$ref: '#/components/schemas/ShortAnswerSpot'}
@@ -2349,6 +2370,7 @@ components:
           items: {$ref: '#/components/schemas/ShortAnswerSolution'}
         similarityValue: {type: integer, format: int32}
         matchLetterCase: {type: boolean}
+      required: [type]
     TutorialGroupStudentImportData:
       type: object
       properties:
@@ -2431,6 +2453,15 @@ components:
         accuracyOfScores: {type: integer, format: int32}
     SubmittedAnswerBeforeEvaluation:
       type: object
+      discriminator:
+        propertyName: type
+        mapping: {multiple-choice: '#/components/schemas/MultipleChoiceSubmittedAnswerBeforeEvaluation',
+          drag-and-drop: '#/components/schemas/DragAndDropSubmittedAnswerBeforeEvaluation',
+          short-answer: '#/components/schemas/ShortAnswerSubmittedAnswerBeforeEvaluation'}
+      oneOf:
+      - {$ref: '#/components/schemas/MultipleChoiceSubmittedAnswerBeforeEvaluation'}
+      - {$ref: '#/components/schemas/DragAndDropSubmittedAnswerBeforeEvaluation'}
+      - {$ref: '#/components/schemas/ShortAnswerSubmittedAnswerBeforeEvaluation'}
       properties:
         id: {type: integer, format: int64}
         quizQuestion: {$ref: '#/components/schemas/QuizQuestionWithoutSolution'}
@@ -2447,6 +2478,48 @@ components:
           type: array
           items: {$ref: '#/components/schemas/ShortAnswerSubmittedText'}
           uniqueItems: true
+    MultipleChoiceSubmittedAnswerBeforeEvaluation:
+      type: object
+      properties:
+        id: {type: integer, format: int64}
+        quizQuestion: {$ref: '#/components/schemas/QuizQuestionWithoutSolution'}
+        selectedOptions:
+          type: array
+          items: {$ref: '#/components/schemas/AnswerOptionWithoutSolution'}
+          uniqueItems: true
+        type:
+          type: string
+          default: multiple-choice
+          enum: [multiple-choice]
+      required: [type]
+    DragAndDropSubmittedAnswerBeforeEvaluation:
+      type: object
+      properties:
+        id: {type: integer, format: int64}
+        quizQuestion: {$ref: '#/components/schemas/QuizQuestionWithoutSolution'}
+        mappings:
+          type: array
+          items: {$ref: '#/components/schemas/DragAndDropMapping'}
+          uniqueItems: true
+        type:
+          type: string
+          default: drag-and-drop
+          enum: [drag-and-drop]
+      required: [type]
+    ShortAnswerSubmittedAnswerBeforeEvaluation:
+      type: object
+      properties:
+        id: {type: integer, format: int64}
+        quizQuestion: {$ref: '#/components/schemas/QuizQuestionWithoutSolution'}
+        submittedTexts:
+          type: array
+          items: {$ref: '#/components/schemas/ShortAnswerSubmittedText'}
+          uniqueItems: true
+        type:
+          type: string
+          default: short-answer
+          enum: [short-answer]
+      required: [type]
     SubmittedAnswerFromStudent:
       discriminator:
         propertyName: type
@@ -2497,6 +2570,7 @@ components:
           enum: [INDIVIDUAL, TEAM]
         maxPoints: {type: number, format: double}
         bonusPoints: {type: number, format: double}
+        exerciseVariantGroup: {$ref: '#/components/schemas/ExerciseVariantGroupReference'}
     StudentQuizParticipationWithQuestions:
       required: [quizQuestionsType]
       type: object
