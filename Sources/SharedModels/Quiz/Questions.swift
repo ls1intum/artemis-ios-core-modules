@@ -80,3 +80,21 @@ public extension DTO.QuizQuestionWithoutSolution {
         }
     }
 }
+
+public extension DTO.QuizQuestionWithSolution {
+    var id: Int64? {
+        switch self {
+        case .dragAndDrop(let question): question.id
+        case .multipleChoice(let question): question.id
+        case .shortAnswer(let question): question.id
+        }
+    }
+
+    var points: Double? {
+        switch self {
+        case .dragAndDrop(let question): question.points
+        case .multipleChoice(let question): question.points
+        case .shortAnswer(let question): question.points
+        }
+    }
+}
