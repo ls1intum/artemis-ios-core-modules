@@ -26,6 +26,11 @@ public protocol LoginService {
     func loginSAML2(rememberMe: Bool, samlCookies: [HTTPCookie]) async -> NetworkResponse
 
     /**
+     * Perform an OIDC login request to exchange short lived code to jwt Token 
+     */
+    func loginOIDC(code: String, codeVerifier: String) async -> NetworkResponse
+
+    /**
      * Perform a request to the server to obtain a login challenge for passkeys.
      */
     func getPasskeyLoginChallenge() async -> Result<PasskeyLoginChallenge, UserFacingError>

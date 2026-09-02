@@ -9,13 +9,13 @@ import CryptoKit
 import Foundation
 
 enum PKCEService {
-    // Generates a high-entropy cryptographic code_verifier according to RFC 7636 (43 characters, URL-safe).
+    // generates a high-entropy cryptographic code_verifier according to RFC 7636 (43 characters, URL-safe).
     static func generateCodeVerifier() -> String {
         var bytes = [UInt8](repeating: 0, count: 32)
         _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
         return Data(bytes).base64URLEncodedString()
     }
-    // Computes the S256 code_challenge: Base64URL(SHA256(ASCII(code_verifier))) without padding.
+    // computes the S256 code_challenge: Base64URL(SHA256(ASCII(code_verifier))) without padding.
     static func generateCodeChallenge(from verifier: String) -> String {
         guard let data = verifier.data(using: .utf8) else { return "" }
         let hash = SHA256.hash(data: data)

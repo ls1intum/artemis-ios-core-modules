@@ -167,7 +167,7 @@ public struct LoginView: View {
         // open sheet if ssoType is not nil
         .sheet(item: $ssoType) { type in
             if #available(iOS 26.0, *) {
-                SSOLoginView(ssoType: type)
+                SSOLoginView(ssoType: type, rememberMe: viewModel.rememberMe)
             }
         }
         .task {

@@ -133,17 +133,6 @@ open class LoginViewModel: NSObject, ObservableObject {
         }
     }
 
-    public func loginWithOIDC() async {
-        // 1) generate code verifier
-        let codeVerifier = PKCEService.generateCodeVerifier()
-        // 2) Get the code_challenge via hashing the code verifier
-        let codeChallenge = PKCEService.generateCodeChallenge(from: codeVerifier)
-        // 3) Redirect user to /oauth2/authorization/oidc?redirect=vscode&code_challenge={code_challenge}
-        // 4) Extract exchange code from server deeplink
-        // 5) Fetch the jwt token from /api/core/public/exchange-code?code={someRandomCode}
-
-    }
-
     public func resetLoginExpired() {
         UserSessionFactory.shared.setTokenExpired(expired: false)
     }

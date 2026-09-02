@@ -4,12 +4,12 @@
 //
 //  Created by Viktor Lynok on 02.09.26.
 //
-// An abstraction used for strategy pattern for different authentication flows in SSOLoginView
 
 import Common
 import Observation
 import WebKit
 
+/// An abstraction used for strategy pattern for different authentication flows in universal SSOLoginView
 @Observable
 @MainActor
 @available(iOS 26, *)

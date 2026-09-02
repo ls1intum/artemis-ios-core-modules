@@ -10,34 +10,52 @@ import WebKit
 @available(iOS 26, *)
 struct SSOLoginView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var viewModel: SSOLoginViewModel
-    init(ssoType: SSOType) {
-        let vm: SSOLoginViewModel = (ssoType == .saml2) ? SAML2LoginViewModel() : OIDCLoginViewModel()
-        _viewModel = State(wrappedValue: vm)
+    @State private var viewModel: SSOLoginViewModel?
+    let rememberMe: Bool
+    let ssoType: SSOType
+
+    init(ssoType: SSOType, rememberMe: Bool) {
+        self.ssoType = ssoType
+        self.rememberMe = rememberMe
     }
+
     var body: some View {
         NavigationStack {
-            WebView(viewModel.page)
-                .loadingIndicator(isLoading: Binding {
-                    viewModel.page.isLoading
-                } set: { _ in
-                })
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button(role: .cancel) {
-                            dismiss()
-                        }
+            Group {
+                if let viewModel {
+                    WebView(viewModel.page)
+                        .loadingIndicator(isLoading: Binding {
+                            viewModel.page.isLoading
+                        } set: { _ in
+                        })
+                        .alert(viewModel.error?.title ?? "", isPresented: Binding {
+                            viewModel.error != nil
+                        } set: { newValue in
+                            if !newValue { viewModel.error = nil }
+                        }) {}
+                } else {
+                    ProgressView()
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(role: .cancel) {
+                        dismiss()
                     }
                 }
-                .alert(viewModel.error?.title ?? "", isPresented:
-                    Binding {
-                        viewModel.error != nil
-                    } set: { newValue in
-                        if !newValue {
-                            viewModel.error = nil
-                        }
+            }
+        }
+        .task {
+            if viewModel == nil {
+                // choose the authentication strategy
+                let vm: SSOLoginViewModel = (ssoType == .saml2) ? SAML2LoginViewModel() : OIDCLoginViewModel(rememberMe: rememberMe)
+                if let oidcVM = vm as? OIDCLoginViewModel {
+                    oidcVM.onLoginSuccess = {
+                        dismiss()
                     }
-                ) {}
+                }
+                self.viewModel = vm
+            }
         }
     }
 }
