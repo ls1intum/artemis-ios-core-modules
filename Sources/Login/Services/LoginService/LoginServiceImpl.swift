@@ -33,6 +33,38 @@ class LoginServiceImpl: LoginService {
         }
     }
 
+    struct GetLoginOptionsRequest: APIRequest {
+        typealias Response = LoginOptionsDTO
+
+        let usernameOrEmail: String
+
+        var method: HTTPMethod { .get }
+
+        var resourceName: String {
+            "api/core/public/login-options"
+        }
+
+        var params: [URLQueryItem] {
+            [URLQueryItem(name: "usernameOrEmail", value: usernameOrEmail)]
+        }
+    }
+
+    func getLoginOptions(usernameOrEmail: String) async -> Result<LoginOptionsDTO, APIClientError> {
+        guard !usernameOrEmail.isEmpty else {
+            return .failure(.other(message: "Username or email cannot be empty"))
+        }
+
+        let request = GetLoginOptionsRequest(usernameOrEmail: usernameOrEmail)
+        let result = await client.sendRequest(request)
+
+        switch result {
+        case .success((let options, _)):
+            return .success(options)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+
     func login(username: String, password: String, rememberMe: Bool) async -> NetworkResponse {
         if !rememberMe {
             UserSessionFactory.shared.saveUsername(username: nil)

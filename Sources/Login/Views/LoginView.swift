@@ -27,13 +27,92 @@ public struct LoginView: View {
                 ScrollView {
                     VStack(spacing: .xl) {
                         header
+                        // first, always ask for username
+                        if viewModel.authenticationPhase == .username {
+                            Text(R.string.localizable.login_enter_username_to_continue(viewModel.institution.shortName))
+                                .font(.customBody)
+                                .multilineTextAlignment(.center)
+                            VStack(spacing: .l) {
+                                usernameInput
+                            }.frame(maxWidth: 520)
+                            Button(R.string.localizable.login_continue_button_text()) {
+                                viewModel.isLoading = true
+                                Task {
+                                    await viewModel.fetchLoginOptions()
+                                }
+                            }
+                            .disabled(viewModel.username.isEmpty)
+                            .buttonStyle(ArtemisButton())
+                        } else if viewModel.authenticationPhase == .credentials, let options = viewModel.loginOptions {
+                            VStack(spacing: .l) {
+                                disabledUsernameInput
 
-                        Text(R.string.localizable.login_please_sign_in_account(viewModel.institution.shortName))
-                            .font(.customBody)
-                            .multilineTextAlignment(.center)
+                                // Provide user with according authentication for given username
+                                switch options.loginMethod {
+                                case .password:
+                                    passwordInput
+
+                                    Toggle(R.string.localizable.login_remember_me_label(), isOn: $viewModel.rememberMe)
+                                        .toggleStyle(.switch)
+                                        .tint(Color.Artemis.toggleColor)
+
+                                    Button(R.string.localizable.login_perform_login_button_text()) {
+                                        viewModel.isLoading = true
+                                        Task { await viewModel.login() }
+                                    }
+                                    .disabled(viewModel.password.count < 8)
+                                    .buttonStyle(ArtemisButton())
+
+                                    // note: this case is only possible if university artemis instance does not have /login-options ednpoint yet
+                                    // otherwise options.loginMethod would be .saml2
+                                    // so this case is used only for availability of old instances
+                                    if let saml2 = viewModel.saml2, #available(iOS 26.0, *) {
+                                        orSplitter
+
+                                        Button(saml2.buttonLabel) {
+                                            saml2Presented = true
+                                        }
+                                        .buttonStyle(ArtemisButton())
+                                    }
+
+                                case .oidc:
+                                    Toggle(R.string.localizable.login_remember_me_label(), isOn: $viewModel.rememberMe)
+                                        .toggleStyle(.switch)
+                                        .tint(Color.Artemis.toggleColor)
+
+                                    let idpTitle = options.idpName ?? R.string.localizable.login_default_sso_name()
+                                    Button(R.string.localizable.login_sign_in_with_idp(idpTitle)) {
+                                        Task {
+                                            // await viewModel.loginWithOIDC()
+                                            print("Start OIDC Login")
+                                        }
+                                    }
+                                    .buttonStyle(ArtemisButton())
+                                    .buttonStyle(ArtemisButton())
+
+                                case .saml2:
+                                    Toggle(R.string.localizable.login_remember_me_label(), isOn: $viewModel.rememberMe)
+                                        .toggleStyle(.switch)
+                                        .tint(Color.Artemis.toggleColor)
+
+                                    let samlTitle = options.idpName ?? R.string.localizable.login_sign_in_with_saml2()
+                                    Button(samlTitle) {
+                                        saml2Presented = true
+                                    }
+                                    .buttonStyle(ArtemisButton())
+                                }
+
+                                // Back button returns user to the username phase
+                                Button(R.string.localizable.login_back_button_text()) {
+                                    viewModel.resetToIdentifierPhase()
+                                }
+                            }
+                            .frame(maxWidth: 520)
+                        }
 
                         // Passkey only supported for Artemis app itself
                         if Bundle.main.bundleIdentifier == "de.tum.cit.ase.artemis" {
+                            orSplitter
                             Button(R.string.localizable.signInPasskey()) {
                                 Task {
                                     await viewModel.loginWithPasskey(controller: authorizationController)
@@ -41,34 +120,6 @@ public struct LoginView: View {
                             }
                             .buttonStyle(ArtemisButton())
                         }
-
-                        if let saml2 = viewModel.saml2, #available(iOS 26.0, *) {
-                            Button(saml2.buttonLabel) {
-                                saml2Presented = true
-                            }
-                            .buttonStyle(ArtemisButton())
-                        }
-
-                        if viewModel.saml2?.passwordLoginDisabled != true {
-                            VStack(spacing: .l) {
-                                usernameInput
-                                passwordInput
-                                Toggle(R.string.localizable.login_remember_me_label(), isOn: $viewModel.rememberMe)
-                                    .toggleStyle(.switch)
-                                    .tint(Color.Artemis.toggleColor)
-                            }
-                            .frame(maxWidth: 520)
-
-                            Button(R.string.localizable.login_perform_login_button_text()) {
-                                viewModel.isLoading = true
-                                Task {
-                                    await viewModel.login()
-                                }
-                            }
-                            .disabled(viewModel.username.isEmpty || viewModel.password.count < 8)
-                            .buttonStyle(ArtemisButton())
-                        }
-
                         Spacer()
 
                         footer
@@ -81,10 +132,12 @@ public struct LoginView: View {
         }
         .onSubmit {
             if focusedField == .username {
-                focusedField = .password
+                focusedField = nil
+                Task {
+                    await viewModel.fetchLoginOptions()
+                }
             } else if focusedField == .password {
                 focusedField = nil
-                viewModel.isLoading = true
                 Task {
                     await viewModel.login()
                 }
@@ -207,5 +260,35 @@ private extension LoginView {
                 .focused($focusedField, equals: .password)
                 .submitLabel(.continue)
         }
+    }
+
+    var disabledUsernameInput: some View {
+        VStack(alignment: .leading, spacing: .xxs) {
+            Text(R.string.localizable.login_username_label())
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+
+            TextField("", text: .constant(viewModel.username))
+                .textFieldStyle(.roundedBorder)
+                .disabled(true)
+                .opacity(0.8)
+        }
+    }
+
+    var orSplitter: some View {
+        HStack(spacing: .m) {
+            Rectangle()
+                .fill(Color.gray.opacity(0.3))
+                .frame(height: 1)
+
+            Text(R.string.localizable.login_or_divider())
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+
+            Rectangle()
+                .fill(Color.gray.opacity(0.3))
+                .frame(height: 1)
+        }
+        .frame(maxWidth: 520)
     }
 }

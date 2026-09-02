@@ -6,10 +6,15 @@
 //
 
 import Account
+import APIClient
 import Common
 import WebKit
 
 public protocol LoginService {
+    /**
+     * Perform a request to the server to retrieve the login option for given username
+     */
+    func getLoginOptions(usernameOrEmail: String) async -> Result<LoginOptionsDTO, APIClientError>
     /**
      * Perform a login request to the server.
      */

@@ -35,6 +35,13 @@ open class LoginViewModel: NSObject, ObservableObject {
     @Published public var showUsernameWarning = false
 
     @Published public var institution: InstitutionIdentifier = .tum
+    public enum AuthenticationPhase {
+        case username
+        case credentials
+    }
+
+    @Published public var authenticationPhase: AuthenticationPhase = .username
+    @Published public var loginOptions: LoginOptionsDTO?
 
     private var cancellables: Set<AnyCancellable> = Set()
     internal let service = LoginServiceFactory.shared
@@ -55,6 +62,36 @@ open class LoginViewModel: NSObject, ObservableObject {
         password = UserSessionFactory.shared.password ?? ""
         loginExpired = UserSessionFactory.shared.tokenExpired
         institution = UserSessionFactory.shared.institution ?? .tum
+    }
+
+    public func fetchLoginOptions() async {
+        isLoading = true
+        defer {isLoading = false}
+        let result = await service.getLoginOptions(usernameOrEmail: username)
+        switch result {
+        case .success(let options):
+            self.loginOptions = options
+            self.authenticationPhase = LoginViewModel.AuthenticationPhase.credentials
+        case .failure(let apiClientError):
+            if case let .httpURLResponseError(statusCode, _) = apiClientError, statusCode == .notFound {
+                // on 404 error (login-option endpoint is not available on the instance) perform a traditional callback to ActiveProfiles
+                if let saml2 = self.saml2, saml2.passwordLoginDisabled {
+                    self.loginOptions = LoginOptionsDTO(loginMethod: .saml2, idpName: saml2.buttonLabel)
+                } else {
+                    self.loginOptions = LoginOptionsDTO(loginMethod: .password, idpName: nil)
+                }
+                self.authenticationPhase = .credentials
+            } else {
+                // else show an alert
+                self.error = UserFacingError(error: apiClientError)
+            }
+        }
+    }
+
+    public func resetToIdentifierPhase() {
+        self.authenticationPhase = LoginViewModel.AuthenticationPhase.username
+        self.loginOptions = nil
+        self.password = ""
     }
 
     public func login() async {
