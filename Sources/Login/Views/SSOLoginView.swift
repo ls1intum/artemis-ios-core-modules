@@ -1,18 +1,20 @@
 //
-//  SAML2LoginView.swift
+//  SSOLoginView.swift
 //  ArtemisCore
 //
-//  Created by Anian Schleyer on 23.02.26.
+//  Created by Viktor Lynok on 02.09.26.
 //
 
 import SwiftUI
 import WebKit
-
 @available(iOS 26, *)
-struct SAML2LoginView: View {
+struct SSOLoginView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var viewModel = SAML2LoginViewModel()
-
+    @State private var viewModel: SSOLoginViewModel
+    init(ssoType: SSOType) {
+        let vm: SSOLoginViewModel = (ssoType == .saml2) ? SAML2LoginViewModel() : OIDCLoginViewModel()
+        _viewModel = State(wrappedValue: vm)
+    }
     var body: some View {
         NavigationStack {
             WebView(viewModel.page)

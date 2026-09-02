@@ -93,6 +93,11 @@ open class LoginViewModel: NSObject, ObservableObject {
         self.loginOptions = nil
         self.password = ""
     }
+    // On change of institution also set the authentication phase to username
+    public func handleInstitutionChanged(profileInfo: ProfileInfo?) {
+        resetToIdentifierPhase()
+        handleProfileInfoReceived(profileInfo: profileInfo)
+    }
 
     public func login() async {
         let response = await service.login(username: username, password: password, rememberMe: rememberMe)
@@ -126,6 +131,17 @@ open class LoginViewModel: NSObject, ObservableObject {
             }
             return
         }
+    }
+
+    public func loginWithOIDC() async {
+        // 1) generate code verifier
+        let codeVerifier = PKCEService.generateCodeVerifier()
+        // 2) Get the code_challenge via hashing the code verifier
+        let codeChallenge = PKCEService.generateCodeChallenge(from: codeVerifier)
+        // 3) Redirect user to /oauth2/authorization/oidc?redirect=vscode&code_challenge={code_challenge}
+        // 4) Extract exchange code from server deeplink
+        // 5) Fetch the jwt token from /api/core/public/exchange-code?code={someRandomCode}
+
     }
 
     public func resetLoginExpired() {

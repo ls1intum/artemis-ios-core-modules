@@ -12,7 +12,7 @@ public struct LoginView: View {
     @Environment(\.authorizationController) var authorizationController
     @StateObject private var viewModel = LoginViewModel()
 
-    @State private var saml2Presented = false
+    @State private var ssoType: SSOType?
     @State private var isInstitutionSelectionPresented = false
     @FocusState private var focusedField: FocusField?
 
@@ -70,7 +70,7 @@ public struct LoginView: View {
                                         orSplitter
 
                                         Button(saml2.buttonLabel) {
-                                            saml2Presented = true
+                                            ssoType = .saml2
                                         }
                                         .buttonStyle(ArtemisButton())
                                     }
@@ -82,10 +82,7 @@ public struct LoginView: View {
 
                                     let idpTitle = options.idpName ?? R.string.localizable.login_default_sso_name()
                                     Button(R.string.localizable.login_sign_in_with_idp(idpTitle)) {
-                                        Task {
-                                            // await viewModel.loginWithOIDC()
-                                            print("Start OIDC Login")
-                                        }
+                                        ssoType = .oidc
                                     }
                                     .buttonStyle(ArtemisButton())
                                     .buttonStyle(ArtemisButton())
@@ -97,7 +94,7 @@ public struct LoginView: View {
 
                                     let samlTitle = options.idpName ?? R.string.localizable.login_sign_in_with_saml2()
                                     Button(samlTitle) {
-                                        saml2Presented = true
+                                        ssoType = .saml2
                                     }
                                     .buttonStyle(ArtemisButton())
                                 }
@@ -167,15 +164,23 @@ public struct LoginView: View {
                 )
             )
         }
-        .sheet(isPresented: $saml2Presented) {
+        // open sheet if ssoType is not nil
+        .sheet(item: $ssoType) { type in
             if #available(iOS 26.0, *) {
-                SAML2LoginView()
+                SSOLoginView(ssoType: type)
             }
         }
         .task {
             await viewModel.getProfileInfo()
         }
     }
+}
+
+enum SSOType: String, Identifiable {
+    case saml2
+    case oidc
+
+    var id: String { rawValue }
 }
 
 private extension LoginView {
@@ -224,7 +229,7 @@ private extension LoginView {
                 NavigationStack {
                     InstitutionSelectionView(
                         institution: $viewModel.institution,
-                        handleProfileInfoCompletion: viewModel.handleProfileInfoReceived
+                        handleProfileInfoCompletion: viewModel.handleInstitutionChanged
                     )
                     .navigationTitle(R.string.localizable.account_select_artemis_instance_select_title())
                     .navigationBarTitleDisplayMode(.inline)

@@ -12,24 +12,20 @@ import WebKit
 @Observable
 @MainActor
 @available(iOS 26, *)
-class SAML2LoginViewModel {
-    let page: WebPage
-    let config: WebPage.Configuration
-    var error: UserFacingError?
+class SAML2LoginViewModel: SSOLoginViewModel {
 
     init() {
-        var config = WebPage.Configuration()
-        config.websiteDataStore = .nonPersistent()
-        let navDecider = NavDecider(config: config)
+            var config = WebPage.Configuration()
+            config.websiteDataStore = .nonPersistent()
+            let navDecider = NavDecider(config: config)
+            let page = WebPage(configuration: config, navigationDecider: navDecider)
 
-        self.page = WebPage(configuration: config, navigationDecider: navDecider)
-        self.config = config
+            super.init(page: page, config: config)
 
-        navDecider.setLoginCallback(login: login)
-
-        let baseURL = UserSessionFactory.shared.institution?.baseURL
-        page.load(baseURL?.appending(path: "saml2/authenticate"))
-    }
+            navDecider.setLoginCallback(login: login)
+            let baseURL = UserSessionFactory.shared.institution?.baseURL
+            page.load(baseURL?.appending(path: "saml2/authenticate"))
+        }
 
     func login(cookies: [HTTPCookie]) async {
         let result = await LoginServiceFactory.shared.loginSAML2(rememberMe: true, samlCookies: cookies)
