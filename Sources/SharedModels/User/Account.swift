@@ -83,6 +83,7 @@ public enum AiSelectionDecision: String, Codable {
 
 public enum Authority: String, RawRepresentable, Codable {
     case admin = "ROLE_ADMIN"
+    case superAdmin = "ROLE_SUPER_ADMIN"
     case instructor = "ROLE_INSTRUCTOR"
     case editor = "ROLE_EDITOR"
     case teachingAssistent = "ROLE_TA"
