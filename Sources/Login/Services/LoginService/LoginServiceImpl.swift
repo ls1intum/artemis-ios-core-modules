@@ -149,51 +149,41 @@ class LoginServiceImpl: LoginService {
         let codeVerifier: String
     }
 
+    struct ExchangeCodeRequest: APIRequest {
+        typealias Response = RawResponse
+
+        let code: String
+        let codeVerifier: String
+
+        var method: HTTPMethod { .post }
+        var resourceName: String { "api/core/public/exchange-code" }
+    }
+
     func loginOIDC(code: String, codeVerifier: String) async -> NetworkResponse {
         guard let baseURL = UserSessionFactory.shared.institution?.baseURL else {
             return .failure(error: URLError(.badURL))
         }
 
-        let url = baseURL.appending(path: "api/core/public/exchange-code")
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let request = ExchangeCodeRequest(code: code, codeVerifier: codeVerifier)
+        let result = await client.sendRequest(request)
 
-        let body = OIDCCodeExchangeDTO(code: code, codeVerifier: codeVerifier)
-        guard let httpBody = try? JSONEncoder().encode(body) else {
-            return .failure(error: URLError(.cannotDecodeContentData))
-        }
-        request.httpBody = httpBody
-
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-
-            guard let httpResponse = response as? HTTPURLResponse else {
-                return .failure(error: URLError(.badServerResponse))
-            }
-
-            guard httpResponse.statusCode == 200 else {
-                return .failure(error: UserFacingError(title: "Authentication failed with status code \(httpResponse.statusCode)"))
-            }
-
-            guard let jwtToken = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines),
-                  !jwtToken.isEmpty else {
+        switch result {
+        case .success((let rawResponse, _)):
+            let cleanToken = rawResponse.rawData.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !cleanToken.isEmpty else {
                 return .failure(error: URLError(.cannotParseResponse))
             }
 
-            // store jwt Token
-            UserSessionFactory.shared.saveToken(jwtToken)
+            UserSessionFactory.shared.saveToken(cleanToken)
 
-            // create a cookie
             if let host = baseURL.host {
                 var properties: [HTTPCookiePropertyKey: Any] = [
                     .domain: host,
                     .path: "/",
                     .name: "jwt",
-                    .value: jwtToken,
+                    .value: cleanToken,
                     .originURL: baseURL
                 ]
-                // use secure flag only for https cases
                 if baseURL.scheme?.lowercased() == "https" {
                     properties[.secure] = "TRUE"
                 }
@@ -202,21 +192,11 @@ class LoginServiceImpl: LoginService {
                 }
             }
 
-            // set user as logget in
             UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
+            _ = await AccountServiceFactory.shared.getAccount()
+            return .success
 
-            // load the user's data
-            let accountResult = await AccountServiceFactory.shared.getAccount()
-            switch accountResult {
-            case .loading:
-                return .loading
-            case .failure:
-                // account fetch failed but user is logged in
-                return .success
-            case .done:
-                return .success
-            }
-        } catch {
+        case .failure(let error):
             return .failure(error: error)
         }
     }
