@@ -34,13 +34,13 @@ class OIDCLoginViewModel: SSOLoginViewModel {
         super.init(page: page, config: config)
 
         decider.setCallbacks(
-                    onCodeReceived: { [weak self] code in
-                        await self?.exchangeCodeCallback(code: code)
-                    },
-                    onErrorReceived: { [weak self] errorCode in
-                        self?.handleAuthError(errorCode: errorCode)
-                    }
-                )
+            onCodeReceived: { [weak self] code in
+                await self?.exchangeCodeCallback(code: code)
+            },
+            onErrorReceived: { [weak self] errorCode in
+                self?.handleAuthError(errorCode: errorCode)
+            }
+        )
 
         if let baseURL = UserSessionFactory.shared.institution?.baseURL {
             var components = URLComponents(
@@ -72,19 +72,19 @@ class OIDCLoginViewModel: SSOLoginViewModel {
     }
 
     private func handleAuthError(errorCode: String) {
-            let title: String
-            switch errorCode {
-            case "deactivated":
-                title = "Your Artemis account is deactivated. Please contact support."
-            case "invalid_request":
-                title = "Invalid authentication request. Please try again."
-            case "server_error":
-                title = "Server failed to generate an authorization code. Please try again later."
-            default:
-                title = "Authentication failed (\(errorCode))."
-            }
-            self.error = UserFacingError(title: title)
+        let title: String
+        switch errorCode {
+        case "deactivated":
+            title = "Your Artemis account is deactivated. Please contact support."
+        case "invalid_request":
+            title = "Invalid authentication request. Please try again."
+        case "server_error":
+            title = "Server failed to generate an authorization code. Please try again later."
+        default:
+            title = "Authentication failed (\(errorCode))."
         }
+        self.error = UserFacingError(title: title)
+    }
 }
 
 /// Allows all navigation, but intercepts redirects to "/oauth-callback"
@@ -95,12 +95,12 @@ private class OIDCNavDecider: WebPage.NavigationDeciding {
     private var onErrorReceived: ((String) -> Void)?
 
     func setCallbacks(
-            onCodeReceived: @escaping (String) async -> Void,
-            onErrorReceived: @escaping (String) -> Void
-        ) {
-            self.onCodeReceived = onCodeReceived
-            self.onErrorReceived = onErrorReceived
-        }
+        onCodeReceived: @escaping (String) async -> Void,
+        onErrorReceived: @escaping (String) -> Void
+    ) {
+        self.onCodeReceived = onCodeReceived
+        self.onErrorReceived = onErrorReceived
+    }
 
     func decidePolicy(for response: WebPage.NavigationResponse) async -> WKNavigationResponsePolicy {
         guard let url = response.response.url else {

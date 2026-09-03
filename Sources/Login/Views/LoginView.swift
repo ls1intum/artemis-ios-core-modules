@@ -36,7 +36,6 @@ public struct LoginView: View {
                                 usernameInput
                             }.frame(maxWidth: 520)
                             Button(R.string.localizable.login_continue_button_text()) {
-                                viewModel.isLoading = true
                                 Task {
                                     await viewModel.fetchLoginOptions()
                                 }
@@ -45,7 +44,7 @@ public struct LoginView: View {
                             .buttonStyle(ArtemisButton())
                         } else if viewModel.authenticationPhase == .credentials, let options = viewModel.loginOptions {
                             VStack(spacing: .l) {
-                                disabledUsernameInput
+                                usernameInput.disabled(true).foregroundColor(.secondary)
 
                                 // Provide user with according authentication for given username
                                 switch options.loginMethod {
@@ -57,7 +56,6 @@ public struct LoginView: View {
                                         .tint(Color.Artemis.toggleColor)
 
                                     Button(R.string.localizable.login_perform_login_button_text()) {
-                                        viewModel.isLoading = true
                                         Task { await viewModel.login() }
                                     }
                                     .disabled(viewModel.password.count < 8)
@@ -84,7 +82,6 @@ public struct LoginView: View {
                                     Button(R.string.localizable.login_sign_in_with_idp(idpTitle)) {
                                         ssoType = .oidc
                                     }
-                                    .buttonStyle(ArtemisButton())
                                     .buttonStyle(ArtemisButton())
 
                                 case .saml2:
@@ -264,19 +261,6 @@ private extension LoginView {
                 .textFieldStyle(.roundedBorder)
                 .focused($focusedField, equals: .password)
                 .submitLabel(.continue)
-        }
-    }
-
-    var disabledUsernameInput: some View {
-        VStack(alignment: .leading, spacing: .xxs) {
-            Text(R.string.localizable.login_username_label())
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-
-            TextField("", text: .constant(viewModel.username))
-                .textFieldStyle(.roundedBorder)
-                .disabled(true)
-                .opacity(0.8)
         }
     }
 
