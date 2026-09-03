@@ -100,6 +100,8 @@ open class LoginViewModel: NSObject, ObservableObject {
     }
 
     public func login() async {
+        isLoading = true
+        defer { isLoading = false }
         let response = await service.login(username: username, password: password, rememberMe: rememberMe)
 
         switch response {
@@ -108,7 +110,6 @@ open class LoginViewModel: NSObject, ObservableObject {
                 switch loginError {
                 case .captchaRequired:
                     await getProfileInfo()
-                    isLoading = false
                     captchaRequired = true
                     self.error = UserFacingError(title: R.string.localizable.account_captcha_alert_message())
                 }
@@ -120,11 +121,9 @@ open class LoginViewModel: NSObject, ObservableObject {
                     self.error = UserFacingError(error: apiClientError)
                 }
             } else {
-                isLoading = false
                 self.error = UserFacingError(title: error.localizedDescription)
             }
         default:
-            isLoading = false
             let isTumUrl = UserSessionFactory.shared.institution?.baseURL?.absoluteString.contains(".tum.") ?? false
             if UserSessionFactory.shared.isLoggedIn && isTumUrl {
                 UserSessionFactory.shared.didLogInWithPassword = true
@@ -141,7 +140,7 @@ open class LoginViewModel: NSObject, ObservableObject {
         isLoading = true
         let response = await ProfileInfoServiceFactory.shared.getProfileInfo()
         isLoading = false
-
+        
         switch response {
         case .loading:
             return

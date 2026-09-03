@@ -15,17 +15,17 @@ import WebKit
 class SAML2LoginViewModel: SSOLoginViewModel {
 
     init() {
-            var config = WebPage.Configuration()
-            config.websiteDataStore = .nonPersistent()
-            let navDecider = NavDecider(config: config)
-            let page = WebPage(configuration: config, navigationDecider: navDecider)
+        var config = WebPage.Configuration()
+        config.websiteDataStore = .nonPersistent()
+        let navDecider = NavDecider(config: config)
+        let page = WebPage(configuration: config, navigationDecider: navDecider)
 
-            super.init(page: page, config: config)
+        super.init(page: page, config: config)
 
-            navDecider.setLoginCallback(login: login)
-            let baseURL = UserSessionFactory.shared.institution?.baseURL
-            page.load(baseURL?.appending(path: "saml2/authenticate"))
-        }
+        navDecider.setLoginCallback(login: login)
+        let baseURL = UserSessionFactory.shared.institution?.baseURL
+        page.load(baseURL?.appending(path: "saml2/authenticate"))
+    }
 
     func login(cookies: [HTTPCookie]) async {
         let result = await LoginServiceFactory.shared.loginSAML2(rememberMe: true, samlCookies: cookies)
