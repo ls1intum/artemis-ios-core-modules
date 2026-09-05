@@ -1,4 +1,5 @@
 import APIClient
+import AuthenticationServices
 import Combine
 import Common
 import Foundation
@@ -154,6 +155,32 @@ open class LoginViewModel: NSObject, ObservableObject {
                 UserSessionFactory.shared.didLogInWithPassword = true
             }
             return
+        }
+    }
+
+    public func loginWithOIDC() async {
+        guard let baseURL = UserSessionFactory.shared.institution?.baseURL else {
+            self.error = UserFacingError(title: "Base URL is missing")
+            return
+        }
+
+        isLoading = true
+        defer { isLoading = false }
+
+        do {
+            let authService = OIDCAuthenticationService()
+            // start OIDC authentication flow and get the data needed to get jwt Token
+            let (code, verifier) = try await authService.authenticate(baseURL: baseURL, rememberMe: rememberMe)
+            // get jwt Token from code
+            let response = await service.loginOIDC(code: code, codeVerifier: verifier)
+            if case .failure(let error) = response {
+                self.error = UserFacingError(title: error.localizedDescription)
+            }
+        } catch {
+            if let authError = error as? ASWebAuthenticationSessionError, authError.code == .canceledLogin {
+                return
+            }
+            self.error = UserFacingError(title: error.localizedDescription)
         }
     }
 

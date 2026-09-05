@@ -8,14 +8,12 @@
 import SwiftUI
 import WebKit
 @available(iOS 26, *)
-struct SSOLoginView: View {
+struct SAML2LoginView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var viewModel: SSOLoginViewModel?
+    @State private var viewModel: SAML2LoginViewModel?
     let rememberMe: Bool
-    let ssoType: SSOType
 
-    init(ssoType: SSOType, rememberMe: Bool) {
-        self.ssoType = ssoType
+    init(rememberMe: Bool) {
         self.rememberMe = rememberMe
     }
 
@@ -47,14 +45,7 @@ struct SSOLoginView: View {
         }
         .task {
             if viewModel == nil {
-                // choose the authentication strategy
-                let vm: SSOLoginViewModel = (ssoType == .saml2) ? SAML2LoginViewModel() : OIDCLoginViewModel(rememberMe: rememberMe)
-                if let oidcVM = vm as? OIDCLoginViewModel {
-                    oidcVM.onLoginSuccess = {
-                        dismiss()
-                    }
-                }
-                self.viewModel = vm
+                self.viewModel = SAML2LoginViewModel()
             }
         }
     }

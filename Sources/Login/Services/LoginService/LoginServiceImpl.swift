@@ -173,7 +173,6 @@ class LoginServiceImpl: LoginService {
             guard !cleanToken.isEmpty else {
                 return .failure(error: URLError(.cannotParseResponse))
             }
-
             UserSessionFactory.shared.saveToken(cleanToken)
 
             if let host = baseURL.host {
@@ -192,8 +191,9 @@ class LoginServiceImpl: LoginService {
                 }
             }
 
-            UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
             _ = await AccountServiceFactory.shared.getAccount()
+
+            UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
             return .success
 
         case .failure(let error):

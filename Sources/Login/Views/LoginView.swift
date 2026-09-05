@@ -12,7 +12,7 @@ public struct LoginView: View {
     @Environment(\.authorizationController) var authorizationController
     @StateObject private var viewModel = LoginViewModel()
 
-    @State private var ssoType: SSOType?
+    @State private var isSAML2Presented = false
     @State private var isInstitutionSelectionPresented = false
     @FocusState private var focusedField: FocusField?
 
@@ -71,7 +71,7 @@ public struct LoginView: View {
                                         orSplitter
 
                                         Button(saml2.buttonLabel) {
-                                            ssoType = .saml2
+                                            isSAML2Presented = true
                                         }
                                         .buttonStyle(ArtemisButton())
                                     }
@@ -83,7 +83,9 @@ public struct LoginView: View {
 
                                     let idpTitle = options.idpName ?? R.string.localizable.login_default_sso_name()
                                     Button(R.string.localizable.login_sign_in_with_idp(idpTitle)) {
-                                        ssoType = .oidc
+                                        Task {
+                                            await viewModel.loginWithOIDC()
+                                        }
                                     }
                                     .buttonStyle(ArtemisButton())
 
@@ -94,7 +96,7 @@ public struct LoginView: View {
 
                                     let samlTitle = options.idpName ?? R.string.localizable.login_sign_in_with_saml2()
                                     Button(samlTitle) {
-                                        ssoType = .saml2
+                                        isSAML2Presented = true
                                     }
                                     .buttonStyle(ArtemisButton())
                                 }
@@ -167,22 +169,15 @@ public struct LoginView: View {
             )
         }
         // open sheet if ssoType is not nil
-        .sheet(item: $ssoType) { type in
+        .sheet(isPresented: $isSAML2Presented) {
             if #available(iOS 26.0, *) {
-                SSOLoginView(ssoType: type, rememberMe: viewModel.rememberMe)
+                SAML2LoginView(rememberMe: viewModel.rememberMe)
             }
         }
         .task {
             await viewModel.getProfileInfo()
         }
     }
-}
-
-enum SSOType: String, Identifiable {
-    case saml2
-    case oidc
-
-    var id: String { rawValue }
 }
 
 private extension LoginView {
