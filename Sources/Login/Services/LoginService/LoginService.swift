@@ -6,10 +6,15 @@
 //
 
 import Account
+import APIClient
 import Common
 import WebKit
 
 public protocol LoginService {
+    /**
+     * Perform a request to the server to retrieve the login option for given username
+     */
+    func getLoginOptions(usernameOrEmail: String) async -> Result<LoginOptionsDTO, APIClientError>
     /**
      * Perform a login request to the server.
      */
@@ -19,6 +24,11 @@ public protocol LoginService {
      * Perform a SAML2 login request to the server.
      */
     func loginSAML2(rememberMe: Bool, samlCookies: [HTTPCookie]) async -> NetworkResponse
+
+    /**
+     * Perform an OIDC login request to exchange short lived code to jwt Token 
+     */
+    func loginOIDC(code: String, codeVerifier: String) async -> NetworkResponse
 
     /**
      * Perform a request to the server to obtain a login challenge for passkeys.
