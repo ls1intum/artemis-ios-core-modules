@@ -44,7 +44,10 @@ public struct LoginView: View {
                             .buttonStyle(ArtemisButton())
                         } else if viewModel.authenticationPhase == .credentials, let options = viewModel.loginOptions {
                             VStack(spacing: .l) {
-                                usernameInput.disabled(true).foregroundColor(.secondary)
+                                // don't show the username if only one SSO option is enabled (user hasn't entered eny username)
+                                if viewModel.singleSSOOption == nil {
+                                    usernameInput.disabled(true).foregroundColor(.secondary)
+                                }
 
                                 // Provide user with according authentication for given username
                                 switch options.loginMethod {
@@ -95,10 +98,12 @@ public struct LoginView: View {
                                     }
                                     .buttonStyle(ArtemisButton())
                                 }
-
-                                // Back button returns user to the username phase
-                                Button(R.string.localizable.login_back_button_text()) {
-                                    viewModel.resetToIdentifierPhase()
+                                // No need to return to username phase in case of single SSO option
+                                if viewModel.singleSSOOption == nil {
+                                    // Back button returns user to the username phase
+                                    Button(R.string.localizable.login_back_button_text()) {
+                                        viewModel.resetToIdentifierPhase()
+                                    }
                                 }
                             }
                             .frame(maxWidth: 520)

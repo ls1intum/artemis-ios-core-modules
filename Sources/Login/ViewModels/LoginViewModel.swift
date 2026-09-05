@@ -28,11 +28,37 @@ open class LoginViewModel: NSObject, ObservableObject {
     @Published public var captchaRequired = false
 
     @Published public var saml2: Saml2?
+    @Published public var oidc: Oidc?
     @Published public var externalUserManagementUrl: DataState<URL> = .loading
     @Published public var externalUserManagementName: DataState<String> = .loading
     @Published public var externalPasswordResetLink: DataState<URL> = .loading
     @Published public var usernamePattern: String?
     @Published public var showUsernameWarning = false
+    @Published public var activeProfiles: [String] = []
+
+    public var isPasswordLoginDisabled: Bool {
+        saml2?.passwordLoginDisabled ?? false
+    }
+
+    public var hasSAML2: Bool {
+        saml2 != nil || activeProfiles.contains("saml2")
+    }
+
+    public var hasOIDC: Bool {
+        oidc != nil || activeProfiles.contains("oidc")
+    }
+    // checks if only one authentication option is enabled on instance
+    public var singleSSOOption: LoginOptionsDTO? {
+        guard isPasswordLoginDisabled else { return nil }
+
+        if hasSAML2 && !hasOIDC {
+            return LoginOptionsDTO(loginMethod: .saml2, idpName: saml2?.buttonLabel)
+        } else if hasOIDC && !hasSAML2 {
+            return LoginOptionsDTO(loginMethod: .oidc, idpName: oidc?.buttonLabel)
+        }
+
+        return nil
+    }
 
     @Published public var institution: InstitutionIdentifier = .tum
     public enum AuthenticationPhase {
@@ -114,7 +140,6 @@ open class LoginViewModel: NSObject, ObservableObject {
                     self.error = UserFacingError(title: R.string.localizable.account_captcha_alert_message())
                 }
             } else if let apiClientError = error as? APIClientError {
-                isLoading = false
                 if case let .httpURLResponseError(statusCode, _) = apiClientError, statusCode == .unauthorized {
                     self.error = UserFacingError(title: "Username or password incorrect.\nPlease try again.")
                 } else {
@@ -140,7 +165,7 @@ open class LoginViewModel: NSObject, ObservableObject {
         isLoading = true
         let response = await ProfileInfoServiceFactory.shared.getProfileInfo()
         isLoading = false
-        
+
         switch response {
         case .loading:
             return
@@ -174,9 +199,17 @@ open class LoginViewModel: NSObject, ObservableObject {
         } else {
             self.externalPasswordResetLink = .loading
         }
+        self.activeProfiles = profileInfo?.activeProfiles ?? []
         saml2 = profileInfo?.saml2
+        oidc = profileInfo?.oidc
         showUsernameWarning = false
         usernameValidation()
+        // if based on loaded profiles only one login option is enabled, display it immediately
+        if let singleSSO = singleSSOOption {
+            self.loginOptions = singleSSO
+            // skip the username part
+            self.authenticationPhase = .credentials
+        }
     }
 
     private func usernameValidation() {

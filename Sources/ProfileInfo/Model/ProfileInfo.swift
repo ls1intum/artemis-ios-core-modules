@@ -27,6 +27,7 @@ public struct ProfileInfo: Codable {
     public let activeModuleFeatures: [String]?
     public let compatibleVersions: PlatformVersionCompatibility?
     public let saml2: Saml2?
+    public let oidc: Oidc?
 }
 
 public struct Build: Codable {
@@ -38,6 +39,14 @@ public struct Saml2: Codable {
     public let buttonLabel: String
     public let identityProviderName: String?
     public let passwordLoginDisabled: Bool
+}
+
+public struct Oidc: Codable {
+    public let buttonLabel: String
+
+    enum CodingKeys: String, CodingKey {
+        case buttonLabel = "buttonlabel"
+    }
 }
 
 public struct PlatformVersionCompatibility: Codable {
