@@ -14,7 +14,6 @@ public struct Lecture: Codable, Identifiable {
     public let description: String?
     public let startDate: Date?
     public let endDate: Date?
-    public let attachments: [Attachment]?
     public let lectureUnits: [LectureUnit]?
 
     public var image: Image {
