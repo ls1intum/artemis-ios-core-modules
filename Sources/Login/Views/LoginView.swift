@@ -171,7 +171,7 @@ public struct LoginView: View {
         // open sheet if ssoType is not nil
         .sheet(isPresented: $isSAML2Presented) {
             if #available(iOS 26.0, *) {
-                SAML2LoginView(rememberMe: viewModel.rememberMe)
+                SAML2LoginView()
             }
         }
         .task {
