@@ -33,6 +33,38 @@ class LoginServiceImpl: LoginService {
         }
     }
 
+    struct GetLoginOptionsRequest: APIRequest {
+        typealias Response = LoginOptionsDTO
+
+        let usernameOrEmail: String
+
+        var method: HTTPMethod { .get }
+
+        var resourceName: String {
+            "api/core/public/login-options"
+        }
+
+        var params: [URLQueryItem] {
+            [URLQueryItem(name: "usernameOrEmail", value: usernameOrEmail)]
+        }
+    }
+
+    func getLoginOptions(usernameOrEmail: String) async -> Result<LoginOptionsDTO, APIClientError> {
+        guard !usernameOrEmail.isEmpty else {
+            return .failure(.other(message: "Username or email cannot be empty"))
+        }
+
+        let request = GetLoginOptionsRequest(usernameOrEmail: usernameOrEmail)
+        let result = await client.sendRequest(request)
+
+        switch result {
+        case .success((let options, _)):
+            return .success(options)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+
     func login(username: String, password: String, rememberMe: Bool) async -> NetworkResponse {
         if !rememberMe {
             UserSessionFactory.shared.saveUsername(username: nil)
@@ -108,6 +140,63 @@ class LoginServiceImpl: LoginService {
 
             return .failure(error: URLError(.cancelled))
         } catch {
+            return .failure(error: error)
+        }
+    }
+
+    struct OIDCCodeExchangeDTO: Encodable {
+        let code: String
+        let codeVerifier: String
+    }
+
+    struct ExchangeCodeRequest: APIRequest {
+        typealias Response = RawResponse
+
+        let code: String
+        let codeVerifier: String
+
+        var method: HTTPMethod { .post }
+        var resourceName: String { "api/core/public/exchange-code" }
+    }
+
+    func loginOIDC(code: String, codeVerifier: String) async -> NetworkResponse {
+        guard let baseURL = UserSessionFactory.shared.institution?.baseURL else {
+            return .failure(error: URLError(.badURL))
+        }
+
+        let request = ExchangeCodeRequest(code: code, codeVerifier: codeVerifier)
+        let result = await client.sendRequest(request)
+
+        switch result {
+        case .success((let rawResponse, _)):
+            let cleanToken = rawResponse.rawData.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !cleanToken.isEmpty else {
+                return .failure(error: URLError(.cannotParseResponse))
+            }
+            UserSessionFactory.shared.saveToken(cleanToken)
+
+            if let host = baseURL.host {
+                var properties: [HTTPCookiePropertyKey: Any] = [
+                    .domain: host,
+                    .path: "/",
+                    .name: "jwt",
+                    .value: cleanToken,
+                    .originURL: baseURL
+                ]
+                if baseURL.scheme?.lowercased() == "https" {
+                    properties[.secure] = "TRUE"
+                }
+                if let cookie = HTTPCookie(properties: properties) {
+                    HTTPCookieStorage.shared.setCookie(cookie)
+                }
+            }
+
+            _ = await AccountServiceFactory.shared.getAccount()
+
+            UserSessionFactory.shared.setUserLoggedIn(isLoggedIn: true)
+            return .success
+
+        case .failure(let error):
             return .failure(error: error)
         }
     }

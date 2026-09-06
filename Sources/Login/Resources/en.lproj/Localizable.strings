@@ -18,6 +18,15 @@
 "login_forgot_password_label" = "Did you forget your password?";
 "login_username_validation_tum_info_label" = "If you are a TUM student, your username should have the format ab12xyz. Do not include '@mytum.de' or '@tum.de'.";
 
+/* Login Identifier-First Flow */
+"login_enter_username_to_continue" = "Enter your %@ username to continue";
+"login_continue_button_text" = "Continue";
+"login_sign_in_with_idp" = "Sign in with %@";
+"login_default_sso_name" = "SSO";
+"login_sign_in_with_saml2" = "Sign in with SAML2";
+"login_back_button_text" = "← Back";
+"login_or_divider" = "or";
+
 // MARK: Captcha
 "account_captcha_title" = "You have entered your password incorrectly too many times :-(";
 "account_captcha_message" = "Please go to [%@](%@), sign in with your account and solve the [CAPTCHA](%@). After you have solved it, try to log in again here.";
