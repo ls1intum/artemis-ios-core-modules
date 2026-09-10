@@ -25,7 +25,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         }
 
         var resourceName: String {
-            return "api/communication/push_notification/unregister"
+            return "api/notification/push_notification/unregister"
         }
     }
 
@@ -68,7 +68,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         }
 
         var resourceName: String {
-            return "api/communication/push_notification/register"
+            return "api/notification/push_notification/register"
         }
     }
 
