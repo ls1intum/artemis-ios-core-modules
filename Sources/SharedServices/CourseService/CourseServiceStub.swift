@@ -14,8 +14,16 @@ struct CourseServiceStub: CourseService {
         return .done(response: .mock)
     }
 
-    func getCourse(courseId: Int) async -> DataState<CourseForDashboardDTO> {
+    func getCourse(courseId: Int) async -> DataState<CourseForOverviewDTO> {
         return .done(response: .mock)
+    }
+
+    func getExerciseOverview(courseId: Int) async -> DataState<CourseExercisesForOverviewDTO> {
+        return .loading
+    }
+
+    func getLectureOverview(courseId: Int) async -> DataState<[Lecture]> {
+        return .loading
     }
 
     func getCourseForAssessment(courseId: Int) async -> DataState<Course> {

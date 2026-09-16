@@ -33,7 +33,7 @@ struct CourseServiceImpl: CourseService {
 
     // MARK: - Get Course
     struct GetCourseRequest: APIRequest {
-        typealias Response = CourseForDashboardDTO
+        typealias Response = CourseForOverviewDTO
 
         var courseId: Int
 
@@ -42,18 +42,65 @@ struct CourseServiceImpl: CourseService {
         }
 
         var resourceName: String {
-            return "api/course/courses/\(courseId)/for-dashboard"
+            return "api/course/courses/\(courseId)/for-overview"
         }
     }
 
-    func getCourse(courseId: Int) async -> DataState<CourseForDashboardDTO> {
+    func getCourse(courseId: Int) async -> DataState<CourseForOverviewDTO> {
         let result = await client.sendRequest(GetCourseRequest(courseId: courseId))
 
         switch result {
         case let .success((response, _)):
             // Mirror the web client and copy it onto the course so views can read it directly.
             var response = response
-            response.course.irisEnabledInCourse = response.irisEnabledInCourse
+            // TODO: Iris
+//            response.course.irisEnabledInCourse = response.irisEnabledInCourse
+            return .done(response: response)
+        case let .failure(error):
+            return .failure(error: UserFacingError(error: error))
+        }
+    }
+
+    struct GetExercisesRequest: APIRequest {
+        typealias Response = CourseExercisesForOverviewDTO
+
+        var courseId: Int
+
+        var method: HTTPMethod { .get }
+
+        var resourceName: String {
+            "api/course/courses/\(courseId)/exercises-for-overview"
+        }
+    }
+
+    func getExerciseOverview(courseId: Int) async -> DataState<CourseExercisesForOverviewDTO> {
+        let result = await client.sendRequest(GetExercisesRequest(courseId: courseId))
+
+        switch result {
+        case let .success((response, _)):
+            return .done(response: response)
+        case let .failure(error):
+            return .failure(error: UserFacingError(error: error))
+        }
+    }
+
+    struct GetLecturesRequest: APIRequest {
+        typealias Response = [Lecture]
+
+        var courseId: Int
+
+        var method: HTTPMethod { .get }
+
+        var resourceName: String {
+            "api/lecture/courses/\(courseId)/lectures-for-overview"
+        }
+    }
+
+    func getLectureOverview(courseId: Int) async -> DataState<[Lecture]> {
+        let result = await client.sendRequest(GetLecturesRequest(courseId: courseId))
+
+        switch result {
+        case let .success((response, _)):
             return .done(response: response)
         case let .failure(error):
             return .failure(error: UserFacingError(error: error))

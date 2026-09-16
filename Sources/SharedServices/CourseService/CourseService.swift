@@ -8,7 +8,13 @@ public protocol CourseService {
     func getCourses() async -> DataState<CoursesForDashboardDTO>
 
     /// Fetch the course for dashboard
-    func getCourse(courseId: Int) async -> DataState<CourseForDashboardDTO>
+    func getCourse(courseId: Int) async -> DataState<CourseForOverviewDTO>
+
+    /// Fetch overview of exercises in course
+    func getExerciseOverview(courseId: Int) async -> DataState<CourseExercisesForOverviewDTO>
+
+    /// Fetch overview of exercises in course
+    func getLectureOverview(courseId: Int) async -> DataState<[Lecture]>
 
     /// Fetch the course for assessment dashboard (with some assessment-related data)
     func getCourseForAssessment(courseId: Int) async -> DataState<Course>
