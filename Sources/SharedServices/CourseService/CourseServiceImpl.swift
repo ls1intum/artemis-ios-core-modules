@@ -107,6 +107,29 @@ struct CourseServiceImpl: CourseService {
         }
     }
 
+    struct GetTabsRequest: APIRequest {
+        typealias Response = CourseAvailableTabsDTO
+
+        var courseId: Int
+
+        var method: HTTPMethod { .get }
+
+        var resourceName: String {
+            "api/course/courses/\(courseId)/available-tabs"
+        }
+    }
+
+    func getAvailableTabs(courseId: Int) async -> DataState<CourseAvailableTabsDTO> {
+        let result = await client.sendRequest(GetTabsRequest(courseId: courseId))
+
+        switch result {
+        case let .success((response, _)):
+            return .done(response: response)
+        case let .failure(error):
+            return .failure(error: UserFacingError(error: error))
+        }
+    }
+
     // MARK: - Get Course For Assessment
     struct GetCourseForAssessmentRequest: APIRequest {
         typealias Response = Course

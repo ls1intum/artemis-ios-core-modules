@@ -13,8 +13,11 @@ public protocol CourseService {
     /// Fetch overview of exercises in course
     func getExerciseOverview(courseId: Int) async -> DataState<CourseExercisesForOverviewDTO>
 
-    /// Fetch overview of exercises in course
+    /// Fetch overview of lectures in course
     func getLectureOverview(courseId: Int) async -> DataState<[Lecture]>
+
+    /// Fetch which tabs can be shown in course
+    func getAvailableTabs(courseId: Int) async -> DataState<CourseAvailableTabsDTO>
 
     /// Fetch the course for assessment dashboard (with some assessment-related data)
     func getCourseForAssessment(courseId: Int) async -> DataState<Course>
