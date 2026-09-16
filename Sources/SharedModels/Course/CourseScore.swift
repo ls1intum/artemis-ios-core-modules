@@ -10,6 +10,7 @@ import Foundation
 public struct CourseScore: Codable {
     public var maxPoints: Double
     public var reachablePoints: Double
+    public var reachablePresentationPoints: Double?
     public var studentScores: StudentScore
 }
 
