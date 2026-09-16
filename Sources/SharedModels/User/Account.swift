@@ -11,22 +11,20 @@ public struct Account: Codable {
     public let email: String
     public let langKey: String
     public let authorities: [Authority]?
-    public let groups: [String]?
+    public let courseRoles: [CourseAccessRightsDTO]?
     public let lastNotificationRead: Date?
     public let visibleRegistrationNumber: String?
     public let createdDate: Date?
     public let selectedLLMUsage: AiSelectionDecision?
     public let selectedLLMUsageTimestamp: Date?
 
-    public static func hasGroup(group: String?) -> Bool {
-        guard let group,
-              UserSessionFactory.shared.isLoggedIn,
+    public static func roles(in courseId: Int) -> [CourseAccessRightsDTO] {
+        guard UserSessionFactory.shared.isLoggedIn,
               let user = UserSessionFactory.shared.user,
-              user.authorities != nil,
-              let groups = user.groups else {
-            return false
+              let roles = user.courseRoles else {
+            return []
         }
-        return groups.contains(group)
+        return roles.filter { $0.courseId == courseId }
     }
 
     public static func hasAnyAuthorityDirect(authority: Authority) -> Bool {
@@ -58,7 +56,7 @@ public extension Account {
         email: "chloe_mitchell@gmail.com",
         langKey: "en",
         authorities: [.user],
-        groups: ["tumuser"],
+        courseRoles: [],
         lastNotificationRead: .yesterday,
         visibleRegistrationNumber: "04242424",
         createdDate: .distantPast,
