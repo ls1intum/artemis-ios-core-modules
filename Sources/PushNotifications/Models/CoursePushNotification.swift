@@ -14,6 +14,12 @@ public enum CoursePushNotification: Codable {
         case type = "notificationType"
         case courseId
         case parameters
+        /// The shape Artemis 10.0 and later write, with the values every notification carries beside it rather than
+        /// among the type specific ones. A key the enum does not declare cannot be built from a string, so the
+        /// decoder would silently never look for these.
+        case payload
+        case courseTitle
+        case courseIconUrl
     }
 
     case addedToChannel(AddedToChannelNotification)
@@ -44,12 +50,17 @@ public enum CoursePushNotification: Codable {
     case irisResponse(IrisResponseNotification)
     case unknown
 
-    /// Initializer for using different CodingKeys.
-    /// This is necessary because Notifications that aren't push notifications have a different name for `type`.
-    public init<Key>(from decoder: Decoder, typeKey: Key, parametersKey: Key) throws where Key: CodingKey { // swiftlint:disable:this cyclomatic_complexity
-        let container = try decoder.container(keyedBy: Key.self)
-        let type = try container.decode(CourseNotificationType.self, forKey: typeKey)
-        let decodeNotification = NotificationDecoder(key: parametersKey, container: container)
+    /// Reads a notification from either shape the server may have sent it in.
+    ///
+    /// `payload` is what Artemis 10.0 and later write, `parameters` the flat map earlier versions write and the push
+    /// body still carries. An install talks to whichever version its institution has deployed, so both have to keep
+    /// working, and no caller can know in advance which one it is about to read. This used to take the keys as
+    /// parameters, because the notification list and the push body named the type field differently; they no longer
+    /// do, so deciding here is what keeps the two transports from drifting apart again.
+    public init(from decoder: Decoder) throws { // swiftlint:disable:this cyclomatic_complexity
+        let container = try decoder.container(keyedBy: Keys.self)
+        let type = try container.decode(CourseNotificationType.self, forKey: .type)
+        let decodeNotification = NotificationDecoder(keys: [.payload, .parameters], container: container)
         self = switch type {
         // Communication
         case .addedToChannelNotification: .addedToChannel(try decodeNotification())
@@ -81,10 +92,6 @@ public enum CoursePushNotification: Codable {
         case .irisResponseNotification: .irisResponse(try decodeNotification())
         case .unknown: .unknown
         }
-    }
-
-    public init(from decoder: Decoder) throws {
-        try self.init(from: decoder, typeKey: Keys.type, parametersKey: Keys.parameters)
     }
 
     /// Not needed, but we conform to Codable to prevent annoyances in `PushNotification`
@@ -122,17 +129,32 @@ public enum CoursePushNotification: Codable {
 // Helper for making decoding above much more compact
 // by making use of compiler's automatic type derivation
 private struct NotificationDecoder<Key: CodingKey> {
-    let key: Key
+    /// The keys the values may arrive under, the shape we prefer first.
+    let keys: [Key]
     let container: KeyedDecodingContainer<Key>
 
     func callAsFunction<T: Codable & CourseBaseNotification>() throws -> T {
-        var value = try container.decode(T.self, forKey: key)
-        // We need to decode courseId separately because it is not part of the parameters
-        if let idKey = Key(stringValue: "courseId") {
-            let courseId = try container.decodeIfPresent(Int.self, forKey: idKey)
-            value.courseId = courseId
+        guard let key = keys.first(where: container.contains) else {
+            throw DecodingError.keyNotFound(
+                keys[0],
+                .init(codingPath: container.codingPath,
+                      debugDescription: "A notification carried its values under none of \(keys.map(\.stringValue))")
+            )
         }
+        var value = try container.decode(T.self, forKey: key)
+
+        // These belong to every notification rather than to its type, so the flat shape carries them among the values
+        // while the typed one puts them beside the payload. Read from the level above either way, and only where the
+        // values did not already carry them, so the flat shape keeps decoding exactly as it did.
+        value.courseId = try sibling(Int.self, named: "courseId") ?? value.courseId
+        value.courseTitle = try value.courseTitle ?? sibling(String.self, named: "courseTitle")
+        value.courseIconUrl = try value.courseIconUrl ?? sibling(String.self, named: "courseIconUrl")
         return value
+    }
+
+    private func sibling<V: Decodable>(_ type: V.Type, named name: String) throws -> V? {
+        guard let key = Key(stringValue: name) else { return nil }
+        return try container.decodeIfPresent(type, forKey: key)
     }
 }
 
@@ -170,8 +192,10 @@ public enum CourseNotificationType: String, Codable, CodingKeyRepresentable, Con
 
 public protocol CourseBaseNotification: Codable {
     var courseId: Int? { get set }
-    var courseTitle: String? { get }
-    var courseIconUrl: String? { get }
+    /// Settable because the typed shape carries this beside the payload rather than inside it, so the decoder fills it
+    /// in from the level above.
+    var courseTitle: String? { get set }
+    var courseIconUrl: String? { get set }
 }
 
 public protocol DisplayableNotification {

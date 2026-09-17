@@ -7,8 +7,8 @@
 
 public class NewPostNotification: CourseBaseNotification {
     public var courseId: Int?
-    public let courseTitle: String?
-    public let courseIconUrl: String?
+    public var courseTitle: String?
+    public var courseIconUrl: String?
 
     public let postId: Int?
     public let postMarkdownContent: String?
