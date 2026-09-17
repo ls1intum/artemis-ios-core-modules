@@ -93,6 +93,18 @@ final class CourseNotificationDecodingTests: XCTestCase {
         XCTAssertEqual(notification.channelName, "typed")
     }
 
+    func testTreatsANullPayloadAsAbsent() throws {
+        let notification = try newPost(decode("""
+        {"version": 2, "courseNotificationDTO": {
+          "notificationType": "newPostNotification", "notificationId": 1, "courseId": 42,
+          "category": "COMMUNICATION", "status": "UNSEEN", "payload": null,
+          "parameters": {"postId": 90037, "channelName": "channel", "courseTitle": "Course Title"}}}
+        """))
+
+        XCTAssertEqual(notification.postId, 90037)
+        XCTAssertEqual(notification.channelName, "channel")
+    }
+
     func testFailsOneNotificationRatherThanGuessingWhenNeitherKeyIsPresent() throws {
         let body = """
         {"version": 2, "courseNotificationDTO": {

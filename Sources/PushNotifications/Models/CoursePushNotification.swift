@@ -134,7 +134,11 @@ private struct NotificationDecoder<Key: CodingKey> {
     let container: KeyedDecodingContainer<Key>
 
     func callAsFunction<T: Codable & CourseBaseNotification>() throws -> T {
-        guard let key = keys.first(where: container.contains) else {
+        // A present but null key counts as absent. The server writes the payload key for every notification it sends,
+        // even one whose payload carries nothing, so this only matters if that ever stops being true — and reading a
+        // null as if it were the values throws, which for the notification list fails the decode of the whole page
+        // rather than of the one notification that cannot be read.
+        guard let key = try keys.first(where: { try container.contains($0) && !container.decodeNil(forKey: $0) }) else {
             throw DecodingError.keyNotFound(
                 keys[0],
                 .init(codingPath: container.codingPath,
