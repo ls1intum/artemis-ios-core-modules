@@ -16,11 +16,20 @@ enum PushNotificationVersionError: Error {
 struct PushNotificationVersion: Codable {
     let version: Int
 
-    /// The version is 1, as of Artemis 6.6.7.
+    /// The push body versions this app can read, declared as `Constants.PUSH_NOTIFICATION_VERSION` on the server.
     ///
-    /// The version is declared in the constants of Artemis, see [source](https://github.com/ls1intum/Artemis/blob/6.6.7/src/main/java/de/tum/in/www1/artemis/config/Constants.java#L318).
+    /// Version 1 carries the values of a notification as the flat `parameters` map. Version 2 carries the typed
+    /// `payload` instead, which ``CoursePushNotification`` already reads, and the server raises it once
+    /// `artemis.compatible-versions.ios.min` rules out the app versions that only accept 1.
+    ///
+    /// A set rather than a single value on purpose. This used to be `version == 1`, which made the server's version
+    /// field useless as a compatibility signal: raising it dropped every push notification on every installed app,
+    /// silently, so the server could never raise it without a lockstep release. Accepting the versions we can
+    /// actually decode is what lets the server move on its own.
+    static let supported: Set<Int> = [1, 2]
+
     var isValid: Bool {
-        version == 1
+        Self.supported.contains(version)
     }
 }
 

@@ -211,6 +211,9 @@ let package = Package(
         ),
         .testTarget(
             name: "ArtemisMarkdownTests",
-            dependencies: ["ArtemisMarkdown"])
+            dependencies: ["ArtemisMarkdown"]),
+        .testTarget(
+            name: "PushNotificationsTests",
+            dependencies: ["PushNotifications"])
     ]
 )
