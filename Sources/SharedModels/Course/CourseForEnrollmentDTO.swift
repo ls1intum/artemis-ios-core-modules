@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CourseForEnrollmentDTO: Codable {
+public struct CourseForEnrollmentDTO: Codable, Identifiable {
     public let id: Int
     public let title: String?
     public let description: String
@@ -21,7 +21,7 @@ public struct CoursePrerequisiteDTO: Codable {
     let title: String?
     let description: String?
     let softDueDate: Date?
-    let masteryThreshold: Int
+    let masteryThreshold: Int // swiftlint:disable:this inclusive_language // Lol
     let optional: Bool
     let type: String?
 }
