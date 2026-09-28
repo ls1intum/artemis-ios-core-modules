@@ -22,7 +22,7 @@ public struct NotificationSettingsView: View {
             DataStateView(data: $viewModel.settings) {
                 await viewModel.loadSettings()
             } content: { _ in
-                let settings = viewModel.currentSettings
+                let settings = viewModel.currentSettings.filter { !$0.0.settingsTitle.isEmpty }
                 Form {
                     presetPicker
 
