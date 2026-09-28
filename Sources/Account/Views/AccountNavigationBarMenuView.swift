@@ -16,7 +16,8 @@ struct AccountNavigationBarMenuView: View {
 
     /// Whether the connected instance has the Iris/AI module enabled. The AI experience settings are only
     /// relevant in that case (e.g. instances set up without any AI experience should not show this).
-    @ModuleFeatureAvailability(.iris) private var isIrisAvailable
+    @ModuleFeatureAvailability(.iris)
+    private var isIrisAvailable
 
     @Binding var error: UserFacingError?
 
