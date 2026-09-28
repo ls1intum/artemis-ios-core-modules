@@ -15,6 +15,8 @@ public struct Channel: BaseConversation {
     public var lastMessageDate: Date?
     public var creator: ConversationUser?
     public var lastReadDate: Date?
+    public var subTypeReferenceStartDate: Date?
+    public var subTypeReferenceEndDate: Date?
     public var unreadMessagesCount: Int?
     public var isFavorite: Bool?
     public var isHidden: Bool?
