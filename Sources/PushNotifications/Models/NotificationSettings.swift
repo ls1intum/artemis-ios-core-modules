@@ -81,7 +81,7 @@ extension CourseNotificationType {
             R.string.localizable.tutorialUnassignedSettingsName()
         case .irisResponseNotification:
             "Iris"
-        case .unknown:
+        case .unknown, .irisResponseNeedsReviewNotification:
             ""
         }
     }
