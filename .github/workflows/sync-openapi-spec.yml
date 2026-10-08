@@ -17,7 +17,7 @@ jobs:
       - name: Download OpenAPI file
         run: |
           curl -o openapi.yaml \
-            https://raw.githubusercontent.com/ls1intum/Artemis/develop/openapi/openapi.yaml
+            https://raw.githubusercontent.com/ls1intum/Artemis/develop/config/openapi/openapi.yaml
 
       - name: Copy file
         run: |
