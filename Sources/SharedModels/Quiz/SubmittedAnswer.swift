@@ -82,3 +82,21 @@ public extension DTO.SubmittedAnswerBeforeEvaluation {
         }
     }
 }
+
+public extension DTO.SubmittedAnswerAfterEvaluation {
+    var score: Double? {
+        switch self {
+        case .dragAndDrop(let answer): answer.scoreInPoints
+        case .multipleChoice(let answer): answer.scoreInPoints
+        case .shortAnswer(let answer): answer.scoreInPoints
+        }
+    }
+
+    var question: DTO.QuizQuestionWithSolution? {
+        switch self {
+        case .dragAndDrop(let answer): answer.quizQuestion
+        case .multipleChoice(let answer): answer.quizQuestion
+        case .shortAnswer(let answer): answer.quizQuestion
+        }
+    }
+}
