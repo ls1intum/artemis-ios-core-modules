@@ -79,6 +79,14 @@ public extension DTO.QuizQuestionWithoutSolution {
                                          singleChoice: mc.singleChoice))
         }
     }
+
+    var id: Int64? {
+        switch self {
+        case .dragAndDrop(let question): question.id
+        case .multipleChoice(let question): question.id
+        case .shortAnswer(let question): question.id
+        }
+    }
 }
 
 public extension DTO.QuizQuestionWithSolution {

@@ -49,3 +49,36 @@ public extension DTO.SubmittedAnswerFromLiveClient {
         }
     }
 }
+
+public extension DTO.SubmittedAnswerBeforeEvaluation {
+    func asAnswerFromLiveClient() -> DTO.SubmittedAnswerFromLiveClient {
+        switch self {
+        case .dragAndDrop(let dnd):
+            let mappings = (dnd.mappings ?? []).compactMap {
+                if let dragId = $0.dragItem?.id, let dropId = $0.dropLocation?.id {
+                    return DTO.DragAndDropMappingFromLiveClient(dragItem: .init(id: dragId),
+                                                                dropLocation: .init(id: dropId))
+                }
+                return nil
+            }
+            return .dragAndDrop(.init(quizQuestion: .init(id: dnd.quizQuestion?.id),
+                                      mappings: mappings,
+                                      _type: .dragAndDrop))
+        case .multipleChoice(let mc):
+            let selected = (mc.selectedOptions ?? []).compactMap(\.id).map(DTO.EntityIdRef.init(id:))
+            return .multipleChoice(.init(quizQuestion: .init(id: mc.quizQuestion?.id),
+                                         selectedOptions: selected,
+                                         _type: .multipleChoice))
+        case .shortAnswer(let sa):
+            let submitted = (sa.submittedTexts ?? []).compactMap {
+                if let text = $0.text, !text.isEmpty, let spotId = $0.spot?.id {
+                    return DTO.ShortAnswerSubmittedTextFromLiveClient(text: text, spot: .init(id: spotId))
+                }
+                return nil
+            }
+            return .shortAnswer(.init(quizQuestion: .init(id: sa.quizQuestion?.id),
+                                      submittedTexts: submitted,
+                                      _type: .shortAnswer))
+        }
+    }
+}
