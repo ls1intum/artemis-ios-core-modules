@@ -181,7 +181,8 @@ class LoginServiceImpl: LoginService {
                     .path: "/",
                     .name: "jwt",
                     .value: cleanToken,
-                    .originURL: baseURL
+                    .originURL: baseURL,
+                    .expires: Date.now.addingTimeInterval(28 * 24 * 60 * 60)
                 ]
                 if baseURL.scheme?.lowercased() == "https" {
                     properties[.secure] = "TRUE"
