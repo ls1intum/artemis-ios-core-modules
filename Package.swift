@@ -51,7 +51,7 @@ let package = Package(
         .package(url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "7.11.0")),
         .package(url: "https://github.com/Romixery/SwiftStomp.git", .upToNextMinor(from: "1.2.1")),
         .package(url: "https://github.com/realm/SwiftLint.git", .upToNextMinor(from: "0.55.0")),
-        .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0")),
+        .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.6")),
         .package(url: "https://github.com/1024jp/GzipSwift.git", .upToNextMajor(from: "6.1.0")),
         .package(url: "https://github.com/apple/swift-openapi-generator", .upToNextMajor(from: "1.11.0")),
         .package(url: "https://github.com/apple/swift-openapi-runtime", .upToNextMajor(from: "1.11.0")),
