@@ -76,7 +76,7 @@ open class LoginViewModel: NSObject, ObservableObject {
     override public init() {
         super.init()
 
-        UserSessionFactory.shared.objectWillChange.sink {
+        UserSessionFactory.shared.objectWillChange.sink { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.username = UserSessionFactory.shared.username ?? ""
                 self?.password = UserSessionFactory.shared.password ?? ""

@@ -254,7 +254,7 @@ class LoginServiceImpl: LoginService {
         let request = LoginRequest(id: credentialId, rawId: credentialId, response: loginResponse)
         let response = await client.sendRequest(request)
         switch response {
-        case .success((let success, _)):
+        case .success:
             let cookies = URLSession.shared.configuration.httpCookieStorage?.cookies
             let jwt = cookies?.first { $0.name == "jwt" }
             UserSessionFactory.shared.saveToken(jwt?.value)

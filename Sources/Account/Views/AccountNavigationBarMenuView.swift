@@ -72,7 +72,7 @@ struct AccountNavigationBarMenuView: View {
             }
         })
         .task {
-            await viewModel.checkPasskeyRecommendation()
+            viewModel.checkPasskeyRecommendation()
         }
         .onChange(of: viewModel.error) { _, error in
             self.error = error

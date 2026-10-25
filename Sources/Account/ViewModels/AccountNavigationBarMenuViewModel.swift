@@ -98,7 +98,7 @@ class AccountNavigationBarMenuViewModel {
 
     /// Updates the saved user with current profile pic url
     func updateProfilePicUrl() async {
-        guard let account = account.value else { return }
+        guard account.value != nil else { return }
 
         let result = await AccountServiceFactory.shared.getAccount()
         switch result {

@@ -28,7 +28,7 @@ class PushNotificationSetupViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = Set()
 
     init() {
-        UserSessionFactory.shared.objectWillChange.sink {
+        UserSessionFactory.shared.objectWillChange.sink { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.updateFromUserSession()
             }
@@ -50,7 +50,7 @@ class PushNotificationSetupViewModel: ObservableObject {
             // 2. Attempt registration for remote notifications on the main thread
             UIApplication.shared.registerForRemoteNotifications()
         } catch {
-            log.error("Error registering for remote notification", error.localizedDescription)
+            log.error("Error registering for remote notification: \(error.localizedDescription)")
         }
     }
 

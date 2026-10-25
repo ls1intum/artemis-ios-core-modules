@@ -72,8 +72,10 @@ public extension PushNotificationHandler {
         let baseUrl = UserSessionFactory.shared.institution?.baseURL?.appending(path: "api/core/files")
         guard let urlString, let url = baseUrl?.appending(path: urlString) else {
             // Default profile picture fallback
-            let pictureView = ProfilePictureInitialsView(name: user, userId: id, size: 100)
-            let imageData = await ImageRenderer(content: pictureView).uiImage?.pngData()
+            let imageData = await MainActor.run {
+                let pictureView = ProfilePictureInitialsView(name: user, userId: id, size: 100)
+                return ImageRenderer(content: pictureView).uiImage?.pngData()
+            }
             if let imageData {
                 return INImage(imageData: imageData)
             }

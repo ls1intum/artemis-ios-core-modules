@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -45,17 +45,18 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/gonzalezreal/swift-markdown-ui", .upToNextMajor(from: "2.3.0")),
-        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "1.8.0")),
-        .package(url: "https://github.com/mac-cain13/R.swift.git", .upToNextMajor(from: "7.5.0")),
-        .package(url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "7.11.0")),
+        .package(url: "https://github.com/gonzalezreal/swift-markdown-ui", .upToNextMajor(from: "2.4.1")),
+        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMajor(from: "1.10.0")),
+        .package(url: "https://github.com/mac-cain13/R.swift.git", .upToNextMajor(from: "7.8.0")),
+        .package(url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "8.14.0")),
         .package(url: "https://github.com/Romixery/SwiftStomp.git", .upToNextMinor(from: "1.2.1")),
-        .package(url: "https://github.com/realm/SwiftLint.git", .upToNextMinor(from: "0.55.0")),
-        .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0")),
+        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", .upToNextMinor(from: "0.65.1")),
+        .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "2.1.1")),
         .package(url: "https://github.com/1024jp/GzipSwift.git", .upToNextMajor(from: "6.1.0")),
-        .package(url: "https://github.com/apple/swift-openapi-generator", .upToNextMajor(from: "1.11.0")),
-        .package(url: "https://github.com/apple/swift-openapi-runtime", .upToNextMajor(from: "1.11.0")),
-        .package(url: "https://github.com/apple/swift-openapi-urlsession", .upToNextMajor(from: "1.3.0")),
+        // 1.13+ emits unused public imports in generated files with current Swift compilers.
+        .package(url: "https://github.com/apple/swift-openapi-generator", .upToNextMinor(from: "1.12.2")),
+        .package(url: "https://github.com/apple/swift-openapi-runtime", .upToNextMajor(from: "1.13.3")),
+        .package(url: "https://github.com/apple/swift-openapi-urlsession", .upToNextMajor(from: "1.4.0"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -74,7 +75,7 @@ let package = Package(
             ],
             plugins: [
                 .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
-                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -86,11 +87,11 @@ let package = Package(
                 "UserStore",
                 .product(name: "Gzip", package: "GzipSwift"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
-                .product(name: "OpenAPIURLSession", package: "swift-openapi-urlsession"),
+                .product(name: "OpenAPIURLSession", package: "swift-openapi-urlsession")
             ],
             plugins: [
                 .plugin(name: "OpenAPIGenerator", package: "swift-openapi-generator"),
-                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint"),
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -102,7 +103,7 @@ let package = Package(
             ],
             plugins: [
                 .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
-                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -111,7 +112,7 @@ let package = Package(
                 "SwiftyBeaver"
             ],
             plugins: [
-                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -124,7 +125,7 @@ let package = Package(
             ],
             plugins: [
                 .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
-                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -142,7 +143,7 @@ let package = Package(
             ],
             plugins: [
                 .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
-                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -151,7 +152,7 @@ let package = Package(
                 "APIClient"
             ],
             plugins: [
-                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -168,7 +169,7 @@ let package = Package(
             ],
             plugins: [
                 .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
-                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -178,12 +179,12 @@ let package = Package(
                 "DesignLibrary",
                 "UserStore",
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
-                .product(name: "RswiftLibrary", package: "R.swift"),
+                .product(name: "RswiftLibrary", package: "R.swift")
             ],
             plugins: [
                 .plugin(name: "OpenAPIGenerator", package: "swift-openapi-generator"),
                 .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
-                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -195,7 +196,7 @@ let package = Package(
                 "UserStore"
             ],
             plugins: [
-                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -206,7 +207,7 @@ let package = Package(
             ],
             plugins: [
                 .plugin(name: "RswiftGeneratePublicResources", package: "R.swift"),
-                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .testTarget(
@@ -215,5 +216,6 @@ let package = Package(
         .testTarget(
             name: "PushNotificationsTests",
             dependencies: ["PushNotifications"])
-    ]
+    ],
+    swiftLanguageModes: [.v5]
 )

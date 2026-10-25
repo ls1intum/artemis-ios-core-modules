@@ -25,6 +25,14 @@ The package is currently used by the following iOS clients:
 
 # Installation Guide
 
+## Compatibility
+
+The package supports iOS 17 and later and requires a Swift 6.2 toolchain. Targets retain Swift 5 language mode. Kingfisher 8 and the current OpenAPI runtime establish the toolchain minimum.
+
+GzipSwift remains on 6.1.0: version 7 requires Swift 6.3, which would raise that minimum again. SwiftStomp 1.2.1 is already the latest stable release.
+
+The OpenAPI generator is restricted to 1.12.x because 1.13 and later emit unused public-import warnings in generated files with current Swift compilers. The OpenAPI runtime and URLSession transport are updated independently.
+
 ## Swift Package Manager
 
 ### Add to Xcode project

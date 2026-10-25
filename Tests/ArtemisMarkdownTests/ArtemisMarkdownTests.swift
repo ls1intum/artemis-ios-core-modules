@@ -50,9 +50,22 @@ final class ArtemisMarkdownTests: XCTestCase {
     }
 
     func testSlidesRegex() throws {
-        let inputString = "[slide]Polymorphism Slide 1(attachment-unit/10/slide/1)[/slide]"
+        let inputString = "[slide]Polymorphism Slide 1(#42)[/slide]"
         let match = try XCTUnwrap(RegexReplacementVisitors.slides.regex.wholeMatch(in: inputString))
         XCTAssertEqual(match.name, "Polymorphism Slide 1")
+        XCTAssertEqual(match.path, "42")
+        var rendered = inputString
+        RegexReplacementVisitors.visitAll(input: &rendered)
+        XCTAssertEqual(rendered, "![Polymorphism Slide 1](/api/core/files/slides/42)")
+    }
+
+    func testLegacySlidesRegex() throws {
+        let inputString = "[slide]Polymorphism Slide 1(attachment-unit/10/slide/1)[/slide]"
+        let match = try XCTUnwrap(RegexReplacementVisitors.slidesLegacy.regex.wholeMatch(in: inputString))
+        XCTAssertEqual(match.name, "Polymorphism Slide 1")
         XCTAssertEqual(match.path, "attachment-unit/10/slide/1")
+        var rendered = inputString
+        RegexReplacementVisitors.visitAll(input: &rendered)
+        XCTAssertEqual(rendered, "![Slide](local://fa-file) [Polymorphism Slide 1](mention://slide/attachment-unit/10/slide/1)")
     }
 }

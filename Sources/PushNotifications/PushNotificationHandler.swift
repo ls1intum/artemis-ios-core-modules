@@ -74,10 +74,11 @@ public class PushNotificationHandler {
             content.body = body
         }
 
-        let target = (displayable as? NavigatableNotification)?.relativePath
-        content.userInfo = [PushNotificationUserInfoKeys.target: target,
-                            PushNotificationUserInfoKeys.communicationInfo: notificationDto.communicationInfo?.asData]
-        if notificationDto.communicationInfo != nil {
+        if let target = (displayable as? NavigatableNotification)?.relativePath {
+            content.userInfo[PushNotificationUserInfoKeys.target] = target
+        }
+        if let communicationInfo = notificationDto.communicationInfo {
+            content.userInfo[PushNotificationUserInfoKeys.communicationInfo] = communicationInfo.asData
             content.categoryIdentifier = PushNotificationActionIdentifiers.communication
         }
 

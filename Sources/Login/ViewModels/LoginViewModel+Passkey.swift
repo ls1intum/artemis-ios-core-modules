@@ -57,6 +57,8 @@ extension LoginViewModel: ASAuthorizationControllerDelegate {
         let authenticatorData = assertion.rawAuthenticatorData?.base64URLEncodedString() ?? ""
         let clientDataJSON = assertion.rawClientDataJSON.base64URLEncodedString()
         let signature = assertion.signature.base64URLEncodedString()
+        // Preserve the existing user-handle decoding for arbitrary credential bytes.
+        // swiftlint:disable:next optional_data_string_conversion
         let userHandle = String(decoding: assertion.userID, as: UTF8.self)
 
         let response = await service.loginWithPasskey(authenticatorData: authenticatorData,

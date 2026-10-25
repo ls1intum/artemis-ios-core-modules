@@ -25,7 +25,7 @@ public extension CourseForDashboardDTO {
         self.course = course
     }
 
-    public static let mock = CourseForDashboardDTO(
+    static let mock = CourseForDashboardDTO(
         course: .mock,
         totalScores: CourseScore(
             maxPoints: 15,
