@@ -149,13 +149,13 @@ public struct Result: Codable {
                     return .submittedWaitingForGrading
                 } else {
                     // the due date is over, further submissions are no longer possible, no result after assessment due date
-                    // TODO: why is this distinct from the case above? The submission can still be graded and often is.
+                    // This status denotes an elapsed assessment deadline, not a guarantee that grading is finished.
                     return .noResult
                 }
             } else if score != nil,
                       assessmentDueDate == nil || assessmentDueDate! >= .now {
-                // Submission is not in due time of exercise, has a result with score and there is no assessmentDueDate for the exercise or it lies in the past.
-                // TODO: handle external submissions with new status "External"
+                // A late submission has a score while assessment is still open or has no deadline.
+                // External submissions currently share this status; see docs/known-limitations.md.
                 return .late
             } else {
                 // Submission is not in due time of exercise and there is actually no feedback for the submission or the feedback should not be displayed yet.

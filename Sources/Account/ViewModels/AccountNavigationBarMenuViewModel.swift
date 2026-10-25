@@ -76,13 +76,13 @@ class AccountNavigationBarMenuViewModel {
                     switch error {
                     case .httpURLResponseError(let statusCode, _):
                         if statusCode == .methodNotAllowed {
-                            // ignore network error and login anyway
-                            // TODO: schedule task to retry above functionality
+                            // Keep local logout available when the server cannot deregister the device.
+                            // Retry limitations are documented in docs/known-limitations.md.
                             APIClient().performLogout()
                         }
                     case .networkError:
-                        // ignore network error and login anyway
-                        // TODO: schedule task to retry above functionality
+                        // Keep local logout available while device deregistration is offline.
+                        // Retry limitations are documented in docs/known-limitations.md.
                         APIClient().performLogout()
                     default:
                         // do nothing
