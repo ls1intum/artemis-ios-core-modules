@@ -39,7 +39,7 @@ public class UserSession: ObservableObject {
 
     private func setupInstitutionSelection() {
         if let institutionData = KeychainHelper.shared.read(service: .institutionKey, account: "Artemis") {
-            institution = InstitutionIdentifier(value: String(decoding: institutionData, as: UTF8.self))
+            institution = InstitutionIdentifier(value: String(bytes: institutionData, encoding: .utf8))
         } else {
             institution = .tum
             saveInstitution(identifier: .tum)
@@ -60,16 +60,16 @@ public class UserSession: ObservableObject {
 
     private func setupLoginData() {
         if let username = KeychainHelper.shared.read(service: .usernameKey, account: "Artemis") {
-            self.username = String(decoding: username, as: UTF8.self)
+            self.username = String(bytes: username, encoding: .utf8)
         }
 
         if let password = KeychainHelper.shared.read(service: .passwordKey, account: "Artemis") {
-            self.password = String(decoding: password, as: UTF8.self)
+            self.password = String(bytes: password, encoding: .utf8)
         }
 
         // Set isLoggedIn last to prevent using any other data before it is loaded
         if let loggedInData = KeychainHelper.shared.read(service: .isLoggedInKey, account: "Artemis") {
-            isLoggedIn = String(decoding: loggedInData, as: UTF8.self) == "true"
+            isLoggedIn = String(bytes: loggedInData, encoding: .utf8) == "true"
         }
     }
 
@@ -79,7 +79,7 @@ public class UserSession: ObservableObject {
 
     public func getToken() -> String? {
         if let tokenData = KeychainHelper.shared.read(service: .jwtKey, account: "Artemis") {
-            return String(decoding: tokenData, as: UTF8.self)
+            return String(bytes: tokenData, encoding: .utf8)
         } else {
             return nil
         }

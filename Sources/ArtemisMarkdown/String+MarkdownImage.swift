@@ -11,7 +11,7 @@ public extension String {
     /**
      Surrounds markdown images with newlines to convert inline images into block images.
      */
-    public func surroundingMarkdownImagesWithNewlines() -> String {
+    func surroundingMarkdownImagesWithNewlines() -> String {
         modifyingMarkdownImagesOutsideStyledBlocks()
     }
 
@@ -19,7 +19,7 @@ public extension String {
      Replaces markdown images with a placeholder: [image 🏞️]
      Used for notification previews.
      */
-    public func replacingMarkdownImages() -> String {
+    func replacingMarkdownImages() -> String {
         modifyingMarkdownImagesOutsideStyledBlocks(replaceWith: "[image 🏞️]")
     }
 
@@ -62,7 +62,6 @@ public extension String {
         // Extract references
         range = NSRange(withoutBlocks.startIndex..<withoutBlocks.endIndex, in: withoutBlocks)
         referenceRegex.enumerateMatches(in: withoutBlocks, options: [], range: range) { match, _, _ in
-            print(match)
             if let matchRange = match?.range, let range = Range(matchRange, in: withoutBlocks) {
                 references.append(String(withoutBlocks[range]))
             }

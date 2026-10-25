@@ -114,7 +114,7 @@ struct NotificationSettingView: View {
     }
 
     var body: some View {
-        if let setting = self.setting[.push] {
+        if setting[.push] != nil {
             Toggle(isOn: binding) {
                 Text(settingType.settingsTitle)
                     .font(.headline)

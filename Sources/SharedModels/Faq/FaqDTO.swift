@@ -44,7 +44,7 @@ public extension FaqDTO {
         faqState = try container.decode(FaqState.self, forKey: .faqState)
     }
 
-    public func encode(to encoder: any Encoder) throws {
+    func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         try container.encodeIfPresent(id, forKey: .id)
@@ -76,6 +76,6 @@ extension FaqCategory {
 
     var asJsonString: String? {
         let data = try? JSONEncoder().encode(self)
-        return data.map { String(decoding: $0, as: UTF8.self) }
+        return data.flatMap { String(bytes: $0, encoding: .utf8) }
     }
 }

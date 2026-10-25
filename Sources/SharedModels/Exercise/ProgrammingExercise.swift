@@ -52,7 +52,7 @@ public struct ProgrammingExercise: BaseExercise {
 }
 
 public extension ProgrammingExercise {
-    public init(id: Int) {
+    init(id: Int) {
         self.id = id
     }
 

@@ -52,7 +52,7 @@ public extension TextSubmission {
         blocks = try container.decodeIfPresent([TextBlock].self, forKey: .blocks)
     }
 
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(Self.type, forKey: .type)
         try container.encode(id, forKey: .id)

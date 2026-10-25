@@ -75,7 +75,7 @@ class PasskeyServiceImpl: PasskeyService {
         let request = RegisterRequest(publicKey: publicKey)
         let response = await client.sendRequest(request)
         switch response {
-        case .success((let response, _)):
+        case .success:
             return .success
         case .failure(let error):
             return .failure(error: error)
@@ -97,7 +97,7 @@ class PasskeyServiceImpl: PasskeyService {
     func deletePasskey(_ passkey: Passkey) async -> NetworkResponse {
         let response = await client.sendRequest(DeletePasskeyRequest(passkey: passkey))
         switch response {
-        case .success((let response, _)):
+        case .success:
             return .success
         case .failure(let error):
             return .failure(error: error)

@@ -60,6 +60,8 @@ public final class APIClient {
              (by specifying RawResponse as ResponseType in Request) return the raw response
              */
             if T.self is RawResponse.Type {
+                // Preserve replacement characters for malformed UTF-8 in raw responses.
+                // swiftlint:disable:next optional_data_string_conversion
                 let rawData = String(decoding: data, as: UTF8.self)
                 return .success((RawResponse(rawData: rawData) as! T, response.statusCode))
             }
@@ -140,6 +142,8 @@ public final class APIClient {
              (by specifying RawResponse as ResponseType in Request) return the raw response
              */
             if T.Response.self is RawResponse.Type {
+                // Preserve replacement characters for malformed UTF-8 in raw responses.
+                // swiftlint:disable:next optional_data_string_conversion
                 let rawData = String(decoding: data, as: UTF8.self)
                 return .success((RawResponse(rawData: rawData) as! T.Response, response.statusCode))
             }
@@ -209,6 +213,8 @@ public final class APIClient {
 // MARK: - Logging
 extension APIClient {
     private func printRequest(urlRequest: URLRequest) {
+        // Log the body even when it contains bytes that are not valid UTF-8.
+        // swiftlint:disable optional_data_string_conversion
         log.verbose(
             """
             \n––––––––––––––––––––––––––––––––––––––––Request––––––––––––––––––––––––––––––––––––––––––
@@ -218,6 +224,7 @@ extension APIClient {
             Content-Type: \(urlRequest.value(forHTTPHeaderField: "Content-Type") ?? "unknown")
             –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––\n
             """)
+        // swiftlint:enable optional_data_string_conversion
     }
 
     private func printResponse(for urlRequest: URLRequest, data: Data?, response: URLResponse?, error: Error?) {

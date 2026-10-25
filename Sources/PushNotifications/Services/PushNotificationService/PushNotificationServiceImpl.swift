@@ -102,7 +102,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         case .success(let (response, _)):
             return .done(response: response)
         case .failure(let error):
-            log.error(error, "Could not load Notification Settings Info")
+            log.error("Could not load Notification Settings Info: \(error)")
             return .failure(error: UserFacingError(error: error))
         }
     }
@@ -126,7 +126,7 @@ class PushNotificationServiceImpl: PushNotificationService {
         case .success(let (response, _)):
             return .done(response: response)
         case .failure(let error):
-            log.error(error, "Could not load Notification Settings")
+            log.error("Could not load Notification Settings: \(error)")
             return .failure(error: UserFacingError(error: error))
         }
     }
@@ -148,10 +148,10 @@ class PushNotificationServiceImpl: PushNotificationService {
         let result = await client.sendRequest(UpdateNotificationSettingRequest(courseId: courseId, notificationTypeChannels: [typeNumber: setting]))
 
         switch result {
-        case .success(let (response, _)):
+        case .success:
             return .success
         case .failure(let error):
-            log.error(error, "Could not update Notification Setting")
+            log.error("Could not update Notification Setting: \(error)")
             return .failure(error: UserFacingError(error: error))
         }
     }
@@ -178,10 +178,10 @@ class PushNotificationServiceImpl: PushNotificationService {
         let result = await client.sendRequest(SelectNotificationSettingPresetRequest(courseId: courseId, preset: preset))
 
         switch result {
-        case .success(let (response, _)):
+        case .success:
             return .success
         case .failure(let error):
-            log.error(error, "Could not update Notification Preset")
+            log.error("Could not update Notification Preset: \(error)")
             return .failure(error: UserFacingError(error: error))
         }
     }

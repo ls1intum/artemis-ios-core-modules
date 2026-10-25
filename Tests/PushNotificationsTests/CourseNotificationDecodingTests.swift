@@ -53,7 +53,7 @@ final class CourseNotificationDecodingTests: XCTestCase {
                          "courseTitle": "Course Title", "courseIconUrl": "icon.url"}}}
         """))
 
-        XCTAssertEqual(notification.postId, 90037)
+        XCTAssertEqual(notification.postId, 90_037)
         XCTAssertEqual(notification.channelName, "channel")
         XCTAssertEqual(notification.authorName, "Author")
         XCTAssertEqual(notification.courseId, 42)
@@ -70,7 +70,7 @@ final class CourseNotificationDecodingTests: XCTestCase {
           "payload": {"postId": 90037, "channelName": "channel", "authorName": "Author"}}}
         """))
 
-        XCTAssertEqual(notification.postId, 90037)
+        XCTAssertEqual(notification.postId, 90_037)
         XCTAssertEqual(notification.channelName, "channel")
         XCTAssertEqual(notification.courseId, 42)
         // Not type specific, so this shape carries them beside the payload. `communicationInfo` reads them off the
@@ -101,7 +101,7 @@ final class CourseNotificationDecodingTests: XCTestCase {
           "parameters": {"postId": 90037, "channelName": "channel", "courseTitle": "Course Title"}}}
         """))
 
-        XCTAssertEqual(notification.postId, 90037)
+        XCTAssertEqual(notification.postId, 90_037)
         XCTAssertEqual(notification.channelName, "channel")
     }
 
@@ -114,7 +114,8 @@ final class CourseNotificationDecodingTests: XCTestCase {
 
         XCTAssertThrowsError(try decode(body)) { error in
             guard case DecodingError.keyNotFound = error else {
-                return XCTFail("Expected a keyNotFound naming the keys that were tried, got \(error)")
+                XCTFail("Expected a keyNotFound naming the keys that were tried, got \(error)")
+                return
             }
         }
     }
@@ -129,7 +130,8 @@ final class CourseNotificationDecodingTests: XCTestCase {
         """)
 
         guard case .unknown = notification else {
-            return XCTFail("Expected the unknown case, decoded \(notification)")
+            XCTFail("Expected the unknown case, decoded \(notification)")
+            return
         }
     }
 }
