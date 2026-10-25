@@ -29,9 +29,33 @@ public class ArtemisStompClient {
         stompClient = nil
     }
 
+    static func webSocketURL(for baseURL: URL) -> URL? {
+        guard var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false),
+              let host = components.host, !host.isEmpty else { return nil }
+
+        switch components.scheme?.lowercased() {
+        case "http":
+            components.scheme = "ws"
+        case "https":
+            components.scheme = "wss"
+        default:
+            return nil
+        }
+
+        if components.percentEncodedPath.hasSuffix("/") {
+            components.percentEncodedPath.removeLast()
+        }
+        components.percentEncodedPath += "/websocket/websocket"
+        components.user = nil
+        components.password = nil
+        components.query = nil
+        components.fragment = nil
+        return components.url
+    }
+
     public func setup() {
-        guard let host = UserSessionFactory.shared.institution?.baseURL?.host(),
-              let stompUrl = URL(string: "wss://\(host):443/websocket/websocket") else { return }
+        guard let baseURL = UserSessionFactory.shared.institution?.baseURL,
+              let stompUrl = Self.webSocketURL(for: baseURL) else { return }
 
         let headers = [
             "heartbeat": "{ outgoing: 10000, incoming: 10000 }",
