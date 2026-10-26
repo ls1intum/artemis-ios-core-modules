@@ -27,7 +27,7 @@ The package is currently used by the following iOS clients:
 
 ## Compatibility
 
-The package supports iOS 17 and later and requires a Swift 6.3 toolchain (Xcode 26.4 or later). GzipSwift 7 establishes this toolchain minimum. Targets retain Swift 5 language mode.
+The package supports iOS 17 and later and requires a Swift 6.4 toolchain (Xcode 27 or later). Targets retain Swift 5 language mode.
 
 The OpenAPI generator is restricted to 1.12.x because 1.13 and later emit unused public-import warnings in generated files with current Swift compilers. The OpenAPI runtime and URLSession transport are updated independently.
 

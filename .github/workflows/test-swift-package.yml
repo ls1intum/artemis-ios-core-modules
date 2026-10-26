@@ -1,0 +1,85 @@
+name: Test Swift package
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: xcode-27
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_27.1.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Print toolchain versions
+        run: |
+          xcodebuild -version
+          xcrun swift --version
+
+      - name: Cache Swift package dependencies
+        uses: actions/cache@v6
+        with:
+          path: build/DerivedData/SourcePackages
+          key: spm-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Package.swift') }}
+
+      - name: Run iOS package tests
+        run: |
+          mkdir -p build
+          simulator_id=$(xcrun simctl create "ArtemisCoreTests-${GITHUB_RUN_ID}" \
+            com.apple.CoreSimulator.SimDeviceType.iPhone-Duo \
+            com.apple.CoreSimulator.SimRuntime.iOS-27-1)
+          cleanup() {
+            xcrun simctl shutdown "$simulator_id" >/dev/null 2>&1 || true
+            xcrun simctl delete "$simulator_id"
+          }
+          trap cleanup EXIT
+          xcrun simctl boot "$simulator_id"
+          xcrun simctl bootstatus "$simulator_id" -b
+          xcodebuild test -scheme ArtemisCore-Package \
+            -destination "platform=iOS Simulator,id=${simulator_id},arch=arm64" \
+            -derivedDataPath build/DerivedData \
+            -resultBundlePath build/CoreTests.xcresult \
+            -skipMacroValidation -skipPackagePluginValidation \
+            -parallel-testing-enabled NO -enableCodeCoverage NO \
+            CODE_SIGNING_ALLOWED=NO 2>&1 | tee build/package-tests.log
+
+      - name: Require warning-free compilation
+        run: |
+          test -s build/package-tests.log
+          if grep -in -m 30 'warning:' build/package-tests.log; then
+            echo '::error::The package build emitted warning diagnostics.'
+            exit 1
+          fi
+
+      - name: Require clean SwiftLint
+        run: |
+          lint_root=build/DerivedData/SourcePackages/artifacts/swiftlintplugins/SwiftLintBinary
+          for lint in "$lint_root"/*.artifactbundle/macos/swiftlint "$lint_root"/*.artifactbundle/swiftlint-*-macos/bin/swiftlint; do
+            if [ -x "$lint" ]; then
+              "$lint" --version
+              "$lint" lint --strict --config .swiftlint.yml
+              exit 0
+            fi
+          done
+          echo '::error::The resolved SwiftLint package has no executable artifact.'
+          exit 1
+
+      - name: Upload test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: core-package-test-results
+          path: |
+            build/CoreTests.xcresult
+            build/package-tests.log
+          retention-days: 14
