@@ -211,6 +211,9 @@ let package = Package(
             ]
         ),
         .testTarget(
+            name: "APIClientTests",
+            dependencies: ["APIClient"]),
+        .testTarget(
             name: "ArtemisMarkdownTests",
             dependencies: ["ArtemisMarkdown"]),
         .testTarget(
