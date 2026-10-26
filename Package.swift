@@ -1,4 +1,4 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -52,8 +52,7 @@ let package = Package(
         .package(url: "https://github.com/Romixery/SwiftStomp.git", .upToNextMinor(from: "1.2.1")),
         .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", .upToNextMinor(from: "0.65.1")),
         .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "2.1.1")),
-        // Gzip 7 requires Swift 6.3; preserve the package's Swift 6.2 minimum.
-        .package(url: "https://github.com/1024jp/GzipSwift.git", .upToNextMajor(from: "6.1.0")),
+        .package(url: "https://github.com/1024jp/GzipSwift.git", .upToNextMajor(from: "7.0.0")),
         // 1.13+ emits unused public imports in generated files with current Swift compilers.
         .package(url: "https://github.com/apple/swift-openapi-generator", .upToNextMinor(from: "1.12.2")),
         .package(url: "https://github.com/apple/swift-openapi-runtime", .upToNextMajor(from: "1.13.3")),
