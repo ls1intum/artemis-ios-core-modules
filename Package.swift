@@ -1,4 +1,4 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -54,7 +54,7 @@ let package = Package(
         .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "2.1.1")),
         .package(url: "https://github.com/1024jp/GzipSwift.git", .upToNextMajor(from: "7.0.0")),
         // 1.13+ emits unused public imports in generated files with current Swift compilers.
-        .package(url: "https://github.com/apple/swift-openapi-generator", .upToNextMinor(from: "1.14.2")),
+        .package(url: "https://github.com/apple/swift-openapi-generator", .upToNextMinor(from: "1.12.2")),
         .package(url: "https://github.com/apple/swift-openapi-runtime", .upToNextMajor(from: "1.13.3")),
         .package(url: "https://github.com/apple/swift-openapi-urlsession", .upToNextMajor(from: "1.4.0"))
     ],

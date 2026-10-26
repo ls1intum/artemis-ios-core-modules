@@ -2,5 +2,17 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "description": "Avoid unused public import diagnostics from OpenAPI Generator 1.13+ until upstream generation is warning-free.",
+      "matchManagers": [
+        "swift"
+      ],
+      "matchPackageNames": [
+        "apple/swift-openapi-generator"
+      ],
+      "allowedVersions": "<1.13.0"
+    }
   ]
 }
