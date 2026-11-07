@@ -81,7 +81,8 @@ extension CourseNotificationType {
             R.string.localizable.tutorialUnassignedSettingsName()
         case .irisResponseNotification:
             "Iris"
-        case .unknown, .irisResponseNeedsReviewNotification:
+        // The following types are not displayed in Settings (e.g. not available for push)
+        case .unknown, .irisResponseNeedsReviewNotification, .atlasCompetencyUpdateNotification:
             ""
         }
     }

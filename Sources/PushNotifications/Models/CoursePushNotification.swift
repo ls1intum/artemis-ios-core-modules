@@ -49,6 +49,7 @@ public enum CoursePushNotification: Codable {
     case tutorialUnassigned(TutorialGroupUnassignedNotification)
     case irisResponse(IrisResponseNotification)
     case irisNeedsReview(IrisResponseNeedsReviewNotification)
+    case atlasCompetencyUpdate(AtlasCompetencyUpdateNotification)
     case unknown
 
     /// Reads a notification from either shape the server may have sent it in.
@@ -92,6 +93,7 @@ public enum CoursePushNotification: Codable {
         case .tutorialGroupUnassignedNotification: .tutorialUnassigned(try decodeNotification())
         case .irisResponseNotification: .irisResponse(try decodeNotification())
         case .irisResponseNeedsReviewNotification: .irisNeedsReview(try decodeNotification())
+        case .atlasCompetencyUpdateNotification: .atlasCompetencyUpdate(try decodeNotification())
         case .unknown: .unknown
         }
     }
@@ -194,6 +196,7 @@ public enum CourseNotificationType: String, Codable, CodingKeyRepresentable, Con
     case tutorialGroupUnassignedNotification
     case irisResponseNotification
     case irisResponseNeedsReviewNotification
+    case atlasCompetencyUpdateNotification
     case unknown
 }
 
