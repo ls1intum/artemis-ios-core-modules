@@ -43,10 +43,6 @@ public struct Saml2: Codable {
 
 public struct Oidc: Codable {
     public let buttonLabel: String
-
-    enum CodingKeys: String, CodingKey {
-        case buttonLabel = "buttonlabel"
-    }
 }
 
 public struct PlatformVersionCompatibility: Codable {
