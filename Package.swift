@@ -55,7 +55,7 @@ let package = Package(
         .package(url: "https://github.com/1024jp/GzipSwift.git", .upToNextMajor(from: "7.0.0")),
         // 1.13+ emits unused public imports in generated files with current Swift compilers.
         .package(url: "https://github.com/apple/swift-openapi-generator", .upToNextMinor(from: "1.12.2")),
-        .package(url: "https://github.com/apple/swift-openapi-runtime", .upToNextMajor(from: "1.13.3")),
+        .package(url: "https://github.com/apple/swift-openapi-runtime", .upToNextMajor(from: "1.13.4")),
         .package(url: "https://github.com/apple/swift-openapi-urlsession", .upToNextMajor(from: "1.4.0"))
     ],
     targets: [
