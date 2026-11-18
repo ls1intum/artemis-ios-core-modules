@@ -27,7 +27,7 @@ struct CourseServiceStub: CourseService {
     }
 
     func getAvailableTabs(courseId: Int) async -> DataState<CourseAvailableTabsDTO> {
-        return .loading
+        return .done(response: .init())
     }
 
     func getCourseForAssessment(courseId: Int) async -> DataState<Course> {
