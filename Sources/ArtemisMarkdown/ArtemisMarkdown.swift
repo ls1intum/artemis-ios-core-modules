@@ -18,6 +18,7 @@ public struct ArtemisMarkdownView: View {
                  baseURL: UserSessionFactory.shared.institution?.baseURL,
                  imageBaseURL: UserSessionFactory.shared.institution?.baseURL)
             .markdownTheme(.artemis)
+            .markdownSoftBreakMode(.lineBreak)
             .markdownImageProvider(ArtemisImageProvider())
             .markdownInlineImageProvider(ArtemisInlineImageProvider())
     }
