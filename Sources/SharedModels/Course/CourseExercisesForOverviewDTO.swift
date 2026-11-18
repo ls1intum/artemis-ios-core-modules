@@ -17,3 +17,14 @@ public struct CourseExercisesForOverviewDTO: Codable {
     public let quizScores: CourseScore?
     public let participationResults: [ParticipationResultDTO]?
 }
+
+public extension CourseExercisesForOverviewDTO {
+    static let mock: Self = .init(exercises: [.programming(exercise: .mock)],
+                                  totalScores: nil,
+                                  textScores: nil,
+                                  programmingScores: nil,
+                                  modelingScores: nil,
+                                  fileUploadScores: nil,
+                                  quizScores: nil,
+                                  participationResults: nil)
+}
